@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Header from './components/headers/Header';
+import Pages from './components/mainPages/Pages';
+import { Routes, Route } from 'react-router-dom'
+import ContractoForm from './components/mainPages/contractorForm/ContractoForm'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Header/>
+      <Routes>
+        <Route path='/' element = {<> <Pages/> </>} />
+         <Route path="contractor-form" element={<div  className="container"> <ContractoForm/></div>  } />
+         <Route path="vendor-form" element={<ContractoForm/>  } />
+        </Routes>
     </div>
   );
 }
