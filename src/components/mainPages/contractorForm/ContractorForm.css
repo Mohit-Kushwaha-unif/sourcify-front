@@ -19,7 +19,7 @@
 }
 .form_header{
     font-weight: 700;
-font-size: 48px;
+font-size: 36px;
 line-height: 56px;
 
 color: #000000;
@@ -36,4 +36,7 @@ border-bottom: 1px solid black;
     line-height: 1;
     content: "*";
     right: -14px;
+}
+.error_field{
+    margin-bottom: 0;
 }

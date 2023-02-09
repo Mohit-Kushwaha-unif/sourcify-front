@@ -2,3 +2,8 @@
 @import url("./components/headers/Header.css");
 @import url("./components/mainPages/selectType/SelectType.css");
 @import url("./components/mainPages/contractorForm/ContractorForm.css");
+.swal2-container.swal2-top-end>.swal2-popup {
+    grid-column: 3;
+    align-self: start;
+    justify-self: center !important;
+}

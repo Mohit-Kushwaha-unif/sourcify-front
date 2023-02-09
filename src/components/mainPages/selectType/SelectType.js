@@ -11,12 +11,12 @@ const SelectType = ({employee_route_value}) => {
     <>
       <Space className='type_employee' direction="Horizontal" >
         <Space wrap>
-          <Button type="primary" shape="round"   onClick={()=>navigation("/contractor-form")}icon={<ArrowRightOutlined />} size="large">
+          <Button className='form_button' type="primary" shape="round"   onClick={()=>navigation("/contractor-form")}icon={<ArrowRightOutlined />} size="large">
             Freelancer
           </Button>
         </Space>
         <Space wrap>
-          <Button type="primary"  shape="round"  onClick={()=>navigation("/vendor-form")}icon={<ArrowRightOutlined />} size="large">
+          <Button className='form_button' type="primary"  shape="round"  onClick={()=>navigation("/vendor-form")}icon={<ArrowRightOutlined />} size="large">
             Employer
           </Button>
         </Space>

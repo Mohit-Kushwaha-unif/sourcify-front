@@ -2,13 +2,15 @@
     display: flex;
     align-items: center;
     padding: 1px;
-    background: rebeccapurple;
-    color: white ;
+    background: #ffffff;
+    color: #1E1E1E ;
     font-family: Helvetica;
     font-weight: 300;
    
 }
-
+.navbar__image{
+    width: 30%;
+}
 .navbar__title {
     margin-right: auto;
     font-size: 150%;
@@ -18,15 +20,25 @@
 }
 
 .navbar__item {
-    padding: 16px 28px;
+    padding: 16px 14px;
     cursor: pointer;
     vertical-align: middle;
 }
 .navbar__button{
-    padding: 0px 0px;
+    padding: 6px 15px 6px;
     cursor: pointer;
     font-size: 104%;
-    color: white ;
+    background-color: #FF5757;
+    color: #ffffff ;
     font-family: Helvetica;
     font-weight: 300;
+    height: auto;
+}
+.navbar__button :hover{
+    color: inherit;
+    background-color: inherit;
+}
+:where(.css-dev-only-do-not-override-ixblex) .ant-btn-link:not(:disabled):hover {
+    color: #ffffff ;
+    background-color: #FF5757 ;
 }

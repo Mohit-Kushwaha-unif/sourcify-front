@@ -10,7 +10,8 @@ import {
   import state_cites from '../../../assests/state_city.';
   import { useEffect, useState } from 'react';
   import axios from 'axios';
-
+  import work_segment from '../../../assests/options';
+import Swal from 'sweetalert2';
   const ContractoForm = () => {
     const [isGSTVisible,setIsGSTVisible] = useState(false)
     const [isMSMEVisible,setIsMSMEVisible] = useState(false)
@@ -22,7 +23,6 @@ import {
     const [valid_gst,set_Valid_gst] = useState(false)
     const [valid_msme,set_Valid_msme] = useState(false)
     const onFinish = (value) =>{
-        console.log('success',value)
         var formData = new FormData()
         value.pan_image = pan_imaged 
         if(value.gst_image){
@@ -35,15 +35,33 @@ import {
             
             formData.append(formKey,(value[formKey])  ) 
         })
-      
         axios({
             url: "http://localhost:5000/contractor/add_contractor",          
             method: "POST",
             data: formData,
-        }).then((res) => {console.log(res) })
+        }).then((res) => {
+        
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+          }).then(function() {
+            window.location = "/";
+        });
+          
+         })
   
         // Catch errors if any
-        .catch((err) => { console.log(err)});
+        .catch((err) => {   
+          console.log(err)
+           Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: err.response.data.msg,
+          showConfirmButton: true,
+          
+        })});
     }
     const onFinishFailed = (value)=>{
         console.log('error',value)
@@ -96,8 +114,10 @@ import {
       function ValidateGSTNumber(event) {
         let text = event.target.value
         var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-       
-          if(regex.test(text)) {
+        if(text.length <1){
+          set_Valid_gst(false)
+        }
+         else if(regex.test(text)) {
             set_Valid_gst(false)
           }else{
             set_Valid_gst(true)
@@ -106,8 +126,11 @@ import {
     }
       function msmeVerfication(event) {
         let text = event.target.value
-        var regex = /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/;
-          if(regex.test(text)) {
+        var regex = /^[A-Z]{5}[-][A-Z]{2}[-][0-9]{2}[-][0-9]{7}$/;
+        if(text.length <1){
+          set_Valid_msme(false)
+        }
+        else  if(regex.test(text)) {
             set_Valid_msme(false)
           }else{
             set_Valid_msme(true)
@@ -163,10 +186,9 @@ import {
       ]}>
           <Select mode="multiple"
       allowClear placeholder="List of Categories Dropdown with Multiselect">
-            <Select.Option value="demo">Demo</Select.Option>
-            <Select.Option value="demdo">Demo</Select.Option>
-            <Select.Option value="dedso">Demo</Select.Option>
-            <Select.Option value="demsso">Demo</Select.Option>
+        {work_segment.map((option)=>{
+          return  <Select.Option value={option}>{option}</Select.Option>
+        })}
           </Select>
         </Form.Item>
         {/*******************************************/}
@@ -244,25 +266,26 @@ import {
         <Form.Item name="pin_code" label="Pin Code " rules={[
         {
           required: true,
-          message: 'Please input your Pin Code!'
+          message: 'Please input your Pin Code!',
+
         },
       ]}>
-          <Input max={6} min={6}  placeholder="Enter 6 digit PIN Code"/>
+          <Input maxLength={6} minLength={6}  placeholder="Enter 6 digit PIN Code"/>
         </Form.Item>
         </div>
         </div>
         <div className='form_email_mobile_flex'>
           <div className='form_flex_children mr-2'>
-        <Form.Item name="pan_number" label="PAN Number" rules={[
+        <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
         {
           required: true,
           message: 'Please provide pan number!'
         },
       ]}
      >
-        <Input onChange={pancardValidation} placeholder='Enter Your PAN Number' />
+        <Input onChange={pancardValidation} maxLength={10} minLength={10}   placeholder='Enter Your PAN Number' />
         </Form.Item>
-        {valid_pan && <span  style={{color:'red'}}>Please Enter valid PAN Number*</span>}
+        {valid_pan && <span  style={{color:'#ff4d4f'}}>Please Enter valid PAN Number*</span>}
         
         </div>
         <div className='form_flex_children mr-2'>
@@ -286,24 +309,25 @@ import {
       ]} 
       >
         <Select onSelect={gstHandler} placeholder="Yes/No">
-        <Select.Option value="yes">yes</Select.Option>
-        <Select.Option value="no">no</Select.Option>
+        <Select.Option value="yes">Yes</Select.Option>
+        <Select.Option value="no">No</Select.Option>
         </Select>
     </Form.Item>
     { 
         isGSTVisible && <div className='form_email_mobile_flex'>
            <div className='form_flex_children mr-2'>
-        <Form.Item name="gst_number" label="GST Number" rules={[
+        <Form.Item name="gst_number" className='mb-0' label="GST Number" rules={[
         {
           required: true,
           message: 'Please provide required details!'
         },
       ]}>
          <Input  onChange={ValidateGSTNumber} />
-    </Form.Item></div>
-    {valid_gst && <span  style={{color:'red'}}>Please Enter valid GST Number*</span>}
+    </Form.Item>
+    {valid_gst && <span  style={{color:'#ff4d4f'}}>Please Enter valid GST Number*</span>}</div>
+   
     <div className='form_flex_children '>
-        <Form.Item name="gst_image" label="GST Number" rules={[
+        <Form.Item name="gst_image" label="GST Image" rules={[
         {
           required: true,
           message: 'Please provide required details!'
@@ -321,11 +345,11 @@ import {
         },
       ]}>
           <Select onSelect={MSMEHandler} placeholder="Yes/No">
-            <Select.Option value="yes">yes</Select.Option>
-            <Select.Option value="no">no</Select.Option>
+            <Select.Option value="yes">Yes</Select.Option>
+            <Select.Option value="no">No</Select.Option>
           </Select>
     </Form.Item>
-    {isMSMEVisible &&<div className='form_email_mobile_flex'><div className='form_flex_children mr-2'> <Form.Item name="msme_number"  label="MSME Number"rules={[
+    {isMSMEVisible &&<div className='form_email_mobile_flex'><div className='form_flex_children mr-2'> <Form.Item name="msme_number" className='mb-0' label="MSME Number"rules={[
         {
           required: true,
           message: 'Please provide required details!'
@@ -333,7 +357,7 @@ import {
       ]}>
       <Input  onChange={msmeVerfication}/>
     </Form.Item>
-    {valid_msme && <span  style={{color:'red'}}>Please Enter valid MSME Number*</span>} </div>
+    {valid_msme && <span  style={{color:'#ff4d4f'}}>Please Enter valid MSME Number*</span>} </div>
     <div className='form_flex_children '>
     <Form.Item name="msme_image" label="MSME Image">
     <Input type='file' max={1} onChange={msme_img_value} />
