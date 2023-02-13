@@ -11,8 +11,11 @@ import {
   import { useEffect, useState } from 'react';
   import axios from 'axios';
   import work_segment from '../../../assests/options';
+  import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 const PersonalDetails = () => {
+  const location = useLocation()
+  console.log(location.state.email)
     const [isMSMEVisible,setIsMSMEVisible] = useState(false)
     const [pan_imaged,set_panImageD]= useState('')
     const [msmeImageD,set_msmeImageD]= useState('')
@@ -21,13 +24,23 @@ const PersonalDetails = () => {
     const [valid_pan,set_Valid_pan] = useState(false)
     const [valid_gst,set_Valid_gst] = useState(false)
     const [valid_msme,set_Valid_msme] = useState(false)
+    const [initialEmail , setStateInitialValue] = useState('')
+    const [form] = Form.useForm();
+    useEffect(()=>{
+      setStateInitialValue(location.state.email)
+    },[location])
+   
+    
     const onFinish = (value) =>{
         var formData = new FormData()
         console.log("sss")
         value.pan_image = pan_imaged 
-
+        value.user_id = localStorage.getItem("user_id")
         if(value.gst_image){
             value.gst_image = gstImageD
+        }
+        if(!value.mobile_number){
+          value.mobile_number = location.state.number
         }
         if(value.gst_number){
             value.gst_number = "N/A"
@@ -36,7 +49,6 @@ const PersonalDetails = () => {
             value.msme_image = msmeImageD
         }
         Object.keys(value).map((formKey)=>{
-            
             formData.append(formKey,(value[formKey])  ) 
         })
         axios({
@@ -143,6 +155,7 @@ const PersonalDetails = () => {
         <h3>Contractor Form</h3>
       </div>
       <Form
+      form={form}
          labelCol={{
           span: 37,
         }}
@@ -193,30 +206,39 @@ const PersonalDetails = () => {
         <div className='form_email_mobile_flex'>
         {/*****************Email*******************/}
         <div className='form_flex_children mr-2' >
-        <Form.Item name="email" label="Email " rules={[
+        {location.state.email ?<>
+        <div >Email <span className='intialValue'>*</span> </div>
+        <Input disabled className='mt-2 '  type="email" placeholder='Enter your Email ID ' value={initialEmail} />  
+        </>:<Form.Item name="email" label="Email "   initialValue={initialEmail} rules={[
         {
           required: true,
           message: 'Please input your Email!'
         },
       ]}   wrapperCol={{
-        
         span: 56,
       }}>
-          <Input  type="email" placeholder='Enter the Email Id to be registered'/>
-        </Form.Item>
+        
+           <Input  type="email" placeholder='Enter your Email ID '  />  
+        
+        
+          
+        </Form.Item>}
         </div>
         {/*******************************************/}
 
         {/************Mobile Number****************/}
         <div className='form_flex_children'>
-        <Form.Item name="mobile_number" label="Mobile Number " rules={[
+        {location.state.number ?<>
+        <div >Mobile Number <span className='intialValue'>*</span> </div>
+        <Input disabled className='mt-2 '  type="number" placeholder='Enter your Email ID ' value={location.state.number} />  
+        </>:<Form.Item name="mobile_number" label="Mobile Number " rules={[
         {
           required: true,
           message: 'Please input your Mobile Number!'
         },
       ]}>
           <Input maxLength={10} minLength={10} placeholder='Enter the Mobile Number to be registered' />
-        </Form.Item>
+        </Form.Item>}
         </div>
         {/*******************************************/}
         </div>

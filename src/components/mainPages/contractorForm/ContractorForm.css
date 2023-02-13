@@ -26,7 +26,7 @@ color: #000000;
 margin-bottom:1.5rem   ;
 border-bottom: 1px solid black;
 }
-.ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+.ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before  {
     position: absolute;
     display: inline-block;
     margin-inline-end: 4px;

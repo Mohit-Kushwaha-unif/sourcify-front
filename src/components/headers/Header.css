@@ -38,7 +38,3 @@
     color: inherit;
     background-color: inherit;
 }
-:where(.css-dev-only-do-not-override-ixblex) .ant-btn-link:not(:disabled):hover {
-    color: #ffffff ;
-    background-color: #FF5757 ;
-}

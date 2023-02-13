@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
-import SelectType from './selectType/SelectType'
-
+import Login from './auth/Login'
+import Regsiter from './auth/Register'
+import { Routes, Route,Navigate   } from 'react-router-dom'
+import PersonalDetails from './contractorForm/PersonalDetails'
+import WorkExperience from './contractorForm/WorkExperience'
 const Pages = () => {
-    const [routeId, setRouteId] = useState()
-    const employee_Route_value =(value) =>{
-        setRouteId(value.route_id)
-    }
+
 
   return (
     <div>
-        <SelectType employee_route_value= {employee_Route_value}/>  
+           <Routes>
+           <Route path="/contractor-form" element={<div  className="container"> <PersonalDetails/></div>  } />
+         <Route path="contractor-form/work-experience" element={<div  className="container"> <WorkExperience/> </div>  } />
+           <Route path="/login" element={<div  className="container"> <Login/></div>  } />
+         <Route path="/register" element={<div  className="container"> <Regsiter/></div>  } />
+          </Routes>
     </div>
   )
 }
