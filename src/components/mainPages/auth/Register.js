@@ -2,22 +2,26 @@
 import {
     Form,
     Input,
-    Checkbox
+    Checkbox,
+    Radio
   } from 'antd';
-import axios from 'axios';
-import { Link, redirect } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import useDocumentTitle from '../../Handler/useDocumentTitle';
+import useDocumentTitle from '../../Helper/useDocumentTitle';
+import * as userService from '../../../services/user'
+import { useDispatch } from 'react-redux';
 const Regsiter = () => {
     useDocumentTitle("Register Yourself")
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
     function formHandler(values){
-        axios({
-            url: "http://localhost:5000/user/register",          
-            method: "POST",
-            data: values,
-        }).then((res) => {
-            console.log(res.data.user_data._id)
-            localStorage.setItem("user_id",res.data.user_data._id)
+
+      dispatch(userService.register(values))
+      .then((res) => {
+            console.log(res)
+            localStorage.setItem("user_id",res.user_data._id)
+            localStorage.setItem("email",res.user_data.email)
+            localStorage.setItem("number",res.user_data.number)
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -25,7 +29,10 @@ const Regsiter = () => {
                 showConfirmButton: true,
                 
               }) 
-            window.location = '/contractor-form'
+              if(values.role ===1)
+               navigate('/vendor-form' ,{state:res.user_data})  
+              else
+              navigate('/contractor-form' ,{state:res.user_data})  
         }).catch(err =>  Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -80,19 +87,28 @@ const Regsiter = () => {
         },
       ]}
     >
-      <Input.Password   placeholder='Enter your password'/>
+      <Input.Password   placeholder='Who are you?'/>
+    </Form.Item>
+      <Form.Item    
+      name="role"
+      rules={[
+        {
+          required: true,
+          message: 'Please input your password!',
+        },
+      ]}
+    >
+     
+     <Radio.Group >
+     <Radio value={1}>Vendor</Radio>
+      <Radio value={2}>Contractor</Radio>
+    </Radio.Group>
     </Form.Item>
           <div className="flex justify-between items-center">
             <div className="form-group form-check">
                         <Form.Item
                 name="remember"
                 valuePropName="checked"
-                rules={[
-                    {
-                    required: true,
-                    message: 'Please check the check box!'
-                    },
-                ]}
                 >
                 <Checkbox>Remember me</Checkbox>
                 </Form.Item>
@@ -105,10 +121,7 @@ const Regsiter = () => {
               type="submit"
               className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
             >
-             
                 Sign Up 
-                
-             
             </button>
             <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                Have an account?

@@ -1,21 +1,20 @@
 import {
-    Button,
-    Form,
-    Input,
-    Select,
-    message, 
-    Upload,
-    Checkbox
-  } from 'antd';
-  import state_cites from '../../../assests/state_city.';
-  import { useEffect, useState } from 'react';
-  import axios from 'axios';
-  import work_segment from '../../../assests/options';
-  import { useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2';
+  Button,
+  Form,
+  Input,
+  Select,
+  Checkbox
+} from 'antd';
+import state_cites from '../../../assests/state_city.';
+import { useEffect, useState } from 'react';
+import work_segment from '../../../assests/options';
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as Contractor_service from '../../../services/contractor'
+import { useDispatch } from 'react-redux';
 const PersonalDetails = () => {
   const location = useLocation()
-  console.log(location.state.email)
+  const navigation  = useNavigate()
+  const dispatch = useDispatch()
     const [isMSMEVisible,setIsMSMEVisible] = useState(false)
     const [pan_imaged,set_panImageD]= useState('')
     const [msmeImageD,set_msmeImageD]= useState('')
@@ -27,20 +26,19 @@ const PersonalDetails = () => {
     const [initialEmail , setStateInitialValue] = useState('')
     const [form] = Form.useForm();
     useEffect(()=>{
-      setStateInitialValue(location.state.email)
+      setStateInitialValue(location.state?.email)
     },[location])
    
     
     const onFinish = (value) =>{
         var formData = new FormData()
-        console.log("sss")
         value.pan_image = pan_imaged 
         value.user_id = localStorage.getItem("user_id")
         if(value.gst_image){
             value.gst_image = gstImageD
         }
         if(!value.mobile_number){
-          value.mobile_number = location.state.number
+          value.mobile_number = location.state?.number
         }
         if(value.gst_number){
             value.gst_number = "N/A"
@@ -48,38 +46,40 @@ const PersonalDetails = () => {
         if(value.msme_image){
             value.msme_image = msmeImageD
         }
-        Object.keys(value).map((formKey)=>{
-            formData.append(formKey,(value[formKey])  ) 
+        Object.keys(value).map((formKey)=>{ 
+          formData.append(formKey,value[formKey])
         })
-        axios({
-            url: "http://localhost:5000/contractor/add_contractor",          
-            method: "POST",
-            data: formData,
-        }).then((res) => {
-        
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Your work has been saved',
-            showConfirmButton: false,
-          }).then(function() {
-            window.location = "contractor-form/work-experience";
-        });
-          
+        dispatch(Contractor_service.add_contractor(formData)).then((res) => { 
+          navigation("/contractor-form/work-experience")
          })
-  
-        // Catch errors if any
-        .catch((err) => {   
-           Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: err.response.data.msg,
-          showConfirmButton: true,
+    //     axios({
+    //         url: "http://localhost:5000/contractor/add_contractor",          
+    //         method: "POST",
+    //         data: formData,
+    //     }).then((res) => {
+        
+    //       Swal.fire({
+    //         position: 'top-end',
+    //         icon: 'success',
+    //         title: 'Your work has been saved',
+    //         showConfirmButton: false,
+    //       }).then(function() {
+    //         window.location = "contractor-form/work-experience";
+    //     });
           
-        }).then(function() {
-            window.location = "contractor-form/work-experience";
-        });
-    });
+    //      })
+    //     // Catch errors if any
+    //     .catch((err) => {   
+    //        Swal.fire({
+    //       position: 'top-end',
+    //       icon: 'error',
+    //       title: err.response.data.msg,
+    //       showConfirmButton: true,
+          
+    //     }).then(function() {
+    //         window.location = "contractor-form/work-experience";
+    //     });
+    // });
     }
     const onFinishFailed = (value)=>{
         console.log('error',value)
@@ -206,7 +206,7 @@ const PersonalDetails = () => {
         <div className='form_email_mobile_flex'>
         {/*****************Email*******************/}
         <div className='form_flex_children mr-2' >
-        {location.state.email ?<>
+        {location.state?.email ?<>
         <div >Email <span className='intialValue'>*</span> </div>
         <Input disabled className='mt-2 '  type="email" placeholder='Enter your Email ID ' value={initialEmail} />  
         </>:<Form.Item name="email" label="Email "   initialValue={initialEmail} rules={[
@@ -228,7 +228,7 @@ const PersonalDetails = () => {
 
         {/************Mobile Number****************/}
         <div className='form_flex_children'>
-        {location.state.number ?<>
+        {location.state?.number ?<>
         <div >Mobile Number <span className='intialValue'>*</span> </div>
         <Input disabled className='mt-2 '  type="number" placeholder='Enter your Email ID ' value={location.state.number} />  
         </>:<Form.Item name="mobile_number" label="Mobile Number " rules={[
@@ -404,7 +404,7 @@ const PersonalDetails = () => {
       }}
     >
       <Button className='form_button' type="primary" htmlType="submit">
-        Submit
+        Next Step
       </Button>
     </Form.Item>
       </Form>

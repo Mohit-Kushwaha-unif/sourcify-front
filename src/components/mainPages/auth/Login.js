@@ -9,11 +9,14 @@ import {
     Checkbox
   } from 'antd';
 import { Link } from 'react-router-dom';
-import useDocumentTitle from '../../Handler/useDocumentTitle';
+import useDocumentTitle from '../../Helper/useDocumentTitle';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import {useNavigate} from "react-router-dom"
+import { useDispatch } from 'react-redux';
+import { setValue } from '../../../store/actions/user';
 const Login = () => {
+  const dispatch = useDispatch()
     useDocumentTitle("Login")
     const navigate = useNavigate();
     function formHandler(value){
@@ -25,9 +28,23 @@ const Login = () => {
           icon: 'success',
           title:"Registerd Successfully",
           showConfirmButton: true,
-          
         }) 
-        navigate('/contractor-form' ,{state:res.data.user})  
+        console.log(res.data.user)
+        localStorage.setItem('accesstoken', res.data.accesstoken)
+        localStorage.setItem('user_id', res.data.user._id)
+        localStorage.setItem('email', res.data.user.email)
+        localStorage.setItem('number', res.data.user.number)
+        dispatch(setValue(res.data.user.role))
+       
+        if(res.data.user.role ===1)
+        navigate('/vendor-form' ,{state:res.data.user_data})  
+        else if(res.data.user.role ===2){
+          localStorage.setItem("adminEmail",res.data.user.email)
+           navigate('/admin') 
+        }
+       else
+        navigate('/contractor-form' ,{state:res.data.user_data})  
+        // navigate('/contractor-form' ,{state:res.data.user})  
       })
         .catch(err =>  Swal.fire({
           position: 'top-end',
