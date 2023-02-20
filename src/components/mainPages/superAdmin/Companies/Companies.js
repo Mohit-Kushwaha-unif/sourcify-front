@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { get_Vendor } from '../../../../services/Vendor';
 const Companies = () => {
     const dispatch = useDispatch([])
+    const navigator =  useNavigate()
     const data = []
 
     const [tableData, setTableData] = useState([])
@@ -60,7 +61,7 @@ const Companies = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Link to='/admin/edit-company' state={{ _id: record._id }}>Edit {record.entity}</Link>
+                    <Link to='/admin/edit-company' state={{ _id: record._id }}>Edit </Link>
                     <Link>Delete</Link>
                 </Space>
             ),

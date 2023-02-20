@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import {useNavigate} from "react-router-dom"
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
+import { get_Vendor, get_Vendor_by_id } from '../../../services/Vendor';
 const Login = () => {
   const dispatch = useDispatch()
     useDocumentTitle("Login")
@@ -37,7 +38,22 @@ const Login = () => {
         dispatch(setValue(res.data.user.role))
        
         if(res.data.user.role ===1)
-        navigate('/vendor-form' ,{state:res.data.user_data})  
+       {
+        dispatch(get_Vendor()).then((res)=>{
+         var user_exist =   res.filter((user_data)=>{
+            if(user_data.user_id._id == localStorage.getItem('user_id')) 
+              return user_data
+            return null
+          })
+          if(user_exist.length > 0){
+            navigate('/dashboard')
+          }
+          else{
+            navigate('/vendor-form' ,{state:res.data.user_data}) 
+          }
+        })
+       }
+         
         else if(res.data.user.role ===2){
           localStorage.setItem("adminEmail",res.data.user.email)
            navigate('/admin') 
@@ -140,12 +156,6 @@ const Login = () => {
                         <Form.Item
                 name="remember"
                 valuePropName="checked"
-                rules={[
-                    {
-                    required: true,
-                    message: 'Please check the check box!'
-                    },
-                ]}
                 >
                 <Checkbox>Remember me</Checkbox>
                 </Form.Item>

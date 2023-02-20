@@ -48,7 +48,7 @@ const WorkExperience = () => {
    </div>
              <Form  labelAlign= "left"  name="dynamic_form_nest_item"
                 layout="vertical" onFinish={FormHandler}>
-             <Form.Item name="State" label="Preffered State to Work " rules={[
+             <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
         {
           required: true,
           message: 'Please input your State!'

@@ -7,10 +7,11 @@ import {
 } from 'antd';
 import state_cites from '../../../assests/state_city.';
 import { useEffect, useState } from 'react';
-import work_segment from '../../../assests/options';
+// import work_segment from '../../../assests/options';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Contractor_service from '../../../services/contractor'
 import { useDispatch } from 'react-redux';
+import { get_category } from '../../../services/category';
 const PersonalDetails = () => {
   const location = useLocation()
   const navigation  = useNavigate()
@@ -20,20 +21,33 @@ const PersonalDetails = () => {
     const [msmeImageD,set_msmeImageD]= useState('')
     const [gstImageD,set_gstImageD]= useState('')
     const [state,setState] = useState([])
+    const [work_segment,set_work_Segment]= useState([])
     const [valid_pan,set_Valid_pan] = useState(false)
     const [valid_gst,set_Valid_gst] = useState(false)
     const [valid_msme,set_Valid_msme] = useState(false)
     const [initialEmail , setStateInitialValue] = useState('')
+
     const [form] = Form.useForm();
     useEffect(()=>{
       setStateInitialValue(location.state?.email)
     },[location])
-   
-    
+    useEffect(()=>{
+      dispatch(get_category()).then((res)=>{
+        // console.log(res)
+        res.map((cat)=>{
+          set_work_Segment((prev_state)=>[...prev_state,cat.category])
+        })
+       })
+    },[])
+
+
     const onFinish = (value) =>{
         var formData = new FormData()
         value.pan_image = pan_imaged 
-        value.user_id = localStorage.getItem("user_id")
+        if(localStorage.getItem("adminEmail")==null)
+        {value.user_id = localStorage.getItem("user_id")
+      }
+      value.role= 0;
         if(value.gst_image){
             value.gst_image = gstImageD
         }
@@ -52,41 +66,13 @@ const PersonalDetails = () => {
         dispatch(Contractor_service.add_contractor(formData)).then((res) => { 
           navigation("/contractor-form/work-experience")
          })
-    //     axios({
-    //         url: "http://localhost:5000/contractor/add_contractor",          
-    //         method: "POST",
-    //         data: formData,
-    //     }).then((res) => {
-        
-    //       Swal.fire({
-    //         position: 'top-end',
-    //         icon: 'success',
-    //         title: 'Your work has been saved',
-    //         showConfirmButton: false,
-    //       }).then(function() {
-    //         window.location = "contractor-form/work-experience";
-    //     });
-          
-    //      })
-    //     // Catch errors if any
-    //     .catch((err) => {   
-    //        Swal.fire({
-    //       position: 'top-end',
-    //       icon: 'error',
-    //       title: err.response.data.msg,
-    //       showConfirmButton: true,
-          
-    //     }).then(function() {
-    //         window.location = "contractor-form/work-experience";
-    //     });
-    // });
     }
     const onFinishFailed = (value)=>{
         console.log('error',value)
     }
     const pancardValidation = (event) => {
       let text = event.target.value
-      let   regex = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+      var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;  
       if(text.length <1){
         set_Valid_pan(false)
       }
@@ -97,15 +83,7 @@ const PersonalDetails = () => {
         set_Valid_pan(true)
       }
 }
-    const MSMEHandler =(value)=>{
-        if(value === "yes"){
-           
-            setIsMSMEVisible(true)
-        }
-        else{
-            setIsMSMEVisible(false)
-        }
-    }
+
 
    
       function pan_img_value (e){
@@ -136,7 +114,7 @@ const PersonalDetails = () => {
     }
       function msmeVerfication(event) {
         let text = event.target.value
-        var regex = /^[A-Z]{5}[-][A-Z]{2}[-][0-9]{2}[-][0-9]{7}$/;
+        var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
         if(text.length <1){
           set_Valid_msme(false)
         }
@@ -150,10 +128,19 @@ const PersonalDetails = () => {
     return (
       <>
       
-      <div className='form_container'>
-      <div className='form_header'>
-        <h3>Contractor Form</h3>
-      </div>
+      <div className='min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full'>
+      <div className="px-8 h-full text-gray-800">
+        <div
+          className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+        >
+          <div className="xl:ml-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+            <div className="flex flex-row items-center justify-center lg:justify-start">
+              <p className="text-lg mb-0 mr-4">Contractor Form</p>
+            </div>
+            <div
+              className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+            >
+            </div>
       <Form
       form={form}
          labelCol={{
@@ -167,9 +154,6 @@ const PersonalDetails = () => {
           size: "default",
         }}
         size="default"
-        style={{
-          maxWidth: 600,
-        }}
         labelAlign= "left"
         scrollToFirstError= {true}
         onFinish={onFinish}
@@ -197,7 +181,7 @@ const PersonalDetails = () => {
       ]}>
           <Select mode="multiple"
       allowClear placeholder="List of Categories Dropdown with Multiselect">
-        {work_segment.map((option)=>{
+        { work_segment.map((option)=>{
           return  <Select.Option value={option}>{option}</Select.Option>
         })}
           </Select>
@@ -323,8 +307,8 @@ const PersonalDetails = () => {
       
  <div className='form_email_mobile_flex'>
            <div className='form_flex_children mr-2'>
-        <Form.Item name="gst_number" className='mb-0' label="GST Number">
-         <Input  onChange={ValidateGSTNumber} />
+        <Form.Item name="gst_number" className='mb-0'  label="GST Number">
+         <Input placeholder='Enter your GST Number' onChange={ValidateGSTNumber} />
     </Form.Item>
     {valid_gst && <span  style={{color:'#ff4d4f'}}>Please Enter valid GST Number*</span>}</div>
    
@@ -333,30 +317,19 @@ const PersonalDetails = () => {
         <Input type='file' max={1}  onChange={gst_img_value}/>
     </Form.Item>
     </div> </div>
-    <Form.Item name="msme" label="Are You Registered Under MSME?"  rules={[
+    <div className='form_email_mobile_flex'><div className='form_flex_children mr-2'> <Form.Item name="msme_number" className='mb-0' label="PF Number"rules={[
         {
           required: true,
           message: 'Please provide required details!'
         },
       ]}>
-          <Select onSelect={MSMEHandler} placeholder="Yes/No">
-            <Select.Option value="yes">Yes</Select.Option>
-            <Select.Option value="no">No</Select.Option>
-          </Select>
+      <Input placeholder='Enter your PAN Number'  onChange={msmeVerfication}/>
     </Form.Item>
-    {isMSMEVisible &&<div className='form_email_mobile_flex'><div className='form_flex_children mr-2'> <Form.Item name="msme_number" className='mb-0' label="MSME Number"rules={[
-        {
-          required: true,
-          message: 'Please provide required details!'
-        },
-      ]}>
-      <Input  onChange={msmeVerfication}/>
-    </Form.Item>
-    {valid_msme && <span  style={{color:'#ff4d4f'}}>Please Enter valid MSME Number*</span>} </div>
+    {valid_msme && <span  style={{color:'#ff4d4f'}}>Please Enter valid PF Number*</span>} </div>
     <div className='form_flex_children '>
-    <Form.Item name="msme_image" label="MSME Image">
+    <Form.Item name="msme_image" label="Copy of PF">
     <Input type='file' max={1} onChange={msme_img_value} />
-    </Form.Item> </div> </div>}
+    </Form.Item> </div> </div>
     <div className='form_email_mobile_flex'>
     <div className='form_flex_children mr-2'>
         <Form.Item label="Contact Person Full Name " name="username" rules={[
@@ -408,6 +381,9 @@ const PersonalDetails = () => {
       </Button>
     </Form.Item>
       </Form>
+      </div>
+      </div>
+      </div>
       </div>
       </>
     );

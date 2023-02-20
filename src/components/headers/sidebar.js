@@ -1,17 +1,23 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate, useNavigation } from 'react-router-dom'
 import { logout } from '../../services/user'
 const Sidebar = () => {
     const dispatch = useDispatch()
+    const navigation = useNavigate()
     const selecor = useSelector(state => state)
     function logoutHandler() {
-        dispatch(logout()).then((res) => { localStorage.clear() })
+        dispatch(logout()).then((res) => { 
+            localStorage.clear()
+            localStorage.setItem("isLoggedIn",false)
+            window.location='/login'
+        
+        })
     }
     return (
 
-        <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+        <div className="flex flex-col min-h-screen h-inherit p-3 bg-white shadow w-60">
             <div className="space-y-3">
                 <div className="flex items-center">
                     <h2 className="text-xl font-bold">Dashboard</h2>
@@ -87,7 +93,7 @@ const Sidebar = () => {
                         </li>
                         <li className="rounded-sm">
                             <NavLink
-                                to="/"
+                                to="/admin/category-list"
                                 className="flex items-center p-2 space-x-3 rounded-md"
                             >
                              <svg xmlns="http://www.w3.org/2000/svg"

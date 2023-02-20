@@ -9,10 +9,10 @@ import {
   import { MinusCircleOutlined } from '@ant-design/icons';
   import state_cites from '../../../../../assests/state_city.';
   import { useEffect, useState } from 'react';
-  import work_segment from '../../../../../assests/options';
   import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as Contractor_service from '../../../../../services/contractor'
 import { useDispatch } from 'react-redux';
+import { get_category } from '../../../../../services/category';
 const Personal_Detail_Tab = ({formValues,isClicked}) => {
     const location = useLocation()
     // useEffect(()=>{
@@ -26,16 +26,32 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
       const [msmeImageD,set_msmeImageD]= useState('')
       const [gstImageD,set_gstImageD]= useState('')
       const [state,setState] = useState([])
+      const [work_segment,set_work_Segment ] = useState([])
       const [valid_pan,set_Valid_pan] = useState(false)
       const [valid_gst,set_Valid_gst] = useState(false)
       const [valid_msme,set_Valid_msme] = useState(false)
       const [initialEmail , setStateInitialValue] = useState('')
       const [isPANchange,setIsPANchange] = useState(true)
+      const [initialpan ,setStateInitialpan ] = useState('')
+      const [initialgst , setStateInitialgst] = useState('')
+      const [initialpf , setStateInitialpf] = useState('')
       const [form] = Form.useForm();
       useEffect(()=>{
+        setStateInitialpan(formValues.pan_number)
+        setStateInitialgst(formValues.gst_number)
+        setStateInitialpf(formValues.msme_number)
         setStateInitialValue(location.state?.email)
       },[location])
-     
+      
+      useEffect(()=>{
+        dispatch(get_category()).then((res)=>{
+          console.log(res)
+          res.map((cat)=>{
+            set_work_Segment((prev_state)=>[...prev_state,cat.category])
+          })
+         })
+      },[])
+  
       const onFinish = (value) =>{
           var formData = new FormData()
             if(isPANchange)
@@ -50,7 +66,7 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
           if(!value.mobile_number){
             value.mobile_number = location.state?.number
           }
-          if(value.gst_number){
+          if(!value.gst_number){
               value.gst_number = "N/A"
           }
           if(value.msme_image){
@@ -69,7 +85,8 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
       }
       const pancardValidation = (event) => {
         let text = event.target.value
-        let   regex = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+        setStateInitialpan(text)
+        var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;  
         if(text.length <1){
           set_Valid_pan(false)
         }
@@ -80,15 +97,7 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
           set_Valid_pan(true)
         }
   }
-      const MSMEHandler =(value)=>{
-          if(value === "yes"){
-             
-              setIsMSMEVisible(true)
-          }
-          else{
-              setIsMSMEVisible(false)
-          }
-      }
+   
   
      
         function pan_img_value (e){
@@ -106,6 +115,7 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
         }
         function ValidateGSTNumber(event) {
           let text = event.target.value
+          setStateInitialgst(text)
           var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
           if(text.length <1){
             set_Valid_gst(false)
@@ -119,7 +129,9 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
       }
         function msmeVerfication(event) {
           let text = event.target.value
-          var regex = /^[A-Z]{5}[-][A-Z]{2}[-][0-9]{2}[-][0-9]{7}$/;
+          setStateInitialpf(text)
+          console.log(text)
+          var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
           if(text.length <1){
             set_Valid_msme(false)
           }
@@ -148,9 +160,7 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
           layout="vertical"
         
           size="default"
-          style={{
-            maxWidth: 600,
-          }}
+         
           fields={[
             {
                 name:["entity"],
@@ -182,15 +192,11 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
             },
             {
                 name:["pan_number"],
-                value: [formValues.pan_number]
+                value: [initialpan]
             },
             {
                 name:["gst_number"],
-                value: [formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number]
-            },
-            {
-                name:["msme"],
-                value: [formValues.msme]
+                value: [initialgst]
             },
             {
                 name:["username"],
@@ -204,7 +210,7 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
                 value: [...work_area]
             },
             {   name:["msme_number"],
-                value: formValues.msme_number
+                value: [initialpf]
             },
            
           ]}
@@ -377,18 +383,9 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
           <Input type='file' max={1}  onChange={gst_img_value}/>
       </Form.Item>}
       </div> </div>
-      <Form.Item name="msme" label="Are You Registered Under MSME?"  rules={[
-          {
-            required: true,
-            message: 'Please provide required details!'
-          },
-        ]}>
-            <Select onSelect={MSMEHandler} placeholder="Yes/No">
-              <Select.Option value="yes">Yes</Select.Option>
-              <Select.Option value="no">No</Select.Option>
-            </Select>
-      </Form.Item>
-      {isMSMEVisible &&<div className='form_email_mobile_flex'><div className='form_flex_children mr-2'> <Form.Item name="msme_number" className='mb-0' label="MSME Number"rules={[
+     
+    <div className='form_email_mobile_flex'><div className='form_flex_children mr-2'>
+         <Form.Item name="msme_number" className='mb-0' label="PF Number"rules={[
           {
             required: true,
             message: 'Please provide required details!'
@@ -396,13 +393,13 @@ const Personal_Detail_Tab = ({formValues,isClicked}) => {
         ]}>
         <Input  onChange={msmeVerfication}/>
       </Form.Item>
-      {valid_msme && <span  style={{color:'#ff4d4f'}}>Please Enter valid MSME Number*</span>} </div>
+      {valid_msme && <span  style={{color:'#ff4d4f'}}>Please Enter valid PAN Number*</span>} </div>
       <div className='form_flex_children '>
       {formValues.gst_image !=="not provided" ? <><div>Copy Of GST</div> <Link className='cursor-pointer underline text-blue-400' >{formValues.gst_image}</Link> <MinusCircleOutlined className='cursor-pointer'/></>
             :   
-      <Form.Item name="msme_image" label="MSME Image">
+      <Form.Item name="msme_image" label="Copy of PF ">
       <Input type='file' max={1} onChange={msme_img_value} />
-      </Form.Item> }</div> </div>}
+      </Form.Item> }</div> </div>
       <div className='form_email_mobile_flex'>
       <div className='form_flex_children mr-2'>
           <Form.Item label="Contact Person Full Name " name="username" rules={[

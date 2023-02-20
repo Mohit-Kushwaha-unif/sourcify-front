@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Contractor = () => {
     const navigator = useNavigate()
     const dispatch = useDispatch()
+    
     const [tableData, setTableData] = useState([])
     const data = [];
     useEffect(() => {
@@ -17,7 +18,7 @@ const Contractor = () => {
                 tableData.work_area.map((segment) => {
                     work_segment.push(segment.work_segment)
                 })
-                console.log(tableData.user_id.number)
+                console.log(tableData)
                 data.push({
                     '_id': tableData._id,
                     'key': index,
@@ -69,7 +70,7 @@ const Contractor = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Link to='/admin/edit-contractors' state={{_id:record._id}}>Edit {record.entity}</Link>
+                    <Link to='/admin/edit-contractors' state={{_id:record._id}}>Edit </Link>
                     <Link>Delete</Link>
                 </Space>
             ),
