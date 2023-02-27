@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
 import { Space, Table, Tag } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Contractor = () => {
     const navigator = useNavigate()
@@ -18,7 +19,6 @@ const Contractor = () => {
                 tableData.work_area.map((segment) => {
                     work_segment.push(segment.work_segment)
                 })
-                console.log(tableData)
                 data.push({
                     '_id': tableData._id,
                     'key': index,
@@ -35,7 +35,11 @@ const Contractor = () => {
         })
     }, [])
 
-
+    function deleteHandler(id){
+        dispatch(ContractorServices.remove_contractor(id)).then((res)=>{
+            Swal.fire('Contractor Removed', 'Contractor is removed Sucessfully', 'info')
+        })
+    }
 
     const columns = [
         {
@@ -71,7 +75,7 @@ const Contractor = () => {
             render: (_, record) => (
                 <Space size="middle">
                     <Link to='/admin/edit-contractors' state={{_id:record._id}}>Edit </Link>
-                    <Link>Delete</Link>
+                    <Link onClick={()=>deleteHandler(record._id)}>Delete</Link>
                 </Space>
             ),
         },

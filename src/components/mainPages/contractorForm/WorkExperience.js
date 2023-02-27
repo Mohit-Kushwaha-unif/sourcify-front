@@ -27,7 +27,7 @@ const WorkExperience = () => {
     })
     formData.append("form_id", localStorage.getItem("form_id"))
     dispatch(Contractor_service.update_contractor(formData)).then((res) => { 
-       navigation("/contractor-form/financial-detail")
+       navigation("/dashboard")
      })
   
        
@@ -38,7 +38,7 @@ const WorkExperience = () => {
     <div
       className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
     >
-      <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+      <div className="xl:ml-20 xl:w-5/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
       <div className="flex flex-row items-center justify-center lg:justify-start">
             <p className="text-lg mb-0 mr-4">Work Experience</p>
           </div>
@@ -48,34 +48,23 @@ const WorkExperience = () => {
    </div>
              <Form  labelAlign= "left"  name="dynamic_form_nest_item"
                 layout="vertical" onFinish={FormHandler}>
-             <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-        {
-          required: true,
-          message: 'Please input your State!'
-        },
-      ]} 
-      >
-          
-          <Select id="country-state" mode="multiple" name="prefferd_state" a placeholder="Select State" onSelect={countrySelectHandler}>
-          <Select.Option value="All State">All State</Select.Option>
-         { Object.keys(state_cites).map((state)=>{
-            return (<Select.Option value={state}>{state}</Select.Option>)
-            }
-          )}
-      </Select>
-        </Form.Item>
-              <div className='mb-2'>Click Button To Add Projects <span className='intialValue'>*</span></div>
+             
+              <div className='mb-2'>Click Button To Add Projects <span className='intialValue'></span></div>
               <Form.List name="Project">
       {(fields, { add, remove }) => (
         <>
           {fields.map(({ key, name, ...restField }) => (
+            <>
+             <p>#Project {key +1}</p>
             <Space
               key={key}
               
               align="baseline"
             >
+              
               <div className="grid grid-cols-1 md:grid-cols-2 ">
               <div >
+               
               <Form.Item
                 {...restField}
                 name={[name, 'Client_Name']}
@@ -167,6 +156,7 @@ const WorkExperience = () => {
               </div>
               <MinusCircleOutlined onClick={() => remove(name)} />
             </Space>
+            </>
           ))}
           <Form.Item>
             <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>

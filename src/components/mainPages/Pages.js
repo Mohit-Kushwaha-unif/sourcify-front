@@ -6,7 +6,7 @@ import PersonalDetails from './contractorForm/PersonalDetails'
 import WorkExperience from './contractorForm/WorkExperience'
 import FinancialDetail from './contractorForm/FinancialDetail'
 import { useSelector } from 'react-redux'
-import AboutUs from './superAdmin/AboutUs'
+import AboutUs from './AboutUs/AboutUs'
 import Service from './services/Service'
 import DraftEditor from './superAdmin/editor/editor'
 import Sidebar from '../headers/sidebar'
@@ -22,7 +22,16 @@ import Edit_category from './superAdmin/Category/Edit_Category/Edit_category'
 import Tab from './superAdmin/Category/Edit_Category/Tab'
 import Company_Dashboard from './Company_Dashboard/Company_Dashboard'
 import ListingForm from './Company_Dashboard/Listing/ListingForm'
-const Pages = () => {
+import Listing from './superAdmin/Listings/Listing'
+import EditListing from './superAdmin/Listings/Edit/Edit'
+import Dashboard from './Homepage/HomePage'
+import reactRouterToArray from 'react-router-to-array';
+import Contractor_Dashboard from './Contractor_Dashboard/Contractor_Dashboard'
+import All_projects from './All_Projects/All_projects'
+import All_Contractors from './All_Contractor/All_Contractors'
+import ProjectDetails from './ProjectDetails/ProjectDetails'
+import ViewForm from './Company_Dashboard/Listing/ViewForm'
+const Pages = (props) => {
   const location = useLocation()
   const navigate = useNavigate()
   const isAdmin = useSelector(state => state.User.user_role);
@@ -32,22 +41,47 @@ const Pages = () => {
   }
   useEffect(() => {
     window.scroll(0,0)
-
+   
   }, [location])
-  console.log(isAdmin,isLoggedIn)
+  // const items = { ...localStorage };
+  console.log(reactRouterToArray( <Routes>
+    <Route path='/' element={<Dashboard/>} />
+    <Route path="/contractor-form" element={ <PersonalDetails />} />
+    <Route path="contractor-form/work-experience" element={<WorkExperience />} />
+    <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
+    <Route path="vendor-form" element={<VendorForm />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={ <Regsiter/>} />
+    <Route path="/about-us" element={isAdmin==2 ?<AboutUs/>: 'ddd'}/>
+    <Route path="/services" element={isAdmin==2 ?<Service/>: 'ddd'}/>
+    <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : 'ddd'}/>
+    <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : 'ddd'}/>
+    <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : 'ddd'}/>
+    <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : 'ddd'}/>
+    <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : 'ddd'}/>
+    <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : 'ddd'}/>
+    <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : 'ddd'}/>
+    <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : 'ddd'}/>
+    <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : 'ddd'}/>
+    <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> :'ddddd'}/>
+    <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: 'ddd'}/>
+    <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: 'ddd'}/>
+    <Route path="/edit-listing" element={isAdmin==2 ? <EditListing/>: 'ddd'}/>
+  </Routes>))
   return (
     <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'flex': ''}>
       {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
+        <Route path='/' element={<Dashboard/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
         <Route path="vendor-form" element={<VendorForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={ <Regsiter/>} />
-        <Route path="/about-us" element={isAdmin==2 ?<AboutUs/>: 'ddd'}/>
+        <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: 'ddd'}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : 'ddd'}/>
         <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : 'ddd'}/>
@@ -58,9 +92,16 @@ const Pages = () => {
         <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : 'ddd'}/>
         <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : 'ddd'}/>
         <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : 'ddd'}/>
-        <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>: 'ddd'}/>
-        <Route path="/dashboard/listing-form" element={isAdmin==1 ? <ListingForm/>: 'ddd'}/>
+        <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : 'ddd'}/>
+        <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: 'ddd'}/>
+        <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: 'ddd'}/>
+        <Route path="/edit-listing" element={ <EditListing/>}/>
+        <Route path="/all_contractors" element={ <All_Contractors/>}/>
+        <Route path="/all_projects" element={ <All_projects/> }/>
+        <Route path="/projectDetails" element={ <ProjectDetails/> }/>
+        <Route path="/viewForm" element={ <ViewForm/> }/>
       </Routes>
+      
     </div>
   )
 }

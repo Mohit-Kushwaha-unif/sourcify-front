@@ -40,16 +40,20 @@ const Login = () => {
         if(res.data.user.role ===1)
        {
         dispatch(get_Vendor()).then((res)=>{
-         var user_exist =   res.filter((user_data)=>{
+          console.log(res)
+         var user_exist = res.filter((user_data)=>{
+          console.log(user_data.user_id._id)
             if(user_data.user_id._id == localStorage.getItem('user_id')) 
               return user_data
             return null
           })
-          if(user_exist.length > 0){
-            navigate('/dashboard')
+          // console.log(user_exist.length)
+          if(user_exist.length===0){
+            navigate('/vendor-form') 
           }
           else{
-            navigate('/vendor-form' ,{state:res.data.user_data}) 
+            navigate('/dashboard')
+            
           }
         })
        }
@@ -59,7 +63,13 @@ const Login = () => {
            navigate('/admin') 
         }
        else
-        navigate('/contractor-form' ,{state:res.data.user_data})  
+       if(res.data.user.contractor_id){
+        navigate('/dashboard')
+       }
+       else{
+        navigate('/contractor-form' ,{state:res.data.user})  
+       }
+       
         // navigate('/contractor-form' ,{state:res.data.user})  
       })
         .catch(err =>  Swal.fire({

@@ -7,19 +7,29 @@ import {
 import state_cites from '../../../assests/state_city.';
 import { useDispatch } from 'react-redux';
 import { Add_Vendor } from '../../../services/Vendor';
+import { update_user } from '../../../services/user';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 const VendorForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch()
-  
+  const navigator = useNavigate()
   function FormHandler(values) {
     if(localStorage.getItem("adminEmail")==null){
     values.user_id = localStorage.getItem("user_id")
   }
   values.role = 1
     dispatch(Add_Vendor(values)).then((res)=>{
-      console.log(res)
+      var obj ={}
+      obj.id = values.user_id
+      obj.vendor_id = res.data._id
+      dispatch(update_user(obj)).then((res)=>{
+        Swal.fire('Saved', 'Values Saved Successfully', 'success').then(()=>{
+          navigator('/dashboard')
+        })
+      })
     })
-    console.log(values)
+    // console.log(values)
    }
    var email,number;
    if(localStorage.getItem("adminEmail")==null)

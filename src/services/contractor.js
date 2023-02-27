@@ -29,11 +29,20 @@ export const update_contractor = (formData)=>{
 }
 
 
-export const get_contractor = ()=>{
+export const get_contractor = (category)=>{
 
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.get(contractor_url+'/get_contractor').then((res)=>{
+            var categories = []
+
+            if(category==undefined || categories ==null){
+                category = []
+            }
+            else{
+                categories.push(category)
+            }
+           
+            Http.post(contractor_url+'/get_contractor',{"category":categories}).then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err)
@@ -45,6 +54,17 @@ export const get_contractorBy_id = (_id)=>{
     return ()=>
         new Promise((resolve,reject)=>{
             Http.get(contractor_url+'/get_contractor/'+_id).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err);
+            })
+        })
+    
+}
+export const remove_contractor = (_id)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.get(contractor_url+'/remove_contractor').then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err);

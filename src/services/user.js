@@ -23,3 +23,15 @@ export const logout = (fromdata)=>{
         })
     
 }
+export const update_user = (fromdata)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            console.log(fromdata)
+            Http.post(user_url+'update_user',fromdata).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+    
+}
