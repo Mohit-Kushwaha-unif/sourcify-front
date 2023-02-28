@@ -191,6 +191,7 @@ const ViewForm = () => {
                                     message: 'Please input your Contact Person Name'
                                 },
                             ]}
+                            labelCol={{span:24}}
                             >
 
                                 <TextArea className='h-[100px]' placeholder='Enter Project Description' />
@@ -344,7 +345,7 @@ const ViewForm = () => {
                                         
                                             <button
                                             type="submit"
-                                            onClick={() => {setFormStatus({"proposal_status":2,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
+                                            onClick={() => {setFormStatus({"proposal_status":1,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
                                             className="inline-block px-7 py-3 bg-green-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
@@ -353,7 +354,7 @@ const ViewForm = () => {
                                         </button>
                                             <button
                                             type="submit"
-                                            onClick={() => {setFormStatus({"proposal_status":1,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
+                                            onClick={() => {setFormStatus({"proposal_status":2,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
                                             className="inline-block px-7 py-3 bg-red-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 

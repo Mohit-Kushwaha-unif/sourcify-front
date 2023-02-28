@@ -60,7 +60,7 @@ const Login = () => {
          
         else if(res.data.user.role ===2){
           localStorage.setItem("adminEmail",res.data.user.email)
-           navigate('/admin') 
+           navigate('/admin/contractors-list') 
         }
        else
        if(res.data.user.contractor_id){

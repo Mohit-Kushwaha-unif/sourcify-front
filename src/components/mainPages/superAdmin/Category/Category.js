@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Table, Tag } from 'antd';
+import { Space,  Tag } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { delete_category, get_category } from '../../../../services/category';
-
+import Table from 'ant-responsive-table'
 const Category = () => {
     const navigator = useNavigate()
     const dispatch = useDispatch()
@@ -21,40 +21,45 @@ const Category = () => {
                     'category': table.category,
                     'sub_category':sub_cat,
                 })
-                console.log(sub_cat)
+               
             })
             
            setTableData(data)
         })    
     },[])
     const deleteHandler=(value,)=>{
-        console.log(value.category)
+
         dispatch((delete_category({heading:value.category}))).then((res)=>{
-            console.log(res)
+    
         })
     }
+    
     const columns = [
         {
             title: 'S.No',
             dataIndex: 'key',
             key: 'key',
             render: (text) => <Link>{text + 1}</Link>,
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Name of Category',
             dataIndex: 'category',
             key: 'category',
             render: (text) => <Link>{text}</Link>,
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Name of Sub Category',
             key: 'sub_category',
             dataIndex: 'sub_category',
-            render: (_, { sub_category }) => (
+            
+            render: (_,  sub_category ) => (
               <>
               {console.log(sub_category)}
-                {Array.isArray(sub_category)? sub_category.map((tag,index) => {
-                    console.log(sub_category)
+                {Array.isArray(sub_category?.sub_category)? sub_category?.sub_category.map((tag,index) => {
                   let color = tag.length > 5 ? 'geekblue' : 'green';
                   if (tag === 'loser') {
                     color = 'volcano';
@@ -63,20 +68,25 @@ const Category = () => {
                     <Tag  key={index}>
                       {tag.sub_Category}
                     </Tag>
+                    
                   );
-                }): sub_category}
+                }): sub_category?.sub_category}
               </>
             ),
+           
+            showOnDesktop: true
           },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Link to='/admin/edit-categories' state={{_id:record._id}}>Edit </Link>
+                    <Link to='/admin/edit-categories' state={{_id:record?._id}}>Edit </Link>
                     <Link onClick={()=>deleteHandler(record)}>Delete</Link>
                 </Space>
             ),
+            showOnResponse: true,
+            showOnDesktop: true
         },
     ]
 
@@ -95,7 +105,13 @@ const Category = () => {
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Work Segment List</p>
                         </div>
-                        <Table columns={columns} dataSource={tableData} />
+                        {/* <Table columns={columns} dataSource={tableData} /> */}
+                        <Table antTableProps={{
+                            showHeader: true,
+                            columns: columns,
+                            dataSource: tableData,
+                            pagination: true
+                        }} mobileBreakPoint={768} />
                     </div>
                 </div>
             </div>

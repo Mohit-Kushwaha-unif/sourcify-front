@@ -107,16 +107,28 @@ const Sidebar = () => {
                                 <span>Category</span>
                             </NavLink>
                         </li>
+
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/all-listing"
                                 className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg"    width="16" height="16" 
-                                  class="bi bi-grid-1x2-fill w-6 h-6"   fill="currentColor" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    class="bi bi-grid-1x2-fill w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h11zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-11z" />
                                     <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3z" />
                                 </svg>   <span>Listings</span>
+                            </NavLink>
+                        </li>
+                        <li className="rounded-sm">
+                            <NavLink
+                                to="/admin/feedbacks"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="bi bi-grid-1x2-fill w-6 h-6" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M21.59,3.59C20.92,3.22 20.17,3 19.41,3H4C2.9,3 2,3.9 2,5V17C2,18.1 2.9,19 4,19H18L22,23V5C22,4.24 21.76,3.53 21.59,3.59M18,7V5.5L19.5,7H18M8,10H16V12H8V10M8,14H14V16H8V14Z" />
+                                </svg>
+                                <span>Feedbacks</span>
                             </NavLink>
                         </li>
                         <li className="rounded-sm">

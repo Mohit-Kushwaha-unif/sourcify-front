@@ -1,9 +1,9 @@
-import { Space, Table, Tag } from 'antd'
+import { Space,  Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { get_listing } from '../../../../../services/listing'
-
+import Table from 'ant-responsive-table'
 const All_Listings = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
@@ -32,22 +32,25 @@ const All_Listings = () => {
             dataIndex: 'key',
             key: 'key',
             render: (text) => <Link>{text + 1}</Link>,
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Project Description',
             dataIndex: 'entity',
             key: 'entity',
             render: (text) => <Link>{text}</Link>,
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Work Segment',
             dataIndex: 'work_segment',
             key: 'work_segment',
-            render: (_, { work_segment }) => (
+            render: (_,  work_segment ) => (
                 <>
                     {console.log(work_segment)}
-                    {Array.isArray(work_segment) ? work_segment.map((tag, index) => {
-                        console.log(work_segment)
+                    {Array.isArray(work_segment?.work_segment) ? work_segment?.work_segment.map((tag, index) => {
                         let color = tag.length > 5 ? 'geekblue' : 'green';
                         if (tag === 'loser') {
                             color = 'volcano';
@@ -60,7 +63,8 @@ const All_Listings = () => {
                     }) : work_segment}
                 </>
             ),
-
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Status',
@@ -79,7 +83,9 @@ const All_Listings = () => {
                     color= 'volcano'
                 }
                 return <Tag color={color}>{text}</Tag>
-            } 
+            } ,
+            showOnResponse: true,
+            showOnDesktop: true
         },
         {
             title: 'Action',
@@ -87,12 +93,15 @@ const All_Listings = () => {
             render: (_, record) => (
                 console.log(record),
                 <Space size="middle">
-                    <Link to='/edit-listing' state={{ _id: record._id }}>Edit </Link>
-                    {record.status ==='Approved'&& <Link to='/viewForm' state={{ _id: record._id }}>View </Link>}
+                    <Link to='/edit-listing' state={{ _id: record?._id }}>Edit </Link>
+                    {record?.status ==='Approved'&& <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>}
                     <Link>Delete</Link>
                     <Link></Link>
                 </Space>
+                
             ),
+            showOnResponse: true,
+            showOnDesktop: true
         },
     ];
     return (
@@ -110,7 +119,13 @@ const All_Listings = () => {
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">All Listings</p>
                         </div>
-                        <Table columns={columns} dataSource={tableData} />
+                        <Table antTableProps={{
+                            showHeader: true,
+                            columns: columns,
+                            dataSource: tableData,
+                            pagination: true,
+                            // pagination:{{ "pageSize": 10 }}
+                        }} mobileBreakPoint={768} />
                     </div>
                 </div>
             </div>

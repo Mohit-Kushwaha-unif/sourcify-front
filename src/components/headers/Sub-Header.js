@@ -19,9 +19,9 @@ const SubHeader = ({filterValue}) => {
         })
     }, [])
   return (
-    <div className='bg-white p-3 sm:mb-1 hidden md:grid grid-cols-8 '>{
+    <div className=' p-3 sm:mb-1 hidden md:grid grid-cols-8 '>{
         category.length>0 && category.map((cats)=>{
-            return <div className='m-0.5'> <p onClick={filterHandler} className='sm:mb-1 cursor-pointer'>{cats}</p> </div>
+            return <div className='m-0.5'> <p onClick={filterHandler} className='sm: cursor-pointer'>{cats}</p> </div>
         })
      }</div>
   )

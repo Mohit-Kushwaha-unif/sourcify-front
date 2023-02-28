@@ -5,7 +5,7 @@ const Footer = () => {
   const navigate = useNavigate()
   return (
     
-    <footer class="relative py-20 flex flex-col items-center bg-white overflow-hidden">
+    <footer class="relative py-15 flex flex-col items-center bg-white overflow-hidden">
       <div class="relative z-[1] container m-auto px-6 md:px-12">
         <div class="m-auto md:w-11/12 lg:w-11/12 xl:w-11/12">
           <div class="flex flex-wrap items-center justify-between md:flex-nowrap">

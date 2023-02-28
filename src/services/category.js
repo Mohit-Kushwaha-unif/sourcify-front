@@ -1,4 +1,4 @@
-import { category_url, content_url } from '../helper'
+import { category_url } from '../helper'
 import Http from '../Http'
 
 export const add_category = (formData)=>{

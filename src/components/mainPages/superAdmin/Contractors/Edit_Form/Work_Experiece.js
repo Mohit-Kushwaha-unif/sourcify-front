@@ -31,7 +31,7 @@ const Work_Experiece = ({formValues,isClicked}) => {
     formValues.prefferd_states.map((state)=>{
         state_To_work.push(state)
     })
-    formValues.projects.map((project)=>{
+    formValues?.projects?.map((project)=>{
         projects.push(project)
     })
     console.log({state_To_work,projects})
@@ -53,22 +53,7 @@ const Work_Experiece = ({formValues,isClicked}) => {
                 
                   ]}
                      onFinish={FormHandler}>
-                <Form.Item name="prefferd_states" label="Preffered State to Work " rules={[
-                    {
-                        required: true,
-                        message: 'Please input your State!'
-                    },
-                ]}
-                >
-                    <Select id="country-state" mode="multiple" name="prefferd_state"  placeholder="Select State" >
-                        <Select.Option value="All State">All State</Select.Option>
-                        {Object.keys(state_cites).map((state) => {
-                            return (<Select.Option value={state}>{state}</Select.Option>)
-                        }
-                        )}
-                    </Select>
-                </Form.Item>
-                <div className='mb-2'>Click Button To Add Projects <span className='intialValue'>*</span></div>
+                <div className='mb-2'>Click Button To Add Projects <span className='intialValue'></span></div>
                 <Form.List name="Project">
                     {(fields, { add, remove }) => (
                         <>

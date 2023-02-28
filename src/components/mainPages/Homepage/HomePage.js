@@ -24,7 +24,7 @@ const Dashboard = () => {
     
   return (
    <div>
-     <div className='bg-white p-3 sm:mb-1 hidden md:grid grid-cols-8 '>{
+     <div className='bg-white sm:mb-1 hidden place-content-center md:grid grid-cols-8 ml-14 '>{
         category.length>0 && category.map((cats)=>{
             return <div className='m-0.5'> <p className='sm:mb-1'>{cats}</p> </div>
         })

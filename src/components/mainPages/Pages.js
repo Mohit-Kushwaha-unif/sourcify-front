@@ -5,7 +5,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import PersonalDetails from './contractorForm/PersonalDetails'
 import WorkExperience from './contractorForm/WorkExperience'
 import FinancialDetail from './contractorForm/FinancialDetail'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AboutUs from './AboutUs/AboutUs'
 import Service from './services/Service'
 import DraftEditor from './superAdmin/editor/editor'
@@ -31,9 +31,15 @@ import All_projects from './All_Projects/All_projects'
 import All_Contractors from './All_Contractor/All_Contractors'
 import ProjectDetails from './ProjectDetails/ProjectDetails'
 import ViewForm from './Company_Dashboard/Listing/ViewForm'
+import FeedBack from './superAdmin/FeedBack/FeedBack'
+import ResourceDenied from './ResourceDenied/ResourceDenied'
+import NotFound from './NotFound/NotFound'
+import ViewFeedback from './superAdmin/FeedBack/ViewFeedback'
+import { add_slug } from '../../services/Slug'
 const Pages = (props) => {
   const location = useLocation()
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const isAdmin = useSelector(state => state.User.user_role);
   var isLoggedIn = true
   if (localStorage.getItem('isLoggedIn') === null) {
@@ -41,10 +47,9 @@ const Pages = (props) => {
   }
   useEffect(() => {
     window.scroll(0,0)
-   
   }, [location])
-  // const items = { ...localStorage };
-  console.log(reactRouterToArray( <Routes>
+  
+  const item =  reactRouterToArray(    <Routes>
     <Route path='/' element={<Dashboard/>} />
     <Route path="/contractor-form" element={ <PersonalDetails />} />
     <Route path="contractor-form/work-experience" element={<WorkExperience />} />
@@ -52,22 +57,37 @@ const Pages = (props) => {
     <Route path="vendor-form" element={<VendorForm />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={ <Regsiter/>} />
-    <Route path="/about-us" element={isAdmin==2 ?<AboutUs/>: 'ddd'}/>
-    <Route path="/services" element={isAdmin==2 ?<Service/>: 'ddd'}/>
-    <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : 'ddd'}/>
-    <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : 'ddd'}/>
-    <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : 'ddd'}/>
-    <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : 'ddd'}/>
-    <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : 'ddd'}/>
-    <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : 'ddd'}/>
-    <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : 'ddd'}/>
-    <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : 'ddd'}/>
-    <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : 'ddd'}/>
-    <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> :'ddddd'}/>
-    <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: 'ddd'}/>
-    <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: 'ddd'}/>
-    <Route path="/edit-listing" element={isAdmin==2 ? <EditListing/>: 'ddd'}/>
-  </Routes>))
+    <Route path="/about-us" element={<AboutUs/>}/>
+    <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
+    <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
+    <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : <ResourceDenied/>}/>
+    <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : <ResourceDenied/>}/>
+    <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : <ResourceDenied/>}/>
+    <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : <ResourceDenied/>}/>
+    <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : <ResourceDenied/>}/>
+    <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : <ResourceDenied/>}/>
+    <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : <ResourceDenied/>}/>
+    <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : <ResourceDenied/>}/>
+    <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
+    <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: <ResourceDenied/>}/>
+    <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
+    <Route path="/edit-listing" element={ <EditListing/>}/>
+    <Route path="/all_contractors" element={ <All_Contractors/>}/>
+    <Route path="/all_projects" element={ <All_projects/> }/>
+    <Route path="/projectDetails" element={ <ProjectDetails/> }/>
+    <Route path="/viewForm" element={ <ViewForm/> }/>
+    <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
+    <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
+    <Route path='*' element={<NotFound />}/>
+  </Routes>)
+
+  useEffect(()=>{
+    if(localStorage.getItem("isSlug") !==null && localStorage.getItem("isSlug") ==true)
+   { dispatch((add_slug({"slugs":item}))).then((res)=>{
+    })}
+  },[])
+ 
+
   return (
     <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'flex': ''}>
       {
@@ -82,24 +102,27 @@ const Pages = (props) => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={ <Regsiter/>} />
         <Route path="/about-us" element={<AboutUs/>}/>
-        <Route path="/services" element={isAdmin==2 ?<Service/>: 'ddd'}/>
-        <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : 'ddd'}/>
-        <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : 'ddd'}/>
-        <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : 'ddd'}/>
-        <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : 'ddd'}/>
-        <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : 'ddd'}/>
-        <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : 'ddd'}/>
-        <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : 'ddd'}/>
-        <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : 'ddd'}/>
-        <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : 'ddd'}/>
-        <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : 'ddd'}/>
-        <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: 'ddd'}/>
-        <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: 'ddd'}/>
+        <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
+        <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
+        <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : <ResourceDenied/>}/>
+        <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : <ResourceDenied/>}/>
+        <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : <ResourceDenied/>}/>
+        <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : <ResourceDenied/>}/>
+        <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : <ResourceDenied/>}/>
+        <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : <ResourceDenied/>}/>
+        <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : <ResourceDenied/>}/>
+        <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : <ResourceDenied/>}/>
+        <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
+        <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: <ResourceDenied/>}/>
+        <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
         <Route path="/edit-listing" element={ <EditListing/>}/>
         <Route path="/all_contractors" element={ <All_Contractors/>}/>
         <Route path="/all_projects" element={ <All_projects/> }/>
         <Route path="/projectDetails" element={ <ProjectDetails/> }/>
         <Route path="/viewForm" element={ <ViewForm/> }/>
+        <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
+        <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
+        <Route path='*' element={<NotFound />}/>
       </Routes>
       
     </div>
