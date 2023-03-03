@@ -10,8 +10,6 @@ import Moderation_listings from './Tabs/moderation_listings'
 import Rejected_Listing from './Tabs/Rejected'
 
 const Listing = () => {
-    const location = useLocation(state=>state)
-    const dispatch = useDispatch()
     
     const [activeTab,setActiveTab] = useState("1")
  

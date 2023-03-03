@@ -12,6 +12,7 @@ const All_Listings = () => {
     useEffect(() => {
         dispatch(get_listing()).then((res) => {
             console.log(res);
+            res = res.reverse()
             var work_segment = []
             res.map((tableData, index) => {
                 data.push({

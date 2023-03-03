@@ -36,6 +36,7 @@ import ResourceDenied from './ResourceDenied/ResourceDenied'
 import NotFound from './NotFound/NotFound'
 import ViewFeedback from './superAdmin/FeedBack/ViewFeedback'
 import { add_slug } from '../../services/Slug'
+import Messages from './Messages/Messages'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -94,7 +95,7 @@ const Pages = (props) => {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
-        <Route path='/' element={<Dashboard/>} />
+        <Route path='/' element={ <Dashboard/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
@@ -122,6 +123,7 @@ const Pages = (props) => {
         <Route path="/viewForm" element={ <ViewForm/> }/>
         <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
         <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
+        <Route path="/messages" element={<Messages/>}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
       

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
+import { setValue } from '../../../store/actions/user';
 const Regsiter = () => {
     useDocumentTitle("Register Yourself")
     const dispatch = useDispatch()
@@ -22,6 +23,9 @@ const Regsiter = () => {
             localStorage.setItem("user_id",res.user_data._id)
             localStorage.setItem("email",res.user_data.email)
             localStorage.setItem("number",res.user_data.number)
+            localStorage.setItem("accesstoken",res.accesstoken)
+            localStorage.setItem("isLoggedIn", true)
+            dispatch(setValue(res.user_data.role))
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',

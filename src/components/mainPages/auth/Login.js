@@ -27,10 +27,10 @@ const Login = () => {
         .then(res =>  { Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title:"Registerd Successfully",
+          title:"Login Successfully",
           showConfirmButton: true,
         }) 
-        console.log(res.data.user)
+        // console.log(res.data.user)
         localStorage.setItem('accesstoken', res.data.accesstoken)
         localStorage.setItem('user_id', res.data.user._id)
         localStorage.setItem('email', res.data.user.email)

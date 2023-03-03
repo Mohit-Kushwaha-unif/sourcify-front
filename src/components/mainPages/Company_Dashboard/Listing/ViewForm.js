@@ -4,7 +4,7 @@ import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
@@ -361,11 +361,13 @@ const ViewForm = () => {
                                             Reject
 
                                         </button>
-                                        </div>: details.contract_status==2 ?<p className='inline-block px-2 py-1 bg-red-400 text-white font-medium'>Rejected</p> : <p className='inline-block px-2 py-1 bg-green-400 text-white font-medium'>Accepted</p>}
+                                        </div>: details.contract_status==2 ?<p className='inline-block px-2 py-1 bg-red-400 text-white font-medium'>Rejected</p> : <> <p className='inline-block px-2 py-1 bg-green-400 text-white font-medium'>Accepted</p>  <Link to={'/messages'} state={details} className='inline-block px-2 py-1 bg-red-400 hover:none focus:none text-white cursor-pointer font-medium'>Chat Now</Link> </>}
+                                            
                                             </>
                                         })
                                        
                                     }
+
                                 })
                             }
 

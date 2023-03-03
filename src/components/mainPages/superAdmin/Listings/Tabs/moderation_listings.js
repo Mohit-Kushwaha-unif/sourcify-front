@@ -13,6 +13,7 @@ const Moderation_listings = () => {
     useEffect(() => {
         dispatch(get_listing()).then((res) => {
             console.log(res);
+            res = res.reverse()
             res.map((tableData, index) => {
                 if(tableData.status==1)
                { data.push({

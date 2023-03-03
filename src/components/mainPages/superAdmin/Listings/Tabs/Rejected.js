@@ -13,6 +13,7 @@ const Rejected_Listing = () => {
     useEffect(() => {
         dispatch(get_listing()).then((res) => {
             console.log(res);
+            res = res.reverse()
             res.map((tableData, index) => {
                 if(tableData.status==2)
                { data.push({

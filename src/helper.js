@@ -8,8 +8,9 @@ const listing_url = 'http://localhost:5000/listing';
 const FeedBack_url = 'http://localhost:5000/feedback'
 const About_url = 'http://localhost:5000/about'
 const Slug_url = 'http://localhost:5000/slug'
+const Message_url= 'http://localhost:5000/messages'
 //Demo url
 // const Upload_Url = 'https://accint-upload.aleaspeaks.com/api/';
 // const fetchDetail_Url = 'https://accint-fetch.aleaspeaks.com/fetch/';
 
-export { user_url, Slug_url,contractor_url,content_url,vendor_url,category_url,listing_url,FeedBack_url,About_url };
+export { user_url, Slug_url,contractor_url,content_url,vendor_url,category_url,listing_url,FeedBack_url,About_url,Message_url };
