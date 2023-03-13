@@ -47,3 +47,15 @@ export const get_user_info = (fromdata)=>{
         })
     
 }
+export const login = (fromdata)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            console.log(fromdata)
+            Http.post(user_url+'login',fromdata).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+    
+}

@@ -13,13 +13,15 @@ import useDocumentTitle from '../../Handler/useDocumentTitle';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import {useNavigate} from "react-router-dom"
+import { useDispatch } from 'react-redux';
+import { authLogin } from '../../../store/actions/user';
+import { login } from '../../../services/user';
 const Login = () => {
     useDocumentTitle("Login")
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     function formHandler(value){
-     
-      axios
-        .post("http://localhost:5000/user/login", value)
+     dispatch(login(value))
         .then(res =>  { Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -27,15 +29,15 @@ const Login = () => {
           showConfirmButton: true,
           
         }) 
-        localStorage.setItem("user_id",res.data.user_data._id)
-        localStorage.setItem('number', res.data.user.number)
-        localStorage.setItem('number', res.data.user.email)
+        localStorage.setItem("user_id",res.user_data._id)
+        localStorage.setItem('number', res.user.number)
+        localStorage.setItem('number', res.user.email)
         navigate('/contractor-form')  
       })
         .catch(err =>  Swal.fire({
           position: 'top-end',
           icon: 'error',
-          title: err.response.data.msg,
+          title: err.response.msg,
           showConfirmButton: true,
           
         }) );
