@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.31fae4d1.css",
+    "main.js": "/static/js/main.9a8ac069.js",
+    "static/media/Sourcify Logo.png": "/static/media/Sourcify Logo.117991e9b3cca7e5ad9d.png",
+    "index.html": "/index.html",
+    "main.31fae4d1.css.map": "/static/css/main.31fae4d1.css.map",
+    "main.9a8ac069.js.map": "/static/js/main.9a8ac069.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31fae4d1.css",
+    "static/js/main.9a8ac069.js"
+  ]
+}
