@@ -29,3 +29,6 @@ input[type=number] {
 
    
 }
+.ant-space-item{
+  min-width: 90% !important;
+}

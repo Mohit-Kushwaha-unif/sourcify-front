@@ -23,11 +23,14 @@ const Login = () => {
         .then(res =>  { Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title:"Registerd Successfully",
+          title:"Login Successfully",
           showConfirmButton: true,
           
         }) 
-        navigate('/contractor-form' ,{state:res.data.user})  
+        localStorage.setItem("user_id",res.data.user_data._id)
+        localStorage.setItem('number', res.data.user.number)
+        localStorage.setItem('number', res.data.user.email)
+        navigate('/contractor-form')  
       })
         .catch(err =>  Swal.fire({
           position: 'top-end',
