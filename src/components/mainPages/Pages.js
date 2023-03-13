@@ -6,12 +6,14 @@ import PersonalDetails from './contractorForm/PersonalDetails'
 import WorkExperience from './contractorForm/WorkExperience'
 import VendorForm from './vendorForm/VendorForm'
 import FinancialDetail from './contractorForm/FinancialDetail'
+import AboutUs from './AboutUs/AboutUs'
 const Pages = () => {
 
 
   return (
     <div>
       <Routes>
+        <Route path='/' element={ <AboutUs/>} />
         <Route path="/contractor-form" element={<div className="container"> <PersonalDetails /></div>} />
         <Route path="contractor-form/work-experience" element={<div className="container"> <WorkExperience /> </div>} />
         <Route path='/vendor-form' element={<VendorForm />} />
