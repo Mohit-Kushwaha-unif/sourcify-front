@@ -137,7 +137,7 @@ const VendorForm = () => {
               ]}>
                 <Input placeholder='Enter Your Office Address' />
               </Form.Item>
-              <div className='form_email_mobile_flex '>
+              <div className='flex flex-col md:flex-row  '>
                 <div className='form_flex_children mr-1'>
                   <Form.Item name="State" label="State " rules={[
                     {

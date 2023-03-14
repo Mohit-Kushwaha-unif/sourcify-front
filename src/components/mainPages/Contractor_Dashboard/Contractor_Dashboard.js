@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { AiOutlineMessage } from 'react-icons/ai'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
-import { get_listing } from '../../../services/listing'
+import { get_listing, get_listingBy_id } from '../../../services/listing'
 
 const Contractor_Dashboard = () => {
   const navigator = useNavigate()
@@ -14,7 +14,7 @@ const Contractor_Dashboard = () => {
   var data = []
   const [tableData, setTableData] = useState([])
   const [lisitngs, setAllLisitngs] = useState([])
-  const [filterCategory, setFilterCategory] = useState([])
+  const [contractors, setContractors] = useState([])
   useEffect(() => {
     dispatch(get_listing(location?.state)).then((res) => {
       var data = []
@@ -27,12 +27,14 @@ const Contractor_Dashboard = () => {
       setAllLisitngs(data)
     })
     dispatch(get_contractor()).then((respnse) => {
+      setContractors(respnse)
       // if(res._id === formValues.vendorDetail._id){
       respnse.map((contact) => {
         if (contact.user_id._id === localStorage.getItem('user_id')) {
-          //  console.log(contact)
+          setContractors(contact)
+
           contact?.Applied.map((applied, index) => {
-           
+
             if (applied.listing_id != null) {
               console.log({ applied })
               data.push({
@@ -53,6 +55,22 @@ const Contractor_Dashboard = () => {
       // }
     })
   }, [location])
+
+
+  function msgNavigationHandler(data) {
+    console.log(contractors)
+    contractors?.Applied.map((contDet) => {
+      if (contDet._id == data._id) {
+        console.log(contDet)
+        dispatch(get_listingBy_id(contDet.listing_id._id)).then((res) => {
+          console.log(res)
+          navigator('/messages', { state: { _id: res.listing.user_id } })
+        })
+
+      }
+    })
+  }
+
   const projectHandler = (id) => {
     navigator('/projectDetails', { state: id })
   }
@@ -118,7 +136,7 @@ const Contractor_Dashboard = () => {
         return <>
           {text == "Accepted" ? <div className='flex'>
             <Tag color={color}>{text}</Tag>
-            <span className='cursor-pointer' onClick={() => navigator('/messages', { state: { _id: data } })}>
+            <span className='cursor-pointer' onClick={() => msgNavigationHandler(data)}>
               <AiOutlineMessage className='h-auto' />
             </span>
           </div>
@@ -151,7 +169,7 @@ const Contractor_Dashboard = () => {
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>
                 </div>
-                <Table columns={columns} dataSource={tableData} pagination={{pageSize:5}} />
+                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
               </div>
             </div>
           </div>

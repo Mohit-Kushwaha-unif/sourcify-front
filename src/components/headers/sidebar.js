@@ -132,6 +132,20 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li className="rounded-sm">
+                            <NavLink
+                                to="/admin/carausel-list"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                            >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  className="bi bi-grid-1x2-fill w-6 h-6">
+                                        <circle cx="6" cy="12" r="2" fill="#444" />
+                                        <circle cx="12" cy="12" r="2" fill="#777" />
+                                        <circle cx="18" cy="12" r="2" fill="#aaa" />
+                                    </svg>
+                               
+                                <span>Caraousel</span>
+                            </NavLink>
+                        </li>
+                        <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}
                                 className="flex items-center p-2 cursor-pointer space-x-3 rounded-md"

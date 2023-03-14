@@ -1,11 +1,11 @@
-import { Space, Table, Tag } from 'antd'
+import { Space,  Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing_user } from '../../../services/listing'
 import ListingCard from './Listing/listingCard'
-
+import Table from 'ant-responsive-table'
 const Company_Dashboard = () => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
@@ -37,33 +37,38 @@ const Company_Dashboard = () => {
         dataIndex: 'key',
         key: 'key',
         render: (text) => text + 1,
+        showOnResponse: true,
+        showOnDesktop: true
     },
     {
         title: 'Description',
         dataIndex: 'entity',
         key: 'entity',
         render: (text) => text,
+        showOnResponse: true,
+        showOnDesktop: true
     },
     {
         title: 'Work Segment',
         dataIndex: 'work_segment',
         key: 'work_segment',
-        render: (_, { work_segment }) => (
+        render: (_,  work_segment ) => (
             <>
-                {Array.isArray(work_segment) ? work_segment.map((tag, index) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
+                {Array.isArray(work_segment?.work_segment) ? work_segment?.work_segment?.map((tag, index) => {
+                    let color = tag?.length > 5 ? 'geekblue' : 'green';
                     if (tag === 'loser') {
-                        color = 'volcano';
+                        color = 'vlcano';
                     }
                     return (
                         <Tag key={index}>
                             {tag}
                         </Tag>
                     );
-                }) : work_segment}
+                }) : work_segment?.work_segment}
             </>
         ),
-
+        showOnResponse: true,
+        showOnDesktop: true
     },
     {
         title: 'Status',
@@ -82,18 +87,22 @@ const Company_Dashboard = () => {
                 color= 'volcano'
             }
             return <Tag color={color}>{text}</Tag>
-        } 
+        } ,
+        showOnResponse: true,
+        showOnDesktop: true
     },
     {
         title: 'Action',
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <Link to='/edit-listing' state={{ _id: record._id }}>Edit </Link>
-                <Link to='/viewForm' state={{ _id: record._id }}>View </Link>
+                <Link to='/edit-listing' state={{ _id: record?._id }}>Edit </Link>
+                <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>
                 <Link>Delete</Link>
             </Space>
         ),
+        showOnResponse: true,
+        showOnDesktop: true
     },
 ];
  
@@ -114,14 +123,20 @@ const Company_Dashboard = () => {
               <div className="flex flex-row items-center justify-center lg:justify-start">
                 <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Listings</p>
               </div>
-              <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }}  />
+              <Table antTableProps={{
+                            showHeader: true,
+                            columns: columns,
+                            dataSource: tableData,
+                            pagination: true
+                        }} mobileBreakPoint={768} />
+              {/* <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }}  /> */}
             </div>
           </div>
         </div>
       </section>
       <div className='px-6 '>
        <p className='text-xl font-semibold  capitalize'> Contractors you might want to  work with </p> 
-       <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+       <div class="p-10 grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
     
     
       {contractor.length> 0 && contractor.map((contract)=>{

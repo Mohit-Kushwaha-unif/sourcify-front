@@ -17,10 +17,10 @@ const FinancialDetail = () => {
     const dispatch = useDispatch()
     function FormHandler(value) {
         let FormField = { "Turnover": [] }
-  
-          if (!value.gst_number) {
+
+        if (!value.gst_number) {
             value.gst_number = "N/A"
-          }
+        }
         let formValue = value
 
         Object.keys(formValue).map((key) => {
@@ -30,55 +30,39 @@ const FinancialDetail = () => {
                 FormField.Turnover.push(obj)
             }
             else {
-                if(key!=="gst_image" && key !=="pan_image")
-                FormField[key] = formValue[key]
+                if (key !== "gst_image" && key !== "pan_image")
+                    FormField[key] = formValue[key]
             }
         })
-        
+
         var formData = new FormData()
         FormField.pan_image = pan_imaged
 
-          if (value.gst_image) {
+        if (value.gst_image) {
             FormField.gst_image = gstImageD
-          }
-          console.log({FormField})
-         
-       
-      
-          
-         
+        }
+        console.log({ FormField })
+
+
+
+
+
         //   formData.append("gst_number",)
         Object.keys(FormField).map((formKey) => {
             console.log({ formKey, FormField })
             console.log({ d: FormField['Turnover'] })
-            if(formKey=="Turnover")
-            {formData.append(formKey, JSON.stringify(FormField[formKey]))}
-            else{
+            if (formKey == "Turnover") { formData.append(formKey, JSON.stringify(FormField[formKey])) }
+            else {
                 formData.append(formKey, FormField[formKey])
             }
         })
         formData.append("form_id", localStorage.getItem("form_id"))
         dispatch(Contractor_service.update_contractor(formData)).then((res) => {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-            }).then(() => {
-                 navigation('/contractor-form/work-experience')
-            })
 
+            navigation('/contractor-form/work-experience')
         })
-            // Catch errors if any
-            .catch((err) => {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: err.response.data.msg,
-                    showConfirmButton: true,
+        // Catch errors if any
 
-                })
-            });
 
     }
     const pancardValidation = (event) => {
@@ -121,7 +105,7 @@ const FinancialDetail = () => {
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
                 >
-                    <div className="xl:ml-20 xl:w-5/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Financial Detail</p>
                         </div>
@@ -131,7 +115,8 @@ const FinancialDetail = () => {
                         </div>
                         <Form labelAlign="left"
                             layout="vertical" onFinish={FormHandler}>
-                                 <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                            <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                            <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                             <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
                                 {
                                     required: true,
@@ -162,7 +147,9 @@ const FinancialDetail = () => {
 
                                 <Input />
                             </Form.Item>
+                            </div>
                             <div className='mb-1'>Bank Overdraft Limit / Solvancy Certificate Value</div>
+                            <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
                             <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
                                 {
                                     required: true,
@@ -179,6 +166,7 @@ const FinancialDetail = () => {
 
                                 <Input />
                             </Form.Item>
+                            </div>
                             <div className='form_email_mobile_flex'>
                                 <div className='form_flex_children mr-2'>
                                     <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
@@ -218,19 +206,19 @@ const FinancialDetail = () => {
                                         <Input type='file' max={1} onChange={gst_img_value} />
                                     </Form.Item>
                                 </div> </div>
-                           
 
 
 
 
 
-                            <div className="text-center lg:text-left">
+
+                            <div className="text-center lg:text-left flex justify-center">
                                 <button
                                     type="submit"
-                                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                                 >
 
-                                    Next Step
+                                    Save
 
                                 </button>
                             </div>

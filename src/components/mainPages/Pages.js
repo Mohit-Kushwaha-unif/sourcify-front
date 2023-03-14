@@ -37,6 +37,13 @@ import NotFound from './NotFound/NotFound'
 import ViewFeedback from './superAdmin/FeedBack/ViewFeedback'
 import { add_slug } from '../../services/Slug'
 import Messages from './Messages/Messages'
+import SearchResult from './Search_Result/SearchResult'
+import CarauselList from './superAdmin/Carausel/CarauselList'
+import Add_Carausel from './superAdmin/Carausel/add_carausel/Add_Carausel'
+import Edit_caraousel from './superAdmin/Carausel/Edit_caraousel/Edit_caraousel'
+import Support from './Support/Support'
+import UpdateProfie from './UpdateProfile/UpdateProfie'
+import UserRole from './useRole/userRole'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -51,13 +58,15 @@ const Pages = (props) => {
   }, [location])
   
   const item =  reactRouterToArray(    <Routes>
-    <Route path='/' element={<Dashboard/>} />
+    {/* <Route path='/' element={<Dashboard/>} /> */}
+    <Route path='/' element={<AboutUs/>} />
     <Route path="/contractor-form" element={ <PersonalDetails />} />
     <Route path="contractor-form/work-experience" element={<WorkExperience />} />
     <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
     <Route path="vendor-form" element={<VendorForm />} />
-    <Route path="/login" element={<Login />} />
+   
     <Route path="/register" element={ <Regsiter/>} />
+    {/* <Route path="/login" element={<Login />} />
     <Route path="/about-us" element={<AboutUs/>}/>
     <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
     <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
@@ -79,7 +88,7 @@ const Pages = (props) => {
     <Route path="/viewForm" element={ <ViewForm/> }/>
     <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
     <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
-    <Route path='*' element={<NotFound />}/>
+    <Route path='*' element={<NotFound />}/> */}
   </Routes>)
 
   useEffect(()=>{
@@ -95,36 +104,45 @@ const Pages = (props) => {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
-        <Route path='/' element={ <Dashboard/>} />
+        <Route path='/' element={<AboutUs/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
         <Route path="vendor-form" element={<VendorForm />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={ <Regsiter/>} />
-        <Route path="/about-us" element={<AboutUs/>}/>
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
         <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : <ResourceDenied/>}/>
+        <Route path="/edit-contractors" element={<><Edit_Form/></>}/>
         <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : <ResourceDenied/>}/>
         <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : <ResourceDenied/>}/>
+        <Route path="/edit-company" element={<><EditForm_Vendor/></>}/>
         <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : <ResourceDenied/>}/>
         <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : <ResourceDenied/>}/>
         <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
         <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: <ResourceDenied/>}/>
         <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
+        <Route path="/admin/carausel-list" element={isAdmin==2 ? <CarauselList/>: <ResourceDenied/>}/>
+        <Route path="/admin/caraousel-form" element={isAdmin==2 ? <Add_Carausel/>: <ResourceDenied/>}/>
+        <Route path="/admin/edit-caraousel" element={isAdmin==2 ? <Edit_caraousel/>: <ResourceDenied/>}/>
         <Route path="/edit-listing" element={ <EditListing/>}/>
         <Route path="/all_contractors" element={ <All_Contractors/>}/>
         <Route path="/all_projects" element={ <All_projects/> }/>
         <Route path="/projectDetails" element={ <ProjectDetails/> }/>
+        <Route path="/support" element={ <Support/> }/>
         <Route path="/viewForm" element={ <ViewForm/> }/>
         <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
         <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
         <Route path="/messages" element={<Messages/>}/>
-        <Route path='*' element={<NotFound />}/>
+        <Route path='/results' element={<SearchResult/>}/>
+        <Route path='/update-profile' element={<UpdateProfie/>}/>
+        <Route path='/userRole' element={<UserRole/>}/>
+        <Route path='*' element={<NotFound />}/> */}
       </Routes>
       
     </div>

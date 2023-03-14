@@ -5,16 +5,16 @@ const Footer = () => {
   const navigate = useNavigate()
   return (
     
-    <footer class="relative py-15 flex flex-col items-center bg-white overflow-hidden">
-      <div class="relative z-[1] container m-auto px-6 md:px-12">
-        <div class="m-auto md:w-11/12 lg:w-11/12 xl:w-11/12">
-          <div class="flex flex-wrap items-center justify-between md:flex-nowrap">
-            <div class="w-full space-x-12 flex justify-center  sm:w-7/12 md:justify-start">
-              <ul class="space-y-8 flex-1">
-                <li><img className=' ml-20 mb-2 w-3/4' src={Sourcify} /></li>
+    <footer className="relative py-15 flex flex-col items-center bg-white overflow-hidden">
+      <div className="relative z-[1] container m-auto px-6 md:px-12">
+        <div className="m-auto md:w-11/12 lg:w-11/12 xl:w-11/12">
+          <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
+            <div className="w-full space-x-12 flex flex-col md:flex-row justify-center sm:w-7/12 md:justify-start">
+              <ul className="space-y-8  flex-1">
+                <li><img className='  mb-2 w-3/4' src={Sourcify} /></li>
               </ul>
 
-              <ul role="list" class="space-y-8">
+              <ul role="list" className="footer space-y-8" style={{marginLeft: '5rem'}}>
                 <li>
                   <span className='flex items-center font-semibold space-x-3'>Quick Links</span>
                 </li>
@@ -35,13 +35,13 @@ const Footer = () => {
 
               </ul>
             </div>
-            <div class="w-10/12 m-auto  mt-16 space-y-6 ml-20 text-center sm:text-left sm:w-5/12 sm:mt-auto">
-              <span class="block font-semibold cursor-pointer">Resources</span>
+            <div className="w-10/12 m-auto  flex justify-center flex-col mt-4 space-y-6 ml-20   sm:w-5/12 ">
+              <span className="block font-semibold cursor-pointer">Resources</span>
 
-              <span class="block cursor-pointer">Blog</span>
-              <span class="block cursor-pointer" >Case Study</span>
-              <span class="block cursor-pointer" onClick={()=>navigate('/about-us')}>About Us </span>
-              <span class="block cursor-pointer">Career</span>
+              <span className="block cursor-pointer">Blog</span>
+              <span className="block cursor-pointer" >Case Study</span>
+              <span className="block cursor-pointer" onClick={()=>navigate('/about-us')}>About Us </span>
+              <span className="block cursor-pointer">Career</span>
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ const Companies = () => {
                         'entity': tableData.agency_name,
                         'username': tableData.contact_person,
                         'number': tableData.user_id?.number.toString(),
-                        'email': tableData.user_id.email
+                        'email': tableData.user_id?.email
                     })
                 }
             })

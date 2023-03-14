@@ -46,3 +46,15 @@ export const update_vendor = (formValue)=>{
             })
         })
 }
+
+export const search_vendor = (fromData)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.get(vendor_url+'/search_vendor/?search='+fromData).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err);
+            })
+        })
+    
+}

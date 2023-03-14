@@ -5,24 +5,39 @@ import { useLocation } from "react-router-dom";
 import { channel } from "../../../PusherConnection";
 import { allMessage, getContacts, send_message } from "../../../services/Messages";
 import Avatar from 'react-avatar';
+import { useMemo } from "react";
 
 const Messages = () => {
     const dispatch = useDispatch()
     const location = useLocation()
+    // console.log({ location })
     const from_id = localStorage.getItem('user_id')
-    const [to_id, set_To_id] = useState(location.state?.contractor_id?._id || location.state._id.listing_user_id)
+    const [to_id, set_To_id] = useState()
     const [messages, setMessages] = useState([]);
     const [contacts, setContacts] = useState([])
     const [header, setHeader] = useState()
-    console.log(location.state)
+    const [run,setRUN] = useState(false)
+    const [message, setMessage] = useState("");
+    const chat_id = header?.id ? header.id : "-"
+
+    useEffect(() => {
+        const contractorId = location.state?.contractor_id?._id;
+        const id = location.state?._id._id;
+        // console.log(location.state?.contractor_id?.contractor_id, id)
+        if (contractorId || id) {
+            set_To_id(contractorId || id);
+        }
+
+    }, [location]);
+    // console.log(to_id)
     useEffect(() => {
         var sideContacts = []
         dispatch((getContacts({ from_id }))).then((res) => {
 
             res.map((msg) => {
-                var exist = sideContacts.some(val => val.name == msg.name)
-                console.log()
+                var exist = sideContacts.some(val => val.id == msg.id)
                 if (!exist && msg.id != localStorage.getItem("user_id")) {
+                    // console.log(msg)
                     var sideObj = {}
                     sideObj.id = msg.id;
                     sideObj.name = msg.name;
@@ -34,61 +49,88 @@ const Messages = () => {
 
         })
 
+
+    }, [])
+
+    useEffect(() => {
         var obj = {}
         obj.to_id = to_id
         obj.from_id = from_id
         var mssgData = []
-        dispatch(allMessage(obj)).then((res) => {
-            console.log(res)
-            res.map((msg) => {
-                var obj = {}
-                if (msg.from_id._id == from_id) {
-                    obj.sender = "me"
-                }
-                else {
-                    obj.sender = "other"
-                }
-                obj.id = msg._id
-                obj.text = msg.message
-                mssgData.push(obj)
-                // msg = JSON.parse(msg)
-
-            })
-            setMessages((prevState) => [...prevState, ...mssgData])
-            // set_To_id(header.id)
-        })
-
-    }, [])
-    useEffect(()=>{
-        console.log(location.state._id._id)
-        if(contacts.length> 0 ){
-            contacts.some((contDet)=>{
-                if(contDet.id===location.state._id._id){
-                    setHeader(contDet)
-                }  
-                else{
+        if (to_id != undefined) {
+            dispatch(allMessage(obj)).then((res) => {
+                // console.log(res)
+                res.map((msg) => {
                     var obj = {}
-                    var sideObj = {}
-                    sideObj.id = location.state._id.listing_user_id
-                    sideObj.name = "new User";
-                    sideObj.status = "online"
-                    setContacts(prevState=>[...prevState,sideObj])
-                }
-                
+                    if (msg.from_id._id == from_id) {
+                        obj.sender = "me"
+                    }
+                    else {
+                        obj.sender = "other"
+                    }
+                    obj.id = msg._id
+                    obj.text = msg.message
+                    mssgData.push(obj)
+                    // msg = JSON.parse(msg)
+
+                })
+                setMessages((prevState) => [...prevState, ...mssgData])
+                // set_To_id(header.id)
             })
         }
-    },[location])
-    const [message, setMessage] = useState("");
+
+    }, [to_id])
+    const findId = useMemo(() => {
+        if (contacts.length > 0)
+        // console.log(contacts,to_id)
+        setRUN(true)
+            return contacts.find((val) => val.id == to_id);
+    }, [to_id,contacts]);
     useEffect(() => {
-        channel.bind('message', function (data) {
-
-            console.log({ header })
-            if (data.from_id === header.id && data.to_id === from_id) {
-                setMessages((prevState) => [...prevState, { id: messages.length + 1, sender: "other", text: data.message }])
+        // console.log(to_id)
+        if (to_id != undefined && contacts.length >0) {
+            // console.log("im htee")
+            const isExist = contacts.findIndex(val => val.id === to_id)
+            // console.log(isExist)
+            if (isExist == -1) {
+                var sideObj = {};
+                sideObj.id = to_id
+                sideObj.name = location.state?._id.email?.split('@')[0] || location.state?.contractor_id.email?.split('@')[0];
+                sideObj.status = "online"
+                // console.log("im here", to_id)
+                setContacts(prevState => [...prevState, sideObj])
+                setHeader(sideObj)
             }
+        }
 
-        })
-    }, [])
+    }, [to_id])
+
+    useEffect(() => {
+        console.log(findId,run,to_id)
+        if (findId != undefined && to_id != undefined && run == true) {
+            var sideObj = {};
+            sideObj.id = findId.id;
+            sideObj.name = findId.name;
+            sideObj.status = "online";
+            setHeader(sideObj);
+        }
+    }, [findId]);
+    // console.log(contacts)
+
+    useEffect(() => {
+        if (chat_id != "-") {
+            set_To_id(chat_id)
+            channel.bind('message', function (data) {
+
+                // console.log({ header })
+                // console.log(data.from_id === header.id && data.to_id === from_id)
+                if (data.from_id === chat_id && data.to_id === from_id) {
+                    setMessages((prevState) => [...prevState, { id: messages.length + 1, sender: "other", text: data.message }])
+                }
+
+            })
+        }
+    }, [chat_id])
     const sendMessage = (text) => {
         var obj = {}
         obj.from_id = from_id
@@ -111,13 +153,15 @@ const Messages = () => {
         }
     };
     function updateMessages(contact) {
+        // console.log({ contact })
+        // set_To_id(contact)
         setHeader(contact)
         var obj = {}
         obj.to_id = contact.id
         obj.from_id = from_id
         var mssgData = []
         dispatch(allMessage(obj)).then((res) => {
-            console.log(res)
+            // console.log(res)
             res.map((msg) => {
                 var obj = {}
                 if (msg.from_id._id == from_id) {
@@ -180,11 +224,12 @@ const Messages = () => {
                 </div>
 
                 <div className="flex-grow bg-gray-100 ">
-                    <div className="flex items-center justify-between bg-[#d1d7db] text-white md:py-4 md:px-8">
-                        <h2 className="text-lg font-semibold">{header?.name}</h2>
+                    {to_id != undefined &&
+                        <div className="flex items-center justify-between bg-[#d1d7db] text-white md:py-4 md:px-8">
+                            <h2 className="text-lg font-semibold">{header?.name}</h2>
 
-                    </div>
-
+                        </div>
+                    }
                     <div className="flex flex-col overflow-hidden h-[29rem] p-4">
                         <div className="flex-grow h-[300px] overflow-y-auto p-4">
                             {messages.map((message) => (
@@ -203,7 +248,7 @@ const Messages = () => {
                             ))}
                         </div>
 
-                        <form onSubmit={handleSubmit}>
+                        {to_id != undefined && <form onSubmit={handleSubmit}>
                             <div className="bg-gray-100 p-4 h-[80px]" >
                                 <input
                                     type="text"
@@ -223,7 +268,7 @@ const Messages = () => {
                                     Send
                                 </button>
                             </div>
-                        </form>
+                        </form>}
                     </div>
                 </div>
             </main>

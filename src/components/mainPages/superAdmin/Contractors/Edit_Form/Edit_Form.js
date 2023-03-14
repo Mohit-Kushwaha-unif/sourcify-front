@@ -14,7 +14,7 @@ const Edit_Form = () => {
     const [activeTab,setActiveTab] = useState("1")
     useEffect(()=>{
         dispatch(Contact_Service.get_contractorBy_id(location.state._id)).then((res)=>{
-            console.log(res);
+            console.log(location.state._id);
                 setFormData(res)
             })
     },[])

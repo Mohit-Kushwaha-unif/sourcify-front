@@ -135,6 +135,28 @@ const PersonalDetails = () => {
                 ]}>
                   <Input placeholder='Enter the Name of Your Firm' />
                 </Form.Item>
+                <div className='form_email_mobile_flex items-end'>
+                  <div className='form_flex_children mr-2'>
+                    <Form.Item label="Contact Person Full Name " name="username" rules={[
+                      {
+                        required: true,
+                        message: 'Please input your Name!',
+                      },
+                    ]}>
+                      <Input placeholder='Enter Contact Person Name' />
+                    </Form.Item>
+                  </div>
+                  <div className='form_flex_children '>
+                    <Form.Item name="Designation" label="Designation" rules={[
+                      {
+                        required: true,
+                        message: 'Please input your Designation!',
+                      },
+                    ]}>
+                      <Input placeholder='Enter the  Designation' />
+                    </Form.Item>
+                  </div>
+                </div>
                 {/*******************************************/}
 
                 {/**************  Work Segment *************/}
@@ -212,7 +234,7 @@ const PersonalDetails = () => {
                 ]}>
                   <Input placeholder='Enter Your Office Address' />
                 </Form.Item>
-                <div className='form_email_mobile_flex '>
+                <div className='flex flex-col md:flex-row '>
                   <div className='form_flex_children mr-1'>
                     <Form.Item name="State" label="State " rules={[
                       {
@@ -277,56 +299,18 @@ const PersonalDetails = () => {
                     <Form.Item name="msme_image" label="Copy of PF">
                       <Input type='file' max={1} onChange={msme_img_value} />
                     </Form.Item> </div> </div>
-                <div className='form_email_mobile_flex'>
-                  <div className='form_flex_children mr-2'>
-                    <Form.Item label="Contact Person Full Name " name="username" rules={[
-                      {
-                        required: true,
-                        message: 'Please input your Name!',
-                      },
-                    ]}>
-                      <Input placeholder='Enter Contact Person Name' />
-                    </Form.Item>
-                  </div>
-                  <div className='form_flex_children '>
-                    <Form.Item name="Designation" label="Designation" rules={[
-                      {
-                        required: true,
-                        message: 'Please input your Designation!',
-                      },
-                    ]}>
-                      <Input placeholder='Enter the  Designation' />
-                    </Form.Item>
-                  </div>
+                
+
+               
+
+                    <div className='flex justify-center'>
+                  <button
+                    type="submit"
+                    className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  >
+                    Next 
+                  </button>
                 </div>
-
-                <Form.Item
-                  name="remember"
-                  valuePropName="checked"
-                  wrapperCol={{
-                    offset: 2,
-                    span: 20,
-                  }}
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please check the check box!'
-                    },
-                  ]}
-                >
-                  <Checkbox>I hereby Consent all the information Provided is true</Checkbox>
-                </Form.Item>
-
-                <Form.Item
-                  wrapperCol={{
-                    offset: 8,
-                    span: 16,
-                  }}
-                >
-                  <Button className='form_button' type="primary" htmlType="submit">
-                    Next Step
-                  </Button>
-                </Form.Item>
               </Form>
             </div>
           </div>

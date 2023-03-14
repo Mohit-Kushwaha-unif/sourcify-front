@@ -32,3 +32,18 @@ input[type=number] {
 .ql-container{
   height: auto !important;
 }
+
+.text-color{
+  color: #FF5757;
+}
+
+
+  @media (min-width: 768px){
+  .footer{
+    margin-left: 0px !important;
+}
+}
+
+.ant-space-item{
+  min-width: 90% !important;
+}

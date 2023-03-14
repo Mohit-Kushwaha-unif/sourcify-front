@@ -7,6 +7,7 @@ import {
   } from 'antd';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
@@ -26,23 +27,12 @@ const Regsiter = () => {
             localStorage.setItem("accesstoken",res.accesstoken)
             localStorage.setItem("isLoggedIn", true)
             dispatch(setValue(res.user_data.role))
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title:"Registerd Successfully",
-                showConfirmButton: true,
-                
-              }) 
+           
               if(values.role ===1)
                navigate('/vendor-form' ,{state:res.user_data})  
               else
               navigate('/contractor-form' ,{state:res.user_data})  
-        }).catch(err =>  Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: err.response.data.msg,
-            showConfirmButton: true,
-          }) );
+        });
     }
   return (
  <section className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
@@ -105,7 +95,7 @@ const Regsiter = () => {
      
      <Radio.Group >
      <Radio value={1}>Vendor</Radio>
-      <Radio value={2}>Contractor</Radio>
+      <Radio value={0}>Contractor</Radio>
     </Radio.Group>
     </Form.Item>
           <div className="flex justify-between items-center">
@@ -127,13 +117,13 @@ const Regsiter = () => {
             >
                 Sign Up 
             </button>
-            <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+            {/* <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                Have an account?
               <Link
                  to='/login'
                 className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                 >Login</Link>
-            </p>
+            </p> */}
           </div>
         </Form>
       </div>

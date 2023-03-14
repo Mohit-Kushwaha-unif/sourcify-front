@@ -72,3 +72,15 @@ export const remove_contractor = (_id)=>{
         })
     
 }
+
+export const search_contractor = (fromData)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.get(contractor_url+'/search_contractor?search='+fromData).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err);
+            })
+        })
+    
+}

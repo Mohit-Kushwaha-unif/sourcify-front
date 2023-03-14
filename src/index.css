@@ -1,10 +1,14 @@
 body {
   margin: 0;
   /* background-color: #f1ebf2; */
+  /* font-size: 12px; */
+  padding: 0;
   background-color: #ffff;
 }
 
-
+html {
+  scroll-behavior: auto;
+}
 .active{
   border-bottom-width: 2px;
   border-color: rgb(239 68 68);
