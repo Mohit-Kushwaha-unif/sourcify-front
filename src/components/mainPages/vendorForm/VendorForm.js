@@ -25,7 +25,8 @@ const VendorForm = () => {
       obj.vendor_id = res.data._id
       dispatch(update_user(obj)).then((res)=>{
         Swal.fire('Saved', 'Values Saved Successfully', 'success').then(()=>{
-          navigator('/dashboard')
+          // navigator('/dashboard')
+           navigator('/')
         })
       })
     })

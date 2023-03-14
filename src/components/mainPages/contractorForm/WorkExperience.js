@@ -31,7 +31,8 @@ const WorkExperience = () => {
     })
     formData.append("form_id", localStorage.getItem("form_id"))
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
-      navigation("/dashboard")
+      // navigation("/dashboard")
+      navigation("/")
     })
 
 
