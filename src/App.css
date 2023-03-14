@@ -18,7 +18,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-.intialValue{
+.intialValue::before{
     position: relative;
     display: inline-block;
     margin-inline-end: 4px;
@@ -26,9 +26,24 @@ input[type=number] {
     font-size: 14px;
     font-family: SimSun,sans-serif;
     line-height: 1;
-
+    content: "*";
    
 }
+.ql-container{
+  height: auto !important;
+}
+
+.text-color{
+  color: #FF5757;
+}
+
+
+  @media (min-width: 768px){
+  .footer{
+    margin-left: 0px !important;
+}
+}
+
 .ant-space-item{
   min-width: 90% !important;
 }

@@ -114,8 +114,8 @@ const PersonalDetails = () => {
                 layout="vertical"
                 fields={
                   [
-                    { "name": "email", "value": localStorage.getItem("email") },
-                    { "name": "mobile_number", "value": localStorage.getItem("number") }
+                    { "name": "email", "value": location.state?.email },
+                    { "name": "mobile_number", "value": location.state?.number }
                   ]
                 }
                 size="default"
@@ -135,9 +135,7 @@ const PersonalDetails = () => {
                 ]}>
                   <Input placeholder='Enter the Name of Your Firm' />
                 </Form.Item>
-                {/*******************************************/}
-
-                <div className='form_email_mobile_flex'>
+                <div className='form_email_mobile_flex items-end'>
                   <div className='form_flex_children mr-2'>
                     <Form.Item label="Contact Person Full Name " name="username" rules={[
                       {
@@ -159,6 +157,41 @@ const PersonalDetails = () => {
                     </Form.Item>
                   </div>
                 </div>
+                {/*******************************************/}
+
+                {/**************  Work Segment *************/}
+                <Form.Item name="work_segment" label="Work Segment" rules={[
+                  {
+                    required: true,
+                    message: 'Please select your Work Segment!'
+                  },
+                ]}>
+                  <Select mode="multiple"
+                    allowClear placeholder="List of Categories Dropdown with Multiselect">
+                    {work_segment.map((option) => {
+
+                      return <Select.Option value={option}>{option}</Select.Option>
+                    })}
+                    <Select.Option value={"other"}>Other</Select.Option>
+                  </Select>
+                </Form.Item>
+                {/*******************************************/}
+                <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
+                  {
+                    required: true,
+                    message: 'Please input your State!'
+                  },
+                ]}
+                >
+
+                  <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
+                    <Select.Option value="All State">All State</Select.Option>
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
                 <div className='form_email_mobile_flex'>
                   {/*****************Email*******************/}
                   <div className='form_flex_children mr-2' >
@@ -235,7 +268,7 @@ const PersonalDetails = () => {
                 ]}>
                   <Input placeholder='Enter Your Office Address' />
                 </Form.Item>
-                <div className='form_email_mobile_flex '>
+                <div className='flex flex-col md:flex-row '>
                   <div className='form_flex_children mr-1'>
                     <Form.Item name="State" label="State " rules={[
                       {
@@ -300,10 +333,11 @@ const PersonalDetails = () => {
                     <Form.Item name="msme_image" label="Copy of PF">
                       <Input type='file' max={1} onChange={msme_img_value} />
                     </Form.Item> </div> </div>
+                
 
+               
 
-
-                <div className='flex justify-center'>
+                    <div className='flex justify-center'>
                   <button
                     type="submit"
                     className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"

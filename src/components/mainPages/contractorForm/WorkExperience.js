@@ -5,7 +5,8 @@ import {
   Input,
   Space,
   Button,
-  Select
+  Select,
+  Checkbox
 } from 'antd';
 import { DatePicker } from 'antd';
 import { AiFillDelete } from 'react-icons/ai'
@@ -58,14 +59,14 @@ const WorkExperience = () => {
                   <>
 
                     {fields.map(({ key, name, ...restField }) => (
-                      <>  <p>#Project {key + 1}</p>
+                      <>  <p className='mb-3'>#Project {key + 1}</p>
                         <Space
                           key={key}
                           className=" w-full "
                           align="baseline"
                         >
 
-                          <div className=" grid grid-cols-1 md:grid-cols-3 gap-6 ">
+                          <div className=" grid grid-cols-1 md:grid-cols-3 gap-x-6 ">
 
 
                             <Form.Item
@@ -260,7 +261,19 @@ const WorkExperience = () => {
           </>
         )}
       </Form.List> */}
+              <Form.Item
+                name="remember"
+                valuePropName="checked"
 
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please check the check box!'
+                  },
+                ]}
+              >
+                <Checkbox>I hereby Consent all the information Provided is true</Checkbox>
+              </Form.Item>
 
               <div className='flex justify-center'>
                 <button

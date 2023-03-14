@@ -18,7 +18,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState("Vendor");
   const [input, setInput] = useState('')
-  const [userName,setUserName] = useState('')
+  const [userName, setUserName] = useState('')
   const isAdmin = useSelector(state => state.User.user_role);
   useEffect(() => {
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
@@ -32,20 +32,20 @@ const Header = () => {
   const setDimension = () => {
     getDimension(window.innerWidth)
   }
-  useEffect(()=>{
-    if(localStorage.getItem('email') != null)
-    dispatch(get_user_info({user_id: localStorage.getItem('user_id')})).then((res)=>{
-      if(Object.keys(res).includes('contractor_id')){
-        console.log(res)
-        setUserName(res.contractor_id.username)
-      }
-      if(Object.keys(res).includes('vendor_id')){
-        setUserName(res.vendor_id.contact_person)
-      }
-      if(userName ==''){
-        setUserName( localStorage.getItem('email').split('@')[0])
-      }
-    })
+  useEffect(() => {
+    if (localStorage.getItem('email') != null)
+      dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res) => {
+        if (Object.keys(res).includes('contractor_id')) {
+          console.log(res)
+          setUserName(res.contractor_id.username)
+        }
+        if (Object.keys(res).includes('vendor_id')) {
+          setUserName(res.vendor_id.contact_person)
+        }
+        if (userName == '') {
+          setUserName(localStorage.getItem('email').split('@')[0])
+        }
+      })
   })
   useEffect(() => {
     window.addEventListener('resize', setDimension);
@@ -129,8 +129,8 @@ const Header = () => {
   return (
     <header className='navbar flex justify-between flex-col items-center md:flex-row md:justify-between"'>
       <div className='navbar__title navbar__item flex items-center justify-between '>
-        <img className='h-8 my-4 mx-4 ' onClick={() => navigate('/')} src={Sourcify} alt="logo" />
-        <MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' />
+        <span> <img className='h-8 my-4 mx-4 ' onClick={() => navigate('/')} src={Sourcify} alt="logo" /></span>
+        <span><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></span>
       </div>
       {showMenu && <>
         {/* <div className='navbar__item'>
@@ -166,44 +166,65 @@ const Header = () => {
         {isLoggedIn ?
 
           <>
-            <div className='navbar__item'>
+            {/* <div className='navbar__item'>
               Dashboard
-            </div>
+            </div> */}
             <div className='navbar__item relative'>
-            <button
-          onClick={() => setIsOpen(!isOpen)}
-         
-          className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-        >
-          <span>{userName}</span>
-          <svg
-            className="w-5 h-5 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+
+                className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+              >
+                <span>{userName}</span>
+                <svg
+                  className="w-5 h-5 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
 
             </div>
 
           </>
           :
-          <button className='navbar__button hover:text-white rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
+          <button className='navbar__button hover:text-white rounded-[25px]' type="link"><Link to='/login'>Login/Signup</Link> </button>
         }
       </>}
       {isOpen && (
         <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-              {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
-              <button
+            {/* <button
+              onClick={handleSettings}
+              className="block px-4 py-2 text-sm w-full text-left"
+            >
+              <svg
+                className="w-4 h-4 mr-2 inline"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+              Update Profile
+            </button> */}
+
+            {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
+            <button
               onClick={logoutHandler}
               className="block px-4 py-2 text-sm w-full text-left"
             >
@@ -223,8 +244,8 @@ const Header = () => {
               </svg>
               Logout
             </button>
-           
-          
+
+
           </div>
         </div>
       )}
