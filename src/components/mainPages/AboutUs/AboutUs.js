@@ -307,7 +307,7 @@ const AboutUs = () => {
         <div className="col-md-12 my-auto mx-auto text-center">
           <div className="hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className="text-light hero-abt-title mb-2">Where sub-contracting meets <br />innovation</h1>
-          <button className="btn btn-primary px-10">Get Started</button>
+          <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[3.25rem] py-2 hover:bg-transparent hover:border-2 hover:broder-white' onClick={() => navigator('/register')}>Get Started</button>
         </div>
       </div>
       <div className="row align-items-center">

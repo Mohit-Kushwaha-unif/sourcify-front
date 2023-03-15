@@ -19,16 +19,19 @@ body {
 
 /* Global CSS */
 
-.btn-primary {
+/* .btn-primary {
   background-color: #FF5757;
   border-radius: 50px;
   border: none;
 }
+.btn-primary :hover{
+  background-color: none !important;
+  border: 3px solid white !important;
+}
 .btn :hover{
   background-color: none !important;
-  border: 1px solid white;
-
-}
+  border: 3px solid white !important;
+} */
 .hero-abt-quote {
   font-size: 24px;
   font-weight: 700;
