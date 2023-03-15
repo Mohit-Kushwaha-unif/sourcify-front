@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dropdown, Input, Space } from 'antd'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import Sourcify from '../../assests/Sourcify Logo.png'
+import NEW_Sourcify from '../../assests/Sourcify.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
@@ -60,7 +61,8 @@ const Header = () => {
     dispatch(logout()).then((res) => {
       localStorage.clear()
       localStorage.setItem("isLoggedIn", false)
-      window.location = '/login'
+      window.location = '/'
+      // window.location = '/login'
       setisLoggedIn(false)
     })
   }
@@ -127,13 +129,14 @@ const Header = () => {
     navigate('/update-profile')
   };
   return (
-    <header className='navbar flex justify-between flex-col items-center md:flex-row md:justify-between"'>
+    <div className='container'>
+    <header className='navbar flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center justify-between '>
-        <span> <img className='h-8 my-4 mx-4 ' onClick={() => navigate('/')} src={Sourcify} alt="logo" /></span>
+        <div> <img className='h-[3rem]  ' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
         <span><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></span>
       </div>
       {showMenu && <>
-        {/* <div className='navbar__item'>
+        <div className='navbar__item flex-row'>
           <form className="flex" onSubmit={submitHandler} >
             <Input type="text" className="w-full pl-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" value={input} onChange={inputHandler} placeholder="Search..." />
             <select value={selected} className="ml-1 px-1 py-1 rounded-r-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={selectHandler}>
@@ -162,7 +165,7 @@ const Header = () => {
           <div className='navbar__item'><Link to='/about-us'>Company</Link></div>
           <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
           <div className='navbar__item'><Link to="/support">Support</Link></div>
-        </>} */}
+        </>}
         {isLoggedIn ?
 
           <>
@@ -250,6 +253,7 @@ const Header = () => {
         </div>
       )}
     </header>
+    </div>
   )
 }
 

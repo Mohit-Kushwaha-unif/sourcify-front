@@ -1,12 +1,48 @@
-
 @import url("./components/headers/Header.css");
 @import url("./components/mainPages/selectType/SelectType.css");
 @import url("./components/mainPages/contractorForm/ContractorForm.css");
-.swal2-container.swal2-top-end>.swal2-popup {
-    grid-column: 3;
-    align-self: start;
-    justify-self: center !important;
+
+html,
+body {
+  scroll-behavior: smooth;
+  transition: background-color 0.5s ease;
+  ;
 }
+
+.swal2-containers.swal2-top-end>.swal2-popup {
+  grid-column: 3;
+  align-self: start;
+  justify-self: center !important;
+}
+
+
+
+/* Global CSS */
+
+.btn-primary {
+  background-color: #FF5757;
+  border-radius: 50px;
+  border: none;
+}
+.btn :hover{
+  background-color: none !important;
+  border: 1px solid white;
+
+}
+.hero-abt-quote {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: 0em;
+
+
+}
+
+
+
+
+
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -18,32 +54,157 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-.intialValue::before{
-    position: relative;
-    display: inline-block;
-    margin-inline-end: 4px;
-    color: #ff4d4f;
-    font-size: 14px;
-    font-family: SimSun,sans-serif;
-    line-height: 1;
-    content: "*";
-   
+
+.intialValue::before {
+  position: relative;
+  display: inline-block;
+  margin-inline-end: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
+
 }
-.ql-container{
+
+.ql-containers {
   height: auto !important;
 }
 
-.text-color{
+.text-color {
   color: #FF5757;
 }
 
 
-  @media (min-width: 768px){
-  .footer{
+@media (min-width: 768px) {
+  .footer {
     margin-left: 0px !important;
-}
+  }
 }
 
-.ant-space-item{
+.ant-space-item {
   min-width: 90% !important;
+}
+
+.about_head_content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.background-image {
+  background-size: cover;
+  background-position: center center;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.background-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.background-image h1,
+.background-image p {
+  position: relative;
+  color: #fff;
+  z-index: 1;
+}
+
+.background-image h1 {
+  color: #FF5757;
+}
+
+
+
+
+
+
+
+
+
+
+/* About us page CSS */
+
+
+.hero-section {
+  background-size: cover;
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+
+}
+
+
+.hero-abt-sourcify {
+  color: #FF5757;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: 0em;
+}
+
+.hero-abt-title {
+
+font-size: 42px;
+font-weight: 600;
+line-height: 51px;
+letter-spacing: 0em;
+text-align: center;
+
+}
+
+.founder_about_image {
+  min-height: 500px;
+}
+
+.what_we_do_quote {
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+
+
+}
+
+.what_We_do_title {
+  /* font-size: 2.5rem; */
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 39px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+
+
+/* Footer */
+
+.footer {
+  min-height: 350px;
+  padding-top: 5rem;
+  border-bottom: 4px solid #FF5757;
+}
+
+.footer h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer li {
+  margin: 10px 0px;
 }

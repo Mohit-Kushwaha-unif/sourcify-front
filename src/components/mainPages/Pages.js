@@ -99,7 +99,7 @@ const Pages = (props) => {
  
 
   return (
-    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'flex': ''}>
+    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'flex': 'container'}>
       {
         isAdmin==2 && <Sidebar/>
       }

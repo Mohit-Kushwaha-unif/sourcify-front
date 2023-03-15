@@ -1,54 +1,57 @@
+import { Button, Input } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import Sourcify from '../../assests/Sourcify Logo.png'
+import Sourcify from '../../assests/Sourcify.png'
+import { FaLandmark } from 'react-icons/fa'
+import {BsFillTelephoneFill} from 'react-icons/bs'
+import {MdAlternateEmail} from 'react-icons/md'
+// import { icons } from 'react-icons'
 const Footer = () => {
   const navigate = useNavigate()
   return (
     
-    <footer className="relative py-15 flex flex-col items-center bg-white overflow-hidden">
-      <div className="relative z-[1] container m-auto px-6 md:px-12">
-        <div className="m-auto md:w-11/12 lg:w-11/12 xl:w-11/12">
-          <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
-            <div className="w-full space-x-12 flex flex-col md:flex-row justify-center sm:w-7/12 md:justify-start">
-              <ul className="space-y-8  flex-1">
-                <li><img className='  mb-2 w-3/4' src={Sourcify} /></li>
-              </ul>
 
-              <ul role="list" className="footer space-y-8" style={{marginLeft: '5rem'}}>
-                <li>
-                  <span className='flex items-center font-semibold space-x-3'>Quick Links</span>
-                </li>
-                <li>
-                  <span className='flex items-center space-x-3'> Terms & Conditions</span>
-                </li>
-                <li>
 
-                  <span className='flex items-center space-x-3'>Privacy Policy</span>
+    <footer className='container'>
 
-                </li>
+      <div className="row footer">
+        <div className="col-md-4">
+          <img src={Sourcify}/>
+          <div className='flex'><i className='mr-2'><FaLandmark/></i>115, Tower A, Spazedge, Sohna Road, Gurugram, Haryana 122018</div>
+          <div className='flex'><i className='mr-2'><BsFillTelephoneFill/></i>+91-99676 62976</div>
+          <div className='flex'><i className='mr-2'><MdAlternateEmail/></i>info@sourcify.in</div>
+        </div>
+        <div className="col-md-2">
+          <h3>Quick Links</h3>
+          <ul>
+            <li>Terms & Conditions</li>
+            <li>Disclaimer</li>
+            <li>Privacy Policy</li>
+          </ul>
+        </div>
+        <div className="col-md-2">
+        <h3>Resources</h3>
+          <ul>
+            <li>Blog</li>
+            <li>Case Study</li>
+            <li>About us</li>
+            <li>Career</li>
+          </ul>
+        </div>
 
-                <li>
+        <div className="col-md-4">
+        <h3>Newsletter</h3>
+        <form>
+          <Input type="text" className='mb-3' style={{width:'70%'}}/>
+        </form>
+        <Button>Submit</Button>
 
-                  <span className='flex items-center space-x-3'>Disclaimer</span>
-
-                </li>
-
-              </ul>
-            </div>
-            <div className="w-10/12 m-auto  flex justify-center flex-col mt-4 space-y-6 ml-20   sm:w-5/12 ">
-              <span className="block font-semibold cursor-pointer">Resources</span>
-
-              <span className="block cursor-pointer">Blog</span>
-              <span className="block cursor-pointer" >Case Study</span>
-              <span className="block cursor-pointer" onClick={()=>navigate('/about-us')}>About Us </span>
-              <span className="block cursor-pointer">Career</span>
-            </div>
-          </div>
         </div>
       </div>
 
-
     </footer>
+
+
 
   )
 }
