@@ -77,19 +77,19 @@ const VendorForm = () => {
               },
             ]}
               layout="vertical" onFinish={FormHandler}>
-              <Form.Item name="agency_name" label="Name of Agency " rules={[
+              <Form.Item name="agency_name" label=" Agency Name " rules={[
                 {
                   required: true,
                   message: 'Please input your Bank Overdraft Limit'
                 },
               ]}
-                className="mb-1"
+                className="mb-2"
               >
 
                 <Input placeholder='Enter name of your Agency' />
               </Form.Item>
 
-              <Form.Item name='contact_person' className='mb-1 mt-0' label="Contact Person Name" rules={[
+              <Form.Item name='contact_person' className='mb-2 mt-0' label="Contact Person Name" rules={[
                 {
                   required: true,
                   message: 'Please input your Contact Person Name'
@@ -116,7 +116,7 @@ const VendorForm = () => {
                   </Form.Item>
                 </div>
                 <div className='form_flex_children mr-1'>
-                  <Form.Item name="email" className='mb-1 mt-0' label="Email" rules={[
+                  <Form.Item name="email" className='mb-2 mt-0' label="Email" rules={[
                     {
                       required: true,
                       message: 'Please input your Email'
@@ -130,7 +130,7 @@ const VendorForm = () => {
                   </Form.Item>
                 </div>
               </div>
-              <Form.Item name="Address" className='mb-1' label="Office Address " rules={[
+              <Form.Item name="Address" className='mb-2' label="Office Address " rules={[
                 {
                   required: true,
                   message: 'Please input your Address!',

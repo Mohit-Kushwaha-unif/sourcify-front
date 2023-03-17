@@ -54,7 +54,7 @@ const WorkExperience = () => {
             <Form labelAlign="left" name="dynamic_form_nest_item"
               layout="vertical" onFinish={FormHandler}>
 
-              <div className='mb-2'>Click Button To Add Projects <span className='intialValue'></span></div>
+              <div className='mb-2'>Projects <span className='intialValue'></span></div>
               <Form.List name="Project">
                 {(fields, { add, remove }) => (
                   <>
@@ -173,8 +173,8 @@ const WorkExperience = () => {
                     ))}
 
                     <Form.Item>
-                      <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                        Add field
+                      <Button className='flex justify-center items-baseline' type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                        Add Project
                       </Button>
 
                     </Form.Item>

@@ -136,7 +136,7 @@ const Header = () => {
         <span><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></span>
       </div>
       {showMenu && <>
-        <div className='navbar__item flex-row'>
+        {/* <div className='navbar__item flex-row'>
           <form className="flex" onSubmit={submitHandler} >
             <Input type="text" className="w-full pl-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" value={input} onChange={inputHandler} placeholder="Search..." />
             <select value={selected} className="ml-1 px-1 py-1 rounded-r-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={selectHandler}>
@@ -159,13 +159,13 @@ const Header = () => {
             </Link>
           </Dropdown>
 
-        </div>
+        </div> */}
 
-        {isAdmin !== 2 && <>
+        {/* {isAdmin !== 2 && <>
           <div className='navbar__item'><Link to='/about-us'>Company</Link></div>
           <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
           <div className='navbar__item'><Link to="/support">Support</Link></div>
-        </>}
+        </>} */}
         {isLoggedIn ?
 
           <>

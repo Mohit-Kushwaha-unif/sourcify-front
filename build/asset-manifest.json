@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.d79d2294.css",
-    "main.js": "/static/js/main.220a39d2.js",
+    "main.css": "/static/css/main.2a6da1ee.css",
+    "main.js": "/static/js/main.7e1c9b24.js",
     "static/media/About_us_Hero_Banner.jpg": "/static/media/About_us_Hero_Banner.78a30544836eefe380b2.jpg",
     "static/media/build.jpg": "/static/media/build.642ddde7554973abce5b.jpg",
     "static/media/person.jpg": "/static/media/person.c273ba3dba30c5357137.jpg",
     "static/media/3227422.jpg": "/static/media/3227422.9ccc25bd656e95332b68.jpg",
     "static/media/Sourcify Logo.png": "/static/media/Sourcify Logo.117991e9b3cca7e5ad9d.png",
     "index.html": "/index.html",
-    "main.d79d2294.css.map": "/static/css/main.d79d2294.css.map",
-    "main.220a39d2.js.map": "/static/js/main.220a39d2.js.map"
+    "main.2a6da1ee.css.map": "/static/css/main.2a6da1ee.css.map",
+    "main.7e1c9b24.js.map": "/static/js/main.7e1c9b24.js.map"
   },
   "entrypoints": [
-    "static/css/main.d79d2294.css",
-    "static/js/main.220a39d2.js"
+    "static/css/main.2a6da1ee.css",
+    "static/js/main.7e1c9b24.js"
   ]
 }

@@ -148,7 +148,7 @@ const FinancialDetail = () => {
                                 <Input />
                             </Form.Item>
                             </div>
-                            <div className='mb-1'>Bank Overdraft Limit / Solvancy Certificate Value</div>
+                            <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
                             <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
                             <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
                                 {

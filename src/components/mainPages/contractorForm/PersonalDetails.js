@@ -100,7 +100,7 @@ const PersonalDetails = () => {
                 <p className="text-lg mb-0 mr-4">Basic Details</p>
               </div>
               <div
-                className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                className="flex items-center my-3 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
               >
               </div>
               <Form
@@ -157,41 +157,6 @@ const PersonalDetails = () => {
                     </Form.Item>
                   </div>
                 </div>
-                {/*******************************************/}
-
-                {/**************  Work Segment *************/}
-                <Form.Item name="work_segment" label="Work Segment" rules={[
-                  {
-                    required: true,
-                    message: 'Please select your Work Segment!'
-                  },
-                ]}>
-                  <Select mode="multiple"
-                    allowClear placeholder="List of Categories Dropdown with Multiselect">
-                    {work_segment.map((option) => {
-
-                      return <Select.Option value={option}>{option}</Select.Option>
-                    })}
-                    <Select.Option value={"other"}>Other</Select.Option>
-                  </Select>
-                </Form.Item>
-                {/*******************************************/}
-                <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                  {
-                    required: true,
-                    message: 'Please input your State!'
-                  },
-                ]}
-                >
-
-                  <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
-                    <Select.Option value="All State">All State</Select.Option>
-                    {Object.keys(state_cites).map((state) => {
-                      return (<Select.Option value={state}>{state}</Select.Option>)
-                    }
-                    )}
-                  </Select>
-                </Form.Item>
                 <div className='form_email_mobile_flex'>
                   {/*****************Email*******************/}
                   <div className='form_flex_children mr-2' >
@@ -226,48 +191,6 @@ const PersonalDetails = () => {
                   </div>
                   {/*******************************************/}
                 </div>
-                {/**************  Work Segment *************/}
-                <Form.Item name="work_segment" label="Work Segment" rules={[
-                  {
-                    required: true,
-                    message: 'Please select your Work Segment!'
-                  },
-                ]}>
-                  <Select mode="multiple"
-                    allowClear placeholder="List of Categories Dropdown with Multiselect">
-                    {work_segment.map((option) => {
-
-                      return <Select.Option value={option}>{option}</Select.Option>
-                    })}
-                    <Select.Option value={"other"}>Other</Select.Option>
-                  </Select>
-                </Form.Item>
-                {/*******************************************/}
-                <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                  {
-                    required: true,
-                    message: 'Please input your State!'
-                  },
-                ]}
-                >
-
-                  <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
-                    <Select.Option value="All State">All State</Select.Option>
-                    {Object.keys(state_cites).map((state) => {
-                      return (<Select.Option value={state}>{state}</Select.Option>)
-                    }
-                    )}
-                  </Select>
-                </Form.Item>
-                
-                <Form.Item name="Address" label="Office Address " rules={[
-                  {
-                    required: true,
-                    message: 'Please input your Address!',
-                  },
-                ]}>
-                  <Input placeholder='Enter Your Office Address' />
-                </Form.Item>
                 <div className='flex flex-col md:flex-row '>
                   <div className='form_flex_children mr-1'>
                     <Form.Item name="State" label="State " rules={[
@@ -312,6 +235,85 @@ const PersonalDetails = () => {
                     </Form.Item>
                   </div>
                 </div>
+                {/*******************************************/}
+
+                {/**************  Work Segment *************/}
+                <Form.Item name="work_segment" label="Work Segment" rules={[
+                  {
+                    required: true,
+                    message: 'Please select your Work Segment!'
+                  },
+                ]}>
+                  <Select mode="multiple"
+                    allowClear placeholder="List of Categories Dropdown with Multiselect">
+                    {work_segment.map((option) => {
+
+                      return <Select.Option value={option}>{option}</Select.Option>
+                    })}
+                    <Select.Option value={"other"}>Other</Select.Option>
+                  </Select>
+                </Form.Item>
+                {/*******************************************/}
+                <Form.Item name="prefferd_state" label="Preferred State to Work " rules={[
+                  {
+                    required: true,
+                    message: 'Please input your State!'
+                  },
+                ]}
+                >
+
+                  <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
+                    <Select.Option value="All State">All State</Select.Option>
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
+             
+                {/**************  Work Segment *************/}
+                {/* <Form.Item name="work_segment" label="Work Segment" rules={[
+                  {
+                    required: true,
+                    message: 'Please select your Work Segment!'
+                  },
+                ]}>
+                  <Select mode="multiple"
+                    allowClear placeholder="List of Categories Dropdown with Multiselect">
+                    {work_segment.map((option) => {
+
+                      return <Select.Option value={option}>{option}</Select.Option>
+                    })}
+                    <Select.Option value={"other"}>Other</Select.Option>
+                  </Select>
+                </Form.Item> */}
+                {/*******************************************/}
+                {/* <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
+                  {
+                    required: true,
+                    message: 'Please input your State!'
+                  },
+                ]}
+                >
+
+                  <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
+                    <Select.Option value="All State">All State</Select.Option>
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item> */}
+                
+                <Form.Item name="Address" label="Office Address " rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Address!',
+                  },
+                ]}>
+                  <Input placeholder='Enter Your Office Address' />
+                </Form.Item>
+            
 
                 <Form.Item name="msme" label="Do you have MSME ?" required >
                   <Select placeholder="Please select an option">
@@ -326,7 +328,7 @@ const PersonalDetails = () => {
                       message: 'Please provide required details!'
                     },
                   ]}>
-                    <Input placeholder='Enter your PAN Number' onChange={msmeVerfication} />
+                    <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
                   </Form.Item>
                   {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
                   <div className='form_flex_children '>
