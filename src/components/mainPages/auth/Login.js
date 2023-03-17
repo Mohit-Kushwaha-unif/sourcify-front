@@ -28,7 +28,7 @@ const Login = () => {
       .post("http://localhost:5000/user/login", value)
       .then(res => {
         Swal.fire({
-          position: 'top-end',
+          
           icon: 'success',
           title: "Login Successfully",
           showConfirmButton: true,
@@ -39,26 +39,34 @@ const Login = () => {
         localStorage.setItem('email', res.data.user.email)
         localStorage.setItem('number', res.data.user.number)
         dispatch(setValue(res.data.user.role))
+        if(res.data.user.otpVerfied == false){
+            navigate('/otp-verification')
+        } 
+       else if (res.data.user.role === 1) {
+          if (Object.keys(res.data.user).includes('vendor_id')) {
+            navigate('/dashboard')
+              }
+              else {
+                navigate('/vendor-form')
+              }
+          // dispatch(get_Vendor()).then((res) => {
+          //   console.log(res)
+          //   var user_exist = res.filter((user_data) => {
+          //     console.log(user_data.user_id)
 
-        if (res.data.user.role === 1) {
-          dispatch(get_Vendor()).then((res) => {
-            console.log(res)
-            var user_exist = res.filter((user_data) => {
-              console.log(user_data.user_id)
+          //     if (user_data.user_id != null && user_data.user_id._id == localStorage.getItem('user_id'))
+          //       return user_data
+          //     return null
+          //   })
+          //   // console.log(user_exist.length)
+          //   if (user_exist.length === 0) {
+          //     navigate('/vendor-form')
+          //   }
+          //   else {
+          //     navigate('/dashboard')
 
-              if (user_data.user_id != null && user_data.user_id._id == localStorage.getItem('user_id'))
-                return user_data
-              return null
-            })
-            // console.log(user_exist.length)
-            if (user_exist.length === 0) {
-              navigate('/vendor-form')
-            }
-            else {
-              navigate('/dashboard')
-
-            }
-          })
+          //   }
+          // })
         }
 
         else if (res.data.user.role === 2) {

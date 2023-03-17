@@ -345,7 +345,7 @@ const AboutUs = () => {
         {about !== true && about.founderAbout.map((founder) => (
           <>
             <div className="col-md-2 col-lg-2 col-xl-5 ">
-              <img src={Person} className="img-responsive w-75 rounded" alt="" />
+              <img src={Person} className="img-responsive md:w-[75%] rounded" alt="" />
             </div>
             <div className="col-md-9 col-lg-10 col-xl-7 pt-3  ">
               <p className="font-semibold text-base">
@@ -369,7 +369,7 @@ const AboutUs = () => {
         {about !== true && about.founderAbout.map((founder) => (
           <>
             <div className="col-md-2 col-lg-2 col-xl-5 ">
-              <img src={about !== true && build} alt="" className='w-[90%] h-full object-fill md:object-cover' />
+              <img src={about !== true && build} alt="" className='md:w-[90%] h-full object-fill md:object-cover' />
 
             </div>
             <div className="col-md-9 col-lg-10 col-xl-7 pt-5  ">
@@ -390,7 +390,19 @@ const AboutUs = () => {
 
                     <Input placeholder='Enter your Full Name' />
                   </Form.Item>
-                  <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
+                  <Form.Item name='company_name' className='mb-1 mt-0' label="Company Name" rules={[
+                    {
+                      required: true,
+                      message: 'Please input your Company Name'
+                    },
+                  ]}
+                  >
+
+                    <Input placeholder='Enter your Company Name' />
+                  </Form.Item>
+                </div>
+                <div className='grid  mb-3 grid-cols-1 gap-8 md:grid-cols-2'>
+                <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
                     {
                       required: true,
                       message: 'Please input your Mobile Number'
@@ -400,8 +412,6 @@ const AboutUs = () => {
 
                     <Input placeholder='Enter your 10 digit Mobile Number' />
                   </Form.Item>
-                </div>
-                <div className='grid  mb-3 grid-cols-1 gap-8 md:grid-cols-2'>
                   <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
                     {
                       required: true,
@@ -413,16 +423,6 @@ const AboutUs = () => {
                     <Input type='email' placeholder='Enter your Email' />
                   </Form.Item>
 
-                  <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
-                    {
-                      required: true,
-                      message: 'Please input your Email ID'
-                    },
-                  ]}
-                  >
-
-                    <Input type='email' placeholder='Enter your Email' />
-                  </Form.Item>
 
                 </div>
                 <Form.Item name='Message' className='mb-1 mt-0' label="Message" rules={[

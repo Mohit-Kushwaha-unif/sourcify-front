@@ -12,7 +12,7 @@ const Footer = () => {
     
 
 
-    <footer className='container'>
+    <footer className='container bg-white'>
 
       <div className="row footer">
         <div className="col-md-4">
@@ -42,9 +42,9 @@ const Footer = () => {
         <div className="col-md-4">
         <h3>Newsletter</h3>
         <form>
-          <Input type="text" className='mb-3' style={{width:'70%'}}/>
+          <Input type="text" className='mb-3' placeholder='Enter your email address'/>
         </form>
-        <Button>Submit</Button>
+        <button className='inline-block w-full py-2 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"'>Subscribe</button>
 
         </div>
       </div>

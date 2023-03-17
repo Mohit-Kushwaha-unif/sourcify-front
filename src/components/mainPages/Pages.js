@@ -44,6 +44,7 @@ import Edit_caraousel from './superAdmin/Carausel/Edit_caraousel/Edit_caraousel'
 import Support from './Support/Support'
 import UpdateProfie from './UpdateProfile/UpdateProfie'
 import UserRole from './useRole/userRole'
+import OTPForm from './auth/OTPForm'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -99,7 +100,7 @@ const Pages = (props) => {
  
 
   return (
-    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'container flex': 'container'}>
+    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? ' flex': 'container-fluid'}>
       {
         isAdmin==2 && <Sidebar/>
       }
@@ -110,8 +111,9 @@ const Pages = (props) => {
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
         <Route path="vendor-form" element={<VendorForm />} />
         <Route path="/register" element={ <Regsiter/>} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/about-us" element={<AboutUs/>}/>
+        <Route path="/otp-verification" element={<OTPForm/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
         <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : <ResourceDenied/>}/>
@@ -141,8 +143,9 @@ const Pages = (props) => {
         <Route path="/messages" element={<Messages/>}/>
         <Route path='/results' element={<SearchResult/>}/>
         <Route path='/update-profile' element={<UpdateProfie/>}/>
-        <Route path='/userRole' element={<UserRole/>}/>
-        <Route path='*' element={<NotFound />}/> */}
+         <Route path='/userRole' element={<UserRole/>}/>
+        <Route path='*' element={<NotFound />}/>
+        
       </Routes>
       
     </div>

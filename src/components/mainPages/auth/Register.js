@@ -27,15 +27,19 @@ const Regsiter = () => {
             localStorage.setItem("accesstoken",res.accesstoken)
             localStorage.setItem("isLoggedIn", true)
             dispatch(setValue(res.user_data.role))
-           
+            // if(res.user_data.otpVerfied == false){
+            //   navigate('/otp-verification')
+            // }
               if(values.role ===1)
                navigate('/vendor-form' ,{state:res.user_data})  
               else
               navigate('/contractor-form' ,{state:res.user_data})  
-        });
+        }).catch((err)=>{
+          Swal.fire('Email Duplicate', err.response.data.msg, 'warning')
+        })
     }
   return (
- <section className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
+ <section className="custom-bodycolor min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
   <div className="px-8 h-full text-gray-800">
     <div
       className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
@@ -45,24 +49,28 @@ const Regsiter = () => {
             <p className="text-lg mb-0 mr-4">Register </p>
           </div>
           <div
-            className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+            className="flex items-center my-2  before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
           >
    </div>
-        <Form onFinish={formHandler}>
+        <Form onFinish={formHandler} labelAlign="left"   layout="vertical" className= "mt-4">
       
           <Form.Item
       name="email"
+      label="Email Address "
+      
       rules={[
         {
           required: true,
           message: 'Please input your username!',
         },
       ]}
+     
     >
       <Input placeholder="Email address" />
     </Form.Item >
           <Form.Item
       name="number"
+      label="Mobile   Number"
       rules={[
         {
           required: true,
@@ -74,6 +82,7 @@ const Regsiter = () => {
     </Form.Item >
       <Form.Item    
       name="password"
+      label="Password"
       rules={[
         {
           required: true,
@@ -92,28 +101,26 @@ const Regsiter = () => {
         },
       ]}
     >
-     
+      
      <Radio.Group >
      <Radio value={1}>Vendor</Radio>
       <Radio value={0}>Contractor</Radio>
     </Radio.Group>
     </Form.Item>
-          <div className="flex justify-between items-center">
-            <div className="form-group form-check">
-                        <Form.Item
-                name="remember"
-                valuePropName="checked"
-                >
-                <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-            </div>
+          <div className="flex justify-between items-center mb-5">
+           
+          
+              
+              <p>By continuing, I agree to the Terms of Use & Privacy Policy</p>  
+              
+            
             {/* <Link to="#!" className="text-gray-800 mb-6">Forgot password?</Link> */}
           </div>
 
           <div className="text-center lg:text-left">
             <button
               type="submit"
-              className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
+              className="inline-block w-full px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
             >
                 Sign Up 
             </button>

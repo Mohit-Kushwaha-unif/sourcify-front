@@ -4,8 +4,12 @@ body {
   /* font-size: 12px; */
   padding: 0;
   background-color: #ffff;
-  font-family: 'Montserrat', sans-serif;
+  /* background-color: #f1f1f1; */
+  font-family: 'Montserrat' , sans-serif !important  ;
   line-height: 1.5em;
+}
+.ant-form,.ant-form-item-required,.ant-btn, .ant-form-item-label{
+  font-family: 'Montserrat' , sans-serif !important  ;
 }
 
 html {
@@ -16,30 +20,30 @@ html {
   border-color: rgb(239 68 68);
 }
 
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
+/* ::-webkit-scrollbar-track {
+  background-color: inherit;
+} */
 
 /* Hide the scrollbar thumb */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background-color: transparent;
-}
+} */
 
 /* Define the width and height of the scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
+} */
 
 /* Define the color of the scrollbar on hover */
-::-webkit-scrollbar:hover {
+/* ::-webkit-scrollbar:hover {
   background-color: #ccc;
-}
+} */
 
 .ant-btn css-dev-only-do-not-override-ixblex ant-btn-primary{
   background-color: blue !important;
   color: blue !important;
 }
-:where(.css-dev-only-do-not-override-ixblex).ant-form-vertical .ant-form-item-label >label{
+/* :where(.css-dev-only-do-not-override-ixblex).ant-form-vertical .ant-form-item-label >label{
 text-transform: capitalize;
-}
+} */

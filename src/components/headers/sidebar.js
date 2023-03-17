@@ -17,7 +17,7 @@ const Sidebar = () => {
     }
     return (
 
-        <div className="flex flex-col min-h-screen h-inherit p-3 bg-white shadow w-60">
+        <div className="flex flex-col min-h-screen h-inherit bg-white p-3 pl-0">
             <div className="space-y-3">
                 <div className="flex items-center">
                     <h2 className="text-xl font-bold">Dashboard</h2>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                                 <span>Contractors</span>
                             </NavLink>
                         </li>
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/about-us"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -66,7 +66,7 @@ const Sidebar = () => {
                                  4.4 3.6 8 8 8z"></path></g></svg>
                                 <span>About US</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/companies"
@@ -108,7 +108,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
 
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/all-listing"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -144,7 +144,7 @@ const Sidebar = () => {
                                
                                 <span>Caraousel</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}

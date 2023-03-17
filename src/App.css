@@ -8,15 +8,42 @@ body {
   transition: background-color 0.5s ease;
   ;
 }
+.custom-bodycolor{
+  background-color: #f1f1f1 !important;
+}
 
 .swal2-containers.swal2-top-end>.swal2-popup {
   grid-column: 3;
   align-self: start;
   justify-self: center !important;
 }
-
-
-
+.ant-select-selector{
+  border-radius: 0 !important;
+}
+.ant-input, .ant-picker  {
+  border-radius: 0 !important;
+  padding-top: 6px !important;
+  padding-bottom : 6px !important
+}
+.ant-input[type= 'file']  {
+ 
+  padding-top: 3.5px !important;
+  padding-bottom : 3.5px !important
+}
+.ant-form-item-control-input {
+  border-radius: 0 !important;
+  
+}
+.ant-input-affix-wrapper {
+  padding-top: 6px;
+  padding-bottom : 6px;
+  border-radius: 0px !important;
+}
+:where(.css-dev-only-do-not-override-ixblex).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  width: 100%;
+  height: 35px;
+  padding: 1px 11px;
+}
 /* Global CSS */
 
 /* .btn-primary {
@@ -98,6 +125,7 @@ input[type=number] {
 
 .background-image {
   background-size: cover;
+  /* filter: brightness(30%); */
   background-position: center center;
   height: 500px;
   display: flex;
