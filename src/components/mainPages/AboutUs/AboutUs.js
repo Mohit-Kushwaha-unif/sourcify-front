@@ -328,8 +328,8 @@ const AboutUs = () => {
                 </div>
                 <div className="">
                   <button
-                    onClick={() => navigator(hero.buttonLink)}
-                    className="btn btn-danger btn-lg text-uppercase shadow rounded-pill"
+                    onClick={() => navigator('/register')}
+                    className="btn btn-danger bg-[#FF5757] btn-lg text-uppercase shadow rounded-pill"
                   >
                     {hero.button}
                   </button>
