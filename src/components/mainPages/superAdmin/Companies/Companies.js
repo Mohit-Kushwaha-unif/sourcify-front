@@ -31,6 +31,9 @@ const Companies = () => {
             console.log(err)
         })
     }, [])
+    function deleteHandler(id){
+        dispatch()
+    }
     const columns = [
         {
             title: 'S.No',
@@ -76,7 +79,7 @@ const Companies = () => {
                 console.log(_,record),
                 <Space size="middle">
                     <Link to='/admin/edit-company' state={{ _id: record?._id }}>Edit </Link>
-                    <Link>Delete</Link>
+                    <Link onClick={()=>deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),
             showOnResponse: true,

@@ -48,14 +48,16 @@ const Regsiter = () => {
             className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
           >
    </div>
-        <Form onFinish={formHandler}>
+        <Form labelAlign="left"
+
+layout="vertical"   onFinish={formHandler}>
       
           <Form.Item
       name="email"
       rules={[
         {
           required: true,
-          message: 'Please input your username!',
+          message: 'Please enter your email',
         },
       ]}
     >
@@ -66,29 +68,29 @@ const Regsiter = () => {
       rules={[
         {
           required: true,
-          message: 'Please input your username!',
+          message: 'Please enter your mobile number',
         },
       ]}
     >
-      <Input type='Number' placeholder="Enter your Mobile Number" />
+      <Input type='Number'maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
     </Form.Item >
       <Form.Item    
       name="password"
       rules={[
         {
           required: true,
-          message: 'Please input your password! and it should be six digit long',
+          message: 'Please select your password! and it should be six digit long',
         },
       ]}
     >
-      <Input.Password   placeholder='Enter Your Passowrd'/>
+      <Input.Password min={6}   placeholder='Enter Your Passowrd'/>
     </Form.Item>
       <Form.Item    
       name="role"
       rules={[
         {
           required: true,
-          message: 'Please input your password!',
+          message: 'Please select your role',
         },
       ]}
     >
@@ -98,19 +100,8 @@ const Regsiter = () => {
       <Radio value={0}>Contractor</Radio>
     </Radio.Group>
     </Form.Item>
-          <div className="flex justify-between items-center">
-            <div className="form-group form-check">
-                        <Form.Item
-                name="remember"
-                valuePropName="checked"
-                >
-                <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-            </div>
-            {/* <Link to="#!" className="text-gray-800 mb-6">Forgot password?</Link> */}
-          </div>
-
-          <div className="text-center lg:text-left">
+    i acknowledge that i have read and agree to the above terms and conditions
+          <div className="text-center mt-5 lg:text-left">
             <button
               type="submit"
               className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"

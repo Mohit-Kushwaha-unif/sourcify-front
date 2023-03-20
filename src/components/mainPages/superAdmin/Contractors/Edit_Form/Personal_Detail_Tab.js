@@ -19,6 +19,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   //     form.resetFields()
   // },[formValues])
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isMSMEVisible, setIsMSMEVisible] = useState(false)
   
   const [msmeImageD, set_msmeImageD] = useState('')
@@ -33,6 +34,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [initialpf, setStateInitialpf] = useState('')
   const [form] = Form.useForm();
   useEffect(() => {
+    if(formValues.msme_image !== "not provided"){
+      setIsMSMEVisible(true)
+    }
+    
     setStateInitialpf(formValues.msme_number)
     setStateInitialValue(location.state?.email)
   }, [location])
@@ -180,7 +185,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           <Form.Item name="entity" label="Name of Entity" rules={[
             {
               required: true,
-              message: 'Please input your Entity Name!',
+              message: 'Please enter your Entity Name!',
             },
           ]}
             initialValue={formValues.entity}>
@@ -323,8 +328,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
             </Form.Item>
             {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
             <div className='form_flex_children '>
-              {formValues.gst_image !== "not provided" ? <><div>Copy Of PF</div><img src={formValues.gst_image} className='cursor-pointer underline text-blue-400' /><MinusCircleOutlined  className='cursor-pointer' /></>
-                :
+              {isMSMEVisible == true ? <><div>Copy Of PF</div>   <div className='mt-3 inline-block'>
+                          <span className='text-[#FF5757] underline mr-3'><a href={formValues.msme_image}  target="_blank" download>
+                            Preview</a> </span> <span className=' text-[#FF5757] cursor-pointer underline' onClick={() => setIsMSMEVisible(false)} >Delete</span>
+                        </div>   </>     :
                 <Form.Item name="msme_image" label="Copy of PF ">
                   <Input type='file' max={1} onChange={msme_img_value} />
                 </Form.Item>}</div> </div>
@@ -351,16 +358,14 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
             </div>
           </div>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button className='form_button' type="primary" htmlType="submit">
+          <div className='flex justify-between'>
+            <button className='primary_btn ' type="primary" onClick={()=>navigate('/admin/contractors-list')}>
+              Back
+            </button>
+            <button className='primary_btn' type="primary" htmlType="submit">
               Next Step
-            </Button>
-          </Form.Item>
+            </button>
+          </div>
         </Form>
       </div>
     </>

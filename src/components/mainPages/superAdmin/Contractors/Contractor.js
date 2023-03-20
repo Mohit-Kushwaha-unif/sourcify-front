@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag } from 'antd';
-import Table from 'ant-responsive-table'
+import { Space, Tag,Table } from 'antd';
+// import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -38,7 +38,7 @@ const Contractor = () => {
 
     function deleteHandler(id) {
         dispatch(ContractorServices.remove_contractor(id)).then((res) => {
-            Swal.fire('Contractor Removed', 'Contractor is removed Sucessfully', 'info')
+window.location = '/admin/contractors-list'
         })
     }
 
@@ -103,18 +103,24 @@ const Contractor = () => {
                     <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/contractor-form')}
-                            className="inline-block mb-5 px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                            className="primary_btn mb-3"
                         >
-                            Add New User </button>
+                            Add New Contractor </button>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Contractors List</p>
                         </div>
-                        <Table antTableProps={{
+                        {/* <Table antTableProps={{
                             showHeader: true,
                             columns: columns,
                             dataSource: tableData,
                             pagination: true
-                        }} mobileBreakPoint={768} />
+                        }} mobileBreakPoint={768} /> */}
+                        <Table 
+                            
+                            columns={columns}
+                            dataSource= {tableData}
+                            pagination ={{pageSize: 5}}
+                        />
                     </div>
                 </div>
             </div>

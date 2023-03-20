@@ -132,8 +132,10 @@ const Header = () => {
     <div className='container'>
     <header className='navbar flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center justify-between '>
-        <div> <img className='h-[3rem]  ' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
-        <span><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></span>
+        <div> <img className='w-[70%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
+        <div className='md:hidden flex-end absolute right-[10px] top-[30px] '>
+        <span><MenuOutlined onClick={() => setShowMenu(!showMenu)}  /></span>
+        </div>
       </div>
       {showMenu && <>
         {/* <div className='navbar__item flex-row'>

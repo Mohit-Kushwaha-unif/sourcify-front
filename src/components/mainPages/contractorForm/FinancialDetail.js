@@ -8,16 +8,82 @@ import * as Contractor_service from '../../../services/contractor'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 const FinancialDetail = () => {
     const navigation = useNavigate()
     const [valid_pan, set_Valid_pan] = useState(false)
     const [valid_gst, set_Valid_gst] = useState(false)
     const [pan_imaged, set_panImageD] = useState('')
     const [gstImageD, set_gstImageD] = useState('')
+    const [isPANchange, setIsPANchange] = useState(false)
+    const [showGstImage, setShowGstImage] = useState(true)
+    const [initialpan, setStateInitialpan] = useState('')
+    const [initialgst, setStateInitialgst] = useState('')
+    const [showError,setShowError] = useState(false)
+    const [formValues, setformValues] = useState('')
+    const [turnover, setTurnover] = useState([])
+    useEffect(() => {
+        if (formValues.pan_number != "not provided") {
+
+            setStateInitialpan(formValues.pan_number)
+        }
+        set_panImageD(formValues.pan_image)
+        console.log(formValues.gst_image)
+        if(formValues.pan_image){
+            setIsPANchange(true)
+        }
+        if (formValues.gst_number != "not provided") {
+
+            setStateInitialgst(formValues.gst_number)
+        }
+        if (formValues.gst_image === "not provided") {
+            setShowGstImage(false)
+        }
+        else{
+            set_gstImageD(formValues.gst_image)
+        }
+
+        var data = []
+        formValues?.turnover?.map((val) => {
+            console.log(val)
+
+            Object.keys(val).map((turn) => {
+                var obj = {}
+                obj["name"] = turn
+                obj["value"] = val[turn]
+                data.push(val)
+            })
+        })
+        setTurnover(data)
+
+    }, [formValues])
+    useEffect(() => {
+        if (localStorage.getItem("form_id")) {
+            dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
+                setformValues(res)
+
+            })
+        }
+
+    }, [])
+    var year = [];
+    var years = []
+    formValues?.turnover?.map((_, index) => {
+        Object.keys(_, [index]).map((turnOvers) => {
+            console.log(turnOvers)
+            years.push(turnOvers)
+            year.push(_[turnOvers])
+        })
+    })
     const dispatch = useDispatch()
     function FormHandler(value) {
         let FormField = { "Turnover": [] }
-
+        value.pan_image = pan_imaged
+        value.gst_image = gstImageD
+        if(value.pan_image == ''){
+            setShowError(true)
+            return false
+        }
         if (!value.gst_number) {
             value.gst_number = "N/A"
         }
@@ -98,7 +164,10 @@ const FinancialDetail = () => {
     function gst_img_value(e) {
         set_gstImageD(e.target.files[0])
     }
-
+    function finishFaild(val){
+        console.log(val)
+    }
+    console.log(formValues.pan_image );
     return (
         <section className="min-h-min mt-10 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
             <div className="px-8 h-full text-gray-800">
@@ -113,27 +182,27 @@ const FinancialDetail = () => {
                             className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                         >
                         </div>
-                        <Form labelAlign="left"
-                            layout="vertical" onFinish={FormHandler}>
+                        {formValues.pan_image==undefined|| formValues == '' ? <Form labelAlign="left"
+
+                            layout="vertical" onFinish={FormHandler} onFinishFailed={finishFaild}>
                             <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
                             <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                            <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Bank Overdraft Limit'
-                                },
-                            ]}
-                            >
-
-                                <Input />
-                            </Form.Item>
-                            <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Bank Overdraft Limit'
-                                },
-                            ]}
-                            >
+                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter value'
+                                    },
+                                ]}
+                                >
+                                    <Input placeholder='Please enter turnover amount' />
+                                </Form.Item>
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter value'
+                                    },
+                                ]}
+                                >
 
                                 <Input />
                             </Form.Item>
@@ -183,14 +252,162 @@ const FinancialDetail = () => {
                                 </div>
                                 <div className='form_flex_children mr-2'>
                                     <Form.Item name="pan_image" label="PAN Image" rules={[
+                                    
+                                    ]}> <Input type='file'  onChange={pan_img_value} />
+                                    </Form.Item>
+
+                                </div>
+                            </div>
+
+                            <div className='form_email_mobile_flex'>
+                                <div className='form_flex_children mr-2'>
+                                    <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                                        <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number"/>
+                                    </Form.Item>
+                                    {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}</div>
+
+                                <div className='form_flex_children '>
+                                <Form.Item name="gst_image" label="Copy Of GST" >
+                                            <Input type='file' max={1} onChange={gst_img_value} />
+                                        </Form.Item>
+                                </div> </div>
+
+
+
+
+
+
+                            <div className="text-center lg:text-left flex justify-between">
+                                <button
+                                    type="submit"
+                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={()=>navigation('/contractor-form')}
+                                >
+
+                                    Back
+
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                >
+
+                                    Save
+
+                                </button>
+                            </div>
+                        </Form> : <Form labelAlign="left"
+                        onFinishFailed={finishFaild}
+                            fields={[turnover,
+                                {
+                                    name: ["Approved_Limit"],
+                                    value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : ''
+                                },
+                                {
+                                    name: ["consumed"],
+                                    value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : ''
+                                },
+                                {
+                                    name: [`Turnover_${new Date().getFullYear()}`],
+                                    value: year[0]
+                                },
+                                {
+                                    name: [`Turnover_${new Date().getFullYear() - 1}`],
+                                    value: year[1]
+                                },
+                                {
+                                    name: [`Turnover_${new Date().getFullYear() - 2}`],
+                                    value: year[2]
+                                },
+
+                                {
+                                    name: ["pan_number"],
+                                    value: initialpan?.replace(/[\[\]\\",]/g,'')
+                                },
+                                {
+                                    name: ["gst_number"],
+                                    value: initialgst?.replace(/[\[\]\\",]/g,'')
+                                },
+
+                            ]}
+                            layout="vertical" onFinish={FormHandler}>
+                            <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                            <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
+                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter your Bank Overdraft Limit'
+                                    },
+                                ]}
+                                >
+
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter value'
+                                    },
+                                ]}
+                                >
+
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter value'
+                                    },
+                                ]}
+                                >
+
+                                    <Input />
+                                </Form.Item>
+                            </div>
+                            <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
+                            <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
+                                <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter value'
+                                    },
+                                ]}
+                                    className="mb-1"
+                                >
+
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item name="consumed" label="Consumed " className="mt-0"
+                                >
+
+                                    <Input />
+                                </Form.Item>
+                            </div>
+                            <div className='form_email_mobile_flex'>
+                                <div className='form_flex_children mr-2'>
+                                    <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
                                         {
                                             required: true,
                                             message: 'Please provide pan image!'
                                         },
                                     ]}>
-
-                                        <Input type='file' max={1} onChange={pan_img_value} />
+                                    <Input />
                                     </Form.Item>
+                                </div>
+                                <div className='form_flex_children mr-2'>
+                                  
+                                    {
+                                        isPANchange ? <><div>Copy Of PAN</div> 
+                                           <div className='mt-3 inline-block'>
+                          <span className='text-[#FF5757] underline mr-3'><a href={formValues.pan_image} target="_blank" download>
+                            Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setIsPANchange(false)} >Delete</span>
+                        </div>
+                         </>                   : <Form.Item name="pan_image" label="PAN Image" >
+                                                 <Input type='file' max={1} onChange={pan_img_value} />
+                                            </Form.Item>
+
+                                    }
+                                    {showError&& <span style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</span>}
                                 </div>
                             </div>
 
@@ -202,9 +419,13 @@ const FinancialDetail = () => {
                                     {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}</div>
 
                                 <div className='form_flex_children '>
-                                    <Form.Item name="gst_image" label="GST Image" >
-                                        <Input type='file' max={1} onChange={gst_img_value} />
-                                    </Form.Item>
+                                    {showGstImage ? <><div>Copy Of GST</div>
+                                    <div className='mt-3 inline-block'>
+                          <span className='text-[#FF5757] underline mr-3'><a href={formValues.gst_image} target="_blank" download>
+                            Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGstImage(false)} >Delete</span>
+                        </div> </>           : <Form.Item name="gst_image" label="Copy Of GST" >
+                                            <Input type='file' max={1} onChange={gst_img_value} />
+                                        </Form.Item>}
                                 </div> </div>
 
 
@@ -212,7 +433,16 @@ const FinancialDetail = () => {
 
 
 
-                            <div className="text-center lg:text-left flex justify-center">
+                            <div className="text-center lg:text-left flex justify-between">
+                                <button
+                                    type="submit"
+                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={()=>navigation('/contractor-form')}
+                               >
+
+                                    Back
+
+                                </button>
                                 <button
                                     type="submit"
                                     className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
@@ -223,7 +453,9 @@ const FinancialDetail = () => {
                                 </button>
                             </div>
                         </Form>
-                    </div>
+                   
+}
+</div>
                 </div>
             </div>
         </section>

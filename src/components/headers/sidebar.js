@@ -17,7 +17,7 @@ const Sidebar = () => {
     }
     return (
 
-        <div className="flex flex-col min-h-screen h-inherit p-3 bg-white shadow w-60">
+        <div className="flex flex-col min-h-screen h-inherit bg-white px-4 p-3">
             <div className="space-y-3">
                 <div className="flex items-center">
                     <h2 className="text-xl font-bold">Dashboard</h2>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                                 <span>Contractors</span>
                             </NavLink>
                         </li>
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/about-us"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -66,7 +66,7 @@ const Sidebar = () => {
                                  4.4 3.6 8 8 8z"></path></g></svg>
                                 <span>About US</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/companies"
@@ -108,7 +108,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
 
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/all-listing"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -119,8 +119,8 @@ const Sidebar = () => {
                                     <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3z" />
                                 </svg>   <span>Listings</span>
                             </NavLink>
-                        </li>
-                        <li className="rounded-sm">
+                        </li> */}
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/feedbacks"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -130,8 +130,8 @@ const Sidebar = () => {
                                 </svg>
                                 <span>Feedbacks</span>
                             </NavLink>
-                        </li>
-                        <li className="rounded-sm">
+                        </li> */}
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/carausel-list"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -144,7 +144,7 @@ const Sidebar = () => {
                                
                                 <span>Caraousel</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}

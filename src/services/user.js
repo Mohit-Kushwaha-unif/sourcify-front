@@ -35,9 +35,21 @@ export const update_user = (fromdata)=>{
         })
     
 }
-export const get_user_info = (fromdata)=>{
-    return ()=>
-        new Promise((resolve,reject)=>{
+export const update_user_info = (fromdata) => {
+    return () =>
+        new Promise((resolve, reject) => {
+            console.log(fromdata)
+            Http.post(user_url + 'update_info_user', fromdata).then((res) => {
+                return resolve(res.data)
+            }).catch((err) => {
+                return reject(err)
+            })
+        })
+
+}
+export const get_user_info = (fromdata) => {
+    return () =>
+        new Promise((resolve, reject) => {
             console.log(fromdata)
             Http.post(user_url+'infor',fromdata).then((res)=>{
                 return resolve(res.data)

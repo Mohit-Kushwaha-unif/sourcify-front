@@ -9,14 +9,95 @@ body {
   ;
 }
 
+.primary_btn{
+  display: inline-block;
+padding-left: 1.75rem;
+padding-right: 1.75rem;
+padding-top: 0.75rem;
+padding-bottom: 0.75rem;
+background-color: #FF5757;
+color: #fff;
+font-weight: 500;
+font-size: 0.875rem;
+line-height: 1.25rem;
+text-transform: uppercase;
+border-radius: 0.5rem;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 1px -1px rgba(0, 0, 0, 0.1);
+transition-property: background-color, box-shadow;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+transition-duration: 150ms;
+outline: none;
+border: none;
+cursor: pointer;
+text-align: center;
+white-space: nowrap;
+text-decoration: none;
+user-select: none;
+touch-action: manipulation;
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
+
+
+/* Hover state */
+.primary_btn:hover {
+  background-color: #e31c3d;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus state */
+.primary_btn:focus {
+  background-color: #e31c3d;
+  box-shadow: 0 0 0 3px rgba(227, 28, 61, 0.5);
+}
+
+/* Active state */
+.primary_btn:active {
+  background-color: #9b1c34;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+}
+
+
 .swal2-containers.swal2-top-end>.swal2-popup {
   grid-column: 3;
   align-self: start;
   justify-self: center !important;
 }
-
-
-
+.ant-select-selector{
+  border-radius: 0 !important;
+}
+.ant-input, .ant-picker  {
+  border-radius: 0 !important;
+  padding-top: 6px !important;
+  padding-bottom : 6px !important
+}
+.ant-input[type= 'file']  {
+ 
+  padding-top: 3.5px !important;
+  padding-bottom : 3.5px !important
+}
+.ant-form-item-control-input {
+  border-radius: 0 !important;
+  
+}
+.ant-input-affix-wrapper {
+  padding-top: 6px;
+  padding-bottom : 6px;
+  border-radius: 0px !important;
+}
+:where(.css-dev-only-do-not-override-ixblex).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  width: 100%;
+  height: 35px;
+  padding: 1px 11px;
+}
+.ant-form-item{
+  margin-bottom: 12px;
+}
+.ant-form-item-explain-error{
+  margin-bottom: 20px;
+}
 /* Global CSS */
 
 /* .btn-primary {
@@ -33,7 +114,7 @@ body {
   border: 3px solid white !important;
 } */
 .hero-abt-quote {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 29px;
   letter-spacing: 0em;
@@ -86,7 +167,8 @@ input[type=number] {
 }
 
 .ant-space-item {
-  min-width: 90% !important;
+  /* min-width: 90% !important; */
+  gap: 0 !important;
 }
 
 .about_head_content {
@@ -97,17 +179,19 @@ input[type=number] {
 }
 
 .background-image {
-  background-size: cover;
-  background-position: center center;
+  /* background-size: cover; */
+  /* filter: brightness(30%); */
+  /* background-position: center center; */
   height: 500px;
-  display: flex;
+  background: rgba(0, 0, 0, 0.79);
+  /* display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative;
+  position: relative; */
 }
 
-.background-image::before {
+/* .background-image::before {
   content: "";
   position: absolute;
   top: 0;
@@ -116,9 +200,9 @@ input[type=number] {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: -1;
-}
+} */
 
-.background-image h1,
+/* .background-image h1,
 .background-image p {
   position: relative;
   color: #fff;
@@ -127,7 +211,7 @@ input[type=number] {
 
 .background-image h1 {
   color: #FF5757;
-}
+} */
 
 
 
@@ -149,11 +233,23 @@ input[type=number] {
 
 
 }
+.hero-overlay{
+  position: relative;
+}
 
-
+.hero-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity value to darken/lighten the image */
+  z-index: -1;
+}
 .hero-abt-sourcify {
   color: #FF5757;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 29px;
   letter-spacing: 0em;
@@ -161,13 +257,33 @@ input[type=number] {
 
 .hero-abt-title {
 
-font-size: 42px;
+font-size: 2.5625rem;
 font-weight: 600;
 line-height: 51px;
 letter-spacing: 0em;
 text-align: center;
+color: #f1f1f1;
 
 }
+@media only screen and (max-width: 600px) {
+  .hero-abt-title {
+
+    font-size: 1.5rem;
+font-weight: 600;
+letter-spacing: 0em;
+text-align: center;
+color: #f1f1f1;
+    }
+    .hero-abt-sourcify {
+      color: #FF5757;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 29px;
+      letter-spacing: 0em;
+    }
+    
+}
+
 
 .founder_about_image {
   min-height: 500px;
@@ -211,3 +327,109 @@ text-align: center;
 .footer li {
   margin: 10px 0px;
 }
+/* 
+.image-box {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: calc(100% * (100 / 300));
+} */
+
+
+/* .ant-table-tbody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px solid black; */
+  /* overflow-x: auto; */
+/* }  */
+
+/* .ant-table-thead {
+  display: flex;
+  flex-direction: row;
+  background-color: lightgray;
+  font-weight: bold;
+}
+
+.thead {
+  display: flex;
+  flex-direction: row;
+}
+
+.ant-table-cell {
+  flex-basis: 33.33%;
+  padding: 5px;
+} */
+
+/* @media (max-width: 768px) {
+  .ant-table-thead{
+    flex-direction: column;
+  }
+  .thead {
+    flex-direction: column;
+  }
+} */
+/* table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+} */
+.ant-table {
+  white-space: nowrap;
+}
+
+.ant-table thead th {
+  min-width: 100px;
+}
+@media screen and (max-width: 768px) {
+  .ant-table thead,
+  .ant-table tbody,
+  .ant-table th,
+  .ant-table td,
+  .ant-table tr {
+    display: block;
+  }
+
+  .ant-table thead tr {
+    transform: translateX(-100%);
+    white-space: nowrap;
+  }
+
+  .ant-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .ant-table td:before {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    content: attr(data-column);
+    font-weight: bold;
+  }
+
+  /* Show table header */
+  .ant-table thead {
+    display: table-header-group;
+  }
+  
+  /* Hide table rows without data */
+  .ant-table tbody tr:not(:empty) {
+    display: table-row;
+  }
+
+  /* Add padding to table cells */
+  .ant-table td:before {
+    padding-top: 10px;
+  }
+}
+

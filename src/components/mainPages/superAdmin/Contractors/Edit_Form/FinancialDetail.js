@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { MinusCircleOutlined } from '@ant-design/icons';
-const FinancialDetail = ({ formValues }) => {
+const FinancialDetail = ({ formValues,isClicked }) => {
     const navigation = useNavigate()
     const dispatch = useDispatch()
     const [pan_imaged, set_panImageD] = useState('')
@@ -20,21 +20,21 @@ const FinancialDetail = ({ formValues }) => {
     const [showGstImage, setShowGstImage] = useState(false)
     const [initialpan, setStateInitialpan] = useState('')
     const [initialgst, setStateInitialgst] = useState('')
-    const [turnover,setTurnover] = useState([])
+    const [turnover, setTurnover] = useState([])
     useEffect(() => {
         if (formValues.pan_number != "not provided") {
             setIsPANchange(true)
             setStateInitialpan(formValues.pan_number)
         }
-        if(formValues.gst_number != "not provided"){
+        if (formValues.gst_number != "not provided") {
             setShowGstImage(true)
             setStateInitialgst(formValues.gst_number)
         }
         var data = []
-        formValues.turnover.map((val)=>{
+        formValues.turnover.map((val) => {
             console.log(val)
-          
-            Object.keys(val).map((turn)=>{
+
+            Object.keys(val).map((turn) => {
                 var obj = {}
                 obj["name"] = turn
                 obj["value"] = val[turn]
@@ -42,7 +42,7 @@ const FinancialDetail = ({ formValues }) => {
             })
         })
         setTurnover(data)
-        
+
     }, [])
     function FormHandler(value) {
         let FormField = { "Turnover": [] }
@@ -69,7 +69,7 @@ const FinancialDetail = ({ formValues }) => {
         formData.append("form_id", formValues._id)
         dispatch(Contractor_service.update_contractor(formData)).then((res) => {
             Swal.fire({
-                position: 'top-end',
+            
                 icon: 'success',
                 title: 'Your work has been saved',
                 showConfirmButton: false,
@@ -79,7 +79,7 @@ const FinancialDetail = ({ formValues }) => {
             // Catch errors if any
             .catch((err) => {
                 Swal.fire({
-                    position: 'top-end',
+                   
                     icon: 'error',
                     title: err.response.data.msg,
                     showConfirmButton: true,
@@ -129,12 +129,14 @@ const FinancialDetail = ({ formValues }) => {
     function gst_img_value(e) {
         set_gstImageD(e.target.files[0])
     }
-    console.log(...turnover,'Turnover_'+new Date().getFullYear())
+    function clickHnadler(){
+        isClicked(2)
+    }
     return (
         <div className='bg-white p-3 rounded-xl '>
             <Form labelAlign="left"
                 layout="vertical"
-                fields={[  turnover,
+                fields={[turnover,
                     {
                         name: ["Approved_Limit"],
                         value: formValues.bank_overdraft[0].approved
@@ -155,16 +157,16 @@ const FinancialDetail = ({ formValues }) => {
                         name: [`Turnover_${new Date().getFullYear() - 2}`],
                         value: year[2]
                     },
-                   
+
                     {
                         name: ["pan_number"],
-                        value: [initialpan]
+                        value: initialpan.replace(/[\[\]\\",]/g,'')
                     },
                     {
                         name: ["gst_number"],
-                        value: [initialgst]
+                        value: initialgst.replace(/[\[\]\\",]/g,'')
                     },
-                   
+
                 ]}
                 onFinish={FormHandler}>
                 <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
@@ -233,8 +235,10 @@ const FinancialDetail = ({ formValues }) => {
                     <div className='form_flex_children mr-2'>
 
                         {
-                            isPANchange ? <><div>Copy Of PAN</div> <img src={formValues.pan_image} className='cursor-pointer underline text-blue-400' /><MinusCircleOutlined onClick={() => { setIsPANchange(false) }} className='cursor-pointer' /></>
-                                : <Form.Item name="pan_image" label="PAN Image" rules={[
+                            isPANchange ? <><div>Copy Of PAN</div><div className='inline-block'>
+                            <span className='font-bold underline mr-3'><a href={formValues.pan_image} target="_blank" download>
+                              Preview</a> </span> <span className='font-bold cursor-pointer underline' onClick={() => setIsPANchange(false)} >Delete</span>
+                          </div> </> : <Form.Item name="pan_image" label="PAN Image" rules={[
                                     {
                                         required: true,
                                         message: 'Please provide pan image!'
@@ -255,8 +259,10 @@ const FinancialDetail = ({ formValues }) => {
                         {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}</div>
 
                     <div className='form_flex_children '>
-                        {showGstImage ? <><div>Copy Of GST</div> <img src={formValues.gst_image} className='cursor-pointer underline text-blue-400' /><MinusCircleOutlined onClick={() => { setShowGstImage(false) }} className='cursor-pointer' /></>
-                            : <Form.Item name="gst_image" label="Copy Of GST" >
+                        {showGstImage ? <><div>Copy Of GST</div><div className='mt-3 inline-block'>
+                          <span className='text-[#FF5757] underline mr-3'><a href={formValues.gst_image} target="_blank" download>
+                            Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGstImage(false)} >Delete</span>
+                        </div> </> : <Form.Item name="gst_image" label="Copy Of GST" >
                                 <Input type='file' max={1} onChange={gst_img_value} />
                             </Form.Item>}
                     </div> </div>
@@ -265,23 +271,20 @@ const FinancialDetail = ({ formValues }) => {
 
 
 
-                <Form.Item
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <div className="text-center lg:text-left">
-                        <button
-                            type="submit"
-                            className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                        >
 
-                            Submit & Save details
+                <div className="flex justify-between text-center lg:text-left">
+                    <button className='primary_btn '  onClick={clickHnadler}>
+                        Back
+                    </button>
 
-                        </button>
-                    </div>
-                </Form.Item>
+                    <button
+                        type="submit"
+                        className="primary_btn"
+                    >
+                        Save details
+                    </button>
+                </div>
+
             </Form>
         </div>
 

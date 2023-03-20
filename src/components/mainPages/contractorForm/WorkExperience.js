@@ -15,14 +15,31 @@ import state_cites from '../../../assests/state_city.';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Contractor_service from '../../../services/contractor'
+import { useEffect } from 'react';
 const WorkExperience = () => {
   const navigation = useNavigate()
   const dispatch = useDispatch()
   const [state, setState] = useState(["All State"])
   const [projectCount, setProjectCount] = useState(0)
+  const [formData, setFormData] = useState()
   function countrySelectHandler(country) {
     setState((prevState) => prevState, state_cites[country])
   }
+  var projects = []
+  useEffect(() => {
+    if (localStorage.getItem("form_id")) {
+      dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
+        setFormData(res)
+      
+        res?.projects?.map((project)=>{
+            projects.push(project)
+        })
+        setFormData(projects)
+  
+      })}
+    
+
+  }, [])
   function FormHandler(value) {
     console.log({ value })
     var formData = new FormData()
@@ -52,21 +69,33 @@ const WorkExperience = () => {
             >
             </div>
             <Form labelAlign="left" name="dynamic_form_nest_item"
+              fields={[
+                {
+                  name: ["Project"],
+                  value: [...projects]
+                }
+
+              ]}
               layout="vertical" onFinish={FormHandler}>
 
-              <div className='mb-2'>Projects <span className='intialValue'></span></div>
+              <p className='mb-2 '>Projects <span className='intialValue'></span></p>
               <Form.List name="Project">
                 {(fields, { add, remove }) => (
                   <>
 
                     {fields.map(({ key, name, ...restField }) => (
-                      <>  <p className='mb-3'>#Project {key + 1}</p>
-                        <Space
-                          key={key}
-                          className=" w-full "
-                          align="baseline"
-                        >
-
+                      <>
+                      <div className='grid grid-cols-2 w-full'>
+                        <p className=' flex mb-3'>#Project {key + 1}  </p> 
+                        <div className=' float-right'>
+                          <span className='mb-3  text-[#FF5757] cursor-pointer underline float-right ' onClick={() => remove(name)}>
+                          <AiFillDelete className='ml-2 cursor-pointer w-5 h-5 float-right'  >  </AiFillDelete>
+                        Remove
+                        </span>
+                      </div>
+                      </div>
+                      
+                        
                           <div className=" grid grid-cols-1 md:grid-cols-3 gap-x-6 ">
 
 
@@ -122,7 +151,7 @@ const WorkExperience = () => {
                                 },
                               ]}
                             >
-                              <Select id="country-state" mode="multiple" name="State" style={{ width: '100%' }} placeholder="Select State" onSelect={countrySelectHandler}>
+                              <Select id="country-state" name="State" style={{ width: '100%' }} placeholder="Select State" onSelect={countrySelectHandler}>
                                 {Object.keys(state_cites).map((state) => {
                                   return (<Select.Option value={state}>{state}</Select.Option>)
                                 }
@@ -158,7 +187,7 @@ const WorkExperience = () => {
                             </Form.Item>
 
                           </div>
-                          <AiFillDelete className='cursor-pointer w-5 h-5' onClick={() => remove(name)} />
+                         
                           {/* <svg xmlns="http://www.w3.org/2000/svg" onClick={() => remove(name)} className="w-6 h-6" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0z" fill="black" />
                             <path d="M19 6H5v12h14V6zm-4.25 7.71l-1.47 1.47L12 11.48l-1.28 1.28-1.47-1.47L10.52 10l-1.28-1.28 1.47-1.47L12 8.52l1.28-1.28 1.47 1.47L13.48 10l1.27 1.71z" fill="#ffffff"  />
@@ -166,7 +195,7 @@ const WorkExperience = () => {
 
                           {/* <MinusCircleOutlined onClick={() => remove(name)} /> */}
 
-                        </Space>
+                        
                       </>
 
 
@@ -262,21 +291,16 @@ const WorkExperience = () => {
           </>
         )}
       </Form.List> */}
-              <Form.Item
-                name="remember"
-                valuePropName="checked"
+              
 
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please check the check box!'
-                  },
-                ]}
-              >
-                <Checkbox>I hereby Consent all the information Provided is true</Checkbox>
-              </Form.Item>
-
-              <div className='flex justify-center'>
+              <div className='flex justify-between'>
+                <button
+                  type="submit"
+                  className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  onClick={()=>navigation('/contractor-form/financial-detail')}
+                >
+                  Back
+                </button>
                 <button
                   type="submit"
                   className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
@@ -284,7 +308,7 @@ const WorkExperience = () => {
                   Save
                 </button>
               </div>
-              
+
             </Form>
           </div>
         </div>
