@@ -26,13 +26,13 @@ const Login = () => {
   function formHandler(value) {
     dispatch(login(value)).then(res => {
    
-        localStorage.setItem('accesstoken', res.data.accesstoken)
-        localStorage.setItem('user_id', res.data.user._id)
-        localStorage.setItem('email', res.data.user.email)
-        localStorage.setItem('number', res.data.user.number)
-        dispatch(setValue(res.data.user.role))
+        localStorage.setItem('accesstoken', res.accesstoken)
+        localStorage.setItem('user_id', res.user._id)
+        localStorage.setItem('email', res.user.email)
+        localStorage.setItem('number', res.user.number)
+        dispatch(setValue(res.user.role))
 
-        if (res.data.user.role === 1) {
+        if (res.user.role === 1) {
           dispatch(get_Vendor()).then((res) => {
             console.log(res)
             var user_exist = res.filter((user_data) => {
@@ -53,16 +53,16 @@ const Login = () => {
           })
         }
 
-        else if (res.data.user.role === 2) {
-          localStorage.setItem("adminEmail", res.data.user.email)
+        else if (res.user.role === 2) {
+          localStorage.setItem("adminEmail", res.user.email)
           navigate('/admin/contractors-list')
         }
         else
-          if (res.data.user.contractor_id) {
+          if (res.user.contractor_id) {
             navigate('/dashboard')
           }
           else {
-            navigate('/contractor-form', { state: res.data.user })
+            navigate('/contractor-form', { state: res.user })
           }
 
         // navigate('/contractor-form' ,{state:res.data.user})  
@@ -222,7 +222,7 @@ const Login = () => {
               <div className="text-center lg:text-left">
                 <button
                   type="submit"
-                  className="primary_btn"
+                  className="primary_btn primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                 >
                   Login
 
