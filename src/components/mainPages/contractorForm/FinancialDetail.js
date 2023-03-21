@@ -194,7 +194,7 @@ const FinancialDetail = () => {
                                     },
                                 ]}
                                 >
-                                    <Input placeholder='Please enter turnover amount' />
+                                    <Input type='number' placeholder='Please enter turnover amount' />
                                 </Form.Item>
                                 <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
                                     {
@@ -204,7 +204,7 @@ const FinancialDetail = () => {
                                 ]}
                                 >
 
-                                <Input  placeholder='Please enter turnover amount' />
+                                <Input type='number'  placeholder='Please enter turnover amount' />
                             </Form.Item>
                             <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
                                 {
@@ -214,7 +214,7 @@ const FinancialDetail = () => {
                             ]}
                             >
 
-                                <Input placeholder='Please enter turnover amount'  />
+                                <Input type='number' placeholder='Please enter turnover amount'  />
                             </Form.Item>
                             </div>
                             <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
@@ -228,12 +228,12 @@ const FinancialDetail = () => {
                                 className="mb-1"
                             >
 
-                                <Input placeholder='Please enter  amount' />
+                                <Input type='number' placeholder='Please enter  amount' />
                             </Form.Item>
                             <Form.Item name="consumed" label="Consumed " className="mt-0"
                             >
 
-                                <Input placeholder='Please enter turnover amount'  />
+                                <Input type='number' placeholder='Please enter turnover amount'  />
                             </Form.Item>
                             </div>
                             <div className='form_email_mobile_flex'>
@@ -351,7 +351,7 @@ const FinancialDetail = () => {
                                 ]}
                                 >
 
-                                    <Input />
+                                    <Input type='number' />
                                 </Form.Item>
                                 <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
                                     {
@@ -361,7 +361,7 @@ const FinancialDetail = () => {
                                 ]}
                                 >
 
-                                    <Input />
+                                    <Input type='number' />
                                 </Form.Item>
                             </div>
                             <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
@@ -375,12 +375,12 @@ const FinancialDetail = () => {
                                     className="mb-1"
                                 >
 
-                                    <Input />
+                                    <Input  type='number'/>
                                 </Form.Item>
                                 <Form.Item name="consumed" label="Consumed " className="mt-0"
                                 >
 
-                                    <Input />
+                                    <Input type='number' />
                                 </Form.Item>
                             </div>
                             <div className='form_email_mobile_flex'>
