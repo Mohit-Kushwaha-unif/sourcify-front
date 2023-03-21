@@ -95,11 +95,6 @@ const Edit_category = ({formValues}) => {
                     )}
                 </Form.List>
                 <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-       
       >
                 <div className="text-center flex justify-center lg:text-left">
                     <button
