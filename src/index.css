@@ -51,7 +51,7 @@ html {
 text-transform: capitalize;
 }  */
 
-.btn {
+/* .btn {
   color: var(--white);
   font-weight: 600;
   background-color: var(--red);
@@ -64,7 +64,7 @@ text-transform: capitalize;
   border: none;
   outline: none;
   cursor: pointer;
-}
+} */
 
 /* Define styles for when the button is hovered */
 /* .btn:hover {
