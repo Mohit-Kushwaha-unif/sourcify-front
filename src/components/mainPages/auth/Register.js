@@ -7,15 +7,25 @@ import {
   } from 'antd';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import {GiFactory} from 'react-icons/gi'
 import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
+import RadioGroup from './RadioButtonMaker';
 const Regsiter = () => {
     useDocumentTitle("Register Yourself")
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const handleRadioChange = (value) => {
+      console.log(`Selected option: ${value}`);
+    };
+  
+    const options = [
+      { value: 1, label: `I'm a company hiring for  projects`, className: 'leading-5 text-[12px] font-bold' },
+      { value: 0, label: "I'm Contractor looking for work", className: 'leading-5 text-[12px] font-bold' },
+    ];
+  
     function formHandler(values){
 
       dispatch(userService.register(values))
@@ -94,17 +104,22 @@ layout="vertical"   onFinish={formHandler}>
         },
       ]}
     >
-     
-     <Radio.Group  className='flex justify-between'>
+      <div className="py-4">
+      <RadioGroup options={options} defaultValue={1} cols={2} onChange={handleRadioChange} />
+    </div>
+     {/* <Radio.Group  className='grid grid-cols-1 md:grid-cols-2'>
      <Radio.Button value={1} className="h-auto" >
-        <div><p>I'm a company hiring for projects </p> 
-         </div>
+        <p className='leading-5 text-[16px] font-bold '>
+      
+
+I'm a company hiring for projects  </p> 
+         
       </Radio.Button>
       <Radio.Button value={0} className="h-auto" >
-       <div> <p> I'm Contractor looking for work </p> <hr/>
+       <div> <p className='leading-5'> I'm Contractor looking for work </p> <hr/>
         </div>
       </Radio.Button>
-    </Radio.Group>
+    </Radio.Group> */}
     </Form.Item>
     By continuing, I agree to the Terms of Use & Privacy Policy
           <div className="text-center mt-5 lg:text-left">

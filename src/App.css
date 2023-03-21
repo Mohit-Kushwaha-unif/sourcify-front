@@ -505,9 +505,10 @@ input[type=number] {
   line-height: 1.375;
   text-transform: uppercase;
   width: 100%;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   color: #FF5757;
   font-weight: 600;
+  border: 2px solid #FF5757;
   border-radius: 50px;
 }
 
@@ -522,4 +523,8 @@ input[type=number] {
 .back_btn:hover {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   background: #ffffff;
+}
+input[type=radio] {
+  -webkit-appearance: unset;
+  border: none;
 }
