@@ -235,8 +235,8 @@ const FinancialDetail = ({ formValues,isClicked }) => {
                     <div className='form_flex_children mr-2'>
 
                         {
-                            isPANchange ? <><div>Copy Of PAN</div><div className='inline-block'>
-                            <span className='font-bold underline mr-3'><a href={formValues.pan_image} target="_blank" download>
+                            isPANchange ? <><div>Copy Of PAN</div><div className='mt-3 inline-block'>
+                            <span className='text-[#FF5757] font-bold underline mr-3'><a href={formValues.pan_image} target="_blank" download>
                               Preview</a> </span> <span className='font-bold cursor-pointer underline' onClick={() => setIsPANchange(false)} >Delete</span>
                           </div> </> : <Form.Item name="pan_image" label="PAN Image" rules={[
                                     {
@@ -272,8 +272,8 @@ const FinancialDetail = ({ formValues,isClicked }) => {
 
 
 
-                <div className="flex justify-between text-center lg:text-left">
-                    <button className='primary_btn '  onClick={clickHnadler}>
+                <div className="flex justify-between text-center lg:text-left mt-3">
+                    <button className='primary_btn  inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out'  onClick={clickHnadler}>
                         Back
                     </button>
 

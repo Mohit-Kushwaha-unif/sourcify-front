@@ -42,7 +42,7 @@ const Footer = () => {
         <div className="mb-3 col-span-4">
         <h3>Newsletter</h3>
         <form>
-          <Input type="text" className='mb-3' />
+          <Input type="text" placeholder='Enter your email address' className='mb-3' />
         </form>
         <button className='primary_btn w-full'>Submit</button>
 
