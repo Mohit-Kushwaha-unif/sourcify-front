@@ -21,14 +21,15 @@ const Edit_Form = () => {
       function tabKeys(valueOfTab){
         console.log({valueOfTab})
         setActiveTab(valueOfTab)
+        return false
       }
  
-
+      console.log({activeTab})
       
   return (
     <div className='flex align-center ml-30 w-full p-2 px-3'>
         {
-            formData!==1 &&  <Tabs centered defaultActiveKey="1" onChange={tabKeys} activeKey={activeTab}  className='w-full'>
+            formData!==1 &&  <Tabs centered defaultActiveKey="1" onChange={tabKeys} onTabClick={tabKeys} activeKey={activeTab}  className='w-full'>
              <TabPane  tab="Basic Details" key="1"  disabled={activeTab!==tabKeys}>
               <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
             </TabPane>

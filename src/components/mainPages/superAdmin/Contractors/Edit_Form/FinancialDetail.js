@@ -130,7 +130,8 @@ const FinancialDetail = ({ formValues,isClicked }) => {
         set_gstImageD(e.target.files[0])
     }
     function clickHnadler(){
-        isClicked(2)
+        isClicked("2")
+       
     }
     return (
         <div className='bg-white p-3 rounded-xl '>
@@ -273,9 +274,9 @@ const FinancialDetail = ({ formValues,isClicked }) => {
 
 
                 <div className="flex justify-between text-center lg:text-left mt-3">
-                    <button className='primary_btn  inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out'  onClick={clickHnadler}>
+                    <span className='primary_btn  inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out'  onClick={clickHnadler}>
                         Back
-                    </button>
+                    </span>
 
                     <button
                         type="submit"

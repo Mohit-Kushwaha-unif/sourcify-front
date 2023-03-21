@@ -20,7 +20,7 @@ const WorkExperience = () => {
   const navigation = useNavigate()
   const dispatch = useDispatch()
   const [state, setState] = useState(["All State"])
-  const [projectCount, setProjectCount] = useState(0)
+  const [showMsg, setShowMsg] = useState(false)
   const [formData, setFormData] = useState()
   function countrySelectHandler(country) {
     setState((prevState) => prevState, state_cites[country])
@@ -49,7 +49,8 @@ const WorkExperience = () => {
     formData.append("form_id", localStorage.getItem("form_id"))
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       // navigation("/dashboard")
-      navigation("/")
+      setShowMsg(true)
+      // navigation("/")
     })
 
 
@@ -296,19 +297,19 @@ const WorkExperience = () => {
               <div className='flex justify-between'>
                 <button
                   type="submit"
-                  className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                   onClick={()=>navigation('/contractor-form/financial-detail')}
                 >
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                 >
                   Save
                 </button>
               </div>
-
+                {showMsg && <p className='text-[#FF5757] text-base'>Your profile saved successfully</p>}
             </Form>
           </div>
         </div>

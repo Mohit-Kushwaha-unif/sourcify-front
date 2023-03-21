@@ -12,7 +12,7 @@ const Footer = () => {
     
 
 
-    <footer className='container mx-auto px-4 bg-white'>
+    <footer className='container text-[14px] mx-auto px-4 bg-white'>
 
       <div className="grid grid-cols-1 md:grid-cols-12 footer">
         <div className="col-span-4 pl-3">

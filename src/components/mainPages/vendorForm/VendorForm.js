@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import state_cites from '../../../assests/state_city.';
 import { useDispatch } from 'react-redux';
-import { Add_Vendor } from '../../../services/Vendor';
+import { Add_Vendor, update_vendor } from '../../../services/Vendor';
 import { update_user } from '../../../services/user';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
@@ -20,19 +20,30 @@ const VendorForm = () => {
     values.user_id = localStorage.getItem("user_id")
   }
   values.role = 1
-    dispatch(Add_Vendor(values)).then((res)=>{
-      var obj ={}
-      obj.id = values.user_id
-      obj.vendor_id = res.data._id
-      dispatch(update_user(obj)).then((res)=>{
-        setShowMsg(true)
-        window.scroll(0,0)
-        // Swal.fire('Saved', 'Values Saved Successfully', 'success').then(()=>{
-          // navigator('/dashboard')
-          //  navigator('/')
-        // })
+    if(showMsg=== true){
+      values._id = localStorage.getItem("form_id")
+      dispatch(update_vendor(values)).then((res)=>{
+        var obj ={}
+        obj.id = values.user_id
+        obj.vendor_id = res.data._id
+        dispatch(update_user(obj)).then((res)=>{
+          setShowMsg(true)
+          window.scroll(0,0)
+        })
       })
-    })
+    }
+    else{
+      dispatch(Add_Vendor(values)).then((res)=>{
+        var obj ={}
+        obj.id = values.user_id
+        localStorage.setItem("form_id",res.data._id)
+        obj.vendor_id = res.data._id
+        dispatch(update_user(obj)).then((res)=>{
+          setShowMsg(true)
+          window.scroll(0,0)
+        })
+      })
+    }
     // console.log(values)
    }
    var email,number;
@@ -63,7 +74,7 @@ const VendorForm = () => {
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Onboarding Form</p>
             </div>
-          {showMsg && <p className='text-[#FF5757] text-base'> Your Profile has been submitted successfully</p> }
+          {showMsg && <p className='text-[#FF5757] text-base'> Your Profile has been saved successfully</p> }
             <div
               className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
             >
@@ -189,7 +200,7 @@ const VendorForm = () => {
               <div className='flex justify-center'>
                   <button
                     type="submit"
-                    className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                    className="inline-block px-32 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                   >
                     Save 
                   </button>
