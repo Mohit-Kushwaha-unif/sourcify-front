@@ -61,7 +61,7 @@ const WorkExperience = () => {
         <div
           className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
         >
-          <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+          <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl w-full p-6">
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Work Experience</p>
             </div>
@@ -294,18 +294,18 @@ const WorkExperience = () => {
       </Form.List> */}
               
 
-              <div className='flex justify-between'>
+              <div className='flex flex-col flex-col-reverse md:flex-row justify-between'>
                 <button
                   type="submit"
-                  className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  className='back_btn'
+                  // className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                   onClick={()=>navigation('/contractor-form/financial-detail')}
                 >
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
-                >
+                  className="save_Btn"      >
                   Save
                 </button>
               </div>

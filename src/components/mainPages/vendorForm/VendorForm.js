@@ -114,7 +114,7 @@ const VendorForm = () => {
 
                 <Input placeholder='Enter Contact Person Name' />
               </Form.Item>
-              <div className='form_email_mobile_flex '>
+              <div className='form_email_mobile_flex flex flex-col flex-col-reverse md:flex-row '>
                 <div className='form_flex_children mr-1'>
                   <Form.Item name="number" label="Number " rules={[
                     {

@@ -40,7 +40,7 @@ const Regsiter = () => {
     <div
       className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
     >
-      <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+      <div className="xl:ml-20 xl:w-4/12 lg:w-5/12 md:w-5/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
       <div className="flex flex-row items-center justify-center lg:justify-start">
             <p className="text-lg mb-0 mr-4">Register </p>
           </div>
@@ -95,16 +95,22 @@ layout="vertical"   onFinish={formHandler}>
       ]}
     >
      
-     <Radio.Group >
-     <Radio value={1}>Vendor</Radio>
-      <Radio value={0}>Contractor</Radio>
+     <Radio.Group  className='flex justify-between'>
+     <Radio.Button value={1} className="h-auto" >
+        <div><p>I'm a company hiring for projects </p> 
+         </div>
+      </Radio.Button>
+      <Radio.Button value={0} className="h-auto" >
+       <div> <p> I'm Contractor looking for work </p> <hr/>
+        </div>
+      </Radio.Button>
     </Radio.Group>
     </Form.Item>
     By continuing, I agree to the Terms of Use & Privacy Policy
           <div className="text-center mt-5 lg:text-left">
             <button
               type="submit"
-              className="inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out"
+              className="primary_btn w-full"
             >
                 Sign Up 
             </button>

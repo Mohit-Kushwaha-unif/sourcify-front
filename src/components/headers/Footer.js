@@ -15,7 +15,7 @@ const Footer = () => {
     <footer className='container text-[14px] mx-auto px-4 bg-white'>
 
       <div className="grid grid-cols-1 md:grid-cols-12 footer">
-        <div className="col-span-4 pl-3">
+        <div className="col-span-4 md:pl-3">
           <img src={Sourcify} className="image-box"/>
           <div className='flex items-center'><i className='mr-2'><FaLandmark/></i>115, Tower A, Spazedge, Sohna Road, Gurugram, Haryana 122018</div>
           <div className='flex items-center'><i className='mr-2'><BsFillTelephoneFill/></i>+91-99676 62976</div>

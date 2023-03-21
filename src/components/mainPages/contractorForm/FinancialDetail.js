@@ -174,7 +174,7 @@ const FinancialDetail = () => {
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
                 >
-                    <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl w-full p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Financial Detail</p>
                         </div>
@@ -182,7 +182,8 @@ const FinancialDetail = () => {
                             className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                         >
                         </div>
-                        {formValues.pan_image==undefined|| formValues == '' ? <Form labelAlign="left"
+                        {formValues.pan_image==undefined|| formValues == '' ?
+                         <Form labelAlign="left"
 
                             layout="vertical" onFinish={FormHandler} onFinishFailed={finishFaild}>
                             <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
@@ -236,7 +237,7 @@ const FinancialDetail = () => {
                                 <Input type='number' placeholder='Please enter turnover amount'  />
                             </Form.Item>
                             </div>
-                            <div className='form_email_mobile_flex'>
+                            <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                                 <div className='form_flex_children mr-2'>
                                     <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
                                         {
@@ -245,12 +246,13 @@ const FinancialDetail = () => {
                                         },
                                     ]}
                                     >
+                                        
                                         <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
                                     </Form.Item>
                                     {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
 
                                 </div>
-                                <div className='form_flex_children mr-2'>
+                                <div className='form_flex_children  mr-2'> 
                                     <Form.Item name="pan_image" label="PAN Image" rules={[
                                     
                                     ]}> <Input type='file'  onChange={pan_img_value} />
@@ -259,7 +261,7 @@ const FinancialDetail = () => {
                                 </div>
                             </div>
 
-                            <div className='form_email_mobile_flex'>
+                            <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                                 <div className='form_flex_children mr-2'>
                                     <Form.Item name="gst_number" className='mb-0' label="GST Number">
                                         <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number"/>
@@ -277,10 +279,10 @@ const FinancialDetail = () => {
 
 
 
-                            <div className="text-center lg:text-left flex justify-between">
+                            <div className="text-center lg:text-left flex flex-col flex-col-reverse md:flex-row justify-between">
                                 <button
                                     type="submit"
-                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    className="back_btn"
                                     onClick={()=>navigation('/contractor-form')}
                                 >
 
@@ -289,8 +291,7 @@ const FinancialDetail = () => {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
-                                >
+                                    className="save_Btn"       >
 
                                     Save
 
@@ -433,10 +434,10 @@ const FinancialDetail = () => {
 
 
 
-                            <div className="text-center lg:text-left flex justify-between">
+                            <div className="text-center lg:text-left flex flex-col md:flex-row justify-between">
                                 <button
                                     type="submit"
-                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    className="inline-block  w-full md:w-1/4  mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                                     onClick={()=>navigation('/contractor-form')}
                                >
 
@@ -445,7 +446,7 @@ const FinancialDetail = () => {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    className="inline-block  w-full md:w-1/4  mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                                 >
 
                                     Save

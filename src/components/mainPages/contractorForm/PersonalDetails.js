@@ -49,7 +49,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
         setFormData(res)
         console.log({ "res.gst_image res.gst_image ": res.gst_image })
-        if (res.msme_image != 'not provided') {
+        if (Object.keys(res).includes('msme_image') && res.msme_image != 'not provided') {
           setShowGSTimage(true)
         }
 
@@ -410,7 +410,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                     {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
                     <div className='form_flex_children  '>
                       {showGSTiMAGE ? <>
-                        <label>Copy Of PAN</label><br />
+                        <label>Copy Of PF</label><br />
                         <div className='mt-3 inline-block'>
                           <span className='text-[#FF5757] underline mr-3'><a href={formData.msme_image} target="_blank" download>
                             Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGSTimage(false)} >Delete</span>
@@ -426,7 +426,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                   <div className='flex justify-center'>
                     <button
                       type="submit"
-                      className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                      className="save_Btn"
                     >
                       Next
                     </button>
@@ -445,8 +445,8 @@ const [formval_workArea,setFormVal_work_area] = useState()
                   layout="vertical"
                   fields={
                     [
-                      { "name": "email", "value": location.state?.email },
-                      { "name": "mobile_number", "value": location.state?.number },
+                      { "name": "email", "value": localStorage.getItem('email') },
+                      { "name": "mobile_number", "value": localStorage.getItem('number') },
                     ]
 
                   }
@@ -468,7 +468,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                   ]}>
                     <Input placeholder='Enter the Name of Your Firm' />
                   </Form.Item>
-                  <div className='form_email_mobile_flex items-end'>
+                  <div className='form_email_mobile_flex flex-col md:flex-row '>
                     <div className='form_flex_children mr-2'>
                       <Form.Item label="Contact Person Full Name " name="username" rules={[
                         {
@@ -490,7 +490,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       </Form.Item>
                     </div>
                   </div>
-                  <div className='form_email_mobile_flex'>
+                  <div className='form_email_mobile_flex flex-col md:flex-row'>
                     {/*****************Email*******************/}
                     <div className='form_flex_children mr-2' >
                       <Form.Item name="email" label="Email " rules={[
@@ -603,41 +603,6 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       )}
                     </Select>
                   </Form.Item>
-
-                  {/**************  Work Segment *************/}
-                  {/* <Form.Item name="work_segment" label="Work Segment" rules={[
-                {
-                  required: true,
-                  message: 'Please select your Work Segment'
-                },
-              ]}>
-                <Select mode="multiple"
-                  allowClear placeholder="List of Categories Dropdown with Multiselect">
-                  {work_segment.map((option) => {
-
-                    return <Select.Option value={option}>{option}</Select.Option>
-                  })}
-                  <Select.Option value={"other"}>Other</Select.Option>
-                </Select>
-              </Form.Item> */}
-                  {/*******************************************/}
-                  {/* <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                {
-                  required: true,
-                  message: 'Please enter your State'
-                },
-              ]}
-              >
-
-                <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" >
-                  <Select.Option value="All State">All State</Select.Option>
-                  {Object.keys(state_cites).map((state) => {
-                    return (<Select.Option value={state}>{state}</Select.Option>)
-                  }
-                  )}
-                </Select>
-              </Form.Item> */}
-
                   <Form.Item name="Address" label="Office Address " rules={[
                     {
                       required: true,
@@ -654,7 +619,8 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       <Select.Option value={"No"}>No</Select.Option>
                     </Select>
                   </Form.Item>
-                  <div className='form_email_mobile_flex'><div className='form_flex_children mr-2'>
+                  <div className='form_email_mobile_flex flex-col md:flex-row'>
+                    <div className='form_flex_children mr-2'>
                     <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
                       {
                         required: true,
@@ -675,8 +641,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                   <div className='flex justify-center'>
                     <button
                       type="submit"
-                      className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
-                    >
+                      className="save_Btn"  >
                       Next
                     </button>
                   </div>
