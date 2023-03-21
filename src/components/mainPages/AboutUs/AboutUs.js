@@ -12,12 +12,14 @@ import { add_feedback } from '../../../services/FeedBack'
 import { useForm } from 'antd/es/form/Form'
 import { get_about } from '../../../services/About'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const AboutUs = () => {
   const dispatch = useDispatch()
   const navigator = useNavigate()
   const [form] = Form.useForm()
   useDocumentTitle('About Us')
+  const [showMsg, setShowMsg] = useState(false)
   const [about, setAbout] = useState(true)
   var [initialWord, setInitialWord] = useState()
   const [lastWord, setLastWord] = useState()
@@ -41,11 +43,20 @@ const AboutUs = () => {
       setInitialWord(string)
     })
   }, [])
+  console.log(showMsg)
   function feedBackHandler(value) {
     (
       dispatch(add_feedback(value)).then((res) => {
+        setShowMsg(true)
+        // Swal.fire({
+        //   icon: 'info',
+        //   title: 'your response has been  <br/> successfully submitted',
+        //   text: 'Our team will get back to you soon',
+
+        // })
+        // Swal.fire('your response has been successfully submitted', 'Our team will get back to you soon', 'info')
         form.resetFields()
-        window.scrollTo(0, 0)
+
       })
     )
   }
@@ -191,7 +202,7 @@ const AboutUs = () => {
 
             <div className="col-span-3 mt-[3rem]">
               <p className="font-semibold text-base">
-                <span className=' text-red-400 '>{founder.qutoe}</span>
+                <span className=' text-[#FF5757]'>{founder.qutoe}</span>
               </p>
               <p className=" text-[2rem] font-semibold leading-8 ">
                 <span className=''>{founder.title}</span>
@@ -226,7 +237,7 @@ const AboutUs = () => {
             <Form.Item name="fullname" label="Full Name " rules={[
               {
                 required: true,
-                message: 'Please input your Full Name'
+                message: 'Please enter your Full Name'
               },
             ]}
               className="mb-1"
@@ -237,7 +248,7 @@ const AboutUs = () => {
             <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
               {
                 required: true,
-                message: 'Please input your Mobile Number'
+                message: 'Please enter your Mobile Number'
               },
             ]}
             >
@@ -249,7 +260,7 @@ const AboutUs = () => {
             <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
               {
                 required: true,
-                message: 'Please input your Email ID'
+                message: 'Please enter your Email ID'
               },
             ]}
             >
@@ -260,7 +271,7 @@ const AboutUs = () => {
             <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
               {
                 required: true,
-                message: 'Please input your Email ID'
+                message: 'Please enter your Email ID'
               },
             ]}
             >
@@ -272,12 +283,12 @@ const AboutUs = () => {
           <Form.Item name='Message' className='mb-1 mt-0' label="Message" rules={[
             {
               required: true,
-              message: 'Please input your Message'
+              message: 'Please enter your Message'
             },
           ]}
           >
 
-            <TextArea row={4} cols={50} />
+            <TextArea placeholder='Enter your message' row={4} cols={50} />
           </Form.Item>
 
 
@@ -289,6 +300,9 @@ const AboutUs = () => {
 
               Send
             </button>
+            {showMsg && <p>your response has been
+              successfully submitted
+              Our team will get back to you soon </p>}
           </div>
         </Form>
       </div>
@@ -411,7 +425,7 @@ const AboutUs = () => {
     //               <Form.Item name="fullname" label="Full Name " rules={[
     //                 {
     //                   required: true,
-    //                   message: 'Please input your Full Name'
+    //                   message: 'Please enter your Full Name'
     //                 },
     //               ]}
     //                 className="mb-1"
@@ -422,7 +436,7 @@ const AboutUs = () => {
     //               <Form.Item name='company_name' className='mb-1 mt-0' label="Company Name" rules={[
     //                 {
     //                   required: true,
-    //                   message: 'Please input your Company Name'
+    //                   message: 'Please enter your Company Name'
     //                 },
     //               ]}
     //               >
@@ -434,7 +448,7 @@ const AboutUs = () => {
     //               <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
     //                 {
     //                   required: true,
-    //                   message: 'Please input your Mobile Number'
+    //                   message: 'Please enter your Mobile Number'
     //                 },
     //               ]}
     //               >
@@ -444,7 +458,7 @@ const AboutUs = () => {
     //               <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
     //                 {
     //                   required: true,
-    //                   message: 'Please input your Email ID'
+    //                   message: 'Please enter your Email ID'
     //                 },
     //               ]}
     //               >
@@ -457,7 +471,7 @@ const AboutUs = () => {
     //             <Form.Item name='Message' className='mb-1 mt-0' label="Message" rules={[
     //               {
     //                 required: true,
-    //                 message: 'Please input your Message'
+    //                 message: 'Please enter your Message'
     //               },
     //             ]}
     //             >
@@ -482,15 +496,15 @@ const AboutUs = () => {
     //     ))}
     //   </div>
     // </div>
-    <div className='container mx-auto ' >
+    <div className='container mx-auto  ' >
       <div className='relative h-[500px]'      >
-         <img src={hero} className=" inset-0 object-cover w-full h-full " />
+        <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute inset-0 bg-[#000000] opacity-75"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className=" hero-abt-title text-center mb-2">Where sub-contracting meets <br />innovation</h1>
           <div className='flex justify-center'>
-          <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] md:px-[3.25rem] py-2 hover:bg-transparent hover:border-2 hover:broder-white' onClick={() => navigator('/register')}>Get Started</button>
+            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/register')}>Get Started</button>
           </div>
         </div>
       </div>
@@ -513,12 +527,12 @@ const AboutUs = () => {
                       </p>
                     </div>
                     <div className='inline-block'>
-                    <button
-                      onClick={() => navigator(hero.buttonLink)}
-                      className="primary_btn btn-lg text-uppercase shadow rounded-pill"
-                    >
-                      {hero.button}
-                    </button>
+                      <button
+                        onClick={() => navigator(hero.buttonLink)}
+                        className="primary_btn btn-lg text-uppercase shadow rounded-pill"
+                      >
+                        {hero.button}
+                      </button>
                     </div>
                   </div>
                   <div className="col-md-6 col-lg-10 col-xl-7 order-1 order-md-2">
@@ -573,7 +587,7 @@ const AboutUs = () => {
                   <Form.Item name="fullname" label="Full Name " rules={[
                     {
                       required: true,
-                      message: 'Please input your Full Name'
+                      message: 'Please enter your Full Name'
                     },
                   ]}
                     className="mb-1"
@@ -584,7 +598,7 @@ const AboutUs = () => {
                   <Form.Item name='company_name' className='mb-1 mt-0' label="Company Name" rules={[
                     {
                       required: true,
-                      message: 'Please input your Company Name'
+                      message: 'Please enter your Company Name'
                     },
                   ]}
                   >
@@ -596,7 +610,7 @@ const AboutUs = () => {
                   <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
                     {
                       required: true,
-                      message: 'Please input your Mobile Number'
+                      message: 'Please enter your Mobile Number'
                     },
                   ]}
                   >
@@ -606,7 +620,7 @@ const AboutUs = () => {
                   <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
                     {
                       required: true,
-                      message: 'Please input your Email ID'
+                      message: 'Please enter your Email ID'
                     },
                   ]}
                   >
@@ -614,11 +628,11 @@ const AboutUs = () => {
                     <Input type='email' placeholder='Enter your Email' />
                   </Form.Item>
                 </div>
-             
+
                 <Form.Item name='Message' className='mb-1 mt-0' label="Message" rules={[
                   {
                     required: true,
-                    message: 'Please input your Message'
+                    message: 'Please enter your Message'
                   },
                 ]}
                 >
@@ -630,12 +644,16 @@ const AboutUs = () => {
                 <div className="text-center lg:text-left mt-2 md:float-right">
                   <button
                     type="submit"
-                    className="primary_btn"
+                    className="primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
                   >
 
                     Send
                   </button>
+                 
                 </div>
+                {showMsg && <p className='text-base mr-4 text-[#FF5757]'>Your response has been
+successfully submitted,
+Our team will get back to you soon</p>}
               </Form>
             </div>
 

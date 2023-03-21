@@ -14,6 +14,7 @@ const VendorForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch()
   const navigator = useNavigate()
+  const [showMsg, setShowMsg] = useState(false)
   function FormHandler(values) {
     if(localStorage.getItem("adminEmail")==null){
     values.user_id = localStorage.getItem("user_id")
@@ -24,10 +25,12 @@ const VendorForm = () => {
       obj.id = values.user_id
       obj.vendor_id = res.data._id
       dispatch(update_user(obj)).then((res)=>{
-        Swal.fire('Saved', 'Values Saved Successfully', 'success').then(()=>{
+        setShowMsg(true)
+        window.scroll(0,0)
+        // Swal.fire('Saved', 'Values Saved Successfully', 'success').then(()=>{
           // navigator('/dashboard')
-           navigator('/')
-        })
+          //  navigator('/')
+        // })
       })
     })
     // console.log(values)
@@ -60,6 +63,7 @@ const VendorForm = () => {
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Onboarding Form</p>
             </div>
+          {showMsg && <p className='text-[#FF5757] text-base'> Your Profile has been submitted successfully</p> }
             <div
               className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
             >

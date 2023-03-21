@@ -18,22 +18,14 @@ import { setValue } from '../../../store/actions/user';
 import { get_Vendor, get_Vendor_by_id } from '../../../services/Vendor';
 import { googleLogin } from '../../../services/SocialLogin';
 import { GoogleLogin } from '@react-oauth/google';
+import { login } from '../../../services/user';
 const Login = () => {
   const dispatch = useDispatch()
   useDocumentTitle("Login")
   const navigate = useNavigate();
   function formHandler(value) {
-
-    axios
-      .post("http://localhost:5000/user/login", value)
-      .then(res => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: "Login Successfully",
-          showConfirmButton: true,
-        })
-        // console.log(res.data.user)
+    dispatch(login(value)).then(res => {
+   
         localStorage.setItem('accesstoken', res.data.accesstoken)
         localStorage.setItem('user_id', res.data.user._id)
         localStorage.setItem('email', res.data.user.email)
@@ -125,7 +117,7 @@ const Login = () => {
     console.log(response)
   };
   return (
-    <section className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
+    <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
       <div className="px-8 h-full text-gray-800">
         <div
           className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
@@ -230,7 +222,7 @@ const Login = () => {
               <div className="text-center lg:text-left">
                 <button
                   type="submit"
-                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  className="primary_btn"
                 >
                   Login
 

@@ -35,7 +35,7 @@ const Regsiter = () => {
         });
     }
   return (
- <section className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
+ <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
   <div className="px-8 h-full text-gray-800">
     <div
       className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
@@ -100,7 +100,7 @@ layout="vertical"   onFinish={formHandler}>
       <Radio value={0}>Contractor</Radio>
     </Radio.Group>
     </Form.Item>
-    i acknowledge that i have read and agree to the above terms and conditions
+    By continuing, I agree to the Terms of Use & Privacy Policy
           <div className="text-center mt-5 lg:text-left">
             <button
               type="submit"

@@ -33,7 +33,7 @@ function OTPForm() {
     }
 
     return (
-        <section className="min-h-screen flex flex-col justify-center  sm:px-6 lg:px-8" >
+        <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center  sm:px-6 lg:px-8" >
             <div className="px-8 h-full text-gray-800">
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "

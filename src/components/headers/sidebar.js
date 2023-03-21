@@ -120,7 +120,7 @@ const Sidebar = () => {
                                 </svg>   <span>Listings</span>
                             </NavLink>
                         </li> */}
-                        {/* <li className="rounded-sm">
+                        <li className="rounded-sm">
                             <NavLink
                                 to="/admin/feedbacks"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -130,7 +130,7 @@ const Sidebar = () => {
                                 </svg>
                                 <span>Feedbacks</span>
                             </NavLink>
-                        </li> */}
+                        </li>
                         {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/carausel-list"

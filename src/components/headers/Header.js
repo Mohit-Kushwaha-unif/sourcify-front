@@ -201,7 +201,7 @@ const Header = () => {
 
           </>
           :
-          <button className='navbar__button hover:text-white rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
+          <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
         }
       </>}
       {isOpen && (
