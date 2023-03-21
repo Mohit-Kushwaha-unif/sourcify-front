@@ -15,7 +15,7 @@ body {
   padding-right: 1.75rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  background-color: #FF5757;
+  background-color: #FF5757 !important;
   border: 1px solid #FF5757;
   border-radius: 50px;
   color: #fff;
@@ -45,19 +45,19 @@ body {
 
 /* Hover state */
 .primary_btn:hover {
-  background-color: #e64d4d;
+  background-color: #e64d4d !important;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
 /* Focus state */
 .primary_btn:focus {
-  background-color: #e64d4d;
+  background-color: #e64d4d !important;
   box-shadow: 0 0 0 3px rgba(227, 28, 61, 0.5);
 }
 
 /* Active state */
 .primary_btn:active {
-  background-color: #9b1c34;
+  background-color: #9b1c34 !important;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
@@ -477,7 +477,7 @@ input[type=number] {
   border-radius: 50px;
   width: 100%;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  background: #FF5757;
+  background: #FF5757 !important;
 }
 
 @media (min-width: 768px) {
