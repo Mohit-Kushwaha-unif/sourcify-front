@@ -95,12 +95,12 @@ window.location = '/admin/contractors-list'
     ];
 
     return (
-        <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
+        <section className="min-h-screen flex  flex-col w-full  py-6 sm:px-6 lg:px-3" >
             <div className="px-2 h-auto text-gray-800">
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
-                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl: w-full overflow-x-scroll   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/contractor-form')}
                             className="primary_btn mb-3"

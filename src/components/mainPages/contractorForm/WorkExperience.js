@@ -16,12 +16,13 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Contractor_service from '../../../services/contractor'
 import { useEffect } from 'react';
+import moment from 'moment';
 const WorkExperience = () => {
   const navigation = useNavigate()
   const dispatch = useDispatch()
   const [state, setState] = useState(["All State"])
   const [showMsg, setShowMsg] = useState(false)
-  const [formData, setFormData] = useState()
+  const [formData, setFormData] = useState([])
   function countrySelectHandler(country) {
     setState((prevState) => prevState, state_cites[country])
   }
@@ -29,11 +30,15 @@ const WorkExperience = () => {
   useEffect(() => {
     if (localStorage.getItem("form_id")) {
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
-        setFormData(res)
-      
-        res?.projects?.map((project)=>{
+        
+        res?.projects?.map((project) => {
+        console.log(project)
+        var Exec = moment(project.Exec)
+        project.Exec = Exec
             projects.push(project)
-        })
+        
+       
+    })
         setFormData(projects)
   
       })}
@@ -49,12 +54,32 @@ const WorkExperience = () => {
     formData.append("form_id", localStorage.getItem("form_id"))
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       // navigation("/dashboard")
+     
+      dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
+        
+        res?.projects?.map((project) => {
+        console.log(project)
+        var Exec = moment(project.Exec)
+        project.Exec = Exec
+            projects.push(project)
+        
+       
+    })
+        setFormData(projects)
+  
+      })
+      window.scrollTo(0,0)
       setShowMsg(true)
       // navigation("/")
     })
 
 
   }
+  
+    
+   
+
+  console.log(formData);
   return (
     <section className="min-h-min mt-10 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
       <div className="px-8 h-full text-gray-800">
@@ -65,6 +90,8 @@ const WorkExperience = () => {
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Work Experience</p>
             </div>
+            {showMsg && <p className='text-[#FF5757] text-base'>Your profile saved successfully</p>}
+
             <div
               className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
             >
@@ -73,7 +100,7 @@ const WorkExperience = () => {
               fields={[
                 {
                   name: ["Project"],
-                  value: [...projects]
+                  value: [...formData]
                 }
 
               ]}
@@ -124,7 +151,7 @@ const WorkExperience = () => {
                                 },
                               ]}
                             >
-                              <Input placeholder="Contract Value" />
+                              <Input type='Number' placeholder="Contract Value" />
                             </Form.Item>
 
 
@@ -184,7 +211,7 @@ const WorkExperience = () => {
                                 },
                               ]}
                             >
-                              <Input style={{ width: '100%' }} placeholder="Client Mobile Number" />
+                              <Input type='Number' style={{ width: '100%' }} placeholder="Client Mobile Number" />
                             </Form.Item>
 
                           </div>
@@ -309,7 +336,6 @@ const WorkExperience = () => {
                   Save
                 </button>
               </div>
-                {showMsg && <p className='text-[#FF5757] text-base'>Your profile saved successfully</p>}
             </Form>
           </div>
         </div>

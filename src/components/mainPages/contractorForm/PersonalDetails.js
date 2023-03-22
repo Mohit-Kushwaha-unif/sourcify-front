@@ -246,7 +246,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                   ]}>
                     <Input placeholder='Enter the Name of Your Firm' />
                   </Form.Item>
-                  <div className='form_email_mobile_flex items-end'>
+                  <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                     <div className='form_flex_children mr-2'>
                       <Form.Item label="Contact Person Full Name " name="username" rules={[
                         {
@@ -258,17 +258,12 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       </Form.Item>
                     </div>
                     <div className='form_flex_children '>
-                      <Form.Item name="Designation" label="Designation" rules={[
-                        {
-                          required: true,
-                          message: 'Please enter  designation',
-                        },
-                      ]}>
+                      <Form.Item name="Designation" label="Designation" >
                         <Input placeholder='Enter the  Designation' />
                       </Form.Item>
                     </div>
                   </div>
-                  <div className='form_email_mobile_flex'>
+                  <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                     {/*****************Email*******************/}
                     <div className='form_flex_children mr-2' >
                       <Form.Item name="email" label="Email " rules={[
@@ -382,12 +377,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                     </Select>
                   </Form.Item>
 
-                  <Form.Item name="Address" label="Office Address " rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your office address',
-                    },
-                  ]}>
+                  <Form.Item name="Address" label="Office Address " >
                     <Input placeholder='Enter Your Office Address' />
                   </Form.Item>
 
@@ -398,7 +388,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       <Select.Option value={"No"}>No</Select.Option>
                     </Select>
                   </Form.Item>
-                  <div className='form_email_mobile_flex'><div className='form_flex_children mr-2'>
+                  <div className='form_email_mobile_flex flex flex-col md:flex-row'><div className='form_flex_children mr-2'>
                     <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
                       {
                         required: true,
@@ -480,12 +470,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       </Form.Item>
                     </div>
                     <div className='form_flex_children '>
-                      <Form.Item name="Designation" label="Designation" rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your Designation',
-                        },
-                      ]}>
+                      <Form.Item name="Designation" label="Designation">
                         <Input placeholder='Enter the  Designation' />
                       </Form.Item>
                     </div>
@@ -498,9 +483,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                           required: true,
                           message: 'Please enter your Email'
                         },
-                      ]} wrapperCol={{
-                        span: 56,
-                      }}>
+                      ]}>
 
                         <Input type="email" placeholder='Enter your Email ID ' />
 
@@ -603,12 +586,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       )}
                     </Select>
                   </Form.Item>
-                  <Form.Item name="Address" label="Office Address " rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your Address',
-                    },
-                  ]}>
+                  <Form.Item name="Address" label="Office Address ">
                     <Input placeholder='Enter Your Office Address' />
                   </Form.Item>
 

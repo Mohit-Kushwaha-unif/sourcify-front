@@ -130,7 +130,7 @@ const Header = () => {
     navigate('/update-profile')
   };
   return (
-    <div className='container'>
+    
     <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center  justify-between '>
         <div> <img className='w-[70%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
@@ -290,7 +290,7 @@ const Header = () => {
         </div>
       )}
     </header>
-    </div>
+  
   )
 }
 

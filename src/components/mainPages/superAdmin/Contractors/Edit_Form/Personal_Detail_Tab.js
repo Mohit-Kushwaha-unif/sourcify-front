@@ -224,7 +224,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   </Select>
                 </Form.Item>
           {/*******************************************/}
-          <div className='form_email_mobile_flex'>
+          <div className='form_email_mobile_flex flex flex-col md:flex-row '>
             {/*****************Email*******************/}
             <div className='form_flex_children mr-2' >
               {location.state?.email ? <>
@@ -271,7 +271,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           ]}>
             <Input placeholder='Enter Your Office Address' />
           </Form.Item>
-          <div className='form_email_mobile_flex '>
+          <div className='form_email_mobile_flex flex flex-col md:flex-row '>
             <div className='form_flex_children mr-1'>
               <Form.Item name="State" label="State " rules={[
                 {
@@ -317,7 +317,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           </div>
           
 
-          <div className='form_email_mobile_flex'><div className='form_flex_children mr-2'>
+          <div className='form_email_mobile_flex flex flex-col md:flex-row'><div className='form_flex_children mr-2'>
             <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
               {
                 required: true,
@@ -335,7 +335,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 <Form.Item name="msme_image" label="Copy of PF ">
                   <Input type='file' max={1} onChange={msme_img_value} />
                 </Form.Item>}</div> </div>
-          <div className='form_email_mobile_flex'>
+          <div className='form_email_mobile_flex flex flex-col md:flex-row'>
             <div className='form_flex_children mr-2'>
               <Form.Item label="Contact Person Full Name " name="username" rules={[
                 {
@@ -358,11 +358,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
             </div>
           </div>
 
-          <div className='flex justify-between'>
-            <button className='primary_btn ' type="primary" onClick={()=>navigate('/admin/contractors-list')}>
+          <div className='text-center lg:text-left flex flex-col flex-col-reverse md:flex-row justify-between'>
+            <button className='back_btn ' type="primary" onClick={()=>navigate('/admin/contractors-list')}>
               Back
             </button>
-            <button className=' primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out' type="primary" htmlType="submit">
+            <button className='save_Btn ' type="primary" htmlType="submit">
               Next Step
             </button>
           </div>

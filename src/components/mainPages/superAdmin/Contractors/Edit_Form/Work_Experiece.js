@@ -195,17 +195,17 @@ const Work_Experiece = ({ formValues, isClicked }) => {
                 )}
               </Form.List>
                
-                    <div className="flex justify-between lg:text-left">
+                    <div className="text-center lg:text-left flex flex-col flex-col-reverse md:flex-row justify-between">
 
                         <span
                             onClick={()=>isClicked("1")}
-                            className="primary_btn primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                            className="back_btn"
                         >
                             Back
                         </span>
                         <button
                             type="submit"
-                            className="primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                            className="save_Btn"
                         >
                             Next Step
                         </button>

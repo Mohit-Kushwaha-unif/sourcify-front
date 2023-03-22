@@ -80,53 +80,56 @@ const FinancialDetail = () => {
         let FormField = { "Turnover": [] }
         value.pan_image = pan_imaged
         value.gst_image = gstImageD
-        if(value.pan_image == ''){
+        console.log(value.pan_image)
+        if(value.pan_image == '' || value.pan_image== undefined){
             setShowError(true)
-            return false
         }
-        if (!value.gst_number) {
-            value.gst_number = "N/A"
+        else{
+            if (!value.gst_number) {
+                value.gst_number = "N/A"
+            }
+            let formValue = value
+    
+            Object.keys(formValue).map((key) => {
+                if (key.includes('Turnover')) {
+                    var obj = {}
+                    obj[key] = formValue[key]
+                    FormField.Turnover.push(obj)
+                }
+                else {
+                    if (key !== "gst_image" && key !== "pan_image")
+                        FormField[key] = formValue[key]
+                }
+            })
+    
+            var formData = new FormData()
+            FormField.pan_image = pan_imaged
+    
+            if (value.gst_image) {
+                FormField.gst_image = gstImageD
+            }
+            console.log({ FormField })
+    
+    
+    
+    
+    
+            //   formData.append("gst_number",)
+            Object.keys(FormField).map((formKey) => {
+                console.log({ formKey, FormField })
+                console.log({ d: FormField['Turnover'] })
+                if (formKey == "Turnover") { formData.append(formKey, JSON.stringify(FormField[formKey])) }
+                else {
+                    formData.append(formKey, FormField[formKey])
+                }
+            })
+            formData.append("form_id", localStorage.getItem("form_id"))
+            dispatch(Contractor_service.update_contractor(formData)).then((res) => {
+    
+                navigation('/contractor-form/work-experience')
+            })
         }
-        let formValue = value
-
-        Object.keys(formValue).map((key) => {
-            if (key.includes('Turnover')) {
-                var obj = {}
-                obj[key] = formValue[key]
-                FormField.Turnover.push(obj)
-            }
-            else {
-                if (key !== "gst_image" && key !== "pan_image")
-                    FormField[key] = formValue[key]
-            }
-        })
-
-        var formData = new FormData()
-        FormField.pan_image = pan_imaged
-
-        if (value.gst_image) {
-            FormField.gst_image = gstImageD
-        }
-        console.log({ FormField })
-
-
-
-
-
-        //   formData.append("gst_number",)
-        Object.keys(FormField).map((formKey) => {
-            console.log({ formKey, FormField })
-            console.log({ d: FormField['Turnover'] })
-            if (formKey == "Turnover") { formData.append(formKey, JSON.stringify(FormField[formKey])) }
-            else {
-                formData.append(formKey, FormField[formKey])
-            }
-        })
-        formData.append("form_id", localStorage.getItem("form_id"))
-        dispatch(Contractor_service.update_contractor(formData)).then((res) => {
-
-            navigation('/contractor-form/work-experience')
-        })
+       
         // Catch errors if any
 
 
@@ -166,10 +169,11 @@ const FinancialDetail = () => {
     }
     function finishFaild(val){
         console.log(val)
+
     }
     console.log(formValues.pan_image );
     return (
-        <section className="min-h-min mt-10 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
+        <section className="min-h-min mt-10 flex flex-col justify-center py-6 lg:px-8" >
             <div className="px-8 h-full text-gray-800">
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
@@ -257,7 +261,8 @@ const FinancialDetail = () => {
                                     
                                     ]}> <Input type='file'  onChange={pan_img_value} />
                                     </Form.Item>
-
+                                    {showError&& <div className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</div>}
+                               
                                 </div>
                             </div>
 
@@ -407,8 +412,9 @@ const FinancialDetail = () => {
                                                  <Input type='file' max={1} onChange={pan_img_value} />
                                             </Form.Item>
 
+
                                     }
-                                    {showError&& <span style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</span>}
+                                    {showError&& <div  className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</div>}
                                 </div>
                             </div>
 
@@ -434,10 +440,10 @@ const FinancialDetail = () => {
 
 
 
-                            <div className="text-center lg:text-left flex flex-col md:flex-row justify-between">
+                            <div className="text-center lg:text-left flex flex-col flex-col-reverse md:flex-row justify-between">
                                 <button
                                     type="submit"
-                                    className="inline-block  w-full md:w-1/4  mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    className="back_btn"
                                     onClick={()=>navigation('/contractor-form')}
                                >
 
@@ -446,7 +452,7 @@ const FinancialDetail = () => {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="inline-block  w-full md:w-1/4  mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                                    className="save_Btn"
                                 >
 
                                     Save

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space,  Tag } from 'antd';
+import { Space,  Tag,Table } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { delete_category, get_category } from '../../../../services/category';
-import Table from 'ant-responsive-table'
+// import Table from 'ant-responsive-table'
 const Category = () => {
     const navigator = useNavigate()
     const dispatch = useDispatch()
@@ -96,7 +96,7 @@ const Category = () => {
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
-                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl: w-full overflow-x-scroll lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/admin/category-form')}
                             className="primary_btn mb-3"
@@ -105,13 +105,13 @@ const Category = () => {
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Work Segment List</p>
                         </div>
-                        {/* <Table columns={columns} dataSource={tableData} /> */}
-                        <Table antTableProps={{
+                        <Table columns={columns} dataSource={tableData} />
+                        {/* <Table antTableProps={{
                             showHeader: true,
                             columns: columns,
                             dataSource: tableData,
                             pagination: true
-                        }} mobileBreakPoint={768} />
+                        }} mobileBreakPoint={768} /> */}
                     </div>
                 </div>
             </div>

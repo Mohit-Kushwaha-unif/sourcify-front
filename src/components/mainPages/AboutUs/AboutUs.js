@@ -496,7 +496,7 @@ const AboutUs = () => {
     //     ))}
     //   </div>
     // </div>
-    <div className='container mx-auto  ' >
+    <div className=' mx-auto  ' >
       <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute inset-0 bg-[#000000] opacity-75"></div>

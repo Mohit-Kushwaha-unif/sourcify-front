@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag } from 'antd';
-import Table from 'ant-responsive-table'
+import { Space, Tag,Table } from 'antd';
+// import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import { get_Vendor } from '../../../../services/Vendor';
 const Companies = () => {
@@ -40,37 +40,32 @@ const Companies = () => {
             dataIndex: 'key',
             key: 'key',
             render: (text) => <Link>{text + 1}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
             render: (text) => <Link>{text}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Contact Person',
             dataIndex: 'username',
             key: 'username',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Email ID',
             dataIndex: 'email',
             key: 'email',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Mobile Number',
             dataIndex: 'number',
             key: 'number',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Action',
@@ -82,8 +77,7 @@ const Companies = () => {
                     <Link onClick={()=>deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
     ];
     return (
@@ -92,7 +86,7 @@ const Companies = () => {
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
-                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl: w-full overflow-x-scroll lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/vendor-form')}
                             className="primary_btn mb-3"
@@ -101,12 +95,12 @@ const Companies = () => {
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Companies List</p>
                         </div>
-                        <Table antTableProps={{
-                            showHeader: true,
-                            columns: columns,
-                            dataSource: tableData,
-                            pagination: true
-                        }} mobileBreakPoint={768} />
+                        <Table 
+                            
+                            columns={columns}
+                            dataSource= {tableData}
+                            pagination ={{pageSize: 5}}
+                        />
                     </div>
                 </div>
             </div>

@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom'
 import { logout } from '../../services/user'
+import { useEffect } from 'react';
 const Sidebar = () => {
     const dispatch = useDispatch()
     const navigation = useNavigate()
+    const [showMenu, setShowMenu] = useState(false)
     const selecor = useSelector(state => state)
     function logoutHandler() {
         dispatch(logout()).then((res) => {
@@ -15,14 +18,29 @@ const Sidebar = () => {
 
         })
     }
+    const [screenSize, getDimension] = useState(window.innerWidth);
+    const setDimension = () => {
+      getDimension(window.innerWidth)
+    }
+    useEffect(() => {
+        window.addEventListener('resize', setDimension);
+        if (screenSize <= 759) {
+          setShowMenu(false)
+          //setShowMenu(false)
+        } else {
+          setShowMenu(true)
+        }
+      }, [screenSize])
     return (
 
-        <div className="flex flex-col min-h-screen h-inherit bg-white px-4 p-3">
-            <div className="space-y-3">
-                <div className="flex items-center">
+        <div className="flex relative flex-col min-h-screen h-inherit bg-white px-4 p-3">
+            <div className="space-y-5">
+                { <div className='z-10  absolute top-[-19px] left-[50px]'><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></div>}
+             { showMenu&&  <>
+                <div className="flex items-center mt-3">
                     <h2 className="text-xl font-bold">Dashboard</h2>
                 </div>
-                <div className="flex-1">
+               <div className="flex-1">
                     <ul className="pt-2 pb-4 space-y-1 text-sm ">
                         <li className="rounded-sm">
                             <NavLink
@@ -169,6 +187,8 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </div>
+                </>
+                }
             </div>
         </div>
 

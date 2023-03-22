@@ -8,6 +8,10 @@ import {
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {GiFactory} from 'react-icons/gi'
+import {MdAlternateEmail} from 'react-icons/md'
+import {BsFillTelephoneFill} from 'react-icons/bs'
+import {RiLockPasswordLine} from 'react-icons/ri'
+import {FaBusinessTime} from 'react-icons/fa'
 import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
@@ -38,17 +42,18 @@ const Regsiter = () => {
             localStorage.setItem("isLoggedIn", true)
             dispatch(setValue(res.user_data.role))
            
-              if(values.role ===1)
+              if(res.user_data.role ===1)
                navigate('/vendor-form' ,{state:res.user_data})  
               else
               navigate('/contractor-form' ,{state:res.user_data})  
         });
     }
+  
   return (
  <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
   <div className="px-8 h-full text-gray-800">
     <div
-      className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+      className="flex xl:justify-center lg:justify-center justify-center  flex-wrap h-full g-6 "
     >
       <div className="xl:ml-20 xl:w-4/12 lg:w-5/12 md:w-5/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
       <div className="flex flex-row items-center justify-center lg:justify-start">
@@ -70,8 +75,10 @@ layout="vertical"   onFinish={formHandler}>
           message: 'Please enter your email',
         },
       ]}
+     
     >
       <Input placeholder="Email address" />
+     
     </Form.Item >
           <Form.Item
       name="number"
@@ -82,18 +89,24 @@ layout="vertical"   onFinish={formHandler}>
         },
       ]}
     >
-      <Input type='Number'maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
+     
+   
+        
+     <Input prefix={ " +91"} type='Number'maxLength={10} minLength={10}  placeholder="Enter your Mobile Number" />
+     
     </Form.Item >
       <Form.Item    
       name="password"
       rules={[
         {
           required: true,
-          message: 'Please select your password! and it should be six digit long',
+          message: 'Please select your password and it should be six digit long',
         },
       ]}
     >
+      
       <Input.Password min={6}   placeholder='Enter Your Passowrd'/>
+      
     </Form.Item>
       <Form.Item    
       name="role"
@@ -104,8 +117,12 @@ layout="vertical"   onFinish={formHandler}>
         },
       ]}
     >
-      <div className="py-4">
-      <RadioGroup options={options} defaultValue={1} cols={2} onChange={handleRadioChange} />
+      <div className='flex items-center'>
+        {/* <span className='mr-3'><FaBusinessTime className='h-full w-full text-[1.5rem]'/> </span> */}
+
+      <div className="py-1">
+      <RadioGroup options={options}  cols={2} onChange={handleRadioChange} />
+    </div>
     </div>
      {/* <Radio.Group  className='grid grid-cols-1 md:grid-cols-2'>
      <Radio.Button value={1} className="h-auto" >

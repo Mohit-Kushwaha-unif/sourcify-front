@@ -398,15 +398,16 @@ input[type=number] {
   width: 100%;
   table-layout: fixed;
 } */
-.ant-table {
+/* .ant-table {
   white-space: nowrap;
 }
 
 .ant-table thead th {
   min-width: 100px;
-}
+} */
 
-@media screen and (max-width: 768px) {
+
+/* @media screen and (max-width: 768px) {
 
   .ant-table thead,
   .ant-table tbody,
@@ -440,21 +441,21 @@ input[type=number] {
     font-weight: bold;
   }
 
-  /* Show table header */
+
   .ant-table thead {
     display: table-header-group;
   }
 
-  /* Hide table rows without data */
+
   .ant-table tbody tr:not(:empty) {
     display: table-row;
   }
 
-  /* Add padding to table cells */
+  
   .ant-table td:before {
     padding-top: 10px;
   }
-}
+} */
 
 
 

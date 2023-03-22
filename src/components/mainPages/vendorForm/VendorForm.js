@@ -21,7 +21,7 @@ const VendorForm = () => {
   }
   values.role = 1
     if(showMsg=== true){
-      values._id = localStorage.getItem("form_id")
+      values.form_id = localStorage.getItem("form_id")
       dispatch(update_vendor(values)).then((res)=>{
         var obj ={}
         obj.id = values.user_id
