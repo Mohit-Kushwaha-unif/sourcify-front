@@ -20,13 +20,13 @@ const PersonalDetails = () => {
   const dispatch = useDispatch()
   // const [isMSMEVisible, setIsMSMEVisible] = useState(false)
   const [msmeImageD, set_msmeImageD] = useState('')
-  const [formData,setFormData] = useState([])
+  const [formData, setFormData] = useState([])
   const [state, setState] = useState([])
-  const [formVal_work_state,setFormVal_work_state] = useState()
+  const [formVal_work_state, setFormVal_work_state] = useState()
   const [showGSTiMAGE, setShowGSTimage] = useState(false)
   const [work_segment, set_work_Segment] = useState([])
-const [initialpf,setStateInitialpf] = useState()
-const [formval_workArea,setFormVal_work_area] = useState()
+  const [initialpf, setStateInitialpf] = useState()
+  const [formval_workArea, setFormVal_work_area] = useState()
 
   const [valid_msme, set_Valid_msme] = useState(false)
 
@@ -131,7 +131,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
   function countrySelectHandler(country) {
     setState(state_cites[country])
   }
-  
+
   function msmeVerfication(event) {
     let text = event.target.value
     var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
@@ -161,8 +161,8 @@ const [formval_workArea,setFormVal_work_area] = useState()
                 className="flex items-center my-3 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
               >
               </div>
-          
-              { !Array.isArray(formData) > 0 ?
+
+              {!Array.isArray(formData) > 0 ?
                 <Form
                   form={form}
 
@@ -236,7 +236,7 @@ const [formval_workArea,setFormVal_work_area] = useState()
 
 
                 >
-                    
+
                   {/**************  Entity Name *************/}
                   <Form.Item name="entity" label="Name of Entity" rules={[
                     {
@@ -263,373 +263,384 @@ const [formval_workArea,setFormVal_work_area] = useState()
                       </Form.Item>
                     </div>
                   </div>
-                  <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                 
+                 <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                     {/*****************Email*******************/}
-                    <div className='form_flex_children mr-2' >
-                      <Form.Item name="email" label="Email " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter  email'
-                        },
-                      ]} wrapperCol={{
-                        span: 56,
-                      }}>
-
-                        <Input type="email" placeholder='Enter your Email ID ' />
-
-
-
-                      </Form.Item>
-                    </div>
-                    {/*******************************************/}
-
-                    {/************Mobile Number****************/}
-                    <div className='form_flex_children'>
-
-                      <Form.Item name="mobile_number" label="Mobile Number " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your mobile number'
-                        },
-                      ]}>
-                        <Input maxLength={10} minLength={10} placeholder='Enter the Mobile Number to be registered' />
-                      </Form.Item>
-                    </div>
-                    {/*******************************************/}
-                  </div>
-                  <div className='flex flex-col md:flex-row '>
-                    <div className='form_flex_children mr-1'>
-                      <Form.Item name="State" label="State " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your state'
-                        },
-                      ]}>
-
-                        <Select name="State" placeholder="Select State" onSelect={countrySelectHandler}>
-                          {Object.keys(state_cites).map((state) => {
-                            return (<Select.Option value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
-                    </div>
-                    <div className='form_flex_children mr-1'>
-                      <Form.Item name="City" label="City " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your city',
-                        },
-                      ]}>
-                        <Select id="country-state" name="City" placeholder="Select City">
-                          {state.length > 0 && state.map((state) => {
-                            return (<Select.Option value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
-                    </div>
-                    <div className='form_flex_children'>
-                      <Form.Item name="pin_code" label="Pin Code " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your PIN Code',
-
-                        },
-                      ]}>
-                        <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN Code" />
-                      </Form.Item>
-                    </div>
-                  </div>
-                  {/*******************************************/}
-
-                  {/**************  Work Segment *************/}
-                  <Form.Item name="work_segment" label="Work Segment" rules={[
-                    {
-                      required: true,
-                      message: 'Please select your work segment'
-                    },
-                  ]}>
-                    <Select mode="multiple"
-                      allowClear placeholder="Select your work segment ">
-                      {work_segment.map((option, index) => {
-
-                        return <Select.Option key={index} value={option}>{option}</Select.Option>
-                      })}
-                      <Select.Option value={"other"}>Other</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  {/*******************************************/}
-                  <Form.Item name="prefferd_state" label="Preferred State to Work " rules={[
-                    {
-                      required: true,
-                      message: 'Please select your state'
-                    },
-                  ]}
-                  >
-
-                    <Select mode="multiple" name="prefferd_state" placeholder="Select State" >
-                      <Select.Option value="All State">All State</Select.Option>
-                      {Object.keys(state_cites).map((state, index) => {
-                        return (<Select.Option key={index} value={state}>{state}</Select.Option>)
-                      }
-                      )}
-                    </Select>
-                  </Form.Item>
-
-                  <Form.Item name="Address" label="Office Address " >
-                    <Input placeholder='Enter Your Office Address' />
-                  </Form.Item>
-
-
-                  <Form.Item name="msme" label="Do you have MSME ?" required >
-                    <Select placeholder="Please select an option">
-                      <Select.Option value={"Yes"}>Yes</Select.Option>
-                      <Select.Option value={"No"}>No</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <div className='form_email_mobile_flex flex flex-col md:flex-row'><div className='form_flex_children mr-2'>
-                    <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
+                  <div className='form_flex_children mr-2' >
+                    <Form.Item name="email" label="Email " rules={[
                       {
                         required: true,
-                        message: 'Please provide required details'
+                        message: 'Please enter  email'
                       },
-                    ]}>
-                      <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
-                    </Form.Item>
-                    {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
-                    <div className='form_flex_children  '>
-                      {showGSTiMAGE ? <>
-                        <label>Copy Of PF</label><br />
-                        <div className='mt-3 inline-block'>
-                          <span className='text-[#FF5757] underline mr-3'><a href={formData.msme_image} target="_blank" download>
-                            Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGSTimage(false)} >Delete</span>
-                        </div>
+                    ]} wrapperCol={{
+                      span: 56,
+                    }}>
 
-                      </> : <Form.Item name="msme_image" label="Copy of PF">
-                        <Input type='file' max={1} onChange={msme_img_value} />
-                      </Form.Item>}</div> </div>
-
-
-
-
-                  <div className='flex justify-center'>
-                    <button
-                      type="submit"
-                      className="save_Btn"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </Form>
-                :
-                <Form
-                  form={form}
-                  labelCol={{
-                    span: 37,
-                  }}
-                  wrapperCol={{
-                    span: 44,
-                  }}
-
-                  layout="vertical"
-                  fields={
-                    [
-                      { "name": "email", "value": localStorage.getItem('email') },
-                      { "name": "mobile_number", "value": localStorage.getItem('number') },
-                    ]
-
-                  }
-                  size="default"
-                  labelAlign="left"
-                  scrollToFirstError={true}
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  autoComplete="off"
-
-
-                >
-                  {/**************  Entity Name *************/}
-                  <Form.Item name="entity" label="Name of Entity" rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your entity name',
-                    },
-                  ]}>
-                    <Input placeholder='Enter the Name of Your Firm' />
-                  </Form.Item>
-                  <div className='form_email_mobile_flex flex-col md:flex-row '>
-                    <div className='form_flex_children mr-2'>
-                      <Form.Item label="Contact Person Full Name " name="username" rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your Name',
-                        },
-                      ]}>
-                        <Input placeholder='Enter Contact Person Name' />
-                      </Form.Item>
-                    </div>
-                    <div className='form_flex_children '>
-                      <Form.Item name="Designation" label="Designation">
-                        <Input placeholder='Enter the  Designation' />
-                      </Form.Item>
-                    </div>
-                  </div>
-                  <div className='form_email_mobile_flex flex-col md:flex-row'>
-                    {/*****************Email*******************/}
-                    <div className='form_flex_children mr-2' >
-                      <Form.Item name="email" label="Email " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your Email'
-                        },
-                      ]}>
-
-                        <Input type="email" placeholder='Enter your Email ID ' />
-
-
-
-                      </Form.Item>
-                    </div>
-                    {/*******************************************/}
-
-                    {/************Mobile Number****************/}
-                    <div className='form_flex_children'>
-
-                      <Form.Item name="mobile_number" label="Mobile Number " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your Mobile Number'
-                        },
-                      ]}>
-                        <Input maxLength={10} minLength={10} placeholder='Enter the Mobile Number to be registered' />
-                      </Form.Item>
-                    </div>
-                    {/*******************************************/}
-                  </div>
-                  <div className='flex flex-col md:flex-row '>
-                    <div className='form_flex_children mr-1'>
-                      <Form.Item name="State" label="State " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your State'
-                        },
-                      ]}>
-
-                        <Select name="State" placeholder="Select State" onSelect={countrySelectHandler}>
-                          {Object.keys(state_cites).map((state) => {
-                            return (<Select.Option value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
-                    </div>
-                    <div className='form_flex_children mr-1'>
-                      <Form.Item name="City" label="City " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your City',
-                        },
-                      ]}>
-                        <Select id="country-state" name="City" placeholder="Select City">
-                          {state.length > 0 && state.map((state) => {
-                            return (<Select.Option value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
-                    </div>
-                    <div className='form_flex_children'>
-                      <Form.Item name="pin_code" label="Pin Code " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your Pin Code',
-
-                        },
-                      ]}>
-                        <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN Code" />
-                      </Form.Item>
-                    </div>
-                  </div>
-                  {/*******************************************/}
-
-                  {/**************  Work Segment *************/}
-                  <Form.Item name="work_segment" label="Work Segment" rules={[
-                    {
-                      required: true,
-                      message: 'Please select your Work Segment'
-                    },
-                  ]}>
-                    <Select mode="multiple"
-                      allowClear placeholder="List of Categories Dropdown with Multiselect">
-                      {work_segment.map((option, index) => {
-
-                        return <Select.Option key={index} value={option}>{option}</Select.Option>
-                      })}
-                      <Select.Option value={"other"}>Other</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  {/*******************************************/}
-                  <Form.Item name="prefferd_state" label="Preferred State to Work " rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your State'
-                    },
-                  ]}
-                  >
-
-                    <Select mode="multiple" name="prefferd_state" placeholder="Select State" >
-                      <Select.Option value="All State">All State</Select.Option>
-                      {Object.keys(state_cites).map((state, index) => {
-                        return (<Select.Option key={index} value={state}>{state}</Select.Option>)
+                      {
+                        formData?.user_id?.email != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
                       }
-                      )}
-                    </Select>
-                  </Form.Item>
-                  <Form.Item name="Address" label="Office Address ">
-                    <Input placeholder='Enter Your Office Address' />
-                  </Form.Item>
 
 
-                  <Form.Item name="msme" label="Do you have MSME ?" required >
-                    <Select placeholder="Please select an option">
-                      <Select.Option value={"Yes"}>Yes</Select.Option>
-                      <Select.Option value={"No"}>No</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <div className='form_email_mobile_flex flex-col md:flex-row'>
-                    <div className='form_flex_children mr-2'>
-                    <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
+                    </Form.Item>
+                  </div>
+                  {/*******************************************/}
+
+                  {/************Mobile Number****************/}
+                  <div className='form_flex_children'>
+
+                    <Form.Item name="mobile_number" label="Mobile Number " rules={[
                       {
                         required: true,
-                        message: 'Please provide required details'
+                        message: 'Please enter your mobile number'
                       },
                     ]}>
-                      <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
+                       {
+                          formData?.user_id?.number != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                        }
+                      {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile Number to be registered' /> */}
                     </Form.Item>
-                    {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
-                    <div className='form_flex_children '>
-                      <Form.Item name="msme_image" label="Copy of PF">
-                        <Input type='file' max={1} onChange={msme_img_value} />
-                      </Form.Item> </div> </div>
-
-
-
-
-                  <div className='flex justify-center'>
-                    <button
-                      type="submit"
-                      className="save_Btn"  >
-                      Next
-                    </button>
                   </div>
-                </Form>
+                  {/*******************************************/}
+                </div> 
+                < div className='flex flex-col md:flex-row '>
+              <div className='form_flex_children mr-1'>
+                <Form.Item name="State" label="State " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your state'
+                  },
+                ]}>
+
+                  <Select name="State" placeholder="Select State" onSelect={countrySelectHandler}>
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className='form_flex_children mr-1'>
+                <Form.Item name="City" label="City " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your city',
+                  },
+                ]}>
+                  <Select id="country-state" name="City" placeholder="Select City">
+                    {state.length > 0 && state.map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className='form_flex_children'>
+                <Form.Item name="pin_code" label="Pin Code " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your PIN Code',
+
+                  },
+                ]}>
+                  <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN Code" />
+                </Form.Item>
+              </div>
+            </div>
+            {/*******************************************/}
+
+            {/**************  Work Segment *************/}
+            <Form.Item name="work_segment" label="Work Segment" rules={[
+              {
+                required: true,
+                message: 'Please select your work segment'
+              },
+            ]}>
+              <Select mode="multiple"
+                allowClear placeholder="Select your work segment ">
+                {work_segment.map((option, index) => {
+
+                  return <Select.Option key={index} value={option}>{option}</Select.Option>
+                })}
+                <Select.Option value={"other"}>Other</Select.Option>
+              </Select>
+            </Form.Item>
+            {/*******************************************/}
+            <Form.Item name="prefferd_state" label="Preferred State to Work " rules={[
+              {
+                required: true,
+                message: 'Please select your state'
+              },
+            ]}
+            >
+
+              <Select mode="multiple" name="prefferd_state" placeholder="Select State" >
+                <Select.Option value="All State">All State</Select.Option>
+                {Object.keys(state_cites).map((state, index) => {
+                  return (<Select.Option key={index} value={state}>{state}</Select.Option>)
+                }
+                )}
+              </Select>
+            </Form.Item>
+
+            <Form.Item name="Address" label="Office Address " >
+              <Input placeholder='Enter Your Office Address' />
+            </Form.Item>
+
+
+            <Form.Item name="msme" label="Do you have MSME ?" required >
+              <Select placeholder="Please select an option">
+                <Select.Option value={"Yes"}>Yes</Select.Option>
+                <Select.Option value={"No"}>No</Select.Option>
+              </Select>
+            </Form.Item>
+            <div className='form_email_mobile_flex flex flex-col md:flex-row'><div className='form_flex_children mr-2'>
+              <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
+                {
+                  required: true,
+                  message: 'Please provide required details'
+                },
+              ]}>
+                <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
+              </Form.Item>
+              {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
+              <div className='form_flex_children  '>
+                {showGSTiMAGE ? <>
+                  <label>Copy Of PF</label><br />
+                  <div className='mt-3 inline-block'>
+                    <span className='text-[#FF5757] underline mr-3'><a href={formData.msme_image} target="_blank" download>
+                      Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGSTimage(false)} >Delete</span>
+                  </div>
+
+                </> : <Form.Item name="msme_image" label="Copy of PF">
+                  <Input type='file' max={1} onChange={msme_img_value} />
+                </Form.Item>}</div> </div>
+
+
+
+
+            <div className='flex justify-center'>
+              <button
+                type="submit"
+                className="save_Btn"
+              >
+                Next
+              </button>
+            </div>
+          </Form>
+          :
+          <Form
+            form={form}
+            labelCol={{
+              span: 37,
+            }}
+            wrapperCol={{
+              span: 44,
+            }}
+
+            layout="vertical"
+            fields={
+              [
+                { "name": "email", "value": localStorage.getItem('email') },
+                { "name": "mobile_number", "value": localStorage.getItem('number') },
+              ]
+
+            }
+            size="default"
+            labelAlign="left"
+            scrollToFirstError={true}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+
+
+          >
+            {/**************  Entity Name *************/}
+            <Form.Item name="entity" label="Name of Entity" rules={[
+              {
+                required: true,
+                message: 'Please enter your entity name',
+              },
+            ]}>
+              <Input placeholder='Enter the Name of Your Firm' />
+            </Form.Item>
+            <div className='form_email_mobile_flex flex-col md:flex-row '>
+              <div className='form_flex_children mr-2'>
+                <Form.Item label="Contact Person Full Name " name="username" rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your Name',
+                  },
+                ]}>
+                  <Input placeholder='Enter Contact Person Name' />
+                </Form.Item>
+              </div>
+              <div className='form_flex_children '>
+                <Form.Item name="Designation" label="Designation">
+                  <Input placeholder='Enter the  Designation' />
+                </Form.Item>
+              </div>
+            </div>
+            <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                    {/*****************Email*******************/}
+                  <div className='form_flex_children mr-2' >
+                    <Form.Item name="email" label="Email " rules={[
+                      {
+                        required: true,
+                        message: 'Please enter  email'
+                      },
+                    ]} wrapperCol={{
+                      span: 56,
+                    }}>
+
+                      {
+                        localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                      }
+
+
+                    </Form.Item>
+                  </div>
+                  {/*******************************************/}
+
+                  {/************Mobile Number****************/}
+                  <div className='form_flex_children'>
+
+                    <Form.Item name="mobile_number" label="Mobile Number " rules={[
+                      {
+                        required: true,
+                        message: 'Please enter your mobile number'
+                      },
+                    ]}>
+                       {
+                          localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                        }
+                      {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile Number to be registered' /> */}
+                    </Form.Item>
+                  </div>
+                  {/*******************************************/}
+                </div> 
+            <div className='flex flex-col md:flex-row '>
+              <div className='form_flex_children mr-1'>
+                <Form.Item name="State" label="State " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your State'
+                  },
+                ]}>
+
+                  <Select name="State" placeholder="Select State" onSelect={countrySelectHandler}>
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className='form_flex_children mr-1'>
+                <Form.Item name="City" label="City " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your City',
+                  },
+                ]}>
+                  <Select id="country-state" name="City" placeholder="Select City">
+                    {state.length > 0 && state.map((state) => {
+                      return (<Select.Option value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className='form_flex_children'>
+                <Form.Item name="pin_code" label="Pin Code " rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your Pin Code',
+
+                  },
+                ]}>
+                  <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN Code" />
+                </Form.Item>
+              </div>
+            </div>
+            {/*******************************************/}
+
+            {/**************  Work Segment *************/}
+            <Form.Item name="work_segment" label="Work Segment" rules={[
+              {
+                required: true,
+                message: 'Please select your Work Segment'
+              },
+            ]}>
+              <Select mode="multiple"
+                allowClear placeholder="List of Categories Dropdown with Multiselect">
+                {work_segment.map((option, index) => {
+
+                  return <Select.Option key={index} value={option}>{option}</Select.Option>
+                })}
+                <Select.Option value={"other"}>Other</Select.Option>
+              </Select>
+            </Form.Item>
+            {/*******************************************/}
+            <Form.Item name="prefferd_state" label="Preferred State to Work " rules={[
+              {
+                required: true,
+                message: 'Please enter your State'
+              },
+            ]}
+            >
+
+              <Select mode="multiple" name="prefferd_state" placeholder="Select State" >
+                <Select.Option value="All State">All State</Select.Option>
+                {Object.keys(state_cites).map((state, index) => {
+                  return (<Select.Option key={index} value={state}>{state}</Select.Option>)
+                }
+                )}
+              </Select>
+            </Form.Item>
+            <Form.Item name="Address" label="Office Address ">
+              <Input placeholder='Enter Your Office Address' />
+            </Form.Item>
+
+
+            <Form.Item name="msme" label="Do you have MSME ?" required >
+              <Select placeholder="Please select an option">
+                <Select.Option value={"Yes"}>Yes</Select.Option>
+                <Select.Option value={"No"}>No</Select.Option>
+              </Select>
+            </Form.Item>
+            <div className='form_email_mobile_flex flex-col md:flex-row'>
+              <div className='form_flex_children mr-2'>
+                <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
+                  {
+                    required: true,
+                    message: 'Please provide required details'
+                  },
+                ]}>
+                  <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
+                </Form.Item>
+                {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
+              <div className='form_flex_children '>
+                <Form.Item name="msme_image" label="Copy of PF">
+                  <Input type='file' max={1} onChange={msme_img_value} />
+                </Form.Item> </div> </div>
+
+
+
+
+            <div className='flex justify-center'>
+              <button
+                type="submit"
+                className="save_Btn"  >
+                Next
+              </button>
+            </div>
+          </Form>
               }
 
-            </div>
-          </div>
         </div>
       </div>
+    </div>
+      </div >
     </>
   );
 };

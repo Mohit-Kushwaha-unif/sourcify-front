@@ -92,7 +92,7 @@ const VendorForm = () => {
               },
             ]}
               layout="vertical" onFinish={FormHandler}>
-              <Form.Item name="agency_name" label=" Agency Name " rules={[
+              <Form.Item name="agency_name" label=" Company Name " rules={[
                 {
                   required: true,
                   message: 'Please input your Bank Overdraft Limit'
@@ -116,7 +116,7 @@ const VendorForm = () => {
               </Form.Item>
               <div className='form_email_mobile_flex flex flex-col flex-col-reverse md:flex-row '>
                 <div className='form_flex_children mr-1'>
-                  <Form.Item name="number" label="Number " rules={[
+                  <Form.Item name="number" label="Mobile Number " rules={[
                     {
                       required: true,
                       message: 'Please input your Number'
