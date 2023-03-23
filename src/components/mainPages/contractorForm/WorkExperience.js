@@ -23,6 +23,7 @@ const WorkExperience = () => {
   const [state, setState] = useState(["All State"])
   const [showMsg, setShowMsg] = useState(false)
   const [formData, setFormData] = useState([])
+  const disabledDate = (current) => current && current > moment().endOf('year');
   function countrySelectHandler(country) {
     setState((prevState) => prevState, state_cites[country])
   }
@@ -30,19 +31,20 @@ const WorkExperience = () => {
   useEffect(() => {
     if (localStorage.getItem("form_id")) {
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
-        
+
         res?.projects?.map((project) => {
-        console.log(project)
-        var Exec = moment(project.Exec)
-        project.Exec = Exec
-            projects.push(project)
-        
-       
-    })
+          console.log(project)
+          var Exec = moment(project.Exec)
+          project.Exec = Exec
+          projects.push(project)
+
+
+        })
         setFormData(projects)
-  
-      })}
-    
+
+      })
+    }
+
 
   }, [])
   function FormHandler(value) {
@@ -54,30 +56,30 @@ const WorkExperience = () => {
     formData.append("form_id", localStorage.getItem("form_id"))
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       // navigation("/dashboard")
-     
+
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
-        
+
         res?.projects?.map((project) => {
-        console.log(project)
-        var Exec = moment(project.Exec)
-        project.Exec = Exec
-            projects.push(project)
-        
-       
-    })
+          console.log(project)
+          var Exec = moment(project.Exec)
+          project.Exec = Exec
+          projects.push(project)
+
+
+        })
         setFormData(projects)
-  
+
       })
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
       setShowMsg(true)
       // navigation("/")
     })
 
 
   }
-  
-    
-   
+
+
+
 
   console.log(formData);
   return (
@@ -113,117 +115,118 @@ const WorkExperience = () => {
 
                     {fields.map(({ key, name, ...restField }) => (
                       <>
-                      <div className='grid grid-cols-2 w-full'>
-                        <p className=' flex mb-3'>#Project {key + 1}  </p> 
-                        <div className=' float-right'>
-                          <span className='mb-3  text-[#FF5757] cursor-pointer underline float-right ' onClick={() => remove(name)}>
-                          <AiFillDelete className='ml-2 cursor-pointer w-5 h-5 float-right'  >  </AiFillDelete>
-                        Remove
-                        </span>
-                      </div>
-                      </div>
-                      
-                        
-                          <div className=" grid grid-cols-1 md:grid-cols-3 gap-x-6 ">
-
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'Client_Name']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing Client Name',
-                                },
-                              ]}
-                            >
-                              <Input placeholder="Client Name" style={{ width: '100%' }} />
-                            </Form.Item>
-
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'Contract_Value']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing Contract Value',
-                                },
-                              ]}
-                            >
-                              <Input type='Number' placeholder="Contract Value" />
-                            </Form.Item>
-
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'Exec']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing Year of Execution',
-                                },
-                              ]}
-                            >
-                              <DatePicker style={{ width: '100%' }} placeholder="Year of Execution" picker="year" />
-                              {/* <Input style={{ width: '100%'  }} placeholder="Year of Execution" /> */}
-                            </Form.Item>
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'Worked_States']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing State Value',
-                                },
-                              ]}
-                            >
-                              <Select id="country-state" name="State" style={{ width: '100%' }} placeholder="Select State" onSelect={countrySelectHandler}>
-                                {Object.keys(state_cites).map((state) => {
-                                  return (<Select.Option value={state}>{state}</Select.Option>)
-                                }
-                                )}
-                              </Select>
-                            </Form.Item>
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'person_name']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing Name Of Person',
-                                },
-                              ]}
-                            >
-                              <Input style={{ width: '100%' }} placeholder="Name Of Person" />
-                            </Form.Item>
-
-
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'client_mobile_number']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Missing Client Mobile Number',
-                                },
-                              ]}
-                            >
-                              <Input type='Number' style={{ width: '100%' }} placeholder="Client Mobile Number" />
-                            </Form.Item>
-
+                        <div className='grid grid-cols-2 w-full'>
+                          <p className=' flex mb-3'>#Project {key + 1}  </p>
+                          <div className=' float-right'>
+                            <span className='mb-3  text-[#FF5757] cursor-pointer underline float-right ' onClick={() => remove(name)}>
+                              <AiFillDelete className='ml-2 cursor-pointer w-5 h-5 float-right'  >  </AiFillDelete>
+                              Remove
+                            </span>
                           </div>
-                         
-                          {/* <svg xmlns="http://www.w3.org/2000/svg" onClick={() => remove(name)} className="w-6 h-6" viewBox="0 0 24 24">
+                        </div>
+
+
+                        <div className=" grid grid-cols-1 md:grid-cols-3 gap-x-6 ">
+
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'Client_Name']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing Client Name',
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Client Name" style={{ width: '100%' }} />
+                          </Form.Item>
+
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'Contract_Value']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing Contract Value',
+                              },
+                            ]}
+                          >
+                            <Input type='Number' placeholder="Contract Value" />
+                          </Form.Item>
+
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'Exec']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing Year of Execution',
+                              },
+                            ]}
+                          >
+                            <DatePicker style={{ width: '100%' }} disabledDate={disabledDate}
+                              placeholder="Year of Execution" picker="year" />
+                            {/* <Input style={{ width: '100%'  }} placeholder="Year of Execution" /> */}
+                          </Form.Item>
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'Worked_States']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing State Value',
+                              },
+                            ]}
+                          >
+                            <Select id="country-state" name="State" style={{ width: '100%' }} placeholder="Select State" onSelect={countrySelectHandler}>
+                              {Object.keys(state_cites).map((state) => {
+                                return (<Select.Option value={state}>{state}</Select.Option>)
+                              }
+                              )}
+                            </Select>
+                          </Form.Item>
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'person_name']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing Name Of Person',
+                              },
+                            ]}
+                          >
+                            <Input style={{ width: '100%' }} placeholder="Name Of Person" />
+                          </Form.Item>
+
+
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'client_mobile_number']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Missing Client Mobile Number',
+                              },
+                            ]}
+                          >
+                            <Input type='Number' style={{ width: '100%' }} placeholder="Client Mobile Number" />
+                          </Form.Item>
+
+                        </div>
+
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" onClick={() => remove(name)} className="w-6 h-6" viewBox="0 0 24 24">
                             <path d="M0 0h24v24H0z" fill="black" />
                             <path d="M19 6H5v12h14V6zm-4.25 7.71l-1.47 1.47L12 11.48l-1.28 1.28-1.47-1.47L10.52 10l-1.28-1.28 1.47-1.47L12 8.52l1.28-1.28 1.47 1.47L13.48 10l1.27 1.71z" fill="#ffffff"  />
                           </svg> */}
 
-                          {/* <MinusCircleOutlined onClick={() => remove(name)} /> */}
+                        {/* <MinusCircleOutlined onClick={() => remove(name)} /> */}
 
-                        
+
                       </>
 
 
@@ -319,14 +322,14 @@ const WorkExperience = () => {
           </>
         )}
       </Form.List> */}
-              
+
 
               <div className='flex flex-col flex-col-reverse md:flex-row justify-between'>
                 <button
                   type="submit"
                   className='back_btn'
                   // className="inline-block px-32 mt-4 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
-                  onClick={()=>navigation('/contractor-form/financial-detail')}
+                  onClick={() => navigation('/contractor-form/financial-detail')}
                 >
                   Back
                 </button>

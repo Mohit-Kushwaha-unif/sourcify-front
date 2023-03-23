@@ -158,7 +158,7 @@ const VendorForm = () => {
                   <Form.Item name="State" label="State " rules={[
                     {
                       required: true,
-                      message: 'Please enter your State!'
+                      message: 'Please enter your state'
                     },
                   ]}>
 
@@ -174,7 +174,7 @@ const VendorForm = () => {
                   <Form.Item name="City" label="City " rules={[
                     {
                       required: true,
-                      message: 'Please enter your City!',
+                      message: 'Please enter your city',
                     },
                   ]}>
                     <Select id="country-state" name="City" placeholder="Select City">
@@ -186,10 +186,10 @@ const VendorForm = () => {
                   </Form.Item>
                 </div>
                 <div className='form_flex_children'>
-                  <Form.Item name="pin_code" label="Pin Code " rules={[
+                  <Form.Item name="pin_code" label="PIN Code " rules={[
                     {
                       required: true,
-                      message: 'Please enter your Pin Code!',
+                      message: 'Please enter your PIN Code',
 
                     },
                   ]}>

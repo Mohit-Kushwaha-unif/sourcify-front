@@ -397,7 +397,7 @@ const PersonalDetails = () => {
               <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
                 {
                   required: true,
-                  message: 'Please provide required details'
+                  message: 'Please provide pf number'
                 },
               ]}>
                 <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
@@ -613,7 +613,7 @@ const PersonalDetails = () => {
                 <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
                   {
                     required: true,
-                    message: 'Please provide required details'
+                    message: 'Please provide pf number'
                   },
                 ]}>
                   <Input placeholder='Enter your PF Number' onChange={msmeVerfication} />
