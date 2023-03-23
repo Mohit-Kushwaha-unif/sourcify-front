@@ -95,19 +95,19 @@ const VendorForm = () => {
               <Form.Item name="agency_name" label=" Company Name " rules={[
                 {
                   required: true,
-                  message: 'Please input your Bank Overdraft Limit'
+                  message: 'Please Enter name of your Company'
                 },
               ]}
                 className="mb-2"
               >
 
-                <Input placeholder='Enter name of your Agency' />
+                <Input placeholder='Enter name of your Company' />
               </Form.Item>
 
               <Form.Item name='contact_person' className='mb-2 mt-0' label="Contact Person Name" rules={[
                 {
                   required: true,
-                  message: 'Please input your Contact Person Name'
+                  message: 'Please enter your Contact Person Name'
                 },
               ]}
               >
@@ -119,7 +119,7 @@ const VendorForm = () => {
                   <Form.Item name="number" label="Mobile Number " rules={[
                     {
                       required: true,
-                      message: 'Please input your Number'
+                      message: 'Please enter your Number'
                     },
                   ]}
                     className="mb-1"
@@ -134,7 +134,7 @@ const VendorForm = () => {
                   <Form.Item name="email" className='mb-2 mt-0' label="Email" rules={[
                     {
                       required: true,
-                      message: 'Please input your Email'
+                      message: 'Please enter your Email'
                     },
                   ]}
                   >
@@ -148,7 +148,7 @@ const VendorForm = () => {
               <Form.Item name="Address" className='mb-2' label="Office Address " rules={[
                 {
                   required: true,
-                  message: 'Please input your Address!',
+                  message: 'Please enter your Address!',
                 },
               ]}>
                 <Input placeholder='Enter Your Office Address' />
@@ -158,7 +158,7 @@ const VendorForm = () => {
                   <Form.Item name="State" label="State " rules={[
                     {
                       required: true,
-                      message: 'Please input your State!'
+                      message: 'Please enter your State!'
                     },
                   ]}>
 
@@ -174,7 +174,7 @@ const VendorForm = () => {
                   <Form.Item name="City" label="City " rules={[
                     {
                       required: true,
-                      message: 'Please input your City!',
+                      message: 'Please enter your City!',
                     },
                   ]}>
                     <Select id="country-state" name="City" placeholder="Select City">
@@ -189,7 +189,7 @@ const VendorForm = () => {
                   <Form.Item name="pin_code" label="Pin Code " rules={[
                     {
                       required: true,
-                      message: 'Please input your Pin Code!',
+                      message: 'Please enter your Pin Code!',
 
                     },
                   ]}>

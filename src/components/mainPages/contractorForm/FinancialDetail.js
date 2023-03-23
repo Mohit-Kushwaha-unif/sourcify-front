@@ -214,7 +214,7 @@ const FinancialDetail = () => {
                             <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Bank Overdraft Limit'
+                                    message: 'Please enter value'
                                 },
                             ]}
                             >
@@ -227,7 +227,7 @@ const FinancialDetail = () => {
                             <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Bank Overdraft Limit'
+                                    message: 'Please enter your Bank Overdraft Limit'
                                 },
                             ]}
                                 className="mb-1"

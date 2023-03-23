@@ -244,7 +244,7 @@ const PersonalDetails = () => {
                       message: 'Please enter your entity name',
                     },
                   ]}>
-                    <Input placeholder='Enter the Name of Your Firm' />
+                    <Input placeholder='Enter the Name of Your entity' />
                   </Form.Item>
                   <div className='form_email_mobile_flex flex flex-col md:flex-row'>
                     <div className='form_flex_children mr-2'>
@@ -461,7 +461,7 @@ const PersonalDetails = () => {
                 message: 'Please enter your entity name',
               },
             ]}>
-              <Input placeholder='Enter the Name of Your Firm' />
+              <Input placeholder='Enter the Name of Your entity' />
             </Form.Item>
             <div className='form_email_mobile_flex flex-col md:flex-row '>
               <div className='form_flex_children mr-2'>
@@ -572,7 +572,7 @@ const PersonalDetails = () => {
               },
             ]}>
               <Select mode="multiple"
-                allowClear placeholder="List of Categories Dropdown with Multiselect">
+                allowClear placeholder="List of work segments">
                 {work_segment.map((option, index) => {
 
                   return <Select.Option key={index} value={option}>{option}</Select.Option>
