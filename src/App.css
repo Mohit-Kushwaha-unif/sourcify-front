@@ -65,7 +65,14 @@ body {
 .swal2-containers.swal2-top-end>.swal2-popup {
   grid-column: 3;
   align-self: start;
+
   justify-self: center !important;
+}
+.swal2-title{
+  line-height: 1.3em;
+}
+.swal2-styled.swal2-confirm{
+  background-color: #e64d4d !important;
 }
 
 .ant-select-selector {

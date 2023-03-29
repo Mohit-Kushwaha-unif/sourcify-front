@@ -22,17 +22,18 @@ const Banner = () => {
             formData.append(formKey, formValue[formKey])
         })
         // console.log()
-    //     if(About_us.length == 0)
-    //    { dispatch(add_about(formData)).then((res)=>{
-    //         // console.group(res)
-    //         localStorage.setItem("AboutUs",res._id)
-    //     })}
-    //     else{
-    //         dispatch(update_about(formData)).then((res)=>{
-    //             // console.group(res)
-    //             localStorage.setItem("AboutUs",res._id)
-    //         })
-    //     }
+        if(About_us.length == 0)
+       { dispatch(add_about(formData)).then((res)=>{
+            // console.group(res)
+            localStorage.setItem("AboutUs",res._id)
+        })}
+        else{
+            formData.append("id", localStorage.getItem("AboutUs"))
+            dispatch(update_about(formData)).then((res)=>{
+                // console.group(res)
+                // localStorage.setItem("AboutUs",res._id)
+            })
+        }
      }
      function fileHandler(e){
         setBannerImg(e.target.files[0])
@@ -43,7 +44,7 @@ const Banner = () => {
       var data =[]
       var optionSet =[]
           dispatch(get_about()).then((res) => {
-            console.log(res[0])
+            SetAboutUs(res)
            res[0].Banner?.map((formVal)=>{
             obj["name"] = "baner_title"
             obj["value"] = formVal.title
@@ -179,8 +180,7 @@ const Banner = () => {
                 </Form.Item>
                 <button
               type="submit"
-              className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >
+              className="primary_btn">
                 Save
                 
              

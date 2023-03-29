@@ -5,7 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import  store  from './store/store';
 import { BrowserRouter } from "react-router-dom";
-
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { PersistGate } from 'redux-persist/integration/react';
 import persistStore from 'redux-persist/es/persistStore';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -35,3 +35,4 @@ root.render(
   </GoogleOAuthProvider>
 );
 
+serviceWorkerRegistration.register();

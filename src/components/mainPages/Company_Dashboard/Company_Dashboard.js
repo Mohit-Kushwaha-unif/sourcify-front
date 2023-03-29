@@ -114,10 +114,10 @@ const Company_Dashboard = () => {
           <div
             className="flex w-full flex-wrap h-full  "
           >
-            <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+            <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
               <button
                 onClick={() => navigator('/dashboard/listing-form')}
-                className="inline-block mb-5 px-7  py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                className="save_Btn mb-4 px-6 "
               >
                 Add New Listing </button>
               <div className="flex flex-row items-center justify-center lg:justify-start">

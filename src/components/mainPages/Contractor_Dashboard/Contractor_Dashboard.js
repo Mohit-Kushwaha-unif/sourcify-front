@@ -164,7 +164,7 @@ const Contractor_Dashboard = () => {
             <div
               className="flex w-full flex-wrap h-full  "
             >
-              <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>

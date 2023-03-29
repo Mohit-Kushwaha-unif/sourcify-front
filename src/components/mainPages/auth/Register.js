@@ -41,8 +41,10 @@ const Regsiter = () => {
             localStorage.setItem("accesstoken",res.accesstoken)
             localStorage.setItem("isLoggedIn", true)
             dispatch(setValue(res.user_data.role))
-           
-              if(res.user_data.role ===1)
+              // if(res.user_data.otpVerfied !=true){
+              //   navigate('/verify')
+              // }
+               if(res.user_data.role ===1)
                navigate('/vendor-form' ,{state:res.user_data})  
               else
               navigate('/contractor-form' ,{state:res.user_data})  
