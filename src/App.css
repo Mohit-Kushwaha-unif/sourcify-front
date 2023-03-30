@@ -492,6 +492,13 @@ input[type=number] {
   .save_Btn {
     width: 25%;
   }
+ 
+}
+@media (max-width: 768px) {
+  .hero-abt-title{
+    line-height: 30px;
+  }
+ 
 }
 
 .save_Btn:hover {

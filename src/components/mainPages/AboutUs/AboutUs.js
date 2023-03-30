@@ -499,8 +499,8 @@ const AboutUs = () => {
     <div className=' mx-auto  ' >
       <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
-        <div className="absolute z-[1] inset-0 bg-[#000000] opacity-75"></div>
-        <div className="absolute top-1/2 z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
+        <div className="absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className=" hero-abt-title text-center mb-2">Where sub-contracting meets <br />innovation</h1>
           <div className='flex justify-center'>
