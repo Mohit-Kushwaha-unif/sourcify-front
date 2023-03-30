@@ -164,7 +164,7 @@ const Contractor_Dashboard = () => {
             <div
               className="flex w-full flex-wrap h-full  "
             >
-              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>
@@ -182,19 +182,20 @@ const Contractor_Dashboard = () => {
             {
               lisitngs.length > 0 && lisitngs.map((res) => {
                 // console.log(res)
-                return <div className='grid grid-cols-3 rounded-lg border-2 min-h-60  max-h-60 rounded-[25px] shadow-gray-50  '>
-                  <div className=' '>
+                return <div className='grid grid-cols-2 rounded-lg border-2 min-h-60  max-h-60  '>
+                  {/* <div className=' '>
                     <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="User image" class="w-full h-60" />
 
-                  </div>
-                  <div class="relative bg-white w-full col-span-2 shadow p-4 h-60">
-                    <h2 class="text-lg font-medium mt-4">{res.project_discription}</h2>
-                    <p class="text-gray-600">{res.project_scope}</p>
+                  </div> */}
+                  <div class="relative w-full font-semibold col-span-2 p-4 h-60 text-xl">
+                    <h2 class="font-semibold  mt-4"><span>Project Description</span> <span className='text-[#FF5757]'> {res.project_discription}</span></h2>
+                    <p class=""><span>Project scope</span><span className='text-[#FF5757]'> {res.project_scope }</span></p>
                     <div class="mt-4 flex items-center">
-                      <div class=" wrap md:px-6 pt-4 pb-2">
+                      <div class=" wrap  pt-4 pb-2">
+                      <h3 className=' mb-2'>Working Sectors</h3>
                         {
                           res.wok_segment.map((work) => {
-                            return <span class="inline-block wrap bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{work}</span>
+                            return <span class="inline-block wrap bg-[#FF5757] rounded-full px-3  text-sm font-semibold text-[#ffffff] py-2 mr-2 mb-2">{work}</span>
                           })
                         }
                       </div>
@@ -204,7 +205,7 @@ const Contractor_Dashboard = () => {
                     <button
                       type="submit"
                       onClick={() => projectHandler(res._id)}
-                      className="absolute right-1 bottom-0 px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="absolute right-1 bottom-0 primary_btn mb-3 mr-3"
                     >
                       View Details
                     </button>

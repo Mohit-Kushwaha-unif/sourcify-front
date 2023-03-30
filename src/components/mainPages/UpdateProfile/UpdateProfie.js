@@ -14,6 +14,7 @@ const UpdateProfie = () => {
     useDocumentTitle('Edit Profile')
     const [initialValue,setInitialValue] = useState([])
     const [isContractor,setIsContractor] = useState()
+    const [contractor, setContractor] = useState()
     var formValue = []
     useEffect(()=>{
         dispatch(get_user_info({user_id:localStorage.getItem('user_id')})).then((res)=>{
@@ -26,11 +27,21 @@ const UpdateProfie = () => {
             obj = {}
             obj.name = "number"
             obj.value= res.number
+            if(res.role == 0){
+                setContractor(true)
+            }
+            else if(res.role == 1){
+                setContractor(false)
+            }
+           
             setInitialValue(prevState=>[...prevState,obj])
             if(Object.keys(res).includes('contractor_id')){
+                console.log({res})
+                
                 setIsContractor({is:false, _id:res.contractor_id._id})
             }
             if(Object.keys(res).includes('vendor_id')){
+                
                 setIsContractor({is:true, _id:res.vendor_id._id})
             }
         })
@@ -45,10 +56,14 @@ const UpdateProfie = () => {
      }
 
      function navigationHandler(){
-        // console.log(isContractor)
+        console.log(isContractor,contractor)
+        console.log(isContractor === undefined)
         // return false
-        if(isContractor === undefined){
-            Swal.fire('Please Contact us ', 'Problem with your profile', 'warning')
+        if(isContractor === undefined && contractor=== true){
+            navigate('/contractor-form')
+        }
+        if(isContractor === undefined && contractor=== false){
+            navigate('/vendor-form')
         }
         if(isContractor?.is === true){
             navigate('/edit-company',{state:{_id:isContractor._id}})
@@ -64,7 +79,7 @@ const UpdateProfie = () => {
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-auto "
                 >
-                    <div className="xl:ml-20 xl:w-11/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="my-2 mx-4 w-full mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Profile Details</p>
                         </div>
@@ -101,17 +116,15 @@ const UpdateProfie = () => {
                  
 
 
-                            <div className="text-center flex justify-center justify-evenly lg:text-left mt-2 mb-3">
-                                <Form.Item
-
-                                >
-                                    <Button className='form_button inline-block h-auto px-7 py-3 mr-10 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out' type="primary" htmlType="submit">
+                            <div className="text-center flex flex-col md:flex-row justify-center justify-between lg:text-left mt-2 mb-3">
+                         
+                                    <button className='back_btn' type="primary" htmlType="submit">
                                         Update
-                                    </Button>
-                                    <Button onClick={navigationHandler} className='form_button inline-block h-auto px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out' type="primary">
+                                    </button>
+                                    <button onClick={navigationHandler} className='save_Btn' type="primary">
                                         NEXT
-                                    </Button>
-                                </Form.Item>
+                                    </button>
+                               
                             </div>
                         </Form>
                     </div>

@@ -242,7 +242,7 @@ const Header = () => {
       {isOpen && (
         <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {/* <button
+            <button
               onClick={handleSettings}
               className="block px-4 py-2 text-sm w-full text-left"
             >
@@ -261,7 +261,7 @@ const Header = () => {
                 />
               </svg>
               Update Profile
-            </button> */}
+            </button>
 
             {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
             <button

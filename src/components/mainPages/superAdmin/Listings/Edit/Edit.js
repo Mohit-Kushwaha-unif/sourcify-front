@@ -326,7 +326,7 @@ const EditListing = () => {
                                             <button
                                                 type="submit"
                                                 onClick={() => setFormStatus(2)}
-                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                             >
 
                                                 Reject
@@ -335,7 +335,7 @@ const EditListing = () => {
                                         {initialValues.length > 0 && initialValues[7].value != 0 && <button
                                             type="submit"
                                             onClick={() => setFormStatus(0)}
-                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
                                             Accept
@@ -344,7 +344,7 @@ const EditListing = () => {
                                         {initialValues.length > 0 && initialValues[7].value != 1 && <button
                                             type="submit"
                                             onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
                                             Moderation
@@ -354,7 +354,7 @@ const EditListing = () => {
                                         <button
                                             type="submit"
                                             onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-blue-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="save_Btn"
                                         >
 
                                             Update

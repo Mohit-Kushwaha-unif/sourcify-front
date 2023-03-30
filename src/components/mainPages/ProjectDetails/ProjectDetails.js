@@ -76,7 +76,7 @@ const ProjectDetails = () => {
                                     </div>
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="email">
-                                            Preffered State
+                                            Preferred State
                                         </label>
                                         {formValues?.listing.prefferd_state.map((states) => {
                                             return <Tag>{states}</Tag>
@@ -165,7 +165,7 @@ const ProjectDetails = () => {
                                     <button
                                         type="submit"
                                         onClick={()=>submitHandler(formValues.listing._id)}
-                                        className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                        className="primary_btn"
                                     >
                                         Send Proposal
 
@@ -176,20 +176,21 @@ const ProjectDetails = () => {
                                {applied? <button
                                     //  type="submit"
                                     disabled
-                                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    className="primary_btn"
                                 >
                                     Already Applied
 
 
-                                </button> : <button
+                                </button> : <div className='flex justify-center'> <button
                                     //  type="submit"
                                     onClick={showModal}
-                                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    className="primary_btn "
                                 >
                                     Send Proposal
 
 
-                                </button>}
+                                </button>
+                                </div>}
                             </div>
                         </div>
                     </div>
