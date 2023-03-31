@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing_user,remove_listing } from '../../../services/listing'
+import useDocumentTitle from '../../Helper/useDocumentTitle'
 import ListingCard from './Listing/listingCard'
 // import Table from 'ant-responsive-table'
 const Company_Dashboard = () => {
@@ -12,6 +13,7 @@ const Company_Dashboard = () => {
   const [tableData, setTableData] = useState([])
   const [contractor,setContractors] = useState([])
   var data =[]
+  useDocumentTitle('Dashboard')
   useEffect(() => {
     dispatch(get_listing_user(localStorage.getItem('user_id'))).then((res) => {
       res.map((tableData, index) => {
@@ -39,16 +41,14 @@ const Company_Dashboard = () => {
         dataIndex: 'key',
         key: 'key',
         render: (text) => text + 1,
-        showOnResponse: true,
-        showOnDesktop: true
+      
     },
     {
         title: 'Description',
         dataIndex: 'entity',
         key: 'entity',
         render: (text) => text,
-        showOnResponse: true,
-        showOnDesktop: true
+      
     },
     {
         title: 'Work Segment',
@@ -69,8 +69,7 @@ const Company_Dashboard = () => {
                 }) : work_segment?.work_segment}
             </>
         ),
-        showOnResponse: true,
-        showOnDesktop: true
+      
     },
     {
         title: 'Status',
@@ -90,8 +89,7 @@ const Company_Dashboard = () => {
             }
             return <Tag color={color}>{text}</Tag>
         } ,
-        showOnResponse: true,
-        showOnDesktop: true
+      
     },
     {
         title: 'Action',
@@ -103,8 +101,7 @@ const Company_Dashboard = () => {
                 <Link onClick={()=>deleteHandler(record?._id)}>Delete</Link>
             </Space>
         ),
-        showOnResponse: true,
-        showOnDesktop: true
+      
     },
 ];
  

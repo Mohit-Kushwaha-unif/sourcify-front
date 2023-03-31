@@ -3,7 +3,7 @@ import { Dropdown, Input, Space } from 'antd'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import Sourcify from '../../assests/Sourcify Logo.png'
 import NEW_Sourcify from '../../assests/Sourcify.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
 import { search_listing } from '../../services/listing';
@@ -134,46 +134,15 @@ const Header = () => {
     <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center  justify-between '>
         <div> <img className='w-[70%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
-        <div className=' flex-end absolute right-[10px] top-[10px] '>
-        <span> {isLoggedIn ?
-
-<>
-  {/* <div className='navbar__item'>
-    Dashboard
-  </div> */}
-  <div className='navbar__item relative'>
-    <button
-      onClick={() => setIsOpen(!isOpen)}
-
-      className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-    >
-      <span>{userName}</span>
-      <svg
-        className="w-5 h-5 ml-2"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19 9l-7 7-7-7"
-        />
-      </svg>
-    </button>
-
-  </div>
-
-</>
-:
-<button className='primary_btn hover:bg-[#e64d4d] mt-1 ml-1 rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
-}</span>
-        </div>
+       
       </div>
-      {/* {showMenu && <> */}
-        {/* <div className='navbar__item flex-row'>
+      {isLoggedIn && <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
+              Dashboard
+            </NavLink>
+            <NavLink to="/messages" className="mr-2">Messages</NavLink></>}
+
+      {showMenu && <>
+        <div className='navbar__item flex-row'>
           <form className="flex" onSubmit={submitHandler} >
             <Input type="text" className="w-full pl-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" value={input} onChange={inputHandler} placeholder="Search..." />
             <select value={selected} className="ml-1 px-1 py-1 rounded-r-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={selectHandler}>
@@ -183,7 +152,7 @@ const Header = () => {
             </select>
           </form>
         </div>
-        <div className='navbar__item'>
+        {/* <div className='navbar__item mr-2'>
           <Dropdown
             menu={{
               items,
@@ -203,13 +172,11 @@ const Header = () => {
           <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
           <div className='navbar__item'><Link to="/support">Support</Link></div>
         </>} */}
-        {/* {isLoggedIn ?
+        {isLoggedIn ?
 
-          <> */}
-            {/* <div className='navbar__item'>
-              Dashboard
-            </div> */}
-            {/* <div className='navbar__item relative'>
+          <>
+         
+            <div className='navbar__item relative'>
               <button
                 onClick={() => setIsOpen(!isOpen)}
 
@@ -232,13 +199,13 @@ const Header = () => {
                 </svg>
               </button>
 
-            </div> */}
+            </div>
 
-          {/* </>
+          </>
           :
           <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
-        } */}
-      {/* </>} */}
+        }
+      </>}
       {isOpen && (
         <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">

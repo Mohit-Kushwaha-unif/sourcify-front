@@ -176,7 +176,7 @@ const FinancialDetail = () => {
         <section className="min-h-min mt-10 flex flex-col justify-center py-6 lg:px-8" >
             <div className="px-8 h-full text-gray-800">
                 <div
-                    className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+                    className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >
                     <div className="xl:mx-20 xl:w-11/12 lg:w-11/12 md:w-11/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl w-full p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">

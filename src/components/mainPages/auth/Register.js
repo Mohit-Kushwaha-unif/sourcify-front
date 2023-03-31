@@ -17,17 +17,19 @@ import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
 import RadioGroup from './RadioButtonMaker';
+import { useState } from 'react';
 const Regsiter = () => {
     useDocumentTitle("Register Yourself")
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const [isError, setIsError] = useState(false)
     const handleRadioChange = (value) => {
       console.log(`Selected option: ${value}`);
     };
   
     const options = [
-      { value: 1, label: `I'm a company hiring for  projects`, className: 'leading-5 text-[12px] font-bold' },
-      { value: 0, label: "I'm Contractor looking for work", className: 'leading-5 text-[12px] font-bold' },
+      { value: 1, label: `I'm a company hiring for  projects`, className: 'leading-5 font-[Montserrat] text-[12px] font-bold' },
+      { value: 0, label: "I'm Contractor looking for work", className: 'leading-5 font-[Montserrat] text-[12px] font-bold' },
     ];
   
     function formHandler(values){
@@ -48,6 +50,9 @@ const Regsiter = () => {
                navigate('/vendor-form' ,{state:res.user_data})  
               else
               navigate('/contractor-form' ,{state:res.user_data})  
+        }).catch((err)=>{
+          setIsError(true)
+          console.log(err.response.data.msg)
         });
     }
   
@@ -82,6 +87,7 @@ layout="vertical"   onFinish={formHandler}>
       <Input placeholder="Email address" />
      
     </Form.Item >
+    {isError&& <p className='text-[red] mb-3'>Email already exists </p>}
           <Form.Item
       name="number"
       rules={[
@@ -94,7 +100,7 @@ layout="vertical"   onFinish={formHandler}>
      
    
         
-     <Input prefix={ " +91"} type='Number'maxLength={10} minLength={10}  placeholder="Enter your Mobile Number" />
+     <Input prefix={"+91"} type='Number'maxLength={10} minLength={10}  placeholder="Enter your Mobile Number" />
      
     </Form.Item >
       <Form.Item    
@@ -148,13 +154,13 @@ I'm a company hiring for projects  </p>
             >
                 Sign Up 
             </button>
-            {/* <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+            <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                Have an account?
               <Link
                  to='/login'
                 className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                 >Login</Link>
-            </p> */}
+            </p>
           </div>
         </Form>
       </div>

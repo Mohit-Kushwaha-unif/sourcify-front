@@ -98,7 +98,7 @@ const PersonalDetails = () => {
         console.log(res)
         var obj = {}
         obj.id = value.user_id
-        obj.contractor_id = res.data.user_id._id
+        obj.contractor_id = res.data._id
 
         dispatch(update_user_info(obj)).then((response) => {
           // console.log(response)

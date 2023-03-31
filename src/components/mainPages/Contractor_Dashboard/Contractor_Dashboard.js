@@ -30,7 +30,7 @@ const Contractor_Dashboard = () => {
       setContractors(respnse)
       // if(res._id === formValues.vendorDetail._id){
       respnse.map((contact) => {
-        if (contact.user_id._id === localStorage.getItem('user_id')) {
+        if (contact.user_id?._id === localStorage.getItem('user_id')) {
           setContractors(contact)
 
           contact?.Applied.map((applied, index) => {
@@ -41,7 +41,7 @@ const Contractor_Dashboard = () => {
                 '_id': applied._id,
                 'key': index,
                 'scope': applied.listing_id.project_scope,
-                'entity': applied.proposal,
+                'entity': applied.listing_id.project_discription,
                 'work_segment': applied.listing_id.prefferd_state,
                 'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Waiting" : "Rejected",
                 'listing_user_id': applied.listing_id.user_id
@@ -182,14 +182,14 @@ const Contractor_Dashboard = () => {
             {
               lisitngs.length > 0 && lisitngs.map((res) => {
                 // console.log(res)
-                return <div className='grid grid-cols-2 rounded-lg border-2 min-h-60  max-h-60  '>
+                return <div className='grid grid-cols-2 rounded-lg border-2 h-auto  '>
                   {/* <div className=' '>
                     <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="User image" class="w-full h-60" />
 
                   </div> */}
-                  <div class="relative w-full font-semibold col-span-2 p-4 h-60 text-xl">
-                    <h2 class="font-semibold  mt-4"><span>Project Description</span> <span className='text-[#FF5757]'> {res.project_discription}</span></h2>
-                    <p class=""><span>Project scope</span><span className='text-[#FF5757]'> {res.project_scope }</span></p>
+                  <div class="relative w-full font-semibold col-span-2 p-4 h-auto text-xl">
+                    <h2 class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project Description</span> <span className='overflow-hidden text-ellipsis text-[#FF5757] truncate'> {res.project_discription}</span></h2>
+                    <p class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project scope</span><span className='max-w-2xl overflow-hidden text-ellipsis text-[#FF5757] truncate"'> {res.project_scope }</span></p>
                     <div class="mt-4 flex items-center">
                       <div class=" wrap  pt-4 pb-2">
                       <h3 className=' mb-2'>Working Sectors</h3>
@@ -205,7 +205,7 @@ const Contractor_Dashboard = () => {
                     <button
                       type="submit"
                       onClick={() => projectHandler(res._id)}
-                      className="absolute right-1 bottom-0 primary_btn mb-3 mr-3"
+                      className="md:absolute right-1 bottom-0 primary_btn mb-3 mr-3"
                     >
                       View Details
                     </button>

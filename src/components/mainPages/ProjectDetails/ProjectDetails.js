@@ -6,27 +6,28 @@ import { get_listingBy_id, update_listing } from '../../../services/listing'
 import { FaFileExcel } from 'react-icons/fa';
 import TextArea from 'antd/es/input/TextArea'
 import { get_contractor, get_contractorBy_id } from '../../../services/contractor'
+import moment from 'moment'
 const ProjectDetails = () => {
     const location = useLocation()
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const [formValues, setFormValues] = useState([])
     const [open, setOpen] = useState(false);
-    const [proposalVal,setProposalVal] = useState('')
-    const [applied,setApplied] = useState(false)
-    var isTrue= false
+    const [proposalVal, setProposalVal] = useState('')
+    const [applied, setApplied] = useState(false)
+    var isTrue = false
     useEffect(() => {
         console.log(location?.state)
         dispatch(get_listingBy_id(location?.state)).then((res) => {
             console.log(res)
-            res.listing.proposals.map((detail)=>{
-               if(detail.contractor_id._id === localStorage.getItem('user_id')) {
-                setApplied(true)
-               }
+            res.listing.proposals.map((detail) => {
+                if (detail.contractor_id._id === localStorage.getItem('user_id')) {
+                    setApplied(true)
+                }
             })
             setFormValues(res)
         })
-       
+
     }, [isTrue])
     // console.log(formValues)
 
@@ -49,7 +50,7 @@ const ProjectDetails = () => {
             navigator('/dashboard')
         })
     }
-    function proposalHandler(e){
+    function proposalHandler(e) {
         // console.log(e.target.value)
         setProposalVal(e.target.value)
     }
@@ -92,8 +93,9 @@ const ProjectDetails = () => {
                                         })}
 
                                     </div>
-                                    <div class="mb-4">
-                                        <label class="block text-gray-700 font-bold mb-2" for="email">
+                                    <div class="mb-4 grid md:grid-cols-2">
+                                        <div>
+                                        <label class=" text-gray-700 font-bold mb-2" for="email">
                                             Project Bill Quantity
                                         </label>
                                         {
@@ -107,8 +109,24 @@ const ProjectDetails = () => {
                                                 </a> :
                                                 <img src={formValues.vendorDetail.project_bill_qty_image} />
                                         }
+                                        </div>
+                                        <div>
+                                        <label class=" text-gray-700 font-bold mb-2" for="email">
+                                            Project Specification 
+                                        </label>
+                                        {
+                                            formValues.listing.project_specification?.split('.')[1] != 'JPEG' ||
+                                                formValues.listing.project_specification?.split('.')[1] != 'PNG' ?
+                                                <a href={formValues.listing.project_specification} download={"Project Bill"}>
 
+                                                    <FaFileExcel className='w-20 h-20' />
+
+                                                    {/* {"Specifiaction Img"} */}
+                                                </a> :
+                                                <img src={formValues.vendorDetail.project_specification} />
+                                        }
                                         {/* {console.log(formValues.listing[0].project_bill_qty_image)} */}
+                                    </div>
                                     </div>
                                     <div className='md:grid grid-cols-2'>
                                         <div class="mb-4 flex">
@@ -123,9 +141,7 @@ const ProjectDetails = () => {
                                                 Posted At - (DD/MM/YYYY) -
                                             </span>
                                             {
-                                                new Date(formValues.listing.createdAt.split('T')[0]).getDate() + '/'
-                                                + new Date(formValues.listing.createdAt.split('T')[0]).getMonth() + '/'
-                                                + new Date(formValues.listing.createdAt.split('T')[0]).getFullYear()
+                                                moment(formValues.listing.createdAt.split('T')[0]).format('DD/MM/YYYY')
                                             }
 
                                         </div>
@@ -141,39 +157,37 @@ const ProjectDetails = () => {
                                             Start Date - (DD/MM/YYYY)
                                         </label>
                                         {
-                                            new Date(formValues.listing.project_tent_date.split('T')[0]).getDate() + '/'
-                                            + new Date(formValues.listing.project_tent_date.split('T')[0]).getMonth() + '/'
-                                            + new Date(formValues.listing.project_tent_date.split('T')[0]).getFullYear()
+                                            moment(formValues.listing.project_tent_date.split('T')[0]).format('DD/MM/YYYY')
                                         }
 
                                     </div>
                                     <div className='flex justify-center'>
                                     </div>
-                               
-                                <Modal
-                                    title="Modal"
-                                    open={open}
-                                    onOk={submitHandler}
-                                    onCancel={hideModal}
-                                    bordered={false}
-                                    footer={false}
-                                // width={1140}
-                                >
-                                    <div className='mb-4'>
-                                        <TextArea placeholder='Add Your Proposal' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
-                                        </div>
-                                    <button
-                                        type="submit"
-                                        onClick={()=>submitHandler(formValues.listing._id)}
-                                        className="primary_btn"
+
+                                    <Modal
+                                        title="Modal"
+                                        open={open}
+                                        onOk={submitHandler}
+                                        onCancel={hideModal}
+                                        bordered={false}
+                                        footer={false}
+                                    // width={1140}
                                     >
-                                        Send Proposal
+                                        <div className='mb-4'>
+                                            <TextArea placeholder='Add Your Proposal' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            onClick={() => submitHandler(formValues.listing._id)}
+                                            className="primary_btn"
+                                        >
+                                            Send Proposal
 
 
-                                    </button>
-                                </Modal>
+                                        </button>
+                                    </Modal>
                                 </form>}
-                               {applied? <button
+                                {applied ? <button
                                     //  type="submit"
                                     disabled
                                     className="primary_btn"
