@@ -154,7 +154,7 @@ const EditListing = () => {
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
                 <div
-                    className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+                    className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >
                     <div className="xl:ml-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-between">
@@ -196,11 +196,11 @@ const EditListing = () => {
                             </Form.Item>
                             <div className='grid grid-cols-2 my-3'>
                             {showSpecImg !== false && <div className='w-full h-full'>
-                                <a href={showSpecImg} download={"Specifiaction Img"}>
+                                <a href={showSpecImg} download={"Specifiaction"}>
 
                                     <FaFileExcel className='w-20 h-20' />
 
-                                    {"Specifiaction Img"}
+                                    {"Specification file"}
                                 </a>
                             </div>}
                            
@@ -210,7 +210,7 @@ const EditListing = () => {
 
                                         <FaFileExcel className='w-20 h-20' />
 
-                                        {"bill img"}
+                                        {"Bill File"}
                                     </a>
                                 </div> 
                             }
@@ -326,7 +326,7 @@ const EditListing = () => {
                                             <button
                                                 type="submit"
                                                 onClick={() => setFormStatus(2)}
-                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                             >
 
                                                 Reject
@@ -335,7 +335,7 @@ const EditListing = () => {
                                         {initialValues.length > 0 && initialValues[7].value != 0 && <button
                                             type="submit"
                                             onClick={() => setFormStatus(0)}
-                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
                                             Accept
@@ -344,7 +344,7 @@ const EditListing = () => {
                                         {initialValues.length > 0 && initialValues[7].value != 1 && <button
                                             type="submit"
                                             onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
                                             Moderation
@@ -354,7 +354,7 @@ const EditListing = () => {
                                         <button
                                             type="submit"
                                             onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-blue-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                            className="save_Btn"
                                         >
 
                                             Update

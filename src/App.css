@@ -65,7 +65,14 @@ body {
 .swal2-containers.swal2-top-end>.swal2-popup {
   grid-column: 3;
   align-self: start;
+
   justify-self: center !important;
+}
+.swal2-title{
+  line-height: 1.3em;
+}
+.swal2-styled.swal2-confirm{
+  background-color: #e64d4d !important;
 }
 
 .ant-select-selector {
@@ -485,6 +492,13 @@ input[type=number] {
   .save_Btn {
     width: 25%;
   }
+ 
+}
+@media (max-width: 768px) {
+  .hero-abt-title{
+    line-height: 30px;
+  }
+ 
 }
 
 .save_Btn:hover {
@@ -525,7 +539,23 @@ input[type=number] {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   background: #ffffff;
 }
-input[type=radio] {
+/* input[type=radio] {
   -webkit-appearance: unset;
   border: none;
+} */
+
+/* .ant-input-prefix{
+  background-color: #f9f9f9;
+} */
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
 }

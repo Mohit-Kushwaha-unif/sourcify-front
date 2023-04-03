@@ -12,7 +12,7 @@ import { add_feedback } from '../../../services/FeedBack'
 import { useForm } from 'antd/es/form/Form'
 import { get_about } from '../../../services/About'
 import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
+import Owner from '../../../assests/owner.jpg'
 
 const AboutUs = () => {
   const dispatch = useDispatch()
@@ -185,7 +185,7 @@ const AboutUs = () => {
                 </div>
               </div>
               <div className="col-md-6 col-lg-10 col-xl-7 order-1 order-md-2">
-                <img src={ban_img} className="img-fluid rounded" alt="" />
+                <img src={Owner} className="img-fluid rounded" alt="" />
               </div>
             </>
           ))}
@@ -499,8 +499,8 @@ const AboutUs = () => {
     <div className=' mx-auto  ' >
       <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
-        <div className="absolute inset-0 bg-[#000000] opacity-75"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
+        <div className="absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className=" hero-abt-title text-center mb-2">Where sub-contracting meets <br />innovation</h1>
           <div className='flex justify-center'>
@@ -508,7 +508,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-      <div className='px-4'>
+      <div className='px-4 md:px-8'>
         <div className='who_we_are'>
           <div className="  grid grid-cols-1 md:grid-cols-2 pt-5">
             {about !== true &&
@@ -548,7 +548,7 @@ const AboutUs = () => {
             {about !== true && about.founderAbout.map((founder) => (
               <>
                 <div className=" ">
-                  <img src={Person} className="mt-[1.5rem] h-[90%] w-full md:w-[75%] rounded md:mt-0" alt="" />
+                  <img src={Owner} className="mt-[1.5rem] h-[90%] w-full md:w-[75%] rounded md:mt-0" alt="" />
                 </div>
                 <div className="   md:my-auto md:col-span-2">
                   <p className="font-semibold text-base">

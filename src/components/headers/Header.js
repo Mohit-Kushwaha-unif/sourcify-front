@@ -133,7 +133,7 @@ const Header = () => {
     
     <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center  justify-between '>
-        <div> <img className='w-[70%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
+        <div> <img className='w-[83%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
         <div className=' flex-end absolute right-[10px] top-[10px] '>
         <span> {isLoggedIn ?
 
@@ -168,7 +168,7 @@ const Header = () => {
 
 </>
 :
-<button className='primary_btn hover:bg-[#e64d4d] mt-1 ml-1 rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
+<button className='primary_btn px-1 hover:bg-[#e64d4d] mt-1 ml-1 rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
 }</span>
         </div>
       </div>

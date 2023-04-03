@@ -28,6 +28,7 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
+          navigator('/dashboard')
           window.scroll(0,0)
         })
       })
@@ -40,6 +41,7 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
+          navigator('/dashboard')
           window.scroll(0,0)
         })
       })
@@ -68,9 +70,9 @@ const VendorForm = () => {
     <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
       <div className="px-8 h-full text-gray-800">
         <div
-          className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+          className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
         >
-          <div className="xl:ml-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+          <div className="xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Onboarding Form</p>
             </div>
@@ -92,34 +94,34 @@ const VendorForm = () => {
               },
             ]}
               layout="vertical" onFinish={FormHandler}>
-              <Form.Item name="agency_name" label=" Company Name " rules={[
+              <Form.Item name="agency_name" label=" Company name " rules={[
                 {
                   required: true,
-                  message: 'Please Enter name of your Company'
+                  message: 'Please enter name of your company'
                 },
               ]}
                 className="mb-2"
               >
 
-                <Input placeholder='Enter name of your Company' />
+                <Input placeholder='Enter name of your company' />
               </Form.Item>
 
-              <Form.Item name='contact_person' className='mb-2 mt-0' label="Contact Person Name" rules={[
+              <Form.Item name='contact_person' className='mb-2 mt-0' label="Contact person name" rules={[
                 {
                   required: true,
-                  message: 'Please enter your Contact Person Name'
+                  message: 'Please enter your contact person name'
                 },
               ]}
               >
 
-                <Input placeholder='Enter Contact Person Name' />
+                <Input placeholder='Enter contact person name' />
               </Form.Item>
               <div className='form_email_mobile_flex flex flex-col flex-col-reverse md:flex-row '>
                 <div className='form_flex_children mr-1'>
-                  <Form.Item name="number" label="Mobile Number " rules={[
+                  <Form.Item name="number" label="Mobile number " rules={[
                     {
                       required: true,
-                      message: 'Please enter your Number'
+                      message: 'Please enter your number'
                     },
                   ]}
                     className="mb-1"
@@ -134,7 +136,7 @@ const VendorForm = () => {
                   <Form.Item name="email" className='mb-2 mt-0' label="Email" rules={[
                     {
                       required: true,
-                      message: 'Please enter your Email'
+                      message: 'Please enter your email'
                     },
                   ]}
                   >
@@ -145,13 +147,13 @@ const VendorForm = () => {
                   </Form.Item>
                 </div>
               </div>
-              <Form.Item name="Address" className='mb-2' label="Office Address " rules={[
+              <Form.Item name="Address" className='mb-2' label="Office address " rules={[
                 {
                   required: true,
-                  message: 'Please enter your Address!',
+                  message: 'Please enter your address',
                 },
               ]}>
-                <Input placeholder='Enter Your Office Address' />
+                <Input placeholder='Enter Your office address' />
               </Form.Item>
               <div className='flex flex-col md:flex-row  '>
                 <div className='form_flex_children mr-1'>
@@ -162,7 +164,7 @@ const VendorForm = () => {
                     },
                   ]}>
 
-                    <Select id="country-state" name="State" placeholder="Select State" onSelect={countrySelectHandler}>
+                    <Select id="country-state" name="State" placeholder="Select state" onSelect={countrySelectHandler}>
                       {Object.keys(state_cites).map((state) => {
                         return (<Select.Option value={state}>{state}</Select.Option>)
                       }
@@ -177,7 +179,7 @@ const VendorForm = () => {
                       message: 'Please enter your city',
                     },
                   ]}>
-                    <Select id="country-state" name="City" placeholder="Select City">
+                    <Select id="country-state" name="City" placeholder="Select city">
                       {state.length > 0 && state.map((state) => {
                         return (<Select.Option value={state}>{state}</Select.Option>)
                       }

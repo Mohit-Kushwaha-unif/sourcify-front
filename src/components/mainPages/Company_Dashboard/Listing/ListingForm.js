@@ -9,6 +9,7 @@ import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
 import { add_listing } from '../../../../services/listing'
 import { update_user } from '../../../../services/user'
+import useDocumentTitle from '../../../Helper/useDocumentTitle'
 
 const ListingForm = () => {
     const form = useForm()
@@ -19,6 +20,7 @@ const ListingForm = () => {
     const [specificationImage ,setSpecificationImage] = useState()
     const [selectedItems, setSelectedItems] = useState([]);
     const [image, set_ImageD] = useState()
+    useDocumentTitle('Add your Listing')
     useEffect(() => {
         dispatch(get_category()).then((res) => {
 
@@ -91,9 +93,9 @@ const ListingForm = () => {
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
                 <div
-                    className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+                    className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >
-                    <div className="xl:ml-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Enter Your Project Details</p>
                         </div>
@@ -104,25 +106,25 @@ const ListingForm = () => {
                         <Form labelAlign="left"
 
                             layout="vertical" onFinish={FormHandler}>
-                            <Form.Item name='project_discription' className='mb-1 mt-0' label="Project Description" rules={[
+                            <Form.Item name='project_discription'  label="Project Description" rules={[
                                 {
                                     required: true,
-                                    message: 'Write the Description of Your Project'
+                                    message: 'Write the description of your project'
                                 },
                             ]}
                             >
 
-                                <TextArea placeholder='Enter Project Description' />
+                                <TextArea placeholder='Enter project description' />
                             </Form.Item>
-                            <Form.Item name="wok_segment" className='mb-1' label="Select Category For Your Project" rules={[
+                            <Form.Item name="wok_segment"  label="Select category for your project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Address!',
+                                    message: 'Please select category for your project',
                                 },
                             ]}>
                                 <Select
                                     mode="multiple"
-                                    placeholder="Select Categories"
+                                    placeholder="Select categories"
                                     value={selectedItems}
                                     onChange={setSelectedItems}
                                     style={{
@@ -137,10 +139,10 @@ const ListingForm = () => {
                             {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                                 return sub_cat.map((sub_category) => {
                                     return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
-                                        <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category For ${sub_item}`} rules={[
+                                        <Form.Item name={sub_item}  label={`Select Sub Category For ${sub_item}`} rules={[
                                             {
                                                 required: true,
-                                                message: 'Please Select options!',
+                                                message: 'Please Select options',
                                             },
                                         ]}>
                                             <Select
@@ -166,7 +168,7 @@ const ListingForm = () => {
                             <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your State!'
+                                    message: 'Please select the states for work'
                                 },
                             ]}
                             >
@@ -179,30 +181,30 @@ const ListingForm = () => {
                                     )}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name='project_scope' className='mb-1 mt-0' label="Scope of Work" rules={[
+                            <Form.Item name='project_scope'  label="Scope of Work" rules={[
                                 {
                                     required: true,
-                                    message: 'Write the Description of Your Project'
+                                    message: 'Write the scope of your project'
                                 },
                             ]}
                             >
 
-                                <TextArea placeholder='Enter Scope of your project' />
+                                <TextArea placeholder='Enter scope of your project' />
                             </Form.Item>
-                            <Form.Item name='project_specification' className='mb-1 mt-0' label="Work Specification" rules={[
+                            <Form.Item name='project_specification'  label="Work Specification" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please attach your work specifications'
                                 },
                             ]}
                             >
                                 <Input type='file' max={1} onChange={specificationimageHandler} />
 
                             </Form.Item>
-                            <Form.Item name='project_bill_qty' className='mb-1 mt-0' label="Please attach Project bill Quantity" rules={[
+                            <Form.Item name='project_bill_qty'  label="Please attach Project bill Quantity" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please attach your bill quantity'
                                 },
                             ]}
                             >
@@ -212,23 +214,23 @@ const ListingForm = () => {
 
 
 
-                            <Form.Item name='project_tent_date' className='mb-1 mt-0' label="Please select the tentative date to start the project" rules={[
+                            <Form.Item name='project_tent_date'  label="Please select the tentative date to start the project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please enter the date to start project'
                                 },
                             ]}
                             >
 
                                 <DatePicker disabledDate={disabledDate} onChange={onChange} />
                             </Form.Item>
-                            <div className="text-center lg:text-left mt-2">
+                            <div className="flex justify-center text-center lg:text-left mt-2">
                                 <button
                                     type="submit"
-                                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    className="save_Btn"
                                 >
 
-                                    Next Step
+                                    Save
 
                                 </button>
                             </div>

@@ -26,7 +26,7 @@ const Contractor = () => {
                     'entity': tableData.entity,
                     'username': tableData.username,
                     'number': tableData.user_id?.number.toString(),
-                    'email': tableData.user_id.email
+                    'email': tableData.user_id?.email
                 })
             })
             console.log({ data })
@@ -48,37 +48,32 @@ window.location = '/admin/contractors-list'
             dataIndex: 'key',
             key: 'key',
             render: (text) => <Link>{text + 1}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
             render: (text) => <Link>{text}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
         {
             title: 'Contact Person',
             dataIndex: 'username',
             key: 'username',
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
         {
             title: 'Email ID',
             dataIndex: 'email',
             key: 'email',
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
         {
             title: 'Mobile Number',
             dataIndex: 'number',
             key: 'number',
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
         {
             title: 'Action',
@@ -89,8 +84,7 @@ window.location = '/admin/contractors-list'
                     <Link onClick={() => deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),
-            showOnResponse: true,
-            showOnDesktop: true
+            
         },
     ];
 
@@ -109,12 +103,7 @@ window.location = '/admin/contractors-list'
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Contractors List</p>
                         </div>
-                        {/* <Table antTableProps={{
-                            showHeader: true,
-                            columns: columns,
-                            dataSource: tableData,
-                            pagination: true
-                        }} mobileBreakPoint={768} /> */}
+                      
                         <Table 
                             
                             columns={columns}

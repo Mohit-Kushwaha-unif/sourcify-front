@@ -11,7 +11,8 @@
 // const Message_url= 'http://localhost:5000/messages'
 // const carausel_url= 'http://localhost:5000/carausel'
 // const social_url= 'http://localhost:5000/auth'
-//Demo url
+
+//Live url
 const user_url = 'http://13.48.248.80:5000/user/';
 const contractor_url = 'http://13.48.248.80:5000/contractor';
 const content_url = 'http://13.48.248.80:5000/content';
@@ -25,7 +26,16 @@ const Message_url= 'http://13.48.248.80:5000/messages'
 const carausel_url= 'http://13.48.248.80:5000/carausel'
 const social_url= 'http://13.48.248.80:5000/auth'
 //Demo url
-// const Upload_Url = 'https://accint-upload.aleaspeaks.com/api/';
-// const fetchDetail_Url = 'https://accint-fetch.aleaspeaks.com/fetch/';
-
+// const user_url = 'https://sourcify-frontd.onrender.com/user/';
+// const contractor_url = 'https://sourcify-frontd.onrender.com/contractor';
+// const content_url = 'https://sourcify-frontd.onrender.com/content';
+// const vendor_url = 'https://sourcify-frontd.onrender.com/vendor';
+// const category_url = 'https://sourcify-frontd.onrender.com/category';
+// const listing_url = 'https://sourcify-frontd.onrender.com/listing';
+// const FeedBack_url = 'https://sourcify-frontd.onrender.com/feedback'
+// const About_url = 'https://sourcify-frontd.onrender.com/about'
+// const Slug_url = 'https://sourcify-frontd.onrender.com/slug'
+// const Message_url= 'https://sourcify-frontd.onrender.com/messages'
+// const carausel_url= 'https://sourcify-frontd.onrender.com/carausel'
+// const social_url= 'https://sourcify-frontd.onrender.com/auth'
 export { user_url,social_url, Slug_url,contractor_url,content_url,vendor_url,category_url,listing_url,FeedBack_url,About_url,Message_url , carausel_url};

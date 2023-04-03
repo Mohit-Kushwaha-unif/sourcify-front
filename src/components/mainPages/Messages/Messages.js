@@ -6,6 +6,7 @@ import { channel } from "../../../PusherConnection";
 import { allMessage, getContacts, send_message } from "../../../services/Messages";
 import Avatar from 'react-avatar';
 import { useMemo } from "react";
+import moment from "moment";
 
 const Messages = () => {
     const dispatch = useDispatch()
@@ -18,17 +19,20 @@ const Messages = () => {
     const [header, setHeader] = useState()
     const [run,setRUN] = useState(false)
     const [message, setMessage] = useState("");
+    const [didMount, setDidMount] = useState(false);
     const chat_id = header?.id ? header.id : "-"
 
-    useEffect(() => {
+   
         const contractorId = location.state?.contractor_id?._id;
         const id = location.state?._id._id;
         // console.log(location.state?.contractor_id?.contractor_id, id)
-        if (contractorId || id) {
-            set_To_id(contractorId || id);
-        }
+        useEffect(()=>{
+            if (contractorId || id) {
+                set_To_id(contractorId || id);
+            }
+        },[])
+       
 
-    }, [location]);
     // console.log(to_id)
     useEffect(() => {
         var sideContacts = []
@@ -46,7 +50,7 @@ const Messages = () => {
                 }
             })
             setContacts(prevState => [...prevState, ...sideContacts])
-
+            setDidMount(true)
         })
 
 
@@ -59,7 +63,6 @@ const Messages = () => {
         var mssgData = []
         if (to_id != undefined) {
             dispatch(allMessage(obj)).then((res) => {
-                // console.log(res)
                 res.map((msg) => {
                     var obj = {}
                     if (msg.from_id._id == from_id) {
@@ -70,6 +73,7 @@ const Messages = () => {
                     }
                     obj.id = msg._id
                     obj.text = msg.message
+                    obj.time = msg.time
                     mssgData.push(obj)
                     // msg = JSON.parse(msg)
 
@@ -79,34 +83,56 @@ const Messages = () => {
             })
         }
 
-    }, [to_id])
+    }, [contacts])
     const findId = useMemo(() => {
         if (contacts.length > 0)
-        // console.log(contacts,to_id)
         setRUN(true)
             return contacts.find((val) => val.id == to_id);
     }, [to_id,contacts]);
+    var count =0
+    
+
     useEffect(() => {
-        // console.log(to_id)
-        if (to_id != undefined && contacts.length >0) {
-            // console.log("im htee")
-            const isExist = contacts.findIndex(val => val.id === to_id)
-            // console.log(isExist)
-            if (isExist == -1) {
-                var sideObj = {};
-                sideObj.id = to_id
-                sideObj.name = location.state?._id.email?.split('@')[0] || location.state?.contractor_id.email?.split('@')[0];
-                sideObj.status = "online"
-                // console.log("im here", to_id)
-                setContacts(prevState => [...prevState, sideObj])
-                setHeader(sideObj)
-            }
+        console.log("A",to_id,contacts);
+        if (to_id === undefined ) {
+          return;
         }
+        if( didMount === true &&contacts.length > 0)
+      {  const isExist = contacts.findIndex((val) => val.id === to_id);
+        if (isExist === -1) {
+          const sideObj = {
+            id: to_id,
+            name:
+              location.state?._id.email?.split("@")[0] ||
+              location.state?.contractor_id.email?.split("@")[0],
+            status: "online",
+            time: new Date(),
+          };
+          setContacts((prevState) => [...prevState, sideObj]);
+          setHeader(sideObj);
+          return
+        }}
+        // console.log(contacts)
+        if (didMount === true && contacts.length == 0 ) {
+            console.log("c")
+          var sideObj = {};
+          sideObj.id = to_id;
+          sideObj.name =
+            location.state?._id.email?.split("@")[0] ||
+            location.state?.contractor_id.email?.split("@")[0];
+          sideObj.status = "online";
+          sideObj.time = new Date();
 
-    }, [to_id])
+          setContacts((prevState) => [...prevState, sideObj]);
+          setHeader(sideObj);
+          return
+        }
+      }, [to_id, contacts.length, contractorId,id,didMount]);
+      
+    
 
     useEffect(() => {
-        console.log(findId,run,to_id)
+
         if (findId != undefined && to_id != undefined && run == true) {
             var sideObj = {};
             sideObj.id = findId.id;
@@ -125,7 +151,7 @@ const Messages = () => {
                 // console.log({ header })
                 // console.log(data.from_id === header.id && data.to_id === from_id)
                 if (data.from_id === chat_id && data.to_id === from_id) {
-                    setMessages((prevState) => [...prevState, { id: messages.length + 1, sender: "other", text: data.message }])
+                    setMessages((prevState) => [...prevState, { id: messages.length + 1, sender: "other", text: data.message , time : new Date() }])
                 }
 
             })
@@ -138,9 +164,10 @@ const Messages = () => {
         obj.message = text
         obj.isSeen = 0
         dispatch((send_message(obj))).then((res) => {
+            const date = new Date()
             setMessages([
                 ...messages,
-                { id: messages.length + 1, sender: "me", text: text },
+                { id: messages.length + 1, sender: "me", text: text ,time:date },
             ]);
         })
 
@@ -161,7 +188,6 @@ const Messages = () => {
         obj.from_id = from_id
         var mssgData = []
         dispatch(allMessage(obj)).then((res) => {
-            // console.log(res)
             res.map((msg) => {
                 var obj = {}
                 if (msg.from_id._id == from_id) {
@@ -172,38 +198,58 @@ const Messages = () => {
                 }
                 obj.id = msg._id
                 obj.text = msg.message
+                obj.time = msg.time
                 mssgData.push(obj)
                 // msg = JSON.parse(msg)
 
             })
 
 
-            setMessages([...mssgData])
+             setMessages([...mssgData])
         })
     }
+    
+    function getRelativeTime(timestamp) {
+        const now = new Date();
+        const diff = (now - new Date(timestamp)) / 1000;
+      
+        if (diff < 60) {
+          return `${Math.floor(diff)} sec ago`;
+        } else if (diff < 60 * 60) {
+          return `${Math.floor(diff / 60)} min ago`;
+        } else if (diff < 24 * 60 * 60) {
+          return `${Math.floor(diff / (60 * 60))} hour ago`;
+        } else if (diff < 7 * 24 * 60 * 60) {
+          return `${Math.floor(diff / (24 * 60 * 60))} day ago`;
+        }  else {
+          const date = new Date(timestamp);
+          return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        }
+      }
+      
     return (
-        <div className="flex flex-col h-[500px] overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-5 scrollbar   overflow-y-auto">
 
-            <main className="flex-grow flex">
-                <div className="w-72 bg-gray-200 p-4">
+         
+                <div className="col-span-1  bg-gray-200 ">
                     {/* TODO: Implement Contacts Sidebar */}
                     <div className="flex flex-col h-full overflow-hidden">
                         {/* Search Bar */}
-                        <div className="p-4">
-                            <Input
+                        <div className=" p-[0.75rem]  border-b-2 border-slate-100">
+                            <input
                                 type="text"
-                                placeholder="Search or Start A New Chat"
-                                className="w-full px-2 py-1 border-gray-200 border rounded-lg"
+                                placeholder="Search contacts"
+                                className="w-full px-5 py-[4.5px] h-auto outline-none rounded-[25px] border-gray-200 border rounded-lg"
                             />
 
                         </div>
 
                         {/* Contacts List */}
-                        <div className="flex-grow overflow-y-auto">
+                        <div className="flex-grow border-b-2 scrollbar border-slate-100 scrollbar overflow-y-auto bg-[#ffffff]">
                             {contacts.length > 0 && contacts.map((contact, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center py-2 px-4 hover:bg-gray-300 cursor-pointer"
+                                    className="flex border-b-2 border-slate-100 items-center py-2 px-4 hover:bg-gray-300 cursor-pointer"
                                     onClick={() => updateMessages(contact)}
                                 >
                                     <Avatar
@@ -212,10 +258,10 @@ const Messages = () => {
                                         round={true}
                                         className="mr-2"
                                     />
-                                    <div
+                                    {/* <div
                                         className={`w-2 h-2 rounded-full mr-2 ${contact.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
                                             }`}
-                                    ></div>
+                                    ></div> */}
                                     <h2 className="text-lg font-medium">{contact.name}</h2>
                                 </div>
                             ))}
@@ -223,7 +269,7 @@ const Messages = () => {
                     </div>
                 </div>
 
-                <div className="flex-grow bg-gray-100 ">
+                <div className="col-span-4 flex-grow bg-gray-100 ">
                     {to_id != undefined &&
                         <div className="flex items-center justify-between bg-[#d1d7db] text-white md:py-4 md:px-8">
                             <h2 className="text-lg font-semibold">{header?.name}</h2>
@@ -231,36 +277,39 @@ const Messages = () => {
                         </div>
                     }
                     <div className="flex flex-col overflow-hidden h-[29rem] p-4">
-                        <div className="flex-grow h-[300px] overflow-y-auto p-4">
+                        <div className="flex-grow h-[300px] scrollbar overflow-y-auto p-4">
                             {messages.map((message) => (
                                 <div
                                     key={message.id}
                                     className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"
                                         } mb-4`}
                                 >
+                                    <div className={`flex ${message.sender === "me" ? "justify-start" : "flex-row-reverse"}`}>
+                                        <div className={`text-slate-400 text-[12px] ${message.sender === "me" ? "mr-3" : "ml-3"}`}>{getRelativeTime(message.time)} </div>
                                     <div
                                         className={`rounded-lg py-2 px-4 ${message.sender === "me" ? "bg-green-200" : "bg-gray-200"
                                             }`}
                                     >
-                                        <p className="text-sm">{message.text}</p>
+                                        <p className="text-sm">{message.text} </p>
+                                    </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
                         {to_id != undefined && <form onSubmit={handleSubmit}>
-                            <div className="bg-gray-100 p-4 h-[80px]" >
+                            <div className="flex justify-between  " >
                                 <input
                                     type="text"
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     placeholder="Type a message"
-                                    className="w-3/4 ml-2 py-2 border border-gray-200 px-4 outline-none"
+                                    className="w-full mx-2  py-2 rounded-[25px] border border-gray-200 px-5 outline-none"
                                 />
                                 <button
                                     type="submit"
 
-                                    className="w-1/7 flex-shrink-0 px-4 py-2  text-white bg-blue-500 hover:bg-blue-600 rounded-lg"
+                                    className="primary_btn"
                                 >
                                     {/* <svg viewBox="0 0 24 24" className="w-6 h-6  text-white" fill="#fffff" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.757 11.136l16.486-6.705a.5.5 0 0 1 .757.424v11.149a.5.5 0 0 1-.757.424L3.757 12.864a.5.5 0 0 1 0-.728z" />
@@ -271,7 +320,7 @@ const Messages = () => {
                         </form>}
                     </div>
                 </div>
-            </main>
+      
         </div>
     );
 }

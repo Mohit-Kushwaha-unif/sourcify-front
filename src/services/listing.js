@@ -63,7 +63,7 @@ export const get_listingBy_id = (_id)=>{
 export const remove_listing = (_id)=>{
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.get(listing_url+'/remove_listing').then((res)=>{
+            Http.post(listing_url+'/remove_listing',_id).then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err);

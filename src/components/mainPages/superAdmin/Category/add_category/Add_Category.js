@@ -17,7 +17,7 @@ const Add_Category = () => {
     function FormHandler(values){
         dispatch(add_category(values)).then((res)=>{console.log(res)
         Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title:"Registerd Added Successfully",
             showConfirmButton: true,
