@@ -500,9 +500,9 @@ const AboutUs = () => {
       <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
-        <div className="absolute top-1/2  left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="ml-[11px] md:ml-0 absolute top-1/2  md:left-1/2 md:-translate-x-1/2 -translate-y-1/2">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
-          <h1 className=" hero-abt-title text-center mb-2">Where sub-contracting meets <br />innovation</h1>
+          <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
           <div className='flex justify-center'>
             <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/register')}>Get Started</button>
           </div>
