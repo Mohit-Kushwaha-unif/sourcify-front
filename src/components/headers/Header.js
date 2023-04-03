@@ -168,7 +168,7 @@ const Header = () => {
 
 </>
 :
-<button className='primary_btn px-1 hover:bg-[#e64d4d] mt-1 ml-1 rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
+<button className='primary_btn  hover:bg-[#e64d4d] mt-1 ml-1 rounded-[25px]' type="link"><Link to='/register'>Login/Signup</Link> </button>
 }</span>
         </div>
       </div>
