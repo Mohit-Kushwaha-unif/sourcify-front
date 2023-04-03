@@ -192,31 +192,16 @@ const FinancialDetail = () => {
                             layout="vertical" onFinish={FormHandler} onFinishFailed={finishFaild}>
                             <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
                             <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter value'
-                                    },
-                                ]}
+                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} 
                                 >
                                     <Input type='number' placeholder='Please enter turnover amount' />
                                 </Form.Item>
-                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter value'
-                                    },
-                                ]}
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
                                 >
 
                                 <Input type='number'  placeholder='Please enter turnover amount' />
                             </Form.Item>
-                            <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter value'
-                                },
-                            ]}
+                            <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} 
                             >
 
                                 <Input type='number' placeholder='Please enter turnover amount'  />
@@ -224,12 +209,7 @@ const FinancialDetail = () => {
                             </div>
                             <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
                             <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-                            <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter your Bank Overdraft Limit'
-                                },
-                            ]}
+                            <Form.Item name="Approved_Limit" label="Approved Limit " 
                                 className="mb-1"
                             >
 
@@ -257,11 +237,11 @@ const FinancialDetail = () => {
 
                                 </div>
                                 <div className='form_flex_children  mr-2'> 
-                                    <Form.Item name="pan_image" label="PAN Image" rules={[
+                                    <Form.Item name="pan_image" label="Copy of PAN Card" rules={[
                                     
                                     ]}> <Input type='file'  onChange={pan_img_value} />
                                     </Form.Item>
-                                    {showError&& <div className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</div>}
+                                    {showError&& <div className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  Copy of PAN Card*</div>}
                                
                                 </div>
                             </div>
@@ -274,7 +254,7 @@ const FinancialDetail = () => {
                                     {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}</div>
 
                                 <div className='form_flex_children '>
-                                <Form.Item name="gst_image" label="Copy Of GST" >
+                                <Form.Item name="gst_image" label="Copy of GST Certificate" >
                                             <Input type='file' max={1} onChange={gst_img_value} />
                                         </Form.Item>
                                 </div> </div>
@@ -339,32 +319,17 @@ const FinancialDetail = () => {
                             layout="vertical" onFinish={FormHandler}>
                             <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
                             <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter your Bank Overdraft Limit'
-                                    },
-                                ]}
+                                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                                 >
 
                                     <Input />
                                 </Form.Item>
-                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter value'
-                                    },
-                                ]}
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`} 
                                 >
 
                                     <Input type='number' />
                                 </Form.Item>
-                                <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter value'
-                                    },
-                                ]}
+                                <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`} 
                                 >
 
                                     <Input type='number' />
@@ -372,12 +337,7 @@ const FinancialDetail = () => {
                             </div>
                             <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
                             <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-                                <Form.Item name="Approved_Limit" label="Approved Limit " rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter value'
-                                    },
-                                ]}
+                                <Form.Item name="Approved_Limit" label="Approved Limit " 
                                     className="mb-1"
                                 >
 
@@ -394,7 +354,7 @@ const FinancialDetail = () => {
                                     <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
                                         {
                                             required: true,
-                                            message: 'Please provide pan image!'
+                                            message: 'Please provide  PAN number'
                                         },
                                     ]}>
                                     <Input />
@@ -408,13 +368,13 @@ const FinancialDetail = () => {
                           <span className='text-[#FF5757] underline mr-3'><a href={formValues.pan_image} target="_blank" download>
                             Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setIsPANchange(false)} >Delete</span>
                         </div>
-                         </>                   : <Form.Item name="pan_image" label="PAN Image" >
+                         </>                   : <Form.Item name="pan_image" label="Copy of PAN Card" >
                                                  <Input type='file' max={1} onChange={pan_img_value} />
                                             </Form.Item>
 
 
                                     }
-                                    {showError&& <div  className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  PAN Image*</div>}
+                                    {showError&& <div  className='mb-3' style={{ color: '#ff4d4f' }}>Please attach  Copy of PAN Card*</div>}
                                 </div>
                             </div>
 
@@ -426,11 +386,11 @@ const FinancialDetail = () => {
                                     {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}</div>
 
                                 <div className='form_flex_children '>
-                                    {showGstImage ? <><div>Copy Of GST</div>
+                                    {showGstImage ? <><div>Copy of GST Certificate</div>
                                     <div className='mt-3 inline-block'>
                           <span className='text-[#FF5757] underline mr-3'><a href={formValues.gst_image} target="_blank" download>
                             Preview</a> </span> <span className='text-[#FF5757] cursor-pointer underline' onClick={() => setShowGstImage(false)} >Delete</span>
-                        </div> </>           : <Form.Item name="gst_image" label="Copy Of GST" >
+                        </div> </>           : <Form.Item name="gst_image" label="Copy of GST Certificate" >
                                             <Input type='file' max={1} onChange={gst_img_value} />
                                         </Form.Item>}
                                 </div> </div>

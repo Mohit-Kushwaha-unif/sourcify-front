@@ -539,10 +539,10 @@ input[type=number] {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   background: #ffffff;
 }
-input[type=radio] {
+/* input[type=radio] {
   -webkit-appearance: unset;
   border: none;
-}
+} */
 
 /* .ant-input-prefix{
   background-color: #f9f9f9;

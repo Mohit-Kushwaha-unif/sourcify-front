@@ -72,7 +72,7 @@ const WorkExperience = () => {
       })
       window.scrollTo(0, 0)
       setShowMsg(true)
-      navigation("/dashboard")
+      // navigation("/dashboard")
     })
 
 
@@ -108,7 +108,7 @@ const WorkExperience = () => {
               ]}
               layout="vertical" onFinish={FormHandler}>
 
-              <p className='mb-2 '>Projects <span className='intialValue'></span></p>
+              <p className='mb-2 '>Projects</p>
               <Form.List name="Project">
                 {(fields, { add, remove }) => (
                   <>

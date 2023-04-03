@@ -57,7 +57,7 @@ const Regsiter = () => {
     }
   
   return (
- <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
+ <section className="min-h-screen bg-[#f3f3f3] mb-3 flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
   <div className="px-8 h-full text-gray-800">
     <div
       className="flex xl:justify-center lg:justify-center justify-center  flex-wrap h-full g-6 "
@@ -73,7 +73,36 @@ const Regsiter = () => {
         <Form labelAlign="left"
 
 layout="vertical"   onFinish={formHandler}>
+        <Form.Item    
+      name="role"
+      rules={[
+        {
+          required: true,
+          message: 'Please select your role',
+        },
+      ]}
+    >
+      <div className='flex items-center'>
+        {/* <span className='mr-3'><FaBusinessTime className='h-full w-full text-[1.5rem]'/> </span> */}
+
+      <div className="py-1">
+      <RadioGroup options={options}  cols={2} onChange={handleRadioChange} />
+    </div>
+    </div>
+     {/* <Radio.Group  className='grid grid-cols-1 md:grid-cols-2'>
+     <Radio.Button value={1} className="h-auto" >
+        <p className='leading-5 text-[16px] font-bold '>
       
+
+I'm a company hiring for projects  </p> 
+         
+      </Radio.Button>
+      <Radio.Button value={0} className="h-auto" >
+       <div> <p className='leading-5'> I'm Contractor looking for work </p> <hr/>
+        </div>
+      </Radio.Button>
+    </Radio.Group> */}
+    </Form.Item>
           <Form.Item
       name="email"
       rules={[
@@ -116,37 +145,8 @@ layout="vertical"   onFinish={formHandler}>
       <Input.Password min={6}   placeholder='Enter Your Passowrd'/>
       
     </Form.Item>
-      <Form.Item    
-      name="role"
-      rules={[
-        {
-          required: true,
-          message: 'Please select your role',
-        },
-      ]}
-    >
-      <div className='flex items-center'>
-        {/* <span className='mr-3'><FaBusinessTime className='h-full w-full text-[1.5rem]'/> </span> */}
-
-      <div className="py-1">
-      <RadioGroup options={options}  cols={2} onChange={handleRadioChange} />
-    </div>
-    </div>
-     {/* <Radio.Group  className='grid grid-cols-1 md:grid-cols-2'>
-     <Radio.Button value={1} className="h-auto" >
-        <p className='leading-5 text-[16px] font-bold '>
-      
-
-I'm a company hiring for projects  </p> 
-         
-      </Radio.Button>
-      <Radio.Button value={0} className="h-auto" >
-       <div> <p className='leading-5'> I'm Contractor looking for work </p> <hr/>
-        </div>
-      </Radio.Button>
-    </Radio.Group> */}
-    </Form.Item>
-    By continuing, I agree to the Terms of Use & Privacy Policy
+    
+    By continuing, I agree to the <Link to={'/privacy-policy'}><span className='text-[#FF5757]'>Terms of Use</span> & <span  className='text-[#FF5757]'>Privacy Policy</span></Link> 
           <div className="text-center mt-5 lg:text-left">
             <button
               type="submit"
@@ -154,13 +154,13 @@ I'm a company hiring for projects  </p>
             >
                 Sign Up 
             </button>
-            <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+            {/* <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                Have an account?
               <Link
                  to='/login'
                 className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                 >Login</Link>
-            </p>
+            </p> */}
           </div>
         </Form>
       </div>

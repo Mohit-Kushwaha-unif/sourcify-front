@@ -46,6 +46,7 @@ import UpdateProfie from './UpdateProfile/UpdateProfie'
 import UserRole from './useRole/userRole'
 import OTPForm from './auth/OTPForm'
 import EmailForm from './auth/EmailForm'
+import Privacy from './LegalAgreement/Privacy'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -147,6 +148,7 @@ const Pages = (props) => {
          <Route path='/userRole' element={<UserRole/>}/>
          <Route path='/verify' element={<OTPForm/>}/>
          <Route path='/everify/:token' element={<EmailForm/>}/>
+         <Route path= '/privacy-policy' element={<Privacy/>}/>
         <Route path='*' element={<NotFound />}/>
         
       </Routes>

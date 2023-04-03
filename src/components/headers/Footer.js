@@ -5,6 +5,7 @@ import Sourcify from '../../assests/Sourcify.png'
 import { FaLandmark } from 'react-icons/fa'
 import {BsFillTelephoneFill} from 'react-icons/bs'
 import {MdAlternateEmail} from 'react-icons/md'
+import { Link } from 'react-router-dom' 
 // import { icons } from 'react-icons'
 const Footer = () => {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ const Footer = () => {
     
 
 
-    <footer className='container text-[14px] mx-auto px-4 bg-white'>
+    <footer className='bg-[#f3f3f3] container text-[14px] mx-auto px-4 '>
 
       <div className="grid grid-cols-1 md:grid-cols-12 footer">
         <div className="col-span-4 md:pl-3">
@@ -24,18 +25,18 @@ const Footer = () => {
         <div className="col-span-4 mt-3 md:col-span-2 md:mt-0">
           <h3>Quick Links</h3>
           <ul>
-            <li>Terms & Conditions</li>
-            <li>Disclaimer</li>
-            <li>Privacy Policy</li>
+         <li> <Link className='cursor-pointer' to={'/privacy-policy'}>Terms & Conditions</Link></li>
+         <li> <Link className='cursor-pointer' to={'/privacy-policy'}>Disclaimer</Link></li>
+         <li> <Link className='cursor-pointer' to={'/privacy-policy'}>Privacy Policy</Link></li>
           </ul>
         </div>
         <div className="col-span-4 md:col-span-2">
         <h3>Resources</h3>
           <ul>
-            <li>Blog</li>
-            <li>Case Study</li>
+            <li className='cursor-pointer' onClick={()=>navigate('/register')}>Register</li>
+            {/* <li>Case Study</li>
             <li>About us</li>
-            <li>Career</li>
+            <li>Career</li> */}
           </ul>
         </div>
 
