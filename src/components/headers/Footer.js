@@ -13,7 +13,7 @@ const Footer = () => {
     
 
 
-    <footer className='bg-[#f3f3f3] container text-[14px] mx-auto px-4 '>
+    <footer className='bg-[#f3f3f3]  text-[14px] mx-auto px-4 '>
 
       <div className="grid grid-cols-1 md:grid-cols-12 footer">
         <div className="col-span-4 md:pl-3">

@@ -17,9 +17,7 @@ const ProjectDetails = () => {
     const [applied, setApplied] = useState(false)
     var isTrue = false
     useEffect(() => {
-        console.log(location?.state)
         dispatch(get_listingBy_id(location?.state)).then((res) => {
-            console.log(res)
             res.listing.proposals.map((detail) => {
                 if (detail.contractor_id._id === localStorage.getItem('user_id')) {
                     setApplied(true)
@@ -46,7 +44,6 @@ const ProjectDetails = () => {
         formData.proposal = proposalVal
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
-            console.log(res)
             navigator('/dashboard')
         })
     }

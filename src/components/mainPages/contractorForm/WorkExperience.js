@@ -33,7 +33,6 @@ const WorkExperience = () => {
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
 
         res?.projects?.map((project) => {
-          console.log(project)
           var Exec = moment(project.Exec)
           project.Exec = Exec
           projects.push(project)
@@ -48,7 +47,6 @@ const WorkExperience = () => {
 
   }, [])
   function FormHandler(value) {
-    console.log({ value })
     var formData = new FormData()
     Object.keys(value).map((formKey) => {
       formData.append(formKey, JSON.stringify(value[formKey]))
@@ -60,7 +58,6 @@ const WorkExperience = () => {
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
 
         res?.projects?.map((project) => {
-          console.log(project)
           var Exec = moment(project.Exec)
           project.Exec = Exec
           projects.push(project)
@@ -78,10 +75,6 @@ const WorkExperience = () => {
 
   }
 
-
-
-
-  console.log(formData);
   return (
     <section className="min-h-min mt-10 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
       <div className="px-8 h-full text-gray-800">

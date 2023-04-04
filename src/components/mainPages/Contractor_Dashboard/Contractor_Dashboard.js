@@ -36,7 +36,7 @@ const Contractor_Dashboard = () => {
           contact?.Applied.map((applied, index) => {
 
             if (applied.listing_id != null) {
-              console.log({ applied })
+           
               data.push({
                 '_id': applied._id,
                 'key': index,
@@ -58,12 +58,11 @@ const Contractor_Dashboard = () => {
 
 
   function msgNavigationHandler(data) {
-    console.log(contractors)
     contractors?.Applied.map((contDet) => {
       if (contDet._id == data._id) {
-        console.log(contDet)
+   
         dispatch(get_listingBy_id(contDet.listing_id._id)).then((res) => {
-          console.log(res)
+         
           navigator('/messages', { state: { _id: res.listing.user_id } })
         })
 
@@ -74,7 +73,6 @@ const Contractor_Dashboard = () => {
   const projectHandler = (id) => {
     navigator('/projectDetails', { state: id })
   }
-  // console.log({tableData})
   const columns = [
     {
       title: 'S.No',
@@ -105,7 +103,7 @@ const Contractor_Dashboard = () => {
             if (tag === 'loser') {
               color = 'volcano';
             }
-            // console.log({ work_segment })
+
             return (
               <Tag key={index}>
                 {tag}
@@ -181,12 +179,8 @@ const Contractor_Dashboard = () => {
           <div className='p-6 col-span-5'><div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {
               lisitngs.length > 0 && lisitngs.map((res) => {
-                // console.log(res)
+                
                 return <div className='grid grid-cols-2 rounded-lg border-2 h-auto  '>
-                  {/* <div className=' '>
-                    <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="User image" class="w-full h-60" />
-
-                  </div> */}
                   <div class="relative w-full font-semibold col-span-2 p-4 h-auto text-xl">
                     <h2 class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project Description</span> <span className='overflow-hidden text-ellipsis text-[#FF5757] truncate'> {res.project_discription}</span></h2>
                     <p class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project scope</span><span className='max-w-2xl overflow-hidden text-ellipsis text-[#FF5757] truncate"'> {res.project_scope }</span></p>

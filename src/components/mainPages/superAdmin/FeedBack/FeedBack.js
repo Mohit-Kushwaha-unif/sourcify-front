@@ -11,7 +11,7 @@ const FeedBack = () => {
   useEffect(()=>{
     dispatch(get_feedback()).then((res)=>{
         console.log(res)
-        res.map((feedback,index)=>{
+        res.reverse().map((feedback,index)=>{
             data.push({
                 "_id": feedback._id,
                 'key' : index,

@@ -41,7 +41,7 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
-          navigator('/dashboard')
+          // navigator('/dashboard')
           window.scroll(0,0)
         })
       })
@@ -64,8 +64,6 @@ const VendorForm = () => {
   function countrySelectHandler(country) {
     setState(state_cites[country])
   }
-
-  console.log(email,number)
   return (
     <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
       <div className="px-8 h-full text-gray-800">

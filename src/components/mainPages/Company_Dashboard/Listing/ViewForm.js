@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Select,Typography } from 'antd'
+import { DatePicker, Form, Input, Select, Typography } from 'antd'
 import { FaFileExcel } from 'react-icons/fa';
 import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
@@ -8,12 +8,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
-import {  get_listingBy_id, update_listing } from '../../../../services/listing'
+import { get_listingBy_id, update_listing } from '../../../../services/listing'
 import moment from 'moment/moment';
 
 const ViewForm = () => {
     const form = useForm()
-    const {Title} = Typography
+    const { Title } = Typography
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const isAdmin = useSelector(state => state.User.user_role);
@@ -27,7 +27,7 @@ const ViewForm = () => {
     const [image, set_ImageD] = useState()
     const [specificationImage, setSpecificationImage] = useState()
     const [formStatus, setFormStatus] = useState()
-    const [proposal_id,setProposalId] = useState()
+    const [proposal_id, setProposalId] = useState()
     const [showbillImg, setShowBillImg] = useState(true)
     const [showSpecImg, setShowSpecImg] = useState(true)
     useEffect(() => {
@@ -44,24 +44,24 @@ const ViewForm = () => {
     var initialValue = [];
     var initialOptions = []
     useEffect(() => {
-        
+
         dispatch(get_listingBy_id(location.state._id)).then((res) => {
-            console.log({res   })
+            console.log({ res })
             set_user_id(res.listing.user_id._id)
             Object.keys(res.listing).map((value) => {
                 var obj = {}
-                if(value === "project_tent_date"){
+                if (value === "project_tent_date") {
                     obj["name"] = value
                     obj["value"] = moment(res.listing[value])
                     initialValue.push(obj)
                 }
-                else{
+                else {
                     obj["name"] = value
                     obj["value"] = res.listing[value]
                     initialValue.push(obj)
                 }
-              
-                
+
+
                 if (value === "wok_segment") {
                     res.listing[value].map((options) => {
                         initialSelects.push(options)
@@ -84,7 +84,7 @@ const ViewForm = () => {
             setSelectedItems(initialSelects)
             setInitialValues(initialValue)
             initialValue.map((values) => {
-                console.log({values})
+                console.log({ values })
                 if (values.name === 'project_bill_qty_image') {
                     setShowBillImg(values.value)
                 }
@@ -98,7 +98,7 @@ const ViewForm = () => {
     console.log(initialValues)
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
     function FormHandler(values) {
-       
+
         var work_area = []
         Object.keys(values).map((val_item) => {
             values.wok_segment.map((work) => {
@@ -116,7 +116,7 @@ const ViewForm = () => {
         values.proposal_status = formStatus.proposal_status
         values.proposal_id = formStatus.proposal_detail
         values.cont_id = formStatus.cont_id
-        console.log(values,formStatus)
+        console.log(values, formStatus)
         dispatch(update_listing(values)).then((res) => {
             // if (formStatus === 0) {
             //     Swal.fire('Proposal Has Been Accepted',
@@ -134,16 +134,15 @@ const ViewForm = () => {
             //         'Admin has rejected this listing',
             //         'error')
             // }
-            if(isAdmin ==2)
-            {navigator('/admin/all-listing')}
-            else{
+            if (isAdmin == 2) { navigator('/admin/all-listing') }
+            else {
                 navigator('/dashboard')
             }
         })
     }
     const onChange = (date, dateString) => {
         console.log(date, dateString);
-        
+
     };
     function disabledDate(current) {
         // Can not select days before today and today
@@ -167,12 +166,11 @@ const ViewForm = () => {
                             <p className="text-lg mb-0 mr-4"> Project Details</p>
                             {isAdmin === 2 && Object.keys(initialValues).map((value) => {
                                 if (initialValues[value].name === 'proposals') {
-                                    // console.log(initialValues[value].value)
-                                   return initialValues[value].value.map((acceptedBy)=>{
+                                    return initialValues[value].value.map((acceptedBy) => {
                                         console.log(acceptedBy.contract_status)
-                                       if(acceptedBy.contract_status ===1) {
-                                        return <p className='font-semibold'>Accepted By :- {acceptedBy.contractor_id.email}</p>
-                                       }
+                                        if (acceptedBy.contract_status === 1) {
+                                            return <p className='font-semibold'>Accepted By :- {acceptedBy.contractor_id.email}</p>
+                                        }
                                     })
                                 }
                             })}
@@ -191,7 +189,7 @@ const ViewForm = () => {
                                     message: 'Please input your Contact Person Name'
                                 },
                             ]}
-                            labelCol={{span:24}}
+                                labelCol={{ span: 24 }}
                             >
 
                                 <TextArea className='h-[100px]' placeholder='Enter Project Description' />
@@ -207,25 +205,25 @@ const ViewForm = () => {
                                 <TextArea placeholder='Enter Scope of your project' />
                             </Form.Item>
                             <div className='grid grid-cols-2 my-3'>
-                            {showSpecImg !== false && <div className='w-full h-full'>
-                                <a href={showSpecImg} download={"Specifiaction Img"}>
-
-                                    <FaFileExcel className='w-20 h-20' />
-
-                                    {"Specifiaction Img"}
-                                </a>
-                            </div>}
-                           
-                            {showbillImg !== false &&
-                                <div className='w-full h-full'>
-                                    <a href={showbillImg} download={"bill_img"}>
+                                {showSpecImg !== false && <div className='w-full h-full'>
+                                    <a href={showSpecImg} className="text-center" download={"Specifiaction Img"}>
 
                                         <FaFileExcel className='w-20 h-20' />
 
-                                        {"bill img"}
+                                       <span>{"Specifcation File"}</span> 
                                     </a>
-                                </div> 
-                            }
+                                </div>}
+
+                                {showbillImg !== false &&
+                                    <div className='w-full h-full'>
+                                        <a href={showbillImg} download={"bill_img"}>
+
+                                            <FaFileExcel className='w-20 h-20' />
+
+                                            <span className='ml-3'>{"Bill File"}</span>
+                                        </a>
+                                    </div>
+                                }
                             </div>
                             {showSpecImg == true &&
                                 <Form.Item name='project_specification' className='mb-1 mt-0' label="Please Enter the Specification you want for Your Project" rules={[
@@ -239,7 +237,7 @@ const ViewForm = () => {
 
                                 </Form.Item>
                             }
-                            { showbillImg == true&&
+                            {showbillImg == true &&
                                 <Form.Item name='project_bill_qty' className='mb-1 mt-0' label="Please attach Project bill Quantity" rules={[
                                     {
                                         required: true,
@@ -319,53 +317,51 @@ const ViewForm = () => {
                                     )}
                                 </Select>
                             </Form.Item>
-                           {initialValues.length >0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label=" tentative date to start the project" rules={[
+                            {initialValues.length > 0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label=" tentative date to start the project" rules={[
                                 {
                                     required: true,
                                     message: 'Please input your Contact Person Name'
                                 },
                             ]}
                             >
-                            
-                            <DatePicker disabledDate={disabledDate} onChange={onChange}  />
+
+                                <DatePicker disabledDate={disabledDate} onChange={onChange} />
                             </Form.Item>}
                             <Title level={4}>Proposals</Title>
                             {
-                               initialValues.length >0 && initialValues.map((proposal)=>{
-                                
-                                    if(proposal.name === "proposals")
-                                    {
-                                       
-                                       return  proposal.value.map((details)=>{
-                                        console.log(details)
+                                initialValues.length > 0 && initialValues.map((proposal) => {
+
+                                    if (proposal.name === "proposals") {
+
+                                        return proposal.value.map((details) => {
                                             return <>
-                                            <p>Submitted By  - {details.contractor_id.email}</p>
-                                            <TextArea value={details.proposal} />
-                                            {details.contract_status===0 ?<div className='flex mt-3 justify-evenly'>
-                                        
-                                            <button
-                                            type="submit"
-                                            onClick={() => {setFormStatus({"proposal_status":1,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
-                                            className="inline-block px-7 py-3 bg-green-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
+                                                <p>Submitted By  - {details.contractor_id.email}</p>
+                                                <TextArea value={details.proposal} />
+                                                {details.contract_status === 0 ? <div className='flex mt-3 justify-evenly'>
 
-                                            Accept
+                                                    <button
+                                                        type="submit"
+                                                        onClick={() => { setFormStatus({ "proposal_status": 1, "proposal_detail": details._id, "cont_id": details.contractor_id._id }) }}
+                                                        className="inline-block px-7 py-3 bg-green-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                    >
 
-                                        </button>
-                                            <button
-                                            type="submit"
-                                            onClick={() => {setFormStatus({"proposal_status":2,"proposal_detail":details._id, "cont_id":details.contractor_id._id})}}
-                                            className="inline-block px-7 py-3 bg-red-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
+                                                        Accept
 
-                                            Reject
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        onClick={() => { setFormStatus({ "proposal_status": 2, "proposal_detail": details._id, "cont_id": details.contractor_id._id }) }}
+                                                        className="inline-block px-7 py-3 bg-red-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                    >
 
-                                        </button>
-                                        </div>: details.contract_status==2 ?<p className='inline-block px-2 py-1 bg-red-400 text-white font-medium'>Rejected</p> : <> <p className='inline-block px-2 py-1 bg-green-400 text-white font-medium'>Accepted</p>  <Link to={'/messages'} state={details} className='inline-block px-2 py-1 bg-red-400 hover:none focus:none text-white cursor-pointer font-medium'>Chat Now</Link> </>}
-                                            
+                                                        Reject
+
+                                                    </button>
+                                                </div> : details.contract_status == 2 ? <p className='inline-block px-2 py-1 bg-red-400 text-white font-medium'>Rejected</p> : <> <p className='inline-block px-2 py-1 bg-green-400 text-white font-medium'>Accepted</p>  <Link to={'/messages'} state={details} className='inline-block px-2 py-1 bg-red-400 hover:none focus:none text-white cursor-pointer font-medium'>Chat Now</Link> </>}
+
                                             </>
                                         })
-                                       
+
                                     }
 
                                 })
