@@ -528,7 +528,7 @@ const AboutUs = () => {
                     </div>
                     <div className='inline-block'>
                       <button
-                        onClick={() => navigator(hero.buttonLink)}
+                        onClick={() => navigator('/register')}
                         className="primary_btn btn-lg text-uppercase shadow rounded-pill"
                       >
                         {hero.button}
