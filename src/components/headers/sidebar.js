@@ -85,7 +85,7 @@ const Sidebar = () => {
                                 <span>About US</span>
                             </NavLink>
                         </li>
-                        {/* <li className="rounded-sm">
+                        <li className="rounded-sm">
                             <NavLink
                                 to="/admin/companies"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -108,7 +108,7 @@ const Sidebar = () => {
                                  8.8 7.2-16 16-16z"/></svg>
                                 <span>Company</span>
                             </NavLink>
-                        </li> */}
+                        </li>
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/category-list"
