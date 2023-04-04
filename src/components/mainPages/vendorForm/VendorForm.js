@@ -28,7 +28,7 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
-          navigator('/dashboard')
+          // navigator('/dashboard')
           window.scroll(0,0)
         })
       })
