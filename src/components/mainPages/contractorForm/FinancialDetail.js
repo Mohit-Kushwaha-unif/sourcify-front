@@ -28,7 +28,6 @@ const FinancialDetail = () => {
             setStateInitialpan(formValues.pan_number)
         }
         set_panImageD(formValues.pan_image)
-        console.log(formValues.gst_image)
         if(formValues.pan_image){
             setIsPANchange(true)
         }
@@ -45,8 +44,6 @@ const FinancialDetail = () => {
 
         var data = []
         formValues?.turnover?.map((val) => {
-            console.log(val)
-
             Object.keys(val).map((turn) => {
                 var obj = {}
                 obj["name"] = turn
@@ -70,7 +67,6 @@ const FinancialDetail = () => {
     var years = []
     formValues?.turnover?.map((_, index) => {
         Object.keys(_, [index]).map((turnOvers) => {
-            console.log(turnOvers)
             years.push(turnOvers)
             year.push(_[turnOvers])
         })
@@ -80,7 +76,6 @@ const FinancialDetail = () => {
         let FormField = { "Turnover": [] }
         value.pan_image = pan_imaged
         value.gst_image = gstImageD
-        console.log(value.pan_image)
         if(value.pan_image == '' || value.pan_image== undefined){
             setShowError(true)
         }
@@ -107,14 +102,8 @@ const FinancialDetail = () => {
     
             if (value.gst_image) {
                 FormField.gst_image = gstImageD
-            }
-            console.log({ FormField })
-    
-    
-    
-    
-    
-            //   formData.append("gst_number",)
+            }       
+                //   formData.append("gst_number",)
             Object.keys(FormField).map((formKey) => {
                 console.log({ formKey, FormField })
                 console.log({ d: FormField['Turnover'] })
@@ -129,10 +118,6 @@ const FinancialDetail = () => {
                 navigation('/contractor-form/work-experience')
             })
         }
-       
-        // Catch errors if any
-
-
     }
     const pancardValidation = (event) => {
         let text = event.target.value

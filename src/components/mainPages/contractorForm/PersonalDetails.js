@@ -55,7 +55,6 @@ const PersonalDetails = () => {
     if (localStorage.getItem("form_id")) {
       dispatch(Contractor_service.get_contractorBy_id(localStorage.getItem("form_id"))).then((res) => {
         setFormData(res)
-        console.log({ "res.gst_image res.gst_image ": res.gst_image })
         if (Object.keys(res).includes('msme_image') && res.msme_image != 'not provided') {
           setShowGSTimage(true)
         }
@@ -69,8 +68,6 @@ const PersonalDetails = () => {
             var obj = {}
             obj["name"] = opt_val
             obj["value"] = options[opt_val]
-            console.log(obj)
-
             work_area_types.push(obj)
           })
         })
@@ -87,18 +84,6 @@ const PersonalDetails = () => {
     }
 
   }, [])
-
-  // if(formData){
-  //   console.log(formData)
-  //   formData.work_area.map((work) => {
-  //     work_area.push(work.work_segment)
-  //   })
-  //   formData.prefferd_states.map((state) => {
-  //     prefferd_state.push(state)
-  //   })
-  //   setStateInitialpf(formData.msme_number)
-  // }
-  console.log(formval_workArea, prefferd_state)
   const onFinish = (value) => {
     
     var work_area_types = []
@@ -128,7 +113,6 @@ const PersonalDetails = () => {
     if (localStorage.getItem("form_id")) {
       formData.append('form_id', localStorage.getItem("form_id"))
       dispatch(Contractor_service.update_contractor(formData)).then((res) => {
-        console.log(res)
         var obj = {}
         obj.id = value.user_id
         obj.contractor_id = res.data._id
@@ -144,7 +128,6 @@ const PersonalDetails = () => {
         var obj = {}
         obj.id = value.user_id
         obj.contractor_id = res.user_data._id
-        console.log(res)
         dispatch(update_user_info(obj)).then((response) => {
           // console.log(response)
           navigation("/contractor-form/financial-detail")
@@ -417,7 +400,6 @@ const PersonalDetails = () => {
             </Form.Item>
             {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                     return sub_cat.map((sub_category) => {
-                      console.log({ sub_cat })
                       return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
                         {
                           <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
@@ -671,7 +653,6 @@ const PersonalDetails = () => {
             </Form.Item>
             {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                     return sub_cat.map((sub_category) => {
-                      console.log({ sub_cat })
                       return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
                         {
                           <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[

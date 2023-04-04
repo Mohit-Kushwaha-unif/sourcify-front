@@ -61,15 +61,14 @@ const Pages = (props) => {
   }, [location])
   
   const item =  reactRouterToArray(    <Routes>
-    {/* <Route path='/' element={<Dashboard/>} /> */}
-    <Route path='/' element={<AboutUs/>} />
+    <Route path='/' element={<Dashboard/>} />
+    <Route path='/about-us' element={<AboutUs/>} />
     <Route path="/contractor-form" element={ <PersonalDetails />} />
     <Route path="contractor-form/work-experience" element={<WorkExperience />} />
     <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
     <Route path="vendor-form" element={<VendorForm />} />
-   
     <Route path="/register" element={ <Regsiter/>} />
-    {/* <Route path="/login" element={<Login />} />
+    <Route path="/login" element={<Login />} />
     <Route path="/about-us" element={<AboutUs/>}/>
     <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
     <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
@@ -91,7 +90,7 @@ const Pages = (props) => {
     <Route path="/viewForm" element={ <ViewForm/> }/>
     <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
     <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
-    <Route path='*' element={<NotFound />}/> */}
+    <Route path='*' element={<NotFound />}/>
   </Routes>)
 
   useEffect(()=>{
@@ -114,7 +113,7 @@ const Pages = (props) => {
         <Route path="vendor-form" element={<VendorForm />} />
         <Route path="/register" element={ <Regsiter/>} />
         {/* <Route path="/otp-verification" element={<OTPForm/>}/> */}
-    s    <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
@@ -145,10 +144,10 @@ const Pages = (props) => {
         <Route path="/messages" element={<Messages/>}/>
         <Route path='/results' element={<SearchResult/>}/>
         <Route path='/update-profile' element={<UpdateProfie/>}/>
-         <Route path='/userRole' element={<UserRole/>}/>
-         <Route path='/verify' element={<OTPForm/>}/>
-         <Route path='/everify/:token' element={<EmailForm/>}/>
-         <Route path= '/privacy-policy' element={<Privacy/>}/>
+        <Route path='/userRole' element={<UserRole/>}/>
+        <Route path='/verify' element={<OTPForm/>}/>
+        <Route path='/everify/:token' element={<EmailForm/>}/>
+        <Route path= '/privacy-policy' element={<Privacy/>}/>
         <Route path='*' element={<NotFound />}/>
         
       </Routes>

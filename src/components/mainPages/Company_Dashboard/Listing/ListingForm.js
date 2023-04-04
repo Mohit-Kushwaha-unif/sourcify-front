@@ -32,9 +32,7 @@ const ListingForm = () => {
         })
     }, [])
 
-    // sub_cat.map((categories)=>{
-    //     categories.category ===selectedItems
-    // })
+
 
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
 
@@ -70,8 +68,7 @@ const ListingForm = () => {
             }
 
         })
-        // var formData = new FormData()
-        // formData.append = values
+      
         dispatch(add_listing(formData)).then((res) => {
             Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success')
         }).then(()=>{
@@ -148,8 +145,6 @@ const ListingForm = () => {
                                             <Select
                                                 mode="multiple"
                                                 placeholder="Select Categories"
-                                                // value={selectedItems}
-                                                // onChange={setSelectedItems}
                                                 style={{
                                                     width: '100%',
                                                 }}
