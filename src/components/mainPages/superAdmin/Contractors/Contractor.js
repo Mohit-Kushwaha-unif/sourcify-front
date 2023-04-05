@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag,Table } from 'antd';
+import { Space, Tag, Table } from 'antd';
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -16,7 +16,7 @@ const Contractor = () => {
         dispatch(ContractorServices.get_contractor()).then((res) => {
 
             var work_segment = []
-            res.map((tableData, index) => {
+            res.reverse().map((tableData, index) => {
                 tableData.work_area.map((segment) => {
                     work_segment.push(segment.work_segment)
                 })
@@ -37,8 +37,9 @@ const Contractor = () => {
     }, [])
 
     function deleteHandler(id) {
-        dispatch(ContractorServices.remove_contractor(id)).then((res) => {
-window.location = '/admin/contractors-list'
+        dispatch(ContractorServices.remove_contractor({ id: id })).then((res) => {
+            window.location = '/admin/contractors-list'
+
         })
     }
 
@@ -48,32 +49,32 @@ window.location = '/admin/contractors-list'
             dataIndex: 'key',
             key: 'key',
             render: (text) => <Link>{text + 1}</Link>,
-            
+
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
             render: (text) => <Link>{text}</Link>,
-            
+
         },
         {
             title: 'Contact Person',
             dataIndex: 'username',
             key: 'username',
-            
+
         },
         {
             title: 'Email ID',
             dataIndex: 'email',
             key: 'email',
-            
+
         },
         {
             title: 'Mobile Number',
             dataIndex: 'number',
             key: 'number',
-            
+
         },
         {
             title: 'Action',
@@ -84,7 +85,7 @@ window.location = '/admin/contractors-list'
                     <Link onClick={() => deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),
-            
+
         },
     ];
 
@@ -103,12 +104,12 @@ window.location = '/admin/contractors-list'
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Contractors List</p>
                         </div>
-                      
-                        <Table 
-                            
+
+                        <Table
+
                             columns={columns}
-                            dataSource= {tableData}
-                            pagination ={{pageSize: 5}}
+                            dataSource={tableData}
+                            pagination={{ pageSize: 5 }}
                         />
                     </div>
                 </div>

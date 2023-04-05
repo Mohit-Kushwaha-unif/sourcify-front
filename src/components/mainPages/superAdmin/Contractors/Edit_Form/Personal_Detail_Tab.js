@@ -32,12 +32,41 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
 
   const [initialpf, setStateInitialpf] = useState('')
+  const [sub_cat, setSub_cat] = useState([])
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const [form] = Form.useForm();
+  var work_area_types = []
   useEffect(() => {
-    if(formValues.msme_image !== "not provided"){
+    dispatch(get_category()).then((res) => {
+
+      res.map((cat) => {
+        setSub_cat((prev_state) => [...prev_state, cat])
+       })
+    })
+  }, [])
+  useEffect(() => {
+    console.log(formValues.msme_image === undefined)
+    if(formValues.msme_image !== "not provided" ){
       setIsMSMEVisible(true)
     }
-    
+    if(formValues.msme_image === undefined){
+      setIsMSMEVisible(false)
+    }
+    formValues.work_area_types.length >0 && formValues.work_area_types.map((options) => {
+      Object.keys(options).map((opt_val) => {
+        var obj = {}
+        obj["name"] = opt_val
+        obj["value"] = options[opt_val]
+        work_area_types.push(obj)
+      })
+    })
+    formValues.work_area.length >0 && formValues.work_area.map((work) => {
+      setSelectedItems((prev_state) => [...prev_state, work.work_segment])
+    })
+
+    setSelectedOptions(work_area_types)
     setStateInitialpf(formValues.msme_number)
     setStateInitialValue(location.state?.email)
   }, [location])
@@ -53,7 +82,18 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   const onFinish = (value) => {
     var formData = new FormData()
-    
+    var work_area_types = []
+    Object.keys(value).map((val_item) => {
+      value.work_segment.map((work) => {
+        if (val_item === work) {
+
+          work_area_types.push({ [val_item]: value[val_item] })
+        }
+      })
+    })
+
+    value["work_area_types"] = JSON.stringify([...work_area_types])
+   
     if (!value.mobile_number) {
       value.mobile_number = location.state?.number
     }
@@ -172,7 +212,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               name: ["msme_number"],
               value: [initialpf]
             },
-
+            ...selectedOptions
           ]}
           labelAlign="left"
           scrollToFirstError={true}
@@ -207,6 +247,40 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               })}
             </Select>
           </Form.Item>
+          {selectedItems.length > 0 && selectedItems.map((sub_item) => {
+                    return sub_cat.map((sub_category) => {
+                      return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
+                        {
+                          <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                            {
+                              required: true,
+                              message: 'Please Select options!',
+                            },
+                          ]}>
+
+                            <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                              {sub_category.sub_category.map((item, index) => {
+                                return (
+                                  <Checkbox
+                                    key={item.sub_Category}
+                                    className={`ml-${index === 0 ? 2 : 0} capitalize`}
+                                    value={item.sub_Category}
+                                  >
+                                    {item.sub_Category}
+                                  </Checkbox>
+                                );
+                              })}
+                            </Checkbox.Group>
+
+
+
+                          </Form.Item>
+                        }
+
+                      </>
+                      })
+                    })
+                    }
           <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
                   {
                     required: true,

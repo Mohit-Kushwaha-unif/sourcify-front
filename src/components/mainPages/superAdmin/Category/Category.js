@@ -65,9 +65,10 @@ const Category = () => {
                     color = 'volcano';
                   }
                   return (
-                    <Tag  key={index}>
+                   <Link to={'/edit-subcategory'}> <Tag className='mb-1' key={index}>
                       {tag.sub_Category}
                     </Tag>
+                    </Link>
                     
                   );
                 }): sub_category?.sub_category}

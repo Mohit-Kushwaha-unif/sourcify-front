@@ -195,7 +195,7 @@ const Work_Experiece = ({ formValues, isClicked }) => {
                 )}
               </Form.List>
                
-                    <div className="text-center lg:text-left flex flex-col flex-col-reverse md:flex-row justify-between">
+                    <div className="text-center  flex flex-col flex-col-reverse md:flex-row justify-between">
 
                         <span
                             onClick={()=>isClicked("1")}
