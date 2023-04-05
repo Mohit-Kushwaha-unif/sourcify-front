@@ -64,7 +64,7 @@ export const get_contractorBy_id = (_id)=>{
 export const remove_contractor = (_id)=>{
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.get(contractor_url+'/remove_contractor').then((res)=>{
+            Http.post(contractor_url+'/remove_contractor',_id).then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err);
