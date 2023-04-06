@@ -33,7 +33,7 @@ const Sidebar = () => {
       }, [screenSize])
     return (
 
-        <div className="flex relative flex-col min-h-screen h-inherit bg-white px-4 p-3">
+        <div className="flex relative flex-col min-h-screen h-inherit bg-white w-[17%] px-4 p-3">
             <div className="space-y-5">
                 { <div className='z-10  absolute top-[-19px] left-[50px]'><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></div>}
              { showMenu&&  <>
@@ -122,7 +122,7 @@ const Sidebar = () => {
                                 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 
                                 1 0 0 1-1-1v-5z"/>
                                 </svg>
-                                <span>Category</span>
+                                <span>Work Segment</span>
                             </NavLink>
                         </li>
 
@@ -146,7 +146,7 @@ const Sidebar = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="bi bi-grid-1x2-fill w-6 h-6" width="24" height="24" viewBox="0 0 24 24">
                                     <path d="M21.59,3.59C20.92,3.22 20.17,3 19.41,3H4C2.9,3 2,3.9 2,5V17C2,18.1 2.9,19 4,19H18L22,23V5C22,4.24 21.76,3.53 21.59,3.59M18,7V5.5L19.5,7H18M8,10H16V12H8V10M8,14H14V16H8V14Z" />
                                 </svg>
-                                <span>Feedbacks</span>
+                                <span>Enquiries</span>
                             </NavLink>
                         </li>
                         {/* <li className="rounded-sm">
@@ -163,7 +163,7 @@ const Sidebar = () => {
                                 <span>Caraousel</span>
                             </NavLink>
                         </li> */}
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}
                                 className="flex items-center p-2 cursor-pointer space-x-3 rounded-md"
@@ -184,7 +184,7 @@ const Sidebar = () => {
                                 </svg>
                                 <span>Logout</span>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
                 </>

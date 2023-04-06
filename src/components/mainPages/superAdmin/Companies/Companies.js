@@ -39,14 +39,13 @@ const Companies = () => {
             title: 'S.No',
             dataIndex: 'key',
             key: 'key',
-            render: (text) => <Link>{text + 1}</Link>,
-           
+            render : (text) => <p>{text+1}</p>
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
-            render: (text) => <Link>{text}</Link>,
+            render:(_, record) =>(console.log(record), <Link to='/admin/edit-company' state={{ _id: record?._id }}>{record.entity}</Link>),
            
         },
         {
@@ -91,7 +90,7 @@ const Companies = () => {
                             onClick={() => navigator('/vendor-form')}
                             className="primary_btn mb-3"
                         >
-                            Add New User </button>
+                            Add New Company </button>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Companies List</p>
                         </div>

@@ -48,14 +48,14 @@ const Contractor = () => {
             title: 'S.No',
             dataIndex: 'key',
             key: 'key',
-            render: (text) => <Link>{text + 1}</Link>,
+            render: (text) => <p>{text + 1}</p>,
 
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
-            render: (text) => <Link>{text}</Link>,
+            render:(_, record) =>(console.log(record), <Link to='/admin/edit-contractors' state={{ _id: record?._id }}>{record.entity}</Link>),
 
         },
         {
