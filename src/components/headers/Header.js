@@ -137,10 +137,10 @@ const Header = () => {
         </div>
         <div className='absolute cursor-pointer text-2xl right-3 top-5 md:hidden'><MenuOutlined onClick={()=>{setShowMenu(!showMenu)}}/></div>
      
-      {isLoggedIn &&showMenu&& <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
+      {/* {isLoggedIn &&showMenu&& <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
               Dashboard
             </NavLink>
-            <NavLink to="/messages" className="mr-2">Messages</NavLink></>}
+            <NavLink to="/messages" className="mr-2">Messages</NavLink></>} */}
 
       {showMenu && <>
         {/* <div className='navbar__item flex-row'>

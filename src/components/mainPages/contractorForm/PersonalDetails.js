@@ -160,18 +160,18 @@ const PersonalDetails = () => {
     setState(state_cites[country])
   }
 
-  function msmeVerfication(event) {
-    let text = event.target.value
-    var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
-    if (text.length < 1) {
-      set_Valid_msme(false)
-    }
-    else if (regex.test(text)) {
-      set_Valid_msme(false)
-    } else {
-      set_Valid_msme(true)
-    }
-  }
+  // function msmeVerfication(event) {
+  //   let text = event.target.value
+  //   var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
+  //   if (text.length < 1) {
+  //     set_Valid_msme(false)
+  //   }
+  //   else if (regex.test(text)) {
+  //     set_Valid_msme(false)
+  //   } else {
+  //     set_Valid_msme(true)
+  //   }
+  // }
 
   return (
     <>
@@ -465,7 +465,8 @@ const PersonalDetails = () => {
                   message: 'Please provide PF number'
                 },
               ]}>
-                <Input placeholder='Enter your PF number' onChange={msmeVerfication} />
+                {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                <Input placeholder='Enter your PF number'  />
               </Form.Item>
               {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
               <div className='form_flex_children  '>
@@ -715,7 +716,8 @@ const PersonalDetails = () => {
                     message: 'Please provide PF number'
                   },
                 ]}>
-                  <Input placeholder='Enter your PF number' onChange={msmeVerfication} />
+                  {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                  <Input placeholder='Enter your PF number'  />
                 </Form.Item>
                 {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>} </div>
               <div className='form_flex_children '>
