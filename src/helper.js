@@ -39,5 +39,5 @@ const Slug_url = 'https://sourcify-frontd.onrender.com/slug'
 const Message_url= 'https://sourcify-frontd.onrender.com/messages'
 const carausel_url= 'https://sourcify-frontd.onrender.com/carausel'
 const social_url= 'https://sourcify-frontd.onrender.com/auth'
-const media_url= 'https://sourcify-frontd.onrender.com/auth'
+const media_url= 'https://sourcify-frontd.onrender.com/media'
 export { user_url,social_url, Slug_url,contractor_url,content_url,vendor_url,category_url,listing_url,FeedBack_url,About_url,Message_url , carausel_url,media_url};

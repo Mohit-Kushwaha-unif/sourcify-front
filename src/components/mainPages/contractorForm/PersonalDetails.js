@@ -49,6 +49,7 @@ const PersonalDetails = () => {
   const [turnover, setTurnover] = useState([])
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
+  const [saved,isSaved] = useState(false)
   const [year, setYear] = useState([])
   const handleFileUpload = async (event, index) => {
     const { getFieldValue, setFieldsValue } = form;
@@ -204,6 +205,7 @@ const PersonalDetails = () => {
         obj.contractor_id = res.data._id
 
         dispatch(update_user_info(obj)).then((response) => {
+          isSaved(true)
           // console.log(response)
           // navigation("/contractor-form/financial-detail")
         })
@@ -215,6 +217,7 @@ const PersonalDetails = () => {
         obj.id = value.user_id
         obj.contractor_id = res.user_data._id
         dispatch(update_user_info(obj)).then((response) => {
+          isSaved(true)
           // console.log(response)
           // navigation("/contractor-form/financial-detail")
         })
@@ -296,6 +299,7 @@ const PersonalDetails = () => {
             <div className=" xl:mx-20 xl:w-11/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
               <div className="flex flex-row items-center justify-center lg:justify-start">
                 <p className="text-lg mb-0 mr-4">Basic Details</p>
+               {saved&& <p className='text-[#FF5757]'>Your Profile Submitted Successfully</p>}
               </div>
               <div
                 className="flex items-center my-3 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
