@@ -141,7 +141,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     setSelectedOptions(work_area_types)
     setStateInitialpf(formValues.msme_number)
     setStateInitialValue(location.state?.email)
-  }, [location])
+  }, [])
   console.log({formValues})
   useEffect(() => {
     dispatch(get_category()).then((res) => {
@@ -165,7 +165,42 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   }
   const onFinish = (value) => {
-    console.log(value)
+    // console.log(value)
+    // var Turnover = []
+    // Object.keys(value).map((key) => {
+    //   if (key.includes('Turnover')) {
+    //     var obj = {}
+    //     obj[key] = value[key]
+    //     Turnover.push(obj)
+    //   }
+    // })
+    // value.Project = JSON.stringify(value.Project)
+    // value.Turnover = JSON.stringify(Turnover)
+    // var work_area_types = []
+    // Object.keys(value).map((val_item) => {
+    //   value.work_segment.map((work) => {
+    //     if (val_item === work) {
+
+    //       work_area_types.push({ [val_item]: value[val_item] })
+    //     }
+    //   })
+    // })
+
+
+    // value["work_area_types"] = JSON.stringify([...work_area_types])
+    // var formData = new FormData()
+
+    // if (localStorage.getItem("adminEmail") == null) {
+    //   value.user_id = localStorage.getItem("user_id")
+    // }
+    // value.role = 0;
+
+    // if (value.msme_image) {
+    //   value.msme_image = msmeImageD
+    // }
+    // Object.keys(value).map((formKey) => {
+    //   formData.append(formKey, value[formKey])
+    // })
     var Turnover = []
     Object.keys(value).map((key) => {
       if (key.includes('Turnover')) {
@@ -174,6 +209,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         Turnover.push(obj)
       }
     })
+    console.log(value.Project)
     value.Project = JSON.stringify(value.Project)
     value.Turnover = JSON.stringify(Turnover)
     var work_area_types = []
@@ -201,7 +237,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     Object.keys(value).map((formKey) => {
       formData.append(formKey, value[formKey])
     })
-    
     formData.append("form_id", formValues._id)
       dispatch(Contractor_service.update_contractor(formData)).then((res) => {
         var obj = {}
