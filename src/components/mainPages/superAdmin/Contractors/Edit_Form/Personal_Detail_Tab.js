@@ -702,7 +702,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                           <Input type='file' max={1} onChange={gst_img_value} />
                         </Form.Item>}
                     </div>
-                <Form.Item name="msme" label="Do you have MSME ?" required >
+                <Form.Item name="msme" label="Do you have MSME registration?" required >
                   <Radio.Group >
                     <Radio value={"Yes"}>Yes</Radio>
                     <Radio value={"No"}>No</Radio>
@@ -716,7 +716,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 >
                 </div>
 
-                <div className=' mt-5 mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
                 <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                   <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                   >

@@ -590,6 +590,10 @@ const PersonalDetails = () => {
                         </Form.Item>
                       </div>
                     </div>
+                    {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formData.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
+                      <Input type="file" onChange={company_image_handler} />
+                    </Form.Item>
+                    }
                     {/*******************************************/}
 
                     {/**************  Work Segment *************/}
@@ -607,6 +611,7 @@ const PersonalDetails = () => {
                         })}
                       </Select>
                     </Form.Item>
+
                     {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                       return sub_cat.map((sub_category) => {
                         return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
@@ -725,7 +730,7 @@ const PersonalDetails = () => {
                           <Input type='file' max={1} onChange={gst_img_value} />
                         </Form.Item>}
                     </div>
-                    <Form.Item name="msme" className='mt-3 md:mt-0' label="Do you have MSME ?" required >
+                    <Form.Item name="msme" className='mt-3 md:mt-0' label="Do you have MSME registration?" required >
                       <Radio.Group >
                         <Radio value={"Yes"}>Yes</Radio>
                         <Radio value={"No"}>No</Radio>
@@ -777,10 +782,7 @@ const PersonalDetails = () => {
                       className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                     >
                     </div>
-                    {showCompnay_Img ? <> <label className='flex mb-3'>Company Image</label> <Link className='mr-16' to={formData.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
-                      <Input type="file" onChange={company_image_handler} />
-                    </Form.Item>
-                    }
+                    
                     <p className='mt-5 mb-2 '>Projects</p>
 
                     <Form.List name="Project">
@@ -1047,6 +1049,9 @@ const PersonalDetails = () => {
                         </Form.Item>
                       </div>
                     </div>
+                    <Form.Item name="company_image" label=" Business Profile">
+                      <Input type="file" onChange={company_image_handler} />
+                    </Form.Item>
                     {/*******************************************/}
 
                     {/**************  Work Segment *************/}
@@ -1160,7 +1165,7 @@ const PersonalDetails = () => {
                       </Form.Item>
                     </div>
 
-                    <Form.Item name="msme" label="Do you have MSME ?" required >
+                    <Form.Item name="msme" label="Do you have MSME registration ?" required >
                       <Radio.Group >
                         <Radio value={"Yes"}>Yes</Radio>
                         <Radio value={"No"}>No</Radio>
@@ -1212,9 +1217,7 @@ const PersonalDetails = () => {
                       className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                     >
                     </div>
-                    <Form.Item name="company_image" label="Company Image">
-                      <Input type="file" onChange={company_image_handler} />
-                    </Form.Item>
+                   
                     <p className='mt-5 mb-2 '>Projects</p>
 
                     <Form.List name="Project">
