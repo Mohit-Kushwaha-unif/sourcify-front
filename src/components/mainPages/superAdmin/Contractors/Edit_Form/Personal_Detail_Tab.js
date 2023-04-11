@@ -256,6 +256,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append('File', pan_imaged)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.pan_image = res
+        formData.append("pan_image",res)
       })
     }
     if (gstImageD !== '') {
@@ -263,6 +264,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append('File', gstImageD)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.gst_image = res
+        formData.append("gst_image",res)
       })
     }
     if (msmeImageD !== '') {
@@ -270,6 +272,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append('File', msmeImageD)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.msme_image = res
+        formData.append("msme_image",res)
       })
     }
     formData.append("form_id", formValues._id)
