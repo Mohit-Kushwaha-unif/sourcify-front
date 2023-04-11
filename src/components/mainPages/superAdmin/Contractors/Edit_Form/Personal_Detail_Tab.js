@@ -46,6 +46,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [showMSMEimage, setShowMSMEImage] = useState(false)
   const [pan_imaged, set_panImageD] = useState('')
   const [gstImageD, set_gstImageD] = useState('')
+  const [showCompnay_Img, setShowCompany_Img] = useState(false)
+  const [company_Image, set_company_imgae] = useState('')
   const [form] = Form.useForm();
   
   var work_area_types = []
@@ -149,6 +151,9 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if (formValues.msme_image && formValues.msme_image !=="undefined") {
       setShowMSMEImage(true)
     }
+    if (formValues.company_image && formValues.company_image.includes("http")) {
+          setShowCompany_Img(true)
+        }
 
     setProjects(projects)
     setTurnover(data)
@@ -275,6 +280,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         formData.append("msme_image",res)
       })
     }
+    if (value.company_image !== undefined) {
+
+      var formDatas = new FormData();
+      formDatas.append("File", company_Image)
+      await dispatch((upload_img(formData))).then((res) => {
+        value.company_image = res
+        formData.append("company_image",res)
+      })
+    }
     formData.append("form_id", formValues._id)
       dispatch(Contractor_service.update_contractor(formData)).then((res) => {
         var obj = {}
@@ -339,6 +353,9 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }
   function gst_img_value(e) {
     set_gstImageD(e.target.files[0])
+  }
+  function company_image_handler(e) {
+    set_company_imgae(e.target.files[0])
   }
   return (
     <>
@@ -570,7 +587,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   </div>
                 </div>
                 {/*******************************************/}
-
+                {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formValues.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
+                      <Input type="file" onChange={company_image_handler} />
+                    </Form.Item>
+                    }
                 {/**************  Work Segment *************/}
                 <Form.Item name="work_segment" label="Work segment" rules={[
                   {
