@@ -41,8 +41,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [valid_pan, set_Valid_pan] = useState(false)
-  
-  
+  const [showGSTiMAGE, setShowGSTimage] = useState(false)
+  const [showPANimage, setShowPANimage] = useState(false)
+  const [showMSMEimage, setShowMSMEImage] = useState(false)
+  const [pan_imaged, set_panImageD] = useState('')
+  const [gstImageD, set_gstImageD] = useState('')
   const [form] = Form.useForm();
   
   var work_area_types = []
@@ -136,6 +139,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
       set_preveiwimg(prevState => [...prevState, project.project_img])
     })
+
+    if (formValues.pan_image && formValues.pan_image !=="undefined") {
+      setShowPANimage(true)
+    }
+    if (formValues.gst_image && formValues.gst_image !=="undefined") {
+      setShowGSTimage(true)
+    }
+    if (formValues.msme_image && formValues.msme_image !=="undefined") {
+      setShowMSMEImage(true)
+    }
+
     setProjects(projects)
     setTurnover(data)
     setSelectedOptions(work_area_types)
@@ -164,7 +178,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     }
 
   }
-  const onFinish = (value) => {
+  const onFinish = async(value) => {
     // console.log(value)
     // var Turnover = []
     // Object.keys(value).map((key) => {
@@ -237,6 +251,27 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     Object.keys(value).map((formKey) => {
       formData.append(formKey, value[formKey])
     })
+    if (pan_imaged !== '') {
+      var formDatas = new FormData()
+      formDatas.append('File', pan_imaged)
+      await dispatch(upload_img(formDatas)).then((res) => {
+        value.pan_image = res
+      })
+    }
+    if (gstImageD !== '') {
+      var formDatas = new FormData()
+      formDatas.append('File', gstImageD)
+      await dispatch(upload_img(formDatas)).then((res) => {
+        value.gst_image = res
+      })
+    }
+    if (msmeImageD !== '') {
+      var formDatas = new FormData()
+      formDatas.append('File', msmeImageD)
+      await dispatch(upload_img(formDatas)).then((res) => {
+        value.msme_image = res
+      })
+    }
     formData.append("form_id", formValues._id)
       dispatch(Contractor_service.update_contractor(formData)).then((res) => {
         var obj = {}
@@ -296,6 +331,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   formValues.work_area.map((work) => {
     work_area.push(work.work_segment)
   })
+  function pan_img_value(e) {
+    set_panImageD(e.target.files[0])
+  }
+  function gst_img_value(e) {
+    set_gstImageD(e.target.files[0])
+  }
   return (
     <>
       <div className='bg-white p-3 rounded-xl '>
@@ -589,41 +630,75 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                     )}
                   </Select>
                 </Form.Item>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-3 '>
-                  <div>
-                    <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
-                      {
-                        required: true,
-                        message: 'Please provide PF number'
-                      },
-                    ]}>
-                      {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                      <Input placeholder='Enter your PF number' />
-                    </Form.Item>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
+                      <div>
+                        <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
+                          {
+                            required: true,
+                            message: 'Please provide PF number'
+                          },
+                        ]}>
+                          {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                          <Input placeholder='Enter your PF number' />
+                        </Form.Item>
 
-                    {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
-                  </div>
+                        {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
+                      </div>
+                      {console.log(showMSMEimage)}
+                      {showMSMEimage == true? <div>
+                        <span className='flex mb-3 '>Copy of PF </span>
+                        <Link className='mr-16' to={formValues.msme_image}>Preview</Link>
+                        <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowMSMEImage(false) }}>Change</span>
 
-                  <div>
-                    <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
-                      {
-                        required: true,
-                        message: 'Please provide PAN number'
-                      },
-                    ]}
-                    >
-                      <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
-                    </Form.Item>
-                    {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
+                      </div>
+                        :
+                        <Form.Item name="msme_image" label="Copy of PF">
+                          <Input type='file' max={1} onChange={msme_img_value} />
+                        </Form.Item>
 
-                  </div>
-                  <div>
-                    <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                      <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
-                    </Form.Item>
-                    {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
-                  </div>
-                </div>
+                      }
+                      <div>
+
+                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
+                          {
+                            required: true,
+                            message: 'Please provide PAN number'
+                          },
+                        ]}
+                        >
+                          <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                        </Form.Item>
+                        {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
+
+                      </div>
+                      {showPANimage ? <div>
+                        <span className='flex mb-3 '>Copy of PAN </span>
+                        <Link className='mr-16' to={formValues.pan_image}>Preview</Link>
+                        <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowPANimage(false) }}>Change</span>
+
+                      </div>
+                        : <Form.Item name="pan_image" label="Copy of PAN">
+                          <Input type='file' max={1} onChange={pan_img_value} />
+                        </Form.Item>}
+                      <div>
+                        <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                          <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                        </Form.Item>
+
+
+                        {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
+                      </div>
+                      {showGSTiMAGE == true ? <>
+                        <div>
+                          <span className='flex mb-3 '>Copy of GST </span>
+                          <Link className='mr-16' to={formValues.gst_image}>Preview</Link>
+                          <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowGSTimage(false) }}>Change</span>
+                        </div>
+                      </> :
+                        <Form.Item name="gst_image" label="Copy of GST">
+                          <Input type='file' max={1} onChange={gst_img_value} />
+                        </Form.Item>}
+                    </div>
                 <Form.Item name="msme" label="Do you have MSME ?" required >
                   <Radio.Group >
                     <Radio value={"Yes"}>Yes</Radio>
