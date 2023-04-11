@@ -173,8 +173,12 @@ const PersonalDetails = () => {
         })
         setFormVal_work_state(prefferd_state)
         setSelectedOptions(work_area_types)
-
-        setStateInitialpf(res.msme_number)
+        if(formData.msme_number == "undefined" || formData.msme_number == "N/A" )
+        {setStateInitialpf("N/A")}
+       else{
+         setStateInitialpf(formData.msme_number)
+       } 
+        
         console.log({ res })
         if (res.company_image && res.company_image.includes("http")) {
           setShowCompany_Img(true)
@@ -455,11 +459,11 @@ const PersonalDetails = () => {
 
                         {
                           name: ["pan_number"],
-                          value: formData.pan_number
+                          value:  formData.pan_number == "N/A" || formData.pan_number == "undefined" ? "N/A" :  formData.pan_number
                         },
                         {
                           name: ["gst_number"],
-                          value: formData.gst_number
+                          value: formData.gst_number== "N/A" || formData.gst_number == "undefined" ? "N/A" :  formData.gst_number
                         },
                         {
                           name: ["Project"],
@@ -663,12 +667,7 @@ const PersonalDetails = () => {
                     </Form.Item>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
                       <div>
-                        <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PF number'
-                          },
-                        ]}>
+                        <Form.Item name="msme_number" className='mb-0' label="PF Number">
                           {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
                           <Input placeholder='Enter your PF number' />
                         </Form.Item>
@@ -690,13 +689,7 @@ const PersonalDetails = () => {
                       }
                       <div>
 
-                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PAN number'
-                          },
-                        ]}
-                        >
+                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' >
                           <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
                         </Form.Item>
                         {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
@@ -744,7 +737,7 @@ const PersonalDetails = () => {
                     >
                     </div>
 
-                    <div className=' mt-5 mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                    <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
                     <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                       <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                       >
@@ -1120,12 +1113,7 @@ const PersonalDetails = () => {
 
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
                       <div>
-                        <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PF number'
-                          },
-                        ]}>
+                        <Form.Item name="msme_number" className='mb-0' label="PF Number" >
                           {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
                           <Input placeholder='Enter your PF number' />
                         </Form.Item>
@@ -1137,13 +1125,7 @@ const PersonalDetails = () => {
                       </Form.Item>
                       <div>
 
-                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PAN number'
-                          },
-                        ]}
-                        >
+                        <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
                           <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
                         </Form.Item>
                         {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
@@ -1179,7 +1161,7 @@ const PersonalDetails = () => {
                     >
                     </div>
 
-                    <div className=' mt-5 mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                    <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
                     <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                       <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                       >

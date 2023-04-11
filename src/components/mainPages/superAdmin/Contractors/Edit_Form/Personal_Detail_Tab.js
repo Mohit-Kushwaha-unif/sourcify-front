@@ -158,7 +158,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     setProjects(projects)
     setTurnover(data)
     setSelectedOptions(work_area_types)
-    setStateInitialpf(formValues.msme_number)
+    if(formValues.msme_number == "undefined" || formValues.msme_number == "N/A" )
+       {setStateInitialpf("N/A")}
+      else{
+        setStateInitialpf(formValues.msme_number)
+      } 
     setStateInitialValue(location.state?.email)
   }, [])
   console.log({formValues})
@@ -253,15 +257,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if (value.msme_image) {
       value.msme_image = msmeImageD
     }
-    Object.keys(value).map((formKey) => {
-      formData.append(formKey, value[formKey])
-    })
+    
     if (pan_imaged !== '') {
       var formDatas = new FormData()
       formDatas.append('File', pan_imaged)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.pan_image = res
-        formData.append("pan_image",res)
+       
       })
     }
     if (gstImageD !== '') {
@@ -269,7 +271,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append('File', gstImageD)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.gst_image = res
-        formData.append("gst_image",res)
+        
       })
     }
     if (msmeImageD !== '') {
@@ -277,7 +279,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append('File', msmeImageD)
       await dispatch(upload_img(formDatas)).then((res) => {
         value.msme_image = res
-        formData.append("msme_image",res)
+        
       })
     }
     if (value.company_image !== undefined) {
@@ -286,9 +288,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formDatas.append("File", company_Image)
       await dispatch((upload_img(formData))).then((res) => {
         value.company_image = res
-        formData.append("company_image",res)
+        
       })
     }
+    Object.keys(value).map((formKey) => {
+      formData.append(formKey, value[formKey])
+    })
     formData.append("form_id", formValues._id)
       dispatch(Contractor_service.update_contractor(formData)).then((res) => {
         var obj = {}
@@ -451,11 +456,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
                     {
                       name: ["pan_number"],
-                      value: formValues.pan_number
+                      value: formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" :  formValues.pan_number
                     },
                     {
                       name: ["gst_number"],
-                      value: formValues.gst_number
+                      value: formValues.gst_number== "N/A" || formValues.gst_number == "undefined" ? "N/A" :  formValues.gst_number
                     },
                     {
                       name: ["Project"],
@@ -655,19 +660,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 </Form.Item>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
                       <div>
-                        <Form.Item name="msme_number" className='mb-0' label="PF Number" rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PF number'
-                          },
-                        ]}>
+                        <Form.Item name="msme_number" className='mb-0' label="PF Number" >
                           {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
                           <Input placeholder='Enter your PF number' />
                         </Form.Item>
 
                         {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
                       </div>
-                      {console.log(showMSMEimage)}
                       {showMSMEimage == true? <div>
                         <span className='flex mb-3 '>Copy of PF </span>
                         <Link className='mr-16' to={formValues.msme_image}>Preview</Link>
@@ -682,13 +681,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       }
                       <div>
 
-                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' rules={[
-                          {
-                            required: true,
-                            message: 'Please provide PAN number'
-                          },
-                        ]}
-                        >
+                        <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
                           <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
                         </Form.Item>
                         {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
