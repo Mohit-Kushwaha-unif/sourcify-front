@@ -35,7 +35,9 @@ const AboutUs = () => {
       setShowMenu(true)
     }
   }, [screenSize])
-
+ useEffect(()=>{
+  window.scroll(0,0)
+ },[])
   useEffect(() => {
     dispatch(get_about()).then((res) => {
       setAbout(res[0])
@@ -81,13 +83,13 @@ const AboutUs = () => {
         </div>
         
       </div>
-      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white'>  <Regsiter/></div>
+      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white z-10'>  <Regsiter/></div>
      
       </div>
       </div>
       :
       
-      <div className='grid grid-cols-1 md:grid-cols-5 ' >
+      <div className='grid grid-cols-1 md:grid-cols-5  ' >
       <div className='md:col-span-3 relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>

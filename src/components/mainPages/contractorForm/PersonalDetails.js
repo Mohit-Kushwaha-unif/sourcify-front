@@ -23,6 +23,7 @@ import { update_user, update_user_info } from '../../../services/user';
 import moment from 'moment';
 import { upload_img } from '../../../services/upload';
 import Swal from 'sweetalert2';
+import { logout } from '../../Helper/LogooutHelper';
 const PersonalDetails = () => {
   const location = useLocation()
   const navigation = useNavigate()
@@ -268,7 +269,13 @@ const PersonalDetails = () => {
         dispatch(update_user_info(obj)).then((response) => {
           isSaved(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
-            navigation('/')
+           
+            dispatch(logout()).then((res)=>{
+              localStorage.clear()
+              localStorage.setItem("isLoggedIn", false)
+             
+              navigation('/')
+            })
           })
           // window.scroll(0, 0)
           // console.log(response)
@@ -283,6 +290,15 @@ const PersonalDetails = () => {
         obj.contractor_id = res.user_data._id
         dispatch(update_user_info(obj)).then((response) => {
           isSaved(true)
+          Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
+           
+            dispatch(logout()).then((res)=>{
+              localStorage.clear()
+              localStorage.setItem("isLoggedIn", false)
+            
+              navigation('/')
+            })
+          })
           window.scroll(0, 0)
           // console.log(response)
           // navigation("/contractor-form/financial-detail")

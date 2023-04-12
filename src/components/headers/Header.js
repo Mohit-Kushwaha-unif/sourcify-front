@@ -137,7 +137,7 @@ const Header = () => {
     <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
       <div className='navbar__title navbar__item flex items-center  justify-between '>
         <div> <img className='w-[83%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
-         {isLoggedIn ?
+         {isLoggedIn &&
 
           <>
          
@@ -168,9 +168,7 @@ const Header = () => {
             </div>
 
           </>
-          :
-          <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/login'>Login for Registered Users</Link> </button>
-        }
+            }
      
         {/* <button className='navbar__button w-[30%] text-[14px] hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link className='text-[14px]' to='/login'>Login for Registered Users</Link> </button> */}
         
@@ -213,7 +211,7 @@ const Header = () => {
           <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
           <div className='navbar__item'><Link to="/support">Support</Link></div>
         </>} */}
-        {isLoggedIn ?
+        {/* {isLoggedIn ?
 
           <>
          
@@ -245,7 +243,7 @@ const Header = () => {
           </>
           :
           <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/login'>Login for Registered Users</Link> </button>
-        }
+        } */}
       </>}
       {isOpen && (
         <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">

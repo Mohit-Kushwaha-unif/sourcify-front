@@ -30,7 +30,7 @@
 .navbar__button{
     padding: 6px 15px 6px;
     cursor: pointer;
-    font-size: 104%;
+    /* font-size: 104%; */
     background-color: #FF5757;
     color: #ffffff ;
     font-family: Helvetica;

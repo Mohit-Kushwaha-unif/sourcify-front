@@ -10,6 +10,7 @@ import { Add_Vendor, get_Vendor, get_Vendor_by_id, update_vendor } from '../../.
 import { update_user } from '../../../services/user';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../Helper/LogooutHelper';
 const VendorForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch()
@@ -29,8 +30,16 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
-          // navigator('/dashboard')
           window.scroll(0,0)
+          Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
+           
+            dispatch(logout()).then((res)=>{
+              localStorage.clear()
+              localStorage.setItem("isLoggedIn", false)
+           
+              navigator('/')
+            })
+          })
         })
       })
     }
@@ -42,7 +51,15 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res)=>{
           setShowMsg(true)
-          // navigator('/dashboard')
+          Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
+           
+            dispatch(logout()).then((res)=>{
+              localStorage.clear()
+              localStorage.setItem("isLoggedIn", false)
+             
+              navigator('/')
+            })
+          })
           window.scroll(0,0)
         })
       })
@@ -54,7 +71,7 @@ const VendorForm = () => {
 
     dispatch(get_Vendor_by_id(localStorage.getItem("form_id"))).then((res)=>{
       setFormData(res)
-
+      
     })
    },[])
    console.log(formData)
@@ -81,7 +98,7 @@ const VendorForm = () => {
         <div
           className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
         >
-          <div className="xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+          <div className="overflow-hidden xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Onboarding Form</p>
             </div>
