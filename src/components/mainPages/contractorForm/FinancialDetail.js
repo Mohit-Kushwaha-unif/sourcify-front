@@ -175,7 +175,7 @@ const FinancialDetail = () => {
                          <Form labelAlign="left"
 
                             layout="vertical" onFinish={FormHandler} onFinishFailed={finishFaild}>
-                            <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
+                            {/* <div className='mb-2'>Last Three Years Turnovers<span className='intialValue'></span></div>
                             <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                                 <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`} 
                                 >
@@ -243,7 +243,7 @@ const FinancialDetail = () => {
                                             <Input type='file' max={1} onChange={gst_img_value} />
                                         </Form.Item>
                                 </div> </div>
-
+ */}
 
 
 

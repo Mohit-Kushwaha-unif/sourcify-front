@@ -33,12 +33,12 @@ const Edit_Form = () => {
              <TabPane  tab="Basic Details" key="1"  disabled={activeTab!==tabKeys}>
               <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
             </TabPane>
-            <TabPane tab="Work Experience" key="2"  disabled={activeTab!==tabKeys}>
+            {/* <TabPane tab="Work Experience" key="2"  disabled={activeTab!==tabKeys}>
              <Work_Experiece formValues = {formData} isClicked={tabKeys}/>
             </TabPane>
             <TabPane tab="Financial details" key="3"  disabled={activeTab!==tabKeys}>
              <FinancialDetail formValues = {formData} isClicked={tabKeys}/>
-            </TabPane>
+            </TabPane> */}
           </Tabs>
         }
    

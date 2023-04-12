@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Login from './auth/Login'
 import Regsiter from './auth/Register'
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate,Redirect, Navigate } from 'react-router-dom'
 import PersonalDetails from './contractorForm/PersonalDetails'
 import WorkExperience from './contractorForm/WorkExperience'
 import FinancialDetail from './contractorForm/FinancialDetail'
@@ -61,7 +61,7 @@ const Pages = (props) => {
   }, [location])
   
   const item =  reactRouterToArray(    <Routes>
-    <Route path='/' element={<Dashboard/>} />
+    <Route path='/' element={isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<Dashboard/>} />
     <Route path='/about-us' element={<AboutUs/>} />
     <Route path="/contractor-form" element={ <PersonalDetails />} />
     <Route path="contractor-form/work-experience" element={<WorkExperience />} />
@@ -106,7 +106,7 @@ const Pages = (props) => {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
-        <Route path='/' element={<AboutUs/>} />
+        <Route path='/' element={ isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<AboutUs/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
@@ -148,6 +148,8 @@ const Pages = (props) => {
         <Route path='/verify' element={<OTPForm/>}/>
         <Route path='/everify/:token' element={<EmailForm/>}/>
         <Route path= '/privacy-policy' element={<Privacy/>}/>
+        <Route path='/admin' element={<Navigate to="/admin/contractors-list" />} />
+    
         <Route path='*' element={<NotFound />}/>
         
       </Routes>

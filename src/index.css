@@ -3,7 +3,7 @@ body {
   /* background-color: #f1ebf2; */
   /* font-size: 12px; */
   padding: 0;
-  background-color: #ffff;
+  background-color: #f3f3f3;
   /* background-color: #f1f1f1; */
   font-family: 'Montserrat' , sans-serif !important  ;
   line-height: 1.5em !important ;
@@ -112,4 +112,12 @@ text-transform: capitalize;
     /* background-color: #1677ff; */
     background-color:none !important;
     background-color:  none  !important;
+}
+
+.about_image{
+  background-position: center center;
+  background-size: cover;
+  object-fit: cover;
+  height: auto;
+  width: auto;
 }

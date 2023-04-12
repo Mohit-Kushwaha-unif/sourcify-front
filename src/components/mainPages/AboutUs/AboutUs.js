@@ -13,6 +13,7 @@ import { useForm } from 'antd/es/form/Form'
 import { get_about } from '../../../services/About'
 import { useNavigate } from 'react-router-dom'
 import Owner from '../../../assests/owner.jpg'
+import Regsiter from '../auth/Register'
 
 const AboutUs = () => {
   const dispatch = useDispatch()
@@ -23,6 +24,20 @@ const AboutUs = () => {
   const [about, setAbout] = useState(true)
   var [initialWord, setInitialWord] = useState()
   const [lastWord, setLastWord] = useState()
+  const [screenSize, getDimension] = useState(window.innerWidth);
+  const [showMenu, setShowMenu] = useState(false)
+  useEffect(() => {
+    window.addEventListener('resize', setDimension);
+    if (screenSize <= 759) {
+      // setShowMenu(true)
+      setShowMenu(false)
+    } else {
+      setShowMenu(true)
+    }
+  }, [screenSize])
+ useEffect(()=>{
+  window.scroll(0,0)
+ },[])
   useEffect(() => {
     dispatch(get_about()).then((res) => {
       setAbout(res[0])
@@ -46,21 +61,53 @@ const AboutUs = () => {
       })
     )
   }
-
+  const setDimension = () => {
+    getDimension(window.innerWidth)
+  }
   return (
 
-    <div className=' mx-auto  ' >
-      <div className='relative h-[500px]'      >
-        <img src={hero} className=" inset-0 object-cover w-full h-full " />
-        <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
+    <div className=' mx-auto bg-[#ffffff] ' >
+     {showMenu? <div className='relative object-cover w-full h-full about_image' style={{backgroundImage: `url(${hero})`}}>
+   <div className="absolute  inset-0 bg-[#000000] opacity-5"></div>
+      <div className='grid grid-cols-1 md:grid-cols-5 ' >
+      <div className='col-span-3  relative h-[500px]'      >
+        {/* <img src={hero} className=" inset-0 object-cover w-full h-full " /> */}
+        {/* <div className="absolute  inset-0 bg-[#000000] opacity-75"></div> */}
+        
         <div className="ml-[11px] md:ml-0 absolute top-1/2  md:left-1/2 md:-translate-x-1/2 -translate-y-1/2">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
           <div className='flex justify-center'>
-            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/register')}>Get Started</button>
+            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/login')}>Login</button>
           </div>
         </div>
+        
       </div>
+      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white z-10'>  <Regsiter/></div>
+     
+      </div>
+      </div>
+      :
+      
+      <div className='grid grid-cols-1 md:grid-cols-5  ' >
+      <div className='md:col-span-3 relative h-[500px]'      >
+        <img src={hero} className=" inset-0 object-cover w-full h-full " />
+        <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
+        <div className="ml-[11px] w-full md:ml-0 absolute top-1/2  md:left-1/2 md:-translate-x-1/2 -translate-y-1/2">
+          <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
+          <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
+          <div className='flex justify-center'>
+            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/login')}>Login</button>
+          </div>
+        </div>
+      
+        
+      </div>
+      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white'>  <Regsiter/></div>
+     
+      </div>
+      
+      }
       <div className='px-4 md:px-8'>
         <div className='who_we_are'>
           <div className="  grid grid-cols-1 md:grid-cols-2 pt-5">
@@ -123,7 +170,7 @@ const AboutUs = () => {
 
           </div>
         </div>
-        <div className='feedback_form'>
+        <div className='feedback_form pb-6 '>
           <div className=' grid grid-cols-1  md:grid-cols-3 mb-3  pt-10'>
 
 
