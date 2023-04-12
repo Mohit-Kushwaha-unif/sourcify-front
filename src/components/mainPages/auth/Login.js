@@ -31,10 +31,9 @@ const Login = () => {
         localStorage.setItem('email', res.user.email)
         localStorage.setItem('number', res.user.number)
         dispatch(setValue(res.user.role))
-
+         var userDetails = res
         if (res.user.role === 1) {
           dispatch(get_Vendor()).then((res) => {
-            console.log(res)
             var user_exist = res.filter((user_data) => {
               console.log(user_data.user_id)
 
@@ -47,7 +46,10 @@ const Login = () => {
               navigate('/vendor-form')
             }
             else {
-              navigate('/dashboard')
+              
+              localStorage.setItem("form_id",userDetails.user.vendor_id)
+              navigate('/vendor-form')
+              // navigate('/dashboard')
 
             }
           })
@@ -59,7 +61,9 @@ const Login = () => {
         }
         else
           if (res.user.contractor_id) {
-            navigate('/dashboard')
+            localStorage.setItem("form_id",res.user.contractor_id)
+            navigate('/contractor-form', { state: res.user })
+            // navigate('/dashboard')
           }
           else {
             navigate('/contractor-form', { state: res.user })
@@ -87,26 +91,29 @@ const Login = () => {
       if(res.data.role === 1){
         console.log(Object.keys(res.data),Object.keys(res.data).includes=='vendor_id')
         if("vendor_id" in res.data){
-          navigate('/dashboard')
-          return
-        }
-        else{
+          localStorage.getItem('form_id',res.data.user.vendor_id)
           navigate('/vendor-form')
           return
         }
+        // else{
+        //   navigate('/vendor-form')
+        //   return
+        // }
        
       }
       if(res.data.role ===0){
         if("contractor_id" in res.data){
-        navigate('/dashboard')
+        localStorage.getItem('form_id',res.data.user.contractor_id)
+        navigate('/contractor-form')
         return
         }
-        else{
-          navigate('/contractor-form')
-          return
-        }
+        // else{
+        //   navigate('/contractor-form')
+        //   return
+        // }
       }
       else{
+        
         navigate('/userRole')
         return
       }
@@ -117,26 +124,32 @@ const Login = () => {
     console.log(response)
   };
   return (
-    <section className="min-h-screen bg-[#f3f3f3] flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
+    <section className="min-h-screen bg-[#f3f3f3] mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
       <div className="px-8 h-full text-gray-800">
         <div
-          className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
+          className="flex xl:justify-center lg:justify-center justify-center  flex-wrap h-full g-6 "
         >
-          <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-            <Form onFinish={formHandler}>
-              <div className="flex flex-col items-center justify-center lg:justify-start">
-                <p className="text-lg mb-0 mr-4">Sign in with</p>
+          <div className="xl:ml-20 xl:w-4/12 lg:w-5/12 md:w-5/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+            <div className="flex flex-row items-center justify-center lg:justify-start">
+              <p className="text-lg mb-0 mr-4">Sign In </p>
+            </div>
+            <div
+              className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+            >
+            </div>
+              <Form onFinish={formHandler}>
+             
               
-               <GoogleLogin  uxMode="popup"  onSuccess={responseMessage} onError={errorMessage} />
+               {/* <GoogleLogin  uxMode="popup"  onSuccess={responseMessage} onError={errorMessage} /> */}
 
              
-              </div>
+             
 
-              <div
+              {/* <div
                 className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-              >
-                <p className="text-center font-semibold mx-4 mb-0">Or</p>
-              </div>
+              > */}
+                {/* <p className="text-center font-semibold mx-4 mb-0">Or</p> */}
+              {/* </div> */}
               <Form.Item
                 name="email"
                 rules={[
