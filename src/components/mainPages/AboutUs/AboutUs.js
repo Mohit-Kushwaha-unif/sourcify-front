@@ -78,7 +78,7 @@ const AboutUs = () => {
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
           <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
           <div className='flex justify-center'>
-            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/register')}>Get Started</button>
+            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/login')}>Login</button>
           </div>
         </div>
         

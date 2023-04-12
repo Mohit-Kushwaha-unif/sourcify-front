@@ -26,6 +26,7 @@
 // const Message_url= 'http://13.48.248.80:5000/messages'
 // const carausel_url= 'http://13.48.248.80:5000/carausel'
 // const social_url= 'http://13.48.248.80:5000/auth'
+// const media_url= 'http://13.48.248.80:5000/media'
 //Demo url
 const user_url = 'https://sourcify-frontd.onrender.com/user/';
 const contractor_url = 'https://sourcify-frontd.onrender.com/contractor';
