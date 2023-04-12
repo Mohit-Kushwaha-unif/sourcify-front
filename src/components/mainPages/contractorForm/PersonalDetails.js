@@ -267,7 +267,7 @@ const PersonalDetails = () => {
         obj.contractor_id = res.data._id
 
         dispatch(update_user_info(obj)).then((response) => {
-          isSaved(true)
+          // isSaved(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
            
             dispatch(logout()).then((res)=>{
@@ -289,7 +289,7 @@ const PersonalDetails = () => {
         obj.id = value.user_id
         obj.contractor_id = res.user_data._id
         dispatch(update_user_info(obj)).then((response) => {
-          isSaved(true)
+          // isSaved(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
            
             dispatch(logout()).then((res)=>{
@@ -661,14 +661,14 @@ const PersonalDetails = () => {
                             ]}>
                               <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
                                 {sub_category.sub_category.map((item, index) => {
-                                  const capitalized = item.sub_Category.charAt(0).toUpperCase() + item.sub_Category.slice(1).toLowerCase();
+                              
                                   return (
                                     <Checkbox
                                       key={item.sub_Category}
                                       className={`ml-${index === 0 ? 2 : 0} `}
                                       value={item.sub_Category}
                                     >
-                                      <span>{capitalized}</span>
+                                      <span>{item.sub_Category}</span>
                                     </Checkbox>
                                   );
                                 })}
@@ -1109,14 +1109,14 @@ const PersonalDetails = () => {
                             ]}>
                               <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
                                 {sub_category.sub_category.map((item, index) => {
-                                  const capitalized = item.sub_Category.charAt(0).toUpperCase() + item.sub_Category.slice(1).toLowerCase();
+                              
                                   return (
                                     <Checkbox
                                       key={item.sub_Category}
                                       className={`ml-${index === 0 ? 2 : 0} `}
                                       value={item.sub_Category}
                                     >
-                                      <span>{capitalized}</span>
+                                      <span>{item.sub_Category}</span>
                                     </Checkbox>
                                   );
                                 })}
