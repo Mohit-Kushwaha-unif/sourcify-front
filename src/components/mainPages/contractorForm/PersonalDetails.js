@@ -640,7 +640,7 @@ const PersonalDetails = () => {
                         message: 'Please select your work segment'
                       },
                     ]}>
-                      <Select mode="multiple" onChange={handleSelectChange} dropdownVisible={isDropdownVisible}
+                      <Select mode="multiple" onChange={setSelectedItems} 
                         allowClear placeholder="List of work segments">
                         {work_segment.map((option, index) => {
 
