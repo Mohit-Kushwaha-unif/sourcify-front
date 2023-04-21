@@ -83,9 +83,9 @@ input::placeholder {
   margin-left: auto;
   /* Center the container horizontally */
   margin-right: auto;
-  padding-left: 15px;
+  padding-left: 80px;
   /* Add left padding for content inside the container */
-  padding-right: 15px;
+  padding-right: 80px;
 }
 
 /* Responsive Classes for Container */
