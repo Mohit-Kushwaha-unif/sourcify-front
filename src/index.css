@@ -127,7 +127,9 @@ input::placeholder {
   }
 }
 
-
+.line130{
+  line-height: 130% !important;
+}
 
 html {
   scroll-behavior: auto;

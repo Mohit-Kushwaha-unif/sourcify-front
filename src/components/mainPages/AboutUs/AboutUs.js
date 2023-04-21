@@ -53,14 +53,14 @@ const AboutUs = () => {
         <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
-        <div className=" md:ml-0 absolute top-[17%] left-[25%] right-[25%] ">
+        <div className=" md:ml-0 absolute top-[17%] left-[25%] right-[25%]  ">
           <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-5  ">Sourcify</div>
-          <div className="white_h3 ml-1 font_42 sm:text-base text-center mb-16">
+          <div className="white_h3 ml-1 font_42 sm:text-base text-center mb-16 line130">
             Where sub-contracting meets innovation
           </div>
         </div>
         <div className='absolute bottom-[5%] md:bottom-[30%] left-[20%] right-[20%] '>
-          <div className='white_p font_16 sm:text-base text-center'>Sourcify is a technology-driven sourcing platform that brings businesses and contractors together to streamline the sourcing and supply chain management process. Our mission is to provide a reliable and efficient sourcing solution for businesses of all sizes, while also providing opportunities for contractors to showcase their skills and grow their businesses.</div>
+          <div className='white_p font_16 sm:text-base text-center line130'>Sourcify is a technology-driven sourcing platform that brings businesses and contractors together to streamline the sourcing and supply chain management process. Our mission is to provide a reliable and efficient sourcing solution for businesses of all sizes, while also providing opportunities for contractors to showcase their skills and grow their businesses.</div>
         </div>
 
       </div>
@@ -77,7 +77,7 @@ const AboutUs = () => {
                   <div className="col-md-6 col-lg-10 col-xl-7 order-1 order-md-2 flex items-center">
                     <img src={ban_img} className="img-fluid rounded" alt="" />
                   </div>
-                  <div className=" mt-[4rem] order-2 md:order-1">
+                  <div className=" mt-[4rem] order-2 md:order-1 ">
                     <p className="text-base font-bold">
                       {hero.qutoe} <span className="text-[#FF5757]">{hero.quto_emph}</span>
                     </p>

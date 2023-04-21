@@ -14,7 +14,7 @@ const Insight = () => {
   return (
     <div className='container mb-24 '>
     <p className='prime_h2_rale mb-16'>Our Insights</p>
-    <div className='grid grid-cols-1 md:grid-cols-5 gap-y-6 md:gap-6' data-aos="fade-left" >
+    <div className='grid grid-cols-1 md:grid-cols-5 gap-y-6 md:gap-6'  >
         <div className="relative col-span-2 "  >
             <img src={gal1} className=" inset-0 object-cover w-full h-full  " alt="Your Image" />
             <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
