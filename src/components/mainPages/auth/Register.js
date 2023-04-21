@@ -13,19 +13,25 @@ import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
 import RadioGroup from './RadioButtonMaker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const Regsiter = () => {
   useDocumentTitle("Register Yourself")
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false)
+  useEffect(()=>{
+    if(localStorage.getItem('isLoggedIn') === "true"){
+      navigate('/')
+    }
+  },[])
+ 
   const handleRadioChange = (value) => {
     console.log(`Selected option: ${value}`);
   };
 
   const options = [
-    { value: 1, label: `I'm a company hiring for  projects`, className: 'leading-5 font-[Montserrat] text-[12px] font-bold' },
-    { value: 0, label: "I'm Contractor looking for work", className: 'leading-5 font-[Montserrat] text-[12px] font-bold' },
+    { value: 1, label: `I'm a company hiring for  projects`, className: 'leading-5 font-[Inter] text-[16px] ' },
+    { value: 0, label: "I'm Contractor looking for work", className: 'leading-5 font-[Inter] text-[16px] ' },
   ];
 
   function formHandler(values) {
@@ -53,19 +59,17 @@ const Regsiter = () => {
   }
 
   return (
-    <section className='p-6 rounded-[25px]' >
-      <div >
+    <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
+      <div className="md:px-8  ">
         <div
-
+          className="flex  justify-center   h-full "
         >
-          <div >
+          <div className="card">
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="text-lg mb-0 mr-4">Register </p>
+              <p className="headings mb-5 mt-5 mr-4">Create Account </p>
             </div>
-            <div
-              className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-            >
-            </div>
+            <p className='text-sm mb-8'>Sign up for Sourcify today and experience the power of our platform firsthand.</p>
+            
             <Form labelAlign="left"
 
               layout="vertical" onFinish={formHandler}>
@@ -78,7 +82,7 @@ const Regsiter = () => {
                   },
                 ]}
               >
-                <div className='flex items-center'>
+                <div className='flex items-center mb-3'>
                   <div className="py-1">
                     <RadioGroup options={options} cols={2} onChange={handleRadioChange} />
                   </div>
@@ -95,7 +99,7 @@ const Regsiter = () => {
                 ]}
 
               >
-                <Input placeholder="Email address" />
+                <Input className='input_border mb-3' placeholder="Email address" />
 
               </Form.Item >
               {isError && <p className='text-[red] mb-3'>Email already exists </p>}
@@ -111,7 +115,7 @@ const Regsiter = () => {
 
 
 
-                <Input prefix={"+91"} type='Number' maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
+                <Input className='input_border mb-3' prefix={"+91"} type='Number' maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
 
               </Form.Item >
               <Form.Item
@@ -124,24 +128,24 @@ const Regsiter = () => {
                 ]}
               >
 
-                <Input.Password min={6} placeholder='Enter Your Passowrd' />
+                <Input.Password className='input_border mb-3' min={6} placeholder='Enter Your Passowrd' />
 
               </Form.Item>
 
-              By continuing, I agree to the <Link to={'/privacy-policy'}><span className='text-[#FF5757]'>Terms of Use</span> & <span className='text-[#FF5757]'>Privacy Policy</span></Link>
-              <div className="text-center mt-5 lg:text-left">
+              <p className=' font-[Inter] text-[14px]'> <span>By continuing, I agree to the</span>  <Link to={'/privacy-policy'}><span className='text-[#FF5757] font-[700]'>Terms of Use</span> & <span className='text-[#FF5757] font-[700]'>Privacy Policy</span></Link></p> 
+              <div className="text-center mt-5 mb-16 lg:text-left ">
                 <button
                   type="submit"
-                  className="primary_btn w-full"
+                  className="brand_button w-full mb-3"
                 >
                   Sign Up
                 </button>
-                <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-                  Have an account?
+                <p className="font-[Inter] text-[14px]  mt-2 pt-1 mb-0">
+                <span className='mr-2'>Already Have an account?</span> 
                   <Link
                     to='/login'
-                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-                  >Login</Link>
+                    className="text-[#FF5757]  font-[700] hover:text-[#FF5757] focus:text-red-700 transition duration-200 ease-in-out"
+                  >Login here</Link>
                 </p>
               </div>
             </Form>
@@ -158,103 +162,3 @@ const Regsiter = () => {
 }
 export default Regsiter
 
-
-
-//earleier ui
-{/* <section className="min-h-screen bg-[#f3f3f3] mb-3 flex flex-col justify-center py-12 sm:px-6 lg:px-8" >
-<div className="px-8 h-full text-gray-800">
-  <div
-    className="flex xl:justify-center lg:justify-center justify-center  flex-wrap h-full g-6 "
-  >
-    <div className="xl:ml-20 xl:w-4/12 lg:w-5/12 md:w-5/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-      <div className="flex flex-row items-center justify-center lg:justify-start">
-        <p className="text-lg mb-0 mr-4">Register </p>
-      </div>
-      <div
-        className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-      >
-      </div>
-      <Form labelAlign="left"
-
-        layout="vertical" onFinish={formHandler}>
-        <Form.Item
-          name="role"
-          rules={[
-            {
-              required: true,
-              message: 'Please select your role',
-            },
-          ]}
-        >
-          <div className='flex items-center'>
-            <div className="py-1">
-              <RadioGroup options={options} cols={2} onChange={handleRadioChange} />
-            </div>
-          </div>
-
-        </Form.Item>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: 'Please enter your email',
-            },
-          ]}
-
-        >
-          <Input placeholder="Email address" />
-
-        </Form.Item >
-        {isError && <p className='text-[red] mb-3'>Email already exists </p>}
-        <Form.Item
-          name="number"
-          rules={[
-            {
-              required: true,
-              message: 'Please enter your mobile number',
-            },
-          ]}
-        >
-
-
-
-          <Input prefix={"+91"} type='Number' maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
-
-        </Form.Item >
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please select your password and it should be six digit long',
-            },
-          ]}
-        >
-
-          <Input.Password min={6} placeholder='Enter Your Passowrd' />
-
-        </Form.Item>
-
-        By continuing, I agree to the <Link to={'/privacy-policy'}><span className='text-[#FF5757]'>Terms of Use</span> & <span className='text-[#FF5757]'>Privacy Policy</span></Link>
-        <div className="text-center mt-5 lg:text-left">
-          <button
-            type="submit"
-            className="primary_btn w-full"
-          >
-            Sign Up
-          </button>
-          <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-            Have an account?
-            <Link
-              to='/login'
-              className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-            >Login</Link>
-          </p>
-        </div>
-      </Form>
-    </div>
-  </div>
-</div>
-
-</section> */}

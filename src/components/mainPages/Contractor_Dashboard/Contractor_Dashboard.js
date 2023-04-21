@@ -157,7 +157,7 @@ const Contractor_Dashboard = () => {
   return (
     <>
       <div>
-        <section className="min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
+        <section className="container min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
           <div className="px-2 h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
@@ -173,7 +173,7 @@ const Contractor_Dashboard = () => {
           </div>
         </section>
 
-        <div className='ml-6 font-semibold'>Projects you might Like to work on </div>
+        {/* <div className='ml-6 font-semibold'>Projects you might Like to work on </div>
         <div className='grid grid-cols-6'>
 
           <div className='p-6 col-span-5'><div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -212,7 +212,7 @@ const Contractor_Dashboard = () => {
 
           </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   )

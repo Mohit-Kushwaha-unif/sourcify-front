@@ -1,12 +1,13 @@
 import { Modal, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { get_listingBy_id, update_listing } from '../../../services/listing'
 import { FaFileExcel } from 'react-icons/fa';
 import TextArea from 'antd/es/input/TextArea'
 import { get_contractor, get_contractorBy_id } from '../../../services/contractor'
 import moment from 'moment'
+import { toast, ToastContainer } from 'react-toastify'
 const ProjectDetails = () => {
     const location = useLocation()
     const navigator = useNavigate()
@@ -15,22 +16,32 @@ const ProjectDetails = () => {
     const [open, setOpen] = useState(false);
     const [proposalVal, setProposalVal] = useState('')
     const [applied, setApplied] = useState(false)
+    const userRole = useSelector(state => state.User.user_role);
     var isTrue = false
     useEffect(() => {
         dispatch(get_listingBy_id(location?.state)).then((res) => {
+            console.log(res)
             res.listing.proposals.map((detail) => {
-                if (detail.contractor_id._id === localStorage.getItem('user_id')) {
+                if (detail.contractor_id!=null &&detail.contractor_id._id === localStorage.getItem('user_id')) {
                     setApplied(true)
                 }
             })
-            setFormValues(res)
+            setFormValues(res);
         })
 
     }, [isTrue])
     // console.log(formValues)
 
     const showModal = () => {
-        setOpen(true);
+        if(userRole==1){
+            toast.error('You are not a sub-contractor', {
+                position: toast.POSITION.TOP_RIGHT
+              })
+        }
+        else{
+            setOpen(true);
+        }
+       
     };
     const hideModal = () => {
         setOpen(false);
@@ -59,7 +70,9 @@ const ProjectDetails = () => {
                         <div class="md:flex">
                             <div class="w-full px-6 py-8">
                                 <h2 class="text-center font-bold text-gray-700 text-2xl mb-6">Project Detail</h2>
+                                {console.log(formValues)}
                                 {!Array.isArray(formValues) && <form onSubmit={submitHandler} class="mb-4">
+                                   
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="name">
                                             Project Description
@@ -202,6 +215,7 @@ const ProjectDetails = () => {
 
                                 </button>
                                 </div>}
+                                <ToastContainer/>
                             </div>
                         </div>
                     </div>

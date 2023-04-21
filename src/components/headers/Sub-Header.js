@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { get_category } from '../../services/category'
+import dropdown_icon from '../../assests/dropdown_icon.png'
 const SubHeader = ({filterValue}) => {
     const dispatch = useDispatch()
     const [category,setCategory] = useState([])
@@ -19,11 +20,12 @@ const SubHeader = ({filterValue}) => {
         })
     }, [])
   return (
-    <div className=' p-3 sm:mb-1 hidden md:grid grid-cols-8 '>{
-        category.length>0 && category.map((cats)=>{
-            return <div className='m-0.5 cursor-pointer'> <p onClick={filterHandler} className='sm: cursor-pointer'>{cats}</p> </div>
+    <div className=' mt-1  sm:mb-1  flex  '>{
+        category.length > 0 && category.map((cats) => {
+            return <div className='p-1 mt-3 mr-10 flex items-baseline place-content-center cursor-pointer'> <p onClick={filterHandler} className='header_text sm:mb-1 mr-3'>{cats}</p> <img className='max-h-[50%]' src={dropdown_icon} /> </div>
         })
-     }</div>
+    }</div>
+    
   )
 }
 

@@ -107,7 +107,7 @@ const Company_Dashboard = () => {
 
   return (
     <>
-      <div className='p-6'>
+      <div className='p-6 container'>
         <section className="min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
           <div className="px-2 h-auto text-gray-800">
             <div
@@ -128,7 +128,7 @@ const Company_Dashboard = () => {
             </div>
           </div>
         </section>
-        <div className='px-6 '>
+        {/* <div className='px-6 '>
           <p className='text-xl font-semibold  capitalize'>Sub-Contractors you might want to  work with </p>
           <div class="p-10 grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
 
@@ -163,7 +163,7 @@ const Company_Dashboard = () => {
 
 
           </div>
-        </div>
+        </div> */}
 
       </div>
 

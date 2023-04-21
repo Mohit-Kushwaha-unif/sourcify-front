@@ -13,7 +13,6 @@ import { useForm } from 'antd/es/form/Form'
 import { get_about } from '../../../services/About'
 import { useNavigate } from 'react-router-dom'
 import Owner from '../../../assests/owner.jpg'
-import Regsiter from '../auth/Register'
 
 const AboutUs = () => {
   const dispatch = useDispatch()
@@ -24,20 +23,6 @@ const AboutUs = () => {
   const [about, setAbout] = useState(true)
   var [initialWord, setInitialWord] = useState()
   const [lastWord, setLastWord] = useState()
-  const [screenSize, getDimension] = useState(window.innerWidth);
-  const [showMenu, setShowMenu] = useState(false)
-  useEffect(() => {
-    window.addEventListener('resize', setDimension);
-    if (screenSize <= 759) {
-      // setShowMenu(true)
-      setShowMenu(false)
-    } else {
-      setShowMenu(true)
-    }
-  }, [screenSize])
- useEffect(()=>{
-  window.scroll(0,0)
- },[])
   useEffect(() => {
     dispatch(get_about()).then((res) => {
       setAbout(res[0])
@@ -61,64 +46,42 @@ const AboutUs = () => {
       })
     )
   }
-  const setDimension = () => {
-    getDimension(window.innerWidth)
-  }
+
   return (
 
-    <div className=' mx-auto bg-[#ffffff] ' >
-     {showMenu? <div className='relative object-cover w-full h-full about_image' style={{backgroundImage: `url(${hero})`}}>
-   <div className="absolute  inset-0 bg-[#000000] opacity-5"></div>
-      <div className='grid grid-cols-1 md:grid-cols-5 ' >
-      <div className='col-span-3  relative h-[500px]'      >
-        {/* <img src={hero} className=" inset-0 object-cover w-full h-full " /> */}
-        {/* <div className="absolute  inset-0 bg-[#000000] opacity-75"></div> */}
-        
-        <div className="ml-[11px] md:ml-0 absolute top-1/2  md:left-1/2 md:-translate-x-1/2 -translate-y-1/2">
-          <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
-          <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
-          <div className='flex justify-center'>
-            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/login')}>Login</button>
-          </div>
-        </div>
-        
-      </div>
-      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white z-10'>  <Regsiter/></div>
-     
-      </div>
-      </div>
-      :
-      
-      <div className='grid grid-cols-1 md:grid-cols-5  ' >
-      <div className='md:col-span-3 relative h-[500px]'      >
+    <div className=' mx-auto  ' >
+        <div className='relative h-[500px]'      >
         <img src={hero} className=" inset-0 object-cover w-full h-full " />
         <div className="absolute  inset-0 bg-[#000000] opacity-75"></div>
-        <div className="ml-[11px] w-full md:ml-0 absolute top-1/2  md:left-1/2 md:-translate-x-1/2 -translate-y-1/2">
-          <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-1">Sourcify</div>
-          <h1 className=" hero-abt-title text-center mb-2">Where Sourcing meets Innovation</h1>
-          <div className='flex justify-center'>
-            <button className='text-white  font-semibold  bg-[#FF5757] rounded-[50px] px-[2.25rem] hover:bg-[#e64d4d] md:px-[3.25rem] py-2 ' onClick={() => navigator('/login')}>Login</button>
+        <div className=" md:ml-0 absolute top-[17%] left-[25%] right-[25%] ">
+          <div className="hero-abt-sourcify text-center text-base md:hero-abt-sourcify mb-5  ">Sourcify</div>
+          <div className="white_h3 ml-1 font_42 sm:text-base text-center mb-16">
+            Where sub-contracting meets innovation
           </div>
         </div>
-      
-        
+        <div className='absolute bottom-[5%] md:bottom-[30%] left-[20%] right-[20%] '>
+          <div className='white_p font_16 sm:text-base text-center'>Sourcify is a technology-driven sourcing platform that brings businesses and contractors together to streamline the sourcing and supply chain management process. Our mission is to provide a reliable and efficient sourcing solution for businesses of all sizes, while also providing opportunities for contractors to showcase their skills and grow their businesses.</div>
+        </div>
+
       </div>
-      <div className='col-span-2 my-10 mx-5 md:mr-10  rounded-[25px] bg-white'>  <Regsiter/></div>
-     
-      </div>
-      
-      }
-      <div className='px-4 md:px-8'>
+
+
+
+      <div className='container '>
         <div className='who_we_are'>
-          <div className="  grid grid-cols-1 md:grid-cols-2 pt-5">
+          <div className="  grid grid-cols-1 md:gap-x-6 md:grid-cols-2 pt-5">
             {about !== true &&
               about?.Hero.map((hero) => (
                 <>
+
+                  <div className="col-md-6 col-lg-10 col-xl-7 order-1 order-md-2 flex items-center">
+                    <img src={ban_img} className="img-fluid rounded" alt="" />
+                  </div>
                   <div className=" mt-[4rem] order-2 md:order-1">
                     <p className="text-base font-bold">
                       {hero.qutoe} <span className="text-[#FF5757]">{hero.quto_emph}</span>
                     </p>
-                    <p className="text-[32px] font-bold leading-8">
+                    <p className="prime_h2 leading-8">
                       {hero.title}
                     </p>
                     <div className="mt-5">
@@ -129,28 +92,23 @@ const AboutUs = () => {
                     <div className='inline-block'>
                       <button
                         onClick={() => navigator('/register')}
-                        className="primary_btn btn-lg text-uppercase shadow rounded-pill"
+                        className="prime_button_sec btn-lg text-uppercase shadow rounded-pill"
                       >
                         {hero.button}
                       </button>
                     </div>
-                  </div>
-                  <div className="col-md-6 col-lg-10 col-xl-7 order-1 order-md-2">
-                    <img src={ban_img} className="img-fluid rounded" alt="" />
                   </div>
                 </>
               ))}
           </div>
         </div>
         <div className='founder mt-10 '>
-          <div className='grid grid-cols-1 md:grid-cols-3 pt-5'>
+          <div className='grid grid-cols-1 md:gap-x-6  md:grid-cols-3 pt-10'>
 
             {about !== true && about.founderAbout.map((founder) => (
               <>
-                <div className=" ">
-                  <img src={Owner} className="mt-[1.5rem] h-[90%] w-full md:w-[75%] rounded md:mt-0" alt="" />
-                </div>
-                <div className="   md:my-auto md:col-span-2">
+
+                <div className="   md:my-auto order-2 md:col-span-2 md:order-1 pr-5">
                   <p className="font-semibold text-base">
                     <span className=' text-[red] '>{founder.qutoe}</span>
                   </p>
@@ -160,106 +118,23 @@ const AboutUs = () => {
                   <div className="mt-8">
                     <p
                       className="text-[1.125rem] leading-6 font-normal mb-5">
-                      {founder.description}
-                    </p>
+                      <p className='mb-5'> We are delighted to introduce you to Sourcify, a platform that was born out of our passion for making sub-contracting process easy and tranparent for everyone involved. After working in procurement and contracting for 2 decades, we realized that there is significant gap in the market when it came to connecting buyers with Contractors/Sub-Contractors.</p>
+
+                      <p className='mb-5'>   Both parties often face challenges when it came to finding new opportunities and projects. We have tried to create the solution that can address this issue. This is only the first step. At Sourcify, we're committed to innovation, integrity, and providing an outstanding experience for our users.</p>
+
+                      <p className='mb-5'>   We believe that by simplifying the sub-contracting process, we can help businesses and contractors achieve their goals, and in turn, contribute to the growth and success of the industry as a whole.We will strive to solve more issues in coming time</p>
+                      </p>
                   </div>
                 </div>
-
+                <div className="order-1 md:order-2  ">
+                  <img src={Owner} className="mt-[1.5rem] h-[90%] w-full  rounded md:mt-0" alt="" />
+                </div>
               </>
             ))}
 
           </div>
         </div>
-        <div className='feedback_form pb-6 '>
-          <div className=' grid grid-cols-1  md:grid-cols-3 mb-3  pt-10'>
 
-
-            <div className="col-span-1  md:w-[100%] radius-12  ">
-              <img src={about !== true && build} alt="" className='w-full md:w-[90%] h-full object-fill md:object-cover' />
-            </div>
-            <div className=" h-auto pt-5 w-full my-auto col-span-2  ">
-              <p className='  font-bold mb-2 text-[2rem]'>Get in touch</p>
-              <Form labelAlign="left"
-                form={form}
-                onFinish={feedBackHandler}
-                layout="vertical" >
-                <div className='grid mb-3 grid-cols-1 gap-8 md:grid-cols-2'>
-                  <Form.Item name="fullname" label="Full Name " rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your Full Name'
-                    },
-                  ]}
-                    className="mb-1"
-                  >
-
-                    <Input placeholder='Enter your Full Name' />
-                  </Form.Item>
-                  <Form.Item name='company_name' className='mb-1 mt-0' label="Company Name" rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your Company Name'
-                    },
-                  ]}
-                  >
-
-                    <Input placeholder='Enter your Company Name' />
-                  </Form.Item>
-                </div>
-                <div className='grid  mb-3 grid-cols-1 gap-8 md:grid-cols-2'>
-                  <Form.Item name='mobile_number' className='mb-1 mt-0' label="Mobile Number" rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your Mobile Number'
-                    },
-                  ]}
-                  >
-
-                    <Input placeholder='Enter your 10 digit Mobile Number' />
-                  </Form.Item>
-                  <Form.Item name='email' className='mb-1 mt-0' label="Email ID" rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your Email ID'
-                    },
-                  ]}
-                  >
-
-                    <Input type='email' placeholder='Enter your Email' />
-                  </Form.Item>
-                </div>
-
-                <Form.Item name='Message' className='mb-1 mt-0' label="Message" rules={[
-                  {
-                    required: true,
-                    message: 'Please enter your Message'
-                  },
-                ]}
-                >
-
-                  <TextArea row={4} cols={50} />
-                </Form.Item>
-
-
-                <div className="text-center lg:text-left mt-2 md:float-right">
-                  <button
-                    type="submit"
-                    className="primary_btn inline-block px-7 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#FF5759] rounded-[50px] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
-                  >
-
-                    Send
-                  </button>
-
-                </div>
-                {showMsg && <p className='text-base mr-4 text-[#FF5757]'>Your response has been
-                  successfully submitted,
-                  Our team will get back to you soon</p>}
-              </Form>
-            </div>
-
-
-          </div>
-        </div>
       </div>
 
     </div>

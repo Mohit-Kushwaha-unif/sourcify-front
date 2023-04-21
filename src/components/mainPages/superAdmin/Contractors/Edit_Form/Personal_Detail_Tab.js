@@ -106,7 +106,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if(formValues.msme_image === undefined){
       setIsMSMEVisible(false)
     }
-    formValues.work_area_types.length >0 && formValues.work_area_types.map((options) => {
+    formValues.work_area_types?.length >0 && formValues.work_area_types.map((options) => {
       Object.keys(options).map((opt_val) => {
         var obj = {}
         obj["name"] = opt_val
@@ -836,13 +836,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                               />
                             </Form.Item>
 
-                            {preview_img.length > 0 ? (
+                            {preview_img?.length > 0 ? (
                               <>
                                 <br />
                                 <p className='text-[#FF5757]'>Project Images</p>
                                 {preview_img.map((link, ind) => {
                                   return (
-                                    <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
+                                    <div className={`grid grid-cols-1 md:grid-cols-${link?.length} gap-4 mb-3`}>
                                       {ind === index &&
                                         link.map(img => {
                                           console.log({ img });

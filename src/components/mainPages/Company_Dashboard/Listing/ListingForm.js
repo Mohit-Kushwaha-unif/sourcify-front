@@ -4,11 +4,13 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
+
 import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
 import { add_listing } from '../../../../services/listing'
-import { update_user } from '../../../../services/user'
+import { get_user_info, update_user } from '../../../../services/user'
 import useDocumentTitle from '../../../Helper/useDocumentTitle'
 
 const ListingForm = () => {
@@ -21,7 +23,22 @@ const ListingForm = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const [image, set_ImageD] = useState()
     useDocumentTitle('Add your Listing')
+
     useEffect(() => {
+        if(localStorage.getItem("isLoggedIn")!=="true"){
+            navigator('/login')
+        }
+        dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res)=>{
+            if(res.role == 0){
+                navigator('/dashboard')
+                toast.error('Your a contractor not allowed to post projects',{
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            }
+            else if(!res.vendor_id){
+                navigator('/vendor-form')
+            }
+        })
         dispatch(get_category()).then((res) => {
 
             res.map((cat) => {
@@ -87,12 +104,12 @@ const ListingForm = () => {
     }
     function countrySelectHandler() { }
     return (
-        <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
+        <section className="container min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
                 <div
                     className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >
-                    <div className="xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border-2 border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Enter Your Project Details</p>
                         </div>
@@ -101,7 +118,6 @@ const ListingForm = () => {
                         >
                         </div>
                         <Form labelAlign="left"
-
                             layout="vertical" onFinish={FormHandler}>
                             <Form.Item name='project_discription'  label="Project Description" rules={[
                                 {
@@ -111,7 +127,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <TextArea placeholder='Enter project description' />
+                                <TextArea className='input_border' placeholder='Enter project description' />
                             </Form.Item>
                             <Form.Item name="wok_segment"  label="Select category for your project" rules={[
                                 {
@@ -184,7 +200,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <TextArea placeholder='Enter scope of your project' />
+                                <TextArea className='input_border' placeholder='Enter scope of your project' />
                             </Form.Item>
                             <Form.Item name='project_specification'  label="Work Specification" rules={[
                                 {
@@ -193,7 +209,7 @@ const ListingForm = () => {
                                 },
                             ]}
                             >
-                                <Input type='file' max={1} onChange={specificationimageHandler} />
+                                <Input className='input_border' type='file' max={1} onChange={specificationimageHandler} />
 
                             </Form.Item>
                             <Form.Item name='project_bill_qty'  label="Please attach Project bill Quantity" rules={[
@@ -204,7 +220,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <Input type='file' max={1} onChange={imageHandler} />
+                                <Input className='input_border' type='file' max={1} onChange={imageHandler} />
                             </Form.Item>
 
 
@@ -217,7 +233,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <DatePicker disabledDate={disabledDate} onChange={onChange} />
+                                <DatePicker className='input_border' disabledDate={disabledDate} onChange={onChange} />
                             </Form.Item>
                             <div className="flex justify-center text-center lg:text-left mt-2">
                                 <button
@@ -233,6 +249,7 @@ const ListingForm = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </section>
     )
 }

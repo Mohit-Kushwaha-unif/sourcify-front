@@ -74,7 +74,7 @@ const UpdateProfie = () => {
         
      }
     return (
-        <section className="min-h-min  flex flex-col  w-full sm:px-6 lg:px-8" >
+        <section className="container min-h-min  flex flex-col  w-full " >
             <div className=" h-auto text-gray-800">
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-auto "

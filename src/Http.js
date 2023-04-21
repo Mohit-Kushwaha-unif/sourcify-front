@@ -21,7 +21,7 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.warn(error.response.status);
+    console.log(error);
     if (error.response.status == 401) {
       console.info('logout called');
       logout();

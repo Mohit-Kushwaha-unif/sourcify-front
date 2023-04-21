@@ -3,19 +3,16 @@
     align-items: center;
     padding: 1px;
     padding-right: 5px;
-    background: #ffffff;
     color: #1E1E1E ;
-    font-family: Helvetica;
-    font-weight: 300;
     /* z-index:1; */
-    box-shadow: 0px 4px 4px rgba(239, 235, 235, 0.5);
+    /* box-shadow: 0px 4px 4px rgba(239, 235, 235, 0.5); */
 }
 .navbar__image{
     width: 30%;
 }
 .navbar__title {
-    margin-right: auto;
-    font-size: 150%;
+    /* margin-right: auto;
+    font-size: 150%; */
     padding: 12px 16px; 
     margin-left: 2px;
  
@@ -25,6 +22,8 @@
     padding: 8px 6px; 
     /* 16px 12px; */
     cursor: pointer;
+    margin-left:0.4rem;
+    margin-right: 0.4rem;;
     vertical-align: middle;
 }
 .navbar__button{

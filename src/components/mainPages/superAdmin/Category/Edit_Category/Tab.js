@@ -21,7 +21,7 @@ const Tab = () => {
     <div className='flex align-center ml-30 w-full p-2 px-3'>
     
          <Tabs centered defaultActiveKey="1"   className='w-full'>
-         <TabPane  tab="Basic Details" key="1" >
+         <TabPane  tab="Work Segment Details" key="1" >
           <Edit_category formValues = {formData} />
         </TabPane>
       </Tabs>

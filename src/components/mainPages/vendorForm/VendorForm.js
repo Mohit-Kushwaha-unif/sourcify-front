@@ -33,12 +33,10 @@ const VendorForm = () => {
           window.scroll(0,0)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
            
-            dispatch(logout()).then((res)=>{
-              localStorage.clear()
-              localStorage.setItem("isLoggedIn", false)
+           
            
               navigator('/')
-            })
+         
           })
         })
       })
@@ -53,12 +51,10 @@ const VendorForm = () => {
           setShowMsg(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
            
-            dispatch(logout()).then((res)=>{
-              localStorage.clear()
-              localStorage.setItem("isLoggedIn", false)
+          
              
               navigator('/')
-            })
+          
           })
           window.scroll(0,0)
         })

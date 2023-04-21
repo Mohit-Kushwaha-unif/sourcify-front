@@ -47,6 +47,13 @@ import UserRole from './useRole/userRole'
 import OTPForm from './auth/OTPForm'
 import EmailForm from './auth/EmailForm'
 import Privacy from './LegalAgreement/Privacy'
+import SourcifyWork from './SourciyWork/SourcifyWork'
+import FindContractor from './Find_Contractor/FindContractor'
+import FindProjects from './FindProjects/FindProjects'
+import Work_Segment from './Work_segment/Work_Segment'
+import Blogs from './Blogs/Blogs'
+import Blog from './Blogs/Blog'
+import Contact from './ContactUs/Contact'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -84,7 +91,7 @@ const Pages = (props) => {
     <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: <ResourceDenied/>}/>
     <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
     <Route path="/edit-listing" element={ <EditListing/>}/>
-    <Route path="/all_contractors" element={ <All_Contractors/>}/>
+    {/* <Route path="/all_contractors" element={ <All_Contractors/>}/> */}
     <Route path="/all_projects" element={ <All_projects/> }/>
     <Route path="/projectDetails" element={ <ProjectDetails/> }/>
     <Route path="/viewForm" element={ <ViewForm/> }/>
@@ -106,7 +113,7 @@ const Pages = (props) => {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
-        <Route path='/' element={ isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<AboutUs/>} />
+        <Route path='/' element={ isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<Dashboard/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
@@ -128,7 +135,7 @@ const Pages = (props) => {
         <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : <ResourceDenied/>}/>
         <Route path="/dashboard" element={isAdmin==1 ? <Company_Dashboard/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
-        <Route path="/dashboard/listing-form" element={isAdmin!=0 ? <ListingForm/>: <ResourceDenied/>}/>
+        <Route path="/dashboard/listing-form" element={<ListingForm/>}/>
         <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
         <Route path="/admin/carausel-list" element={isAdmin==2 ? <CarauselList/>: <ResourceDenied/>}/>
         <Route path="/admin/caraousel-form" element={isAdmin==2 ? <Add_Carausel/>: <ResourceDenied/>}/>
@@ -149,7 +156,13 @@ const Pages = (props) => {
         <Route path='/everify/:token' element={<EmailForm/>}/>
         <Route path= '/privacy-policy' element={<Privacy/>}/>
         <Route path='/admin' element={<Navigate to="/admin/contractors-list" />} />
-    
+        <Route path='/SourcifyWork' element={< SourcifyWork/>} />
+        <Route path='/contractors' element={< FindContractor/>} />
+        <Route path='/project_list' element={< FindProjects/>} />
+        <Route path='/work_segment' element={ <Work_Segment/> } />
+        <Route path='/blogs' element={ <Blogs/> } />
+        <Route path='/blog' element={ <Blog/> } />
+        <Route path='/contact-us' element={ <Contact/> } />
         <Route path='*' element={<NotFound />}/>
         
       </Routes>

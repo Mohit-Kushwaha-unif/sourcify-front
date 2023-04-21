@@ -87,7 +87,7 @@ export const get_listing_user = (_id)=>{
 export const search_listing = (fromData)=>{
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.get(listing_url+'/search_listing/?search='+fromData).then((res)=>{
+            Http.post(listing_url+'/search_listing',fromData).then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err);

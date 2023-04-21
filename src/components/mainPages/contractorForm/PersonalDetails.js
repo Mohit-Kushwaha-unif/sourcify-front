@@ -270,12 +270,10 @@ const PersonalDetails = () => {
           // isSaved(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
            
-            dispatch(logout()).then((res)=>{
-              localStorage.clear()
-              localStorage.setItem("isLoggedIn", false)
+           
              
               navigation('/')
-            })
+          
           })
           // window.scroll(0, 0)
           // console.log(response)
@@ -291,13 +289,9 @@ const PersonalDetails = () => {
         dispatch(update_user_info(obj)).then((response) => {
           // isSaved(true)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(()=>{
-           
-            dispatch(logout()).then((res)=>{
-              localStorage.clear()
-              localStorage.setItem("isLoggedIn", false)
             
               navigation('/')
-            })
+            
           })
           window.scroll(0, 0)
           // console.log(response)

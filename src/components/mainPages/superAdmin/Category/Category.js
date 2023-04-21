@@ -10,23 +10,48 @@ const Category = () => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     var data = []
-    useEffect(()=>{
+    const populateChildren = (subCategories) => {
+        return subCategories.map((subCategory, index) => {
+          const { _id, name, description, sub_category } = subCategory;
+          const children = sub_category && Array.isArray(sub_category) && sub_category.length > 0 ? populateChildren(sub_category) : [];
+          if(sub_category.length > 0)
+          {return {
+            _id,
+            key: `${_id}_${index}`,
+            category: name,
+            description,
+            children,
+          };}
+          else{
+            return {
+                _id,
+                key: `${_id}_${index}`,
+                category: name,
+                description,
+            }
+          }
+        });
+      };
+      
+      useEffect(() => {
         dispatch(get_category()).then((res) => {
-            res.map((table,index)=>{
-                var sub_cat =  table.sub_category ? table.sub_category:"N/A"
-              
-                data.push({
-                    '_id': table._id,
-                    'key': index,
-                    'category': table.category,
-                    'sub_category':sub_cat,
-                })
-               
-            })
-            
-           setTableData(data)
-        })    
-    },[])
+          const data = res.map((table, index) => {
+            const subCategories = table.sub_category ? table.sub_category : [];
+            const children = populateChildren(subCategories);
+      
+            return {
+              _id: table._id,
+              key: index,
+              category: table.category,
+              description: table.description,
+              children,
+            };
+          });
+      
+          setTableData(data);
+        });
+      }, []);
+      console.log(tableData)
     const deleteHandler=(value,)=>{
 
         dispatch((delete_category({heading:value.category}))).then((res)=>{
@@ -35,47 +60,18 @@ const Category = () => {
     }
     
     const columns = [
+     
         {
-            title: 'S.No',
-            dataIndex: 'key',
-            key: 'key',
-            render: (text) => <Link>{text + 1}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
-        },
-        {
-            title: 'Name of Category',
+            title: 'Work Segment',
             dataIndex: 'category',
             key: 'category',
             render: (text) => <Link>{text}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+         
         },
         {
-            title: 'Name of Sub Category',
-            key: 'sub_category',
-            dataIndex: 'sub_category',
-            
-            render: (_,  sub_category ) => (
-              <>
-              {console.log(sub_category)}
-                {Array.isArray(sub_category?.sub_category)? sub_category?.sub_category.map((tag,index) => {
-                  let color = tag.length > 5 ? 'geekblue' : 'green';
-                  if (tag === 'loser') {
-                    color = 'volcano';
-                  }
-                  return (
-                   <Link to={'/edit-subcategory'}> <Tag className='mb-1' key={index}>
-                      {tag.sub_Category}
-                    </Tag>
-                    </Link>
-                    
-                  );
-                }): sub_category?.sub_category}
-              </>
-            ),
-           
-            showOnDesktop: true
+            title: 'Description',
+            key: 'description',
+            dataIndex: 'description',
           },
         {
             title: 'Action',
@@ -86,8 +82,7 @@ const Category = () => {
                     <Link onClick={()=>deleteHandler(record)}>Delete</Link>
                 </Space>
             ),
-            showOnResponse: true,
-            showOnDesktop: true
+         
         },
     ]
 
@@ -102,17 +97,12 @@ const Category = () => {
                             onClick={() => navigator('/admin/category-form')}
                             className="primary_btn mb-3"
                         >
-                            Add New Category </button>
+                            Add New  </button>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Work Segment List</p>
                         </div>
                         <Table columns={columns} dataSource={tableData} />
-                        {/* <Table antTableProps={{
-                            showHeader: true,
-                            columns: columns,
-                            dataSource: tableData,
-                            pagination: true
-                        }} mobileBreakPoint={768} /> */}
+                      
                     </div>
                 </div>
             </div>

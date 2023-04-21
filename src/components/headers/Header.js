@@ -6,12 +6,17 @@ import NEW_Sourcify from '../../assests/Sourcify.png'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
+
 import { search_listing } from '../../services/listing';
 import { search_vendor } from '../../services/Vendor';
 import { search_contractor } from '../../services/contractor';
 import { get_user_info } from '../../services/user';
-import {BsPersonFill} from 'react-icons/bs'
+import profile from '../../assests/profile.png'
+import edit_icon from '../../assests/edit_icon.png'
+import search_icon from '../../assests/search_icon.png'
 import TopBar from './TopBar';
+import { get_category } from '../../services/category';
+import SubHeader from './Sub-Header';
 
 const Header = () => {
   const navigate = useNavigate()
@@ -22,6 +27,7 @@ const Header = () => {
   const [selected, setSelected] = useState("Vendor");
   const [input, setInput] = useState('')
   const [userName, setUserName] = useState('')
+  const [category, setCategory] = useState([])
   const isAdmin = useSelector(state => state.User.user_role);
   useEffect(() => {
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
@@ -30,7 +36,17 @@ const Header = () => {
       setisLoggedIn(localStorage.getItem('isLoggedIn'))
     }
   }, [localStorage.getItem('isLoggedIn')])
-
+  useEffect(() => {
+    dispatch(get_category()).then((res) => {
+        // console.log(res)
+        var data = []
+        res.map((cats) => {
+            data.push(cats.category)
+        })
+        setCategory(data)
+    })
+ 
+}, [])
   const [screenSize, getDimension] = useState(window.innerWidth);
   const setDimension = () => {
     getDimension(window.innerWidth)
@@ -133,169 +149,136 @@ const Header = () => {
   };
   return (
     <>
-    <TopBar/>
-    <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
-      <div className='navbar__title navbar__item flex items-center  justify-between '>
-        <div> <img className='w-[83%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
-         {isLoggedIn &&
+      <TopBar />
+      <div className='bg-white'>
+        <div className='container py-2'>
+          <header className=' grid grid-cols-2 md:grid-cols-12 '>
 
-          <>
-         
-            <div className='navbar__item absolute right-0'>
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-
-                className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-              >
-                <BsPersonFill/>
-                <span>{userName.split(' ')[0]}</span>
-                <svg
-                  className="w-5 h-5 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-
+            <div className='md:col-span-2 grid place-items-center '>
+              <div> <img className='  md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
             </div>
 
-          </>
-            }
-     
-        {/* <button className='navbar__button w-[30%] text-[14px] hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link className='text-[14px]' to='/login'>Login for Registered Users</Link> </button> */}
-        
-        </div>
+            <div className='absolute cursor-pointer text-2xl right-3 top-[3rem] md:hidden'><MenuOutlined onClick={() => { setShowMenu(!showMenu) }} /></div>
 
-        {/* <div className='absolute cursor-pointer text-2xl right-3 top-5 md:hidden'><MenuOutlined onClick={()=>{setShowMenu(!showMenu)}}/></div> */}
-     
-      {/* {isLoggedIn &&showMenu&& <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
+            {/* {isLoggedIn && showMenu && <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
               Dashboard
             </NavLink>
-            <NavLink to="/messages" className="mr-2">Messages</NavLink></>} */}
-      
-      {showMenu && <>
-        {/* <div className='navbar__item flex-row'>
-          <form className="flex" onSubmit={submitHandler} >
-            <Input type="text" className="w-full pl-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" value={input} onChange={inputHandler} placeholder="Search..." />
-            <select value={selected} className="ml-1 px-1 py-1 rounded-r-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={selectHandler}>
-              <option value="Vendor">Vendor</option>
-              <option value="Listing">Listing</option>
-              <option value="Contractor">Contractor</option>
-            </select>
-          </form>
-        </div> */}
-        {/* <div className='navbar__item mr-2'>
-          <Dropdown
-            menu={{
-              items,
-            }}
-          >
-            <Link onClick={(e) => e.preventDefault()}>
-              <Space className='text-base font-sans	font-normal'>
-                Find Work
-              </Space>
-            </Link>
-          </Dropdown>
-        </div> */}
+              </>} */}
 
-        {/* {isAdmin !== 2 && <>
-          <div className='navbar__item'><Link to='/about-us'>Company</Link></div>
-          <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
-          <div className='navbar__item'><Link to="/support">Support</Link></div>
-        </>} */}
-        {/* {isLoggedIn ?
+            {showMenu && <>
+              <div className='col-span-4 md:flex justify-between items-center place-content-center'>
+                
+                  <NavLink className='header_text cursor-pointer' to={'/contractors'} >Find Contractors</NavLink>
+                
+               
+                  <NavLink className='header_text cursor-pointer' to={'/project_list'}>Find Projects</NavLink>
+                
+               
+                  <NavLink className='header_text cursor-pointer ' to={'/SourcifyWork'}>How it works</NavLink>
+              </div>
+              {showMenu && <>
+                <div className='grid place-items-center col-span-3 mx-4 ' >
+  
+      <Input placeholder='Search for contractors or projects ' className='input_radius' suffix={<img src={search_icon}/>} />
+ 
+    </div>
+    </>
+    }
+              <div className='col-span-3  md:flex flex-start items-center place-items-center'>
+                {isLoggedIn ?
+                <>
+                 <NavLink to="/messages" className="mr-2">Messages</NavLink>
+                      <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="inline-flex h-[70%]  justify-center items-center  w-full "
+                      >
+                        <img src={profile} />
+                        {/* <span>{userName}</span> */}
+                        <svg
+                          className=" w-[10px] ml-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+                     
+                      </>
+                  :
+                  <>
 
-          <>
-         
-            <div className='navbar__item relative'>
-              <button
-                onClick={() => setIsOpen(!isOpen)}
+                    <Link className='flex items-center mr-3' to='/login'><span className='w-auto bold mr-1'><img src={edit_icon} /></span> <p className='header_text'>Sign up</p>  </Link>
+                    <Link className='flex items-center mr-3' to='/register'><span className='w-auto bold mr-1'><img src={profile} /></span> <p className='header_text'> Login </p> </Link>
 
-                className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-              >
-                <span>{userName}</span>
-                <svg
-                  className="w-5 h-5 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
+                  </>
+                }
+                <div className='prime_button min-w-[41%]  cursor-pointer'  onClick={()=>{navigate('/dashboard/listing-form')}}>
+                  Post Project
+                </div>
+              </div>
+            </>}
+            {isOpen && (
+              <div className="absolute z-10 top-[13%] right-[15%] w-40 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1">
+                  {/* <button
+                    onClick={handleSettings}
+                    className="block px-4 py-2 text-sm w-full text-left"
+                  >
+                    <svg
+                      className="w-4 h-4 mr-2 inline"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                    Update Profile
+                  </button> */}
 
-            </div>
-
-          </>
-          :
-          <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/login'>Login for Registered Users</Link> </button>
-        } */}
-      </>}
-      {isOpen && (
-        <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            {/* <button
-              onClick={handleSettings}
-              className="block px-4 py-2 text-sm w-full text-left"
-            >
-              <svg
-                className="w-4 h-4 mr-2 inline"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-              Update Profile
-            </button> */}
-
-            {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
-            <button
-              onClick={logoutHandler}
-              className="block px-4 py-2 text-sm w-full text-left"
-            >
-              <svg
-                className="w-4 h-4 mr-2 inline"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-              Logout
-            </button>
+                  {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
+                  <button
+                    onClick={logoutHandler}
+                    className="block px-4 py-2 text-sm w-full text-left"
+                  >
+                    <svg
+                      className="w-4 h-4 mr-2 inline"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                    Logout
+                  </button>
 
 
-          </div>
+                </div>
+              </div>
+            )}
+
+          </header>
+         <SubHeader/>
         </div>
-      )}
-    </header>
+      </div>
     </>
   )
 }
