@@ -4,7 +4,7 @@ import * as ContractorServices from '../../../../services/contractor'
 import { Space, Tag,Table } from 'antd';
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
-import { get_Vendor, remove_vendor } from '../../../../services/Vendor';
+import { get_Vendor } from '../../../../services/Vendor';
 const Companies = () => {
     const dispatch = useDispatch([])
     const navigator = useNavigate()
@@ -32,9 +32,7 @@ const Companies = () => {
         })
     }, [])
     function deleteHandler(id){
-        dispatch(remove_vendor(id)).then((res)=>{
-            window.location = '/admin/companies'
-        })
+        dispatch()
     }
     const columns = [
         {
