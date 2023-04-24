@@ -25,7 +25,7 @@ const FeedBack = () => {
   },[])
   function deleteHandler(id){
     dispatch(removeFeedBackById(id)).then((res)=>{
-        window.location = 'admin/feedbacks'
+        window.location = '/admin/feedbacks'
     })
 }
     const columns = [
