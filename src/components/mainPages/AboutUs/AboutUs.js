@@ -170,7 +170,7 @@ const AboutUs = () => {
 
           </div>
         </div>
-        {/* <div className='feedback_form pb-6 '>
+        <div className='feedback_form pb-6 '>
           <div className=' grid grid-cols-1  md:grid-cols-3 mb-3  pt-10'>
 
 
@@ -259,7 +259,7 @@ const AboutUs = () => {
 
 
           </div>
-        </div> */}
+        </div>
       </div>
 
     </div>
