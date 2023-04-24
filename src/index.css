@@ -3,9 +3,18 @@ body {
   /* background-color: #f1ebf2; */
   /* font-size: 12px; */
   padding: 0;
-  background-color: #ffff;
+  background-color: #f3f3f3;
+  /* background-color: #f1f1f1; */
+  font-family: 'Montserrat' , sans-serif !important  ;
+  line-height: 1.5em !important ;
 }
-
+.ant-form,.ant-form-item-required,.ant-btn, .ant-form-item-label{
+  font-family: 'Montserrat' , sans-serif !important  ;
+}
+:root {
+  --red: #FF5757;
+  --white: #FFFFFF;
+}
 html {
   scroll-behavior: auto;
 }
@@ -14,30 +23,101 @@ html {
   border-color: rgb(239 68 68);
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
 /* Hide the scrollbar thumb */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background-color: transparent;
-}
+} */
 
 /* Define the width and height of the scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
+} */
 
 /* Define the color of the scrollbar on hover */
-::-webkit-scrollbar:hover {
+/* ::-webkit-scrollbar:hover {
   background-color: #ccc;
-}
+}  */
 
-.ant-btn css-dev-only-do-not-override-ixblex ant-btn-primary{
+/* .ant-btn {
   background-color: blue !important;
   color: blue !important;
-}
-:where(.css-dev-only-do-not-override-ixblex).ant-form-vertical .ant-form-item-label >label{
+} */
+/* :where(.css-dev-only-do-not-override-ixblex).ant-form-vertical .ant-form-item-label >label{
 text-transform: capitalize;
+}  */
+
+/* .btn {
+  color: var(--white);
+  font-weight: 600;
+  background-color: var(--red);
+  border-radius: 50px;
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: background-color 0.2s, border-color 0.2s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+} */
+
+/* Define styles for when the button is hovered */
+/* .btn:hover {
+  background-color: transparent;
+  border: 2px solid var(--white);
+} */
+
+.ant-radio-button-wrapper-checked{
+  color: black  !important;
+  border: 1.5px solid;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: #FF5757  !important;
+  border-radius: 0px !important;
+}
+.ant-radio-button-wrapper:last-child{
+  border-radius: 0px !important;
+  
+}
+
+.ant-radio-button-wrapper::before{
+  border-color: #FF5757  !important;
+}
+.ant-radio-button-wrapper:hover{
+  color:  #FF5757  !important;
+}
+
+.ant-radio-button-wrapper-checked:not {
+  border-color: #FF5757  !important;
+}
+.ant-radio-button-wrapper-disabled::before {
+  border-color: #FF5757  !important;
+}
+
+.ant-radio-button-wrapper::before{
+  border-color: #FF5757  !important;
+  background: none;
+}
+:where(.css-dev-only-do-not-override-ixblex).ant-radio-button-wrapper:first-child {
+  border-radius: 0px;
+}
+
+
+:where(.css-dev-only-do-not-override-ixblex).ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before  {
+    /* background-color: #1677ff; */
+    background-color:none !important;
+    background-color:  none  !important;
+}
+
+.about_image{
+  background-position: center center;
+  background-size: cover;
+  object-fit: cover;
+  height: auto;
+  width: auto;
 }

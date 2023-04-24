@@ -1,9 +1,9 @@
-import { Space,  Tag } from 'antd'
+import { Space,  Tag,Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { get_listing } from '../../../../../services/listing'
-import Table from 'ant-responsive-table'
+// import Table from 'ant-responsive-table'
 const All_Listings = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
@@ -111,22 +111,21 @@ const All_Listings = () => {
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
-                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl: w-full overflow-x-auto lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/dashboard/listing-form')}
-                            className="inline-block mb-5 px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                            className="primary_btn mb-5"
                         >
                             Add New Listing </button>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">All Listings</p>
                         </div>
-                        <Table antTableProps={{
-                            showHeader: true,
-                            columns: columns,
-                            dataSource: tableData,
-                            pagination: true,
+                        <Table 
+                            columns={columns}
+                            dataSource={ tableData}
+                            pagination={{pageSize:5}}
                             // pagination:{{ "pageSize": 10 }}
-                        }} mobileBreakPoint={768} />
+                        />
                     </div>
                 </div>
             </div>

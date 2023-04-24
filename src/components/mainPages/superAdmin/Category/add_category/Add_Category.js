@@ -17,7 +17,7 @@ const Add_Category = () => {
     function FormHandler(values){
         dispatch(add_category(values)).then((res)=>{console.log(res)
         Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title:"Registerd Added Successfully",
             showConfirmButton: true,
@@ -81,21 +81,17 @@ const Add_Category = () => {
                         </>
                     )}
                 </Form.List>
-                <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-                <div className="text-center lg:text-left">
+        
+      
+                <div className="flex items-center justify-center text-center  lg:text-left">
                     <button
                         type="submit"
-                        className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                        className="primary_btn"
                     >
                        Save Category
                     </button>
                 </div>
-                </Form.Item>
+                
             </Form>
             </div>
         </div>

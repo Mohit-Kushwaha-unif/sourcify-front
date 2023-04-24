@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Dropdown, Input, Space } from 'antd'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import Sourcify from '../../assests/Sourcify Logo.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import NEW_Sourcify from '../../assests/Sourcify.png'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
 import { search_listing } from '../../services/listing';
 import { search_vendor } from '../../services/Vendor';
 import { search_contractor } from '../../services/contractor';
 import { get_user_info } from '../../services/user';
+import {BsPersonFill} from 'react-icons/bs'
+import TopBar from './TopBar';
 
 const Header = () => {
   const navigate = useNavigate()
@@ -50,6 +53,7 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener('resize', setDimension);
     if (screenSize <= 759) {
+      // setShowMenu(true)
       setShowMenu(false)
     } else {
       setShowMenu(true)
@@ -60,7 +64,8 @@ const Header = () => {
     dispatch(logout()).then((res) => {
       localStorage.clear()
       localStorage.setItem("isLoggedIn", false)
-      window.location = '/login'
+      window.location = '/'
+      // window.location = '/login'
       setisLoggedIn(false)
     })
   }
@@ -127,13 +132,57 @@ const Header = () => {
     navigate('/update-profile')
   };
   return (
-    <header className='navbar flex justify-between flex-col items-center md:flex-row md:justify-between"'>
-      <div className='navbar__title navbar__item flex items-center justify-between '>
-        <span> <img className='h-8 my-4 mx-4 ' onClick={() => navigate('/')} src={Sourcify} alt="logo" /></span>
-        <span><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></span>
-      </div>
+    <>
+    <TopBar/>
+    <header className='navbar relative flex justify-between flex-col items-center md:flex-row md:justify-between'>
+      <div className='navbar__title navbar__item flex items-center  justify-between '>
+        <div> <img className='w-[83%] mt-1 md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
+         {isLoggedIn &&
+
+          <>
+         
+            <div className='navbar__item absolute right-0'>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+
+                className="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+              >
+                <BsPersonFill/>
+                <span>{userName.split(' ')[0]}</span>
+                <svg
+                  className="w-5 h-5 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+            </div>
+
+          </>
+            }
+     
+        {/* <button className='navbar__button w-[30%] text-[14px] hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link className='text-[14px]' to='/login'>Login for Registered Users</Link> </button> */}
+        
+        </div>
+
+        {/* <div className='absolute cursor-pointer text-2xl right-3 top-5 md:hidden'><MenuOutlined onClick={()=>{setShowMenu(!showMenu)}}/></div> */}
+     
+      {/* {isLoggedIn &&showMenu&& <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
+              Dashboard
+            </NavLink>
+            <NavLink to="/messages" className="mr-2">Messages</NavLink></>} */}
+      
       {showMenu && <>
-        {/* <div className='navbar__item'>
+        {/* <div className='navbar__item flex-row'>
           <form className="flex" onSubmit={submitHandler} >
             <Input type="text" className="w-full pl-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" value={input} onChange={inputHandler} placeholder="Search..." />
             <select value={selected} className="ml-1 px-1 py-1 rounded-r-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={selectHandler}>
@@ -142,8 +191,8 @@ const Header = () => {
               <option value="Contractor">Contractor</option>
             </select>
           </form>
-        </div>
-        <div className='navbar__item'>
+        </div> */}
+        {/* <div className='navbar__item mr-2'>
           <Dropdown
             menu={{
               items,
@@ -155,20 +204,17 @@ const Header = () => {
               </Space>
             </Link>
           </Dropdown>
+        </div> */}
 
-        </div>
-
-        {isAdmin !== 2 && <>
+        {/* {isAdmin !== 2 && <>
           <div className='navbar__item'><Link to='/about-us'>Company</Link></div>
           <div className='navbar__item'><Link to="/editor">Resources</Link> </div>
           <div className='navbar__item'><Link to="/support">Support</Link></div>
         </>} */}
-        {isLoggedIn ?
+        {/* {isLoggedIn ?
 
           <>
-            {/* <div className='navbar__item'>
-              Dashboard
-            </div> */}
+         
             <div className='navbar__item relative'>
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -196,8 +242,8 @@ const Header = () => {
 
           </>
           :
-          <button className='navbar__button hover:text-white rounded-[25px]' type="link"><Link to='/login'>Login/Signup</Link> </button>
-        }
+          <button className='navbar__button hover:bg-[#e64d4d] rounded-[25px]' type="link"><Link to='/login'>Login for Registered Users</Link> </button>
+        } */}
       </>}
       {isOpen && (
         <div className="absolute z-10 top-16 right-0 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -250,6 +296,7 @@ const Header = () => {
         </div>
       )}
     </header>
+    </>
   )
 }
 

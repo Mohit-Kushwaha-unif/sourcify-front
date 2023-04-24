@@ -19,25 +19,26 @@ const Edit_Form = () => {
             })
     },[])
       function tabKeys(valueOfTab){
-
+        console.log({valueOfTab})
         setActiveTab(valueOfTab)
+        return false
       }
  
-
+      console.log({activeTab})
       
   return (
     <div className='flex align-center ml-30 w-full p-2 px-3'>
         {
-            formData!==1 &&  <Tabs centered defaultActiveKey="1" onChange={tabKeys} activeKey={activeTab}  className='w-full'>
-             <TabPane  tab="Basic Details" key="1" >
-              <Personal_Detail_Tab formValues = {formData} isClicked = {tabKeys}/>
+            formData!==1 &&  <Tabs centered defaultActiveKey="1" onChange={tabKeys} onTabClick={tabKeys} activeKey={activeTab}  className='w-full'>
+             <TabPane  tab="Basic Details" key="1"  disabled={activeTab!==tabKeys}>
+              <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
             </TabPane>
-            <TabPane tab="Work Experience" key="2">
+            {/* <TabPane tab="Work Experience" key="2"  disabled={activeTab!==tabKeys}>
              <Work_Experiece formValues = {formData} isClicked={tabKeys}/>
             </TabPane>
-            <TabPane tab="Financial details" key="3">
-             <FinancialDetail formValues = {formData}/>
-            </TabPane>
+            <TabPane tab="Financial details" key="3"  disabled={activeTab!==tabKeys}>
+             <FinancialDetail formValues = {formData} isClicked={tabKeys}/>
+            </TabPane> */}
           </Tabs>
         }
    

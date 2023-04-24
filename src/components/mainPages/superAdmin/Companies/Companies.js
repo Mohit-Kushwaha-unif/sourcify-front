@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag } from 'antd';
-import Table from 'ant-responsive-table'
+import { Space, Tag,Table } from 'antd';
+// import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
-import { get_Vendor } from '../../../../services/Vendor';
+import { get_Vendor, remove_vendor } from '../../../../services/Vendor';
 const Companies = () => {
     const dispatch = useDispatch([])
     const navigator = useNavigate()
@@ -31,43 +31,42 @@ const Companies = () => {
             console.log(err)
         })
     }, [])
+    function deleteHandler(id){
+        dispatch(remove_vendor(id)).then((res)=>{
+            window.location = '/admin/companies'
+        })
+    }
     const columns = [
         {
             title: 'S.No',
             dataIndex: 'key',
             key: 'key',
-            render: (text) => <Link>{text + 1}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+            render : (text) => <p>{text+1}</p>
         },
         {
             title: 'Name of Contractor',
             dataIndex: 'entity',
             key: 'entity',
-            render: (text) => <Link>{text}</Link>,
-            showOnResponse: true,
-            showOnDesktop: true
+            render:(_, record) =>(console.log(record), <Link to='/admin/edit-company' state={{ _id: record?._id }}>{record.entity}</Link>),
+           
         },
         {
             title: 'Contact Person',
             dataIndex: 'username',
             key: 'username',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Email ID',
             dataIndex: 'email',
             key: 'email',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Mobile Number',
             dataIndex: 'number',
             key: 'number',
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
         {
             title: 'Action',
@@ -76,11 +75,10 @@ const Companies = () => {
                 console.log(_,record),
                 <Space size="middle">
                     <Link to='/admin/edit-company' state={{ _id: record?._id }}>Edit </Link>
-                    <Link>Delete</Link>
+                    <Link onClick={()=>deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),
-            showOnResponse: true,
-            showOnDesktop: true
+           
         },
     ];
     return (
@@ -89,21 +87,21 @@ const Companies = () => {
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
-                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="xl: w-full overflow-x-scroll lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <button
                             onClick={() => navigator('/vendor-form')}
-                            className="inline-block mb-5 px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                            className="primary_btn mb-3"
                         >
-                            Add New User </button>
+                            Add New Company </button>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="text-lg mb-0 mr-4">Companies List</p>
                         </div>
-                        <Table antTableProps={{
-                            showHeader: true,
-                            columns: columns,
-                            dataSource: tableData,
-                            pagination: true
-                        }} mobileBreakPoint={768} />
+                        <Table 
+                            
+                            columns={columns}
+                            dataSource= {tableData}
+                            pagination ={{pageSize: 5}}
+                        />
                     </div>
                 </div>
             </div>

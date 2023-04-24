@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Login from './auth/Login'
 import Regsiter from './auth/Register'
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate,Redirect, Navigate } from 'react-router-dom'
 import PersonalDetails from './contractorForm/PersonalDetails'
 import WorkExperience from './contractorForm/WorkExperience'
 import FinancialDetail from './contractorForm/FinancialDetail'
@@ -44,6 +44,9 @@ import Edit_caraousel from './superAdmin/Carausel/Edit_caraousel/Edit_caraousel'
 import Support from './Support/Support'
 import UpdateProfie from './UpdateProfile/UpdateProfie'
 import UserRole from './useRole/userRole'
+import OTPForm from './auth/OTPForm'
+import EmailForm from './auth/EmailForm'
+import Privacy from './LegalAgreement/Privacy'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -58,15 +61,14 @@ const Pages = (props) => {
   }, [location])
   
   const item =  reactRouterToArray(    <Routes>
-    {/* <Route path='/' element={<Dashboard/>} /> */}
-    <Route path='/' element={<AboutUs/>} />
+    <Route path='/' element={isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<Dashboard/>} />
+    <Route path='/about-us' element={<AboutUs/>} />
     <Route path="/contractor-form" element={ <PersonalDetails />} />
     <Route path="contractor-form/work-experience" element={<WorkExperience />} />
     <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
     <Route path="vendor-form" element={<VendorForm />} />
-   
     <Route path="/register" element={ <Regsiter/>} />
-    {/* <Route path="/login" element={<Login />} />
+    <Route path="/login" element={<Login />} />
     <Route path="/about-us" element={<AboutUs/>}/>
     <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
     <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
@@ -88,7 +90,7 @@ const Pages = (props) => {
     <Route path="/viewForm" element={ <ViewForm/> }/>
     <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
     <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
-    <Route path='*' element={<NotFound />}/> */}
+    <Route path='*' element={<NotFound />}/>
   </Routes>)
 
   useEffect(()=>{
@@ -99,19 +101,20 @@ const Pages = (props) => {
  
 
   return (
-    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? 'flex': ''}>
+    <div className={isLoggedIn && isAdmin!=1 &&isAdmin!=0 ? ' flex': 'container-fluid'}>
       {
         isAdmin==2 && <Sidebar/>
       }
       <Routes>
-        <Route path='/' element={<AboutUs/>} />
+        <Route path='/' element={ isAdmin ==2 ? <Navigate to="/admin/contractors-list"/> :<AboutUs/>} />
         <Route path="/contractor-form" element={ <PersonalDetails />} />
         <Route path="contractor-form/work-experience" element={<WorkExperience />} />
         <Route path="contractor-form/financial-detail" element={<FinancialDetail />} />
         <Route path="vendor-form" element={<VendorForm />} />
         <Route path="/register" element={ <Regsiter/>} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/about-us" element={<AboutUs/>}/>
+        {/* <Route path="/otp-verification" element={<OTPForm/>}/> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>
         <Route path="/admin/contractors-list" element={isAdmin==2 ?<><Contractor/></> : <ResourceDenied/>}/>
@@ -142,7 +145,13 @@ const Pages = (props) => {
         <Route path='/results' element={<SearchResult/>}/>
         <Route path='/update-profile' element={<UpdateProfie/>}/>
         <Route path='/userRole' element={<UserRole/>}/>
-        <Route path='*' element={<NotFound />}/> */}
+        <Route path='/verify' element={<OTPForm/>}/>
+        <Route path='/everify/:token' element={<EmailForm/>}/>
+        <Route path= '/privacy-policy' element={<Privacy/>}/>
+        <Route path='/admin' element={<Navigate to="/admin/contractors-list" />} />
+    
+        <Route path='*' element={<NotFound />}/>
+        
       </Routes>
       
     </div>

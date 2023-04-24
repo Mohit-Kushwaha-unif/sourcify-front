@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom'
 import { logout } from '../../services/user'
+import { useEffect } from 'react';
 const Sidebar = () => {
     const dispatch = useDispatch()
     const navigation = useNavigate()
+    const [showMenu, setShowMenu] = useState(false)
     const selecor = useSelector(state => state)
     function logoutHandler() {
         dispatch(logout()).then((res) => {
@@ -15,14 +18,29 @@ const Sidebar = () => {
 
         })
     }
+    const [screenSize, getDimension] = useState(window.innerWidth);
+    const setDimension = () => {
+      getDimension(window.innerWidth)
+    }
+    useEffect(() => {
+        window.addEventListener('resize', setDimension);
+        if (screenSize <= 759) {
+          setShowMenu(false)
+          //setShowMenu(false)
+        } else {
+          setShowMenu(true)
+        }
+      }, [screenSize])
     return (
 
-        <div className="flex flex-col min-h-screen h-inherit p-3 bg-white shadow w-60">
-            <div className="space-y-3">
-                <div className="flex items-center">
+        <div className="flex relative flex-col min-h-screen h-inherit bg-white w-[17%] px-4 p-3">
+            <div className="space-y-5">
+                { <div className='z-10  absolute top-[-19px] left-[50px]'><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></div>}
+             { showMenu&&  <>
+                <div className="flex items-center mt-3">
                     <h2 className="text-xl font-bold">Dashboard</h2>
                 </div>
-                <div className="flex-1">
+               <div className="flex-1">
                     <ul className="pt-2 pb-4 space-y-1 text-sm ">
                         <li className="rounded-sm">
                             <NavLink
@@ -104,11 +122,11 @@ const Sidebar = () => {
                                 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 
                                 1 0 0 1-1-1v-5z"/>
                                 </svg>
-                                <span>Category</span>
+                                <span>Work Segment</span>
                             </NavLink>
                         </li>
 
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/all-listing"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -119,7 +137,7 @@ const Sidebar = () => {
                                     <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3z" />
                                 </svg>   <span>Listings</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/feedbacks"
@@ -128,10 +146,10 @@ const Sidebar = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="bi bi-grid-1x2-fill w-6 h-6" width="24" height="24" viewBox="0 0 24 24">
                                     <path d="M21.59,3.59C20.92,3.22 20.17,3 19.41,3H4C2.9,3 2,3.9 2,5V17C2,18.1 2.9,19 4,19H18L22,23V5C22,4.24 21.76,3.53 21.59,3.59M18,7V5.5L19.5,7H18M8,10H16V12H8V10M8,14H14V16H8V14Z" />
                                 </svg>
-                                <span>Feedbacks</span>
+                                <span>Enquiries</span>
                             </NavLink>
                         </li>
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/carausel-list"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -144,8 +162,8 @@ const Sidebar = () => {
                                
                                 <span>Caraousel</span>
                             </NavLink>
-                        </li>
-                        <li className="rounded-sm">
+                        </li> */}
+                        {/* <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}
                                 className="flex items-center p-2 cursor-pointer space-x-3 rounded-md"
@@ -166,9 +184,11 @@ const Sidebar = () => {
                                 </svg>
                                 <span>Logout</span>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
+                </>
+                }
             </div>
         </div>
 
