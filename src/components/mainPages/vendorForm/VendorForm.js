@@ -5,13 +5,14 @@ import {
   Select
 } from 'antd';
 import state_cites from '../../../assests/state_city.';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Add_Vendor, get_Vendor, get_Vendor_by_id, update_vendor } from '../../../services/Vendor';
 import { update_user } from '../../../services/user';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../Helper/LogooutHelper';
 const VendorForm = () => {
+  const isAdmin = useSelector(state => state.User.user_role);
   const [form] = Form.useForm();
   const dispatch = useDispatch()
   const navigator = useNavigate()
@@ -259,7 +260,8 @@ const VendorForm = () => {
                       Save 
                     </button>
                 </div>
-              </Form>:
+              </Form>
+              : isAdmin !=2 ?
               <Form labelAlign="left"
             form={form}
             fields={[
@@ -273,6 +275,124 @@ const VendorForm = () => {
                 value: number
               },
             ]}
+              layout="vertical" onFinish={FormHandler}>
+              <Form.Item name="agency_name" label=" Company Name " rules={[
+                {
+                  required: true,
+                  message: 'Please enter name of your company'
+                },
+              ]}
+                className="mb-2"
+              >
+
+                <Input placeholder='Enter name of your company' />
+              </Form.Item>
+
+              <Form.Item name='contact_person' className='mb-2 mt-0' label="Contact Person Name" rules={[
+                {
+                  required: true,
+                  message: 'Please enter your contact person name'
+                },
+              ]}
+              >
+
+                <Input placeholder='Enter contact person name' />
+              </Form.Item>
+              <div className='form_email_mobile_flex flex flex-col flex-col-reverse md:flex-row '>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="number" label="Mobile Number " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your number'
+                    },
+                  ]}
+                    className="mb-1"
+                  >
+                {
+                  number!=null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> 
+                }
+                    
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="email" className='mb-2 mt-0' label="Email" rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your email'
+                    },
+                  ]}
+                  >
+                    {
+                      email !=null  && !localStorage.getItem("adminEmail")? <Input disabled placeholder='Enter Your Email' /> : <Input  placeholder='Enter Your Email' />
+                    }
+                    
+                  </Form.Item>
+                </div>
+              </div>
+              <Form.Item name="Address" className='mb-2' label="Office Address " rules={[
+                {
+                  required: true,
+                  message: 'Please enter your address',
+                },
+              ]}>
+                <Input placeholder='Enter Your office address' />
+              </Form.Item>
+              <div className='flex flex-col md:flex-row  '>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="State" label="State " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your state'
+                    },
+                  ]}>
+
+                    <Select id="country-state" name="State" placeholder="Select state" onSelect={countrySelectHandler}>
+                      {Object.keys(state_cites).map((state) => {
+                        return (<Select.Option value={state}>{state}</Select.Option>)
+                      }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="City" label="City " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your city',
+                    },
+                  ]}>
+                    <Select id="country-state" name="City" placeholder="Select city">
+                      {state.length > 0 && state.map((state) => {
+                        return (<Select.Option value={state}>{state}</Select.Option>)
+                      }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children'>
+                  <Form.Item name="pin_code" label="PIN Code " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your PIN Code',
+
+                    },
+                  ]}>
+                    <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN Code" />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className='flex justify-center'>
+                  <button
+                    type="submit"
+                    className="inline-block px-32 py-3 bg-[#FF5757] text-white font-medium text-sm leading-snug uppercase rounded-[50px] shadow-md hover:bg-[#FF5759] hover:shadow-lg focus:bg-[#FF5757] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#FF5757] active:shadow-lg transition duration-150 ease-in-out"
+                  >
+                    Save 
+                  </button>
+              </div>
+            </Form>
+            :  <Form labelAlign="left"
+            form={form}
+
               layout="vertical" onFinish={FormHandler}>
               <Form.Item name="agency_name" label=" Company Name " rules={[
                 {
