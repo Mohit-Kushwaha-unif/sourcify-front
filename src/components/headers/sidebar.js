@@ -126,7 +126,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
 
-                        {/* <li className="rounded-sm">
+                        <li className="rounded-sm">
                             <NavLink
                                 to="/admin/all-listing"
                                 className="flex items-center p-2 space-x-3 rounded-md"
@@ -137,7 +137,7 @@ const Sidebar = () => {
                                     <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3z" />
                                 </svg>   <span>Listings</span>
                             </NavLink>
-                        </li> */}
+                        </li>
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/feedbacks"
@@ -163,7 +163,7 @@ const Sidebar = () => {
                                 <span>Caraousel</span>
                             </NavLink>
                         </li> */}
-                        {/* <li className="rounded-sm">
+                        <li className="rounded-sm">
                             <div
                                 onClick={logoutHandler}
                                 className="flex items-center p-2 cursor-pointer space-x-3 rounded-md"
@@ -184,7 +184,7 @@ const Sidebar = () => {
                                 </svg>
                                 <span>Logout</span>
                             </div>
-                        </li> */}
+                        </li>
                     </ul>
                 </div>
                 </>

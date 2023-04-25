@@ -26,11 +26,11 @@ const Work_segment_foooter = () => {
         category.map((cat)=>{
             return <>
             <div className='mb-16'>
-            <p className='rale_text my-10'>{cat.category}</p>
+            <p className='rale_text my-10'>{cat.name}</p>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
             {
-                cat.sub_category.length > 0 && cat.sub_category.map((cat_sub)=>{
-                  return  <div>{cat_sub.sub_Category}</div>
+                cat.children.length > 0 && cat.children.map((cat_sub)=>{
+                  return  <div>{cat_sub.name}</div>
                 })
             }
             </div>

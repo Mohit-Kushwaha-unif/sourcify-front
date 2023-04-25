@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { add_category, get_category } from '../../../../../services/category';
+import { add_category, get_category, get_category_for_ws } from '../../../../../services/category';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -18,41 +18,11 @@ const Add_Category = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [category, setCategory] = useState([])
-    const getAllCategoryNames = (categories) => {
-        let categoryNames = [];
-        
-        const extractCategoryNames = (category) => {
-         
-          if (category.sub_category && category.sub_category.length > 0) {
-            category.sub_category.forEach((subCategory) => {
-              extractCategoryNames(subCategory);
-            });
-          }
-        };
-      
-        const extractSubCategoryNames = (subCategories) => {
-          subCategories.forEach((subCategory) => {
-            categoryNames.push(subCategory.name);
-            if (subCategory.sub_category && subCategory.sub_category.length > 0) {
-              extractSubCategoryNames(subCategory.sub_category);
-            }
-          });
-        };
-      
-        categories.forEach((category) => {
-            categoryNames.push(category.category)
-          if (category.sub_category && category.sub_category.length > 0) {
-            extractSubCategoryNames(category.sub_category);
-          }
-        });
-      
-        return categoryNames;
-      };
+    
       
       useEffect(() => {
-        dispatch(get_category()).then((res) => {
-          const allCategoryNames = getAllCategoryNames(res);
-          setCategory(allCategoryNames);
+        dispatch(get_category_for_ws()).then((res) => {
+          setCategory(res);
         });
       }, []);
       
@@ -62,7 +32,7 @@ const Add_Category = () => {
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title:"Registerd Added Successfully",
+            title:"Category Added Successfully",
             showConfirmButton: true,
         }).then(
             navigate('/admin/category-list')
@@ -78,7 +48,7 @@ const Add_Category = () => {
                 className='w-full h-auto'
                 layout="vertical"
                      onFinish={FormHandler}>
-                  <Form.Item name="add_category" label="Enter Category Name " rules={[
+                  <Form.Item name="name" label="Enter Category Name " rules={[
                     {
                         required: true,
                         message: 'Please input your Category!'
@@ -87,7 +57,7 @@ const Add_Category = () => {
                 >
                 <Input placeholder='Enter your category name' />
                 </Form.Item>
-                <Form.Item name="work_segment" label="Select Work Segment " rules={[
+                <Form.Item name="parent" label="Select Work Segment " rules={[
                     {
                         required: true,
                         message: 'Please input your Category!'
@@ -98,7 +68,7 @@ const Add_Category = () => {
                   <Select.Option value="none">None</Select.Option>
                   {
                      category.length > 0&& category.map((cat)=>{
-                        return <Select.Option value={cat}>{cat}</Select.Option>
+                        return <Select.Option value={cat._id}>{cat.name}</Select.Option>
                     })
                   }
                   </Select>

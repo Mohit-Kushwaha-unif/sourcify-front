@@ -13,8 +13,9 @@ const Work_Segment = () => {
         })
     }, [])
     return (
-        <div className='container mt-3 mb-16'>
-            <h2 className='prime_h2_rale mb-10'>Work Segments</h2>
+        <div className='container mt-3 '>
+            
+            {/* <h2 className='prime_h2_rale mb-10'>Work Segments</h2>
             {
                 category.map((res) => {
                     { console.log(res) }
@@ -32,7 +33,7 @@ const Work_Segment = () => {
                         </div>
                     </div>
                 })
-            }
+            } */}
 
         </div>
     )

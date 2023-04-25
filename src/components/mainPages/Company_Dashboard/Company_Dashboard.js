@@ -1,10 +1,12 @@
 import { Space, Tag, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing_user, remove_listing } from '../../../services/listing'
 import useDocumentTitle from '../../Helper/useDocumentTitle'
+import Contractor_Dashboard from '../Contractor_Dashboard/Contractor_Dashboard'
 import ListingCard from './Listing/listingCard'
 // import Table from 'ant-responsive-table'
 const Company_Dashboard = () => {
@@ -12,8 +14,15 @@ const Company_Dashboard = () => {
   const dispatch = useDispatch()
   const [tableData, setTableData] = useState([])
   const [contractor, setContractors] = useState([])
+  const [accountStatus, setaccountStatus] = useState()
   var data = []
+  var status = useSelector(state =>state.User.acc_status)
+  useEffect(()=>{
+    setaccountStatus(status) 
+  },[status])
   useDocumentTitle('Dashboard')
+  
+  console.log({accountStatus})
   useEffect(() => {
     dispatch(get_listing_user(localStorage.getItem('user_id'))).then((res) => {
       res.map((tableData, index) => {
@@ -107,20 +116,23 @@ const Company_Dashboard = () => {
 
   return (
     <>
-      <div className='p-6 container'>
-        <section className="min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
+    <ToastContainer/>
+      <div className='p-6 container w-full'>
+        <section className="min-h-auto flex flex-col w-full mb-6  pt-6 " >
           <div className="px-2 h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
             >
               <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                 <button
-                  onClick={() => navigator('/dashboard/listing-form')}
-                  className="save_Btn mb-4 px-6 "
+                 onClick={()=>{accountStatus!==0 ?  toast.error('Account is  not approved by admin', {
+                  position: toast.POSITION.TOP_RIGHT
+                }) : navigator('/dashboard/listing-form')}}
+                  className="save_Btn mb-6 px-6 "
                 >
                   Add New Listing </button>
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Listings</p>
+                  <p className="text-lg mb-6 mr-4 font-semibold">Your Previous Listings</p>
                 </div>
 
                 <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
@@ -166,7 +178,7 @@ const Company_Dashboard = () => {
         </div> */}
 
       </div>
-
+        {/* <Contractor_Dashboard/> */}
 
     </>
   )

@@ -48,6 +48,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [gstImageD, set_gstImageD] = useState('')
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
+  const [contractor_status,set_Contractor_status] = useState(1)
   const [form] = Form.useForm();
   
   var work_area_types = []
@@ -188,42 +189,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   }
   const onFinish = async(value) => {
-    // console.log(value)
-    // var Turnover = []
-    // Object.keys(value).map((key) => {
-    //   if (key.includes('Turnover')) {
-    //     var obj = {}
-    //     obj[key] = value[key]
-    //     Turnover.push(obj)
-    //   }
-    // })
-    // value.Project = JSON.stringify(value.Project)
-    // value.Turnover = JSON.stringify(Turnover)
-    // var work_area_types = []
-    // Object.keys(value).map((val_item) => {
-    //   value.work_segment.map((work) => {
-    //     if (val_item === work) {
-
-    //       work_area_types.push({ [val_item]: value[val_item] })
-    //     }
-    //   })
-    // })
-
-
-    // value["work_area_types"] = JSON.stringify([...work_area_types])
-    // var formData = new FormData()
-
-    // if (localStorage.getItem("adminEmail") == null) {
-    //   value.user_id = localStorage.getItem("user_id")
-    // }
-    // value.role = 0;
-
-    // if (value.msme_image) {
-    //   value.msme_image = msmeImageD
-    // }
-    // Object.keys(value).map((formKey) => {
-    //   formData.append(formKey, value[formKey])
-    // })
+    value.status = contractor_status
     var Turnover = []
     Object.keys(value).map((key) => {
       if (key.includes('Turnover')) {
@@ -879,17 +845,39 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   )}
                 </Form.List>
 
-                <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
+                <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                   {/* <button
                     type="submit"
                     className="back_btn"  >
                     Next
                   </button> */}
+                  {formValues.status !=2 &&
+                   <button
+                   type="submit"
+                  className="back_btn"
+                  onClick={()=>{set_Contractor_status(2)}} 
+                   >
+                  Reject
+                </button> }
+                 
+                {formValues.status !=0 &&
                   <button
                     type="submit"
-                    className="save_Btn"  >
-                    Save
+                    className="save_Btn"
+                    onClick={()=>{set_Contractor_status(0)}} 
+                      >
+                    Accept
                   </button>
+                  }
+                {formValues.status !=1 &&
+                  <button
+                    type="submit"
+                    className="save_Btn moderation_color  hover:bg-yellow-400"  
+                    onClick={()=>{set_Contractor_status(1)}} 
+                    >
+                    Moderation
+                  </button>
+                  }
                 </div>
               </Form>
       </div>

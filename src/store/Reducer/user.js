@@ -1,9 +1,9 @@
-import { AUTH_USER } from '../action-types';
 
 const initialState = {
   isLoggedIn: false,
   userDetails: {},
-  user_role: false
+  user_role: false,
+  accStatus: null
 };
 
 const State = (state = initialState, { type, payload }) => {
@@ -18,6 +18,9 @@ const State = (state = initialState, { type, payload }) => {
       return logout(state);
       case 'USER_ROLE':
       return user_Role(state,payload)
+      case 'ACC_STATUS':
+      return acc_status(state,payload)
+      
     default:
       return state;
   }
@@ -53,6 +56,14 @@ function user_Role(state, payload) {
   state.user_role = payload
   return {
     user_role : payload
+  };
+}
+function acc_status(state, payload) {
+  
+  state.acc_status = payload
+  return {
+    ...state,
+    acc_status : payload
   };
 }
 

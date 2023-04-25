@@ -48,10 +48,10 @@ const SourcifyWork = () => {
                     <div className='border-2 p-4'>
                         <div className='flex items-center  mb-5'>
                             <div className=' mr-1 brand_text font_64 font_inter'>4</div>
-                            <div className=' headings'>Finalize the Deal</div>
+                            <div className=' headings'>Take it further</div>
                         </div>
                         <div className='content'>
-                            Post submission of the proposal company will connect with you through our in-built chat feature and contractors can finalize the deal and start working on the project.
+                            Post submission of the proposal company will connect with you through our in-built chat feature and contractors can take it further and start working on the project.
                         </div>
                     </div>
                 
@@ -93,10 +93,10 @@ const SourcifyWork = () => {
                     <div className='border-2 p-4'>
                         <div className='flex items-center  mb-5'>
                             <div className=' mr-1 brand_text font_64 font_inter new_color'>4</div>
-                            <div className=' headings'>Finalize the Deal</div>
+                            <div className=' headings'>Take it further</div>
                         </div>
                         <div className='content'>
-                            Post submission of the proposal company will connect with you through our in-built chat feature and contractors can finalize the deal and start working on the project.
+                            Post submission of the proposal company will connect with you through our in-built chat feature and contractors can take it further and start working on the project.
                         </div>
                     </div>
                     

@@ -12,6 +12,7 @@ import { useForm } from 'antd/es/form/Form'
 import { useNavigate } from 'react-router-dom'
 import TextArea from 'antd/es/input/TextArea'
 import { toast, ToastContainer } from 'react-toastify'
+import { get_contractor } from '../../../services/contractor'
 const FindProjects = () => {
     const [projects, setProjects] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,12 +50,29 @@ const FindProjects = () => {
             })
         }
     }, [])
-
+console.log(projects)
     // 
     useLayoutEffect(() => {
         const projDet = [];
         dispatch(get_Vendor()).then((res) => {
             res.filter((vendor_det) => {
+               
+                if (vendor_det.user_id !== null) {
+                    projects.find((pro_det) => {
+                        if (vendor_det.user_id._id === pro_det.user_id) {
+                            const obj = {};
+                            obj["pro_details"] = pro_det;
+                            obj["vendor_det"] = vendor_det;
+                            projDet.push(obj);
+                        }
+                    });
+                }
+            });
+           
+        });
+        dispatch(get_contractor()).then((res) => {
+            res.filter((vendor_det) => {
+               
                 if (vendor_det.user_id !== null) {
                     projects.find((pro_det) => {
                         if (vendor_det.user_id._id === pro_det.user_id) {
@@ -69,9 +87,11 @@ const FindProjects = () => {
             console.log(projDet);
             setProjectDetails([...projDet]);
         });
+        console.log(projDet);
+        setProjectDetails([...projDet]);
     }, [projects, dispatch]);
 
-    console.log(projectDetails)
+    console.log({projectDetails})
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
@@ -162,7 +182,7 @@ const FindProjects = () => {
                     onValuesChange={handleFormChange}
                 >
                     <Form.Item name="Project_name" label="">
-                        <Input className='input_border mb-5' placeholder='Search for projects' />
+                        <Input className=' mb-5' placeholder='Search for projects' />
                     </Form.Item>
 
                     <Form.Item name="Location" label="Search Location">
@@ -174,14 +194,14 @@ const FindProjects = () => {
                         </Select>
                     </Form.Item>
 
-                    <Form.Item name="work_Segments" label="Select Work Segments">
-                        <Select className=' mb-5' placeholder='Select category of work' >
-                            {
+                    <Form.Item name="work_Segments" label="Select Company">
+                        <Input className=' mb-5' placeholder='Select Company' />
+                            {/* {
                                 work_segment.length > 0 && work_segment.map((cats) => {
                                     return (<Select.Option value={cats.category}>{cats.category}</Select.Option>)
                                 })
                             }
-                        </Select>
+                        </Select> */}
                     </Form.Item>
 
                 </Form>
@@ -210,7 +230,7 @@ const FindProjects = () => {
                                 <h2 className='prime_h2 font_18 mb-3'>Project Name</h2>
                                 <div className='grid grid-cols-3 gap-2 mb-3'>
                                     <div>
-                                        <span>Posted By: </span> <span>{proj_det.vendor_det.agency_name}</span>
+                                        <span>Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
                                     </div>
                                     <div>
                                         <span>Posting Date: </span> <span>{moment(proj_det.pro_details.created_at).format('DD-MM-YYYY')}</span>

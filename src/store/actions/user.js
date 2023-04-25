@@ -4,7 +4,8 @@ import
     AUTH_CHECK,
     AUTH_LOGIN,
     AUTH_LOGOUT,
-    USER_ROLE
+    USER_ROLE,
+    ACC_STATUS
   } from '../action-types';
 
 export const set_user_auth = (payload) =>
@@ -39,6 +40,12 @@ export function authLogout()
 export function setValue(value) {
     return {
       type: USER_ROLE,
+      payload: value
+    };
+  }
+export function acc_status(value) {
+    return {
+      type: ACC_STATUS,
       payload: value
     };
   }

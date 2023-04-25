@@ -105,7 +105,7 @@ const Dashboard = () => {
                         category.map((cats) => {
                             return <div onClick={() => navigator('/all_contractors', { state: cats })} className="p-16 shadow-md  rounded-[6px] " >
                                 <img src={carbon_clean} className="center_content"/>
-                               <p className='text-center'>{cats.category}</p> 
+                               <p className='text-center'>{cats.name}</p> 
                             </div>
                         })
                     } </div>
@@ -142,10 +142,10 @@ const Dashboard = () => {
                     </div>
                     <div className='grid_card_design'>
                         <img src={proposal} className="grid_img_design" alt="Share Interests" />
-                        <h2 className='grid_heading'>Share Interests</h2>
+                        <h2 className='grid_heading'>Share Interest</h2>
                         <p className='text-center'>
-                            Contractors looking for projects can submit their proposals
-                            to the projects listed by top companies.
+                            Contractors looking for projects can share their interest
+                            for the projects listed by top companies.
                         </p>
                     </div>
 
@@ -169,21 +169,21 @@ const Dashboard = () => {
                         <img className='h-full mr-3' src={down_arrow} />
                         <p className='text-[#FF5757] font-semibold text-[21px] '>Innovation Free of Cost</p>
                     </div>
-                    <p>
+                    <p className='mb-8'>
                         Sourcify drives innovation free of cost through data-driven insights and technology. Sourcify provides a comprehensive platform for businesses to manage their sourcin g and supply chain operations
                     </p>
                     <div className='flex my-3'>
                         <img className='h-full mr-3' src={mssg} />
                         <p className='text-[#FF5757] font-semibold text-[21px] '> Communication and Collaboration </p>
                     </div>
-                    <p>
+                    <p className='mb-8'>
                         Sourcify facilitates communication and collaboration between businesses and contractors, enabling them to work together seamlessly. With Sourcify, businesses can communicate with their contractors and suppliers in real-time, ensuring that everyone is on the same page.
                     </p>
                     <div className='flex my-3'>
                         <img className='h-full mr-3' src={personalized} />
                         <p className='text-[#FF5757] font-semibold text-[21px] '>Personalized Support</p>
                     </div>
-                    <p>
+                    <p className='mb-8'>
                         Sourcify offers personalized support from a team of experts with sourcing and supply chain expertise. With Sourcify, businesses have access to a dedicated account manager who can provide customized solutions and support throughout the sourcing process.
                     </p>
 

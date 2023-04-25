@@ -25,7 +25,7 @@ const Listing = () => {
          <TabPane  tab="All Listings" key="1" >
           <All_Listings  isClicked = {tabKeys}/>
         </TabPane>
-        <TabPane tab="Moderation Listing" key="2">
+        {/* <TabPane tab="Moderation Listing" key="2">
          < Moderation_listings  isClicked={tabKeys}/>
         </TabPane>
         <TabPane tab="Approved Listing" key="3">
@@ -33,7 +33,7 @@ const Listing = () => {
         </TabPane>
         <TabPane tab="Rejected Listing" key="4">
          <Rejected_Listing />
-        </TabPane>
+        </TabPane> */}
       </Tabs>
     }
     </div>

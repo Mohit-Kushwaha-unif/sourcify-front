@@ -14,7 +14,7 @@ const SubHeader = ({filterValue}) => {
             // console.log(res)
             var data = []
             res.map((cats)=>{
-                data.push(cats.category)
+                data.push(cats.name)
             })
             setCategory(data)
         })

@@ -18,7 +18,7 @@ export const update_category = (formValue)=>{
 
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.patch(category_url+'/update_category',formValue).then((res)=>{
+            Http.post(category_url+'/update_category',formValue).then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err)
@@ -48,11 +48,24 @@ export const get_category_by_id = (id)=>{
         })
 }
 
-export const delete_category = (formvalue)=>{
+export const delete_category = (id)=>{
 
     return ()=>
         new Promise((resolve,reject)=>{
-            Http.delete(category_url+'/remove_category',formvalue).then((res)=>{
+            Http.delete(category_url+'/remove_category/'+id).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+}
+
+
+export const get_category_for_ws = (formvalue)=>{
+
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.get(category_url+'/get_category_for_ws').then((res)=>{
                 return resolve(res.data)
             }).catch((err)=>{
                 return reject(err)

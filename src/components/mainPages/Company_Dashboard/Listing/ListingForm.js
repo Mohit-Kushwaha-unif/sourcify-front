@@ -1,4 +1,4 @@
-import { Calendar, DatePicker, Form, Input, Select } from 'antd'
+import { Calendar, Checkbox, DatePicker, Form, Input, Select } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
@@ -19,37 +19,37 @@ const ListingForm = () => {
     const dispatch = useDispatch()
     const [categories, setCategories] = useState([])
     const [sub_cat, setSub_cat] = useState([])
-    const [specificationImage ,setSpecificationImage] = useState()
+    const [specificationImage, setSpecificationImage] = useState()
     const [selectedItems, setSelectedItems] = useState([]);
     const [image, set_ImageD] = useState()
     useDocumentTitle('Add your Listing')
 
     useEffect(() => {
-        if(localStorage.getItem("isLoggedIn")!=="true"){
+        if (localStorage.getItem("isLoggedIn") !== "true") {
             navigator('/login')
         }
-        dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res)=>{
-            if(res.role == 0){
-                navigator('/dashboard')
-                toast.error('Your a contractor not allowed to post projects',{
-                    position: toast.POSITION.TOP_RIGHT
-                })
-            }
-            else if(!res.vendor_id){
-                navigator('/vendor-form')
-            }
-        })
+        // dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res)=>{
+        //     if(res.role == 0){
+        //         navigator('/dashboard')
+        //         toast.error('Your a contractor not allowed to post projects',{
+        //             position: toast.POSITION.TOP_RIGHT
+        //         })
+        //     }
+        //     else if(!res.vendor_id){
+        //         navigator('/vendor-form')
+        //     }
+        // })
         dispatch(get_category()).then((res) => {
 
             res.map((cat) => {
-
+                console.log(cat)
                 setSub_cat((prev_state) => [...prev_state, cat])
-                setCategories((prev_state) => [...prev_state, cat.category])
+                setCategories((prev_state) => [...prev_state, cat.name])
             })
         })
     }, [])
 
-
+    console.log(categories)
 
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
 
@@ -75,7 +75,7 @@ const ListingForm = () => {
         values.status = 1
         values.project_bill_qty = image
         values.project_specification = specificationImage
-         console.log(values)
+        console.log(values)
         Object.keys(values).map((formVal) => {
             if (formVal == "work_area") {
                 formData.append(formVal, JSON.stringify(values[formVal]))
@@ -85,14 +85,14 @@ const ListingForm = () => {
             }
 
         })
-      
+
         dispatch(add_listing(formData)).then((res) => {
             Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success')
-        }).then(()=>{
+        }).then(() => {
             navigator('/dashboard')
         })
     }
-    function specificationimageHandler(e){
+    function specificationimageHandler(e) {
         setSpecificationImage(e.target.files[0])
     }
     function imageHandler(e) {
@@ -119,7 +119,7 @@ const ListingForm = () => {
                         </div>
                         <Form labelAlign="left"
                             layout="vertical" onFinish={FormHandler}>
-                            <Form.Item name='project_discription'  label="Project Description" rules={[
+                            <Form.Item name='project_discription' label="Project Description" rules={[
                                 {
                                     required: true,
                                     message: 'Write the description of your project'
@@ -127,9 +127,9 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <TextArea className='input_border' placeholder='Enter project description' />
+                                <TextArea placeholder='Enter project description' />
                             </Form.Item>
-                            <Form.Item name="wok_segment"  label="Select category for your project" rules={[
+                            <Form.Item name="wok_segment" label="Select category for your project" rules={[
                                 {
                                     required: true,
                                     message: 'Please select category for your project',
@@ -151,24 +151,28 @@ const ListingForm = () => {
                             </Form.Item>
                             {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                                 return sub_cat.map((sub_category) => {
-                                    return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
-                                        <Form.Item name={sub_item}  label={`Select Sub Category For ${sub_item}`} rules={[
+                                    return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                                        <Form.Item name={sub_item} label={`Select Sub Category For ${sub_item}`} rules={[
                                             {
                                                 required: true,
                                                 message: 'Please Select options',
                                             },
                                         ]}>
-                                            <Select
-                                                mode="multiple"
-                                                placeholder="Select Categories"
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                                options={sub_category.sub_category.map((item) => ({
-                                                    value: item.sub_Category,
-                                                    label: item.sub_Category,
-                                                }))}
-                                            />
+                                            <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                                {sub_category.children.map((item, index) => {
+
+                                                    return (
+                                                        <Checkbox
+                                                            key={item.sub_Category}
+                                                            className={`ml-${index === 0 ? 2 : 0} `}
+                                                            value={item._id}
+                                                        >
+                                                            <span>{item.name}</span>
+                                                        </Checkbox>
+                                                    );
+                                                })}
+                                            </Checkbox.Group>
+                                     
                                         </Form.Item>
                                     </>
 
@@ -192,7 +196,7 @@ const ListingForm = () => {
                                     )}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name='project_scope'  label="Scope of Work" rules={[
+                            <Form.Item name='project_scope' label="Scope of Work" rules={[
                                 {
                                     required: true,
                                     message: 'Write the scope of your project'
@@ -200,19 +204,19 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <TextArea className='input_border' placeholder='Enter scope of your project' />
+                                <TextArea placeholder='Enter scope of your project' />
                             </Form.Item>
-                            <Form.Item name='project_specification'  label="Work Specification" rules={[
+                            <Form.Item name='project_specification' label="Work Specification" rules={[
                                 {
                                     required: true,
                                     message: 'Please attach your work specifications'
                                 },
                             ]}
                             >
-                                <Input className='input_border' type='file' max={1} onChange={specificationimageHandler} />
+                                <Input type='file' max={1} onChange={specificationimageHandler} />
 
                             </Form.Item>
-                            <Form.Item name='project_bill_qty'  label="Please attach Project bill Quantity" rules={[
+                            <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
                                 {
                                     required: true,
                                     message: 'Please attach your bill quantity'
@@ -220,12 +224,12 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <Input className='input_border' type='file' max={1} onChange={imageHandler} />
+                                <Input type='file' max={1} onChange={imageHandler} />
                             </Form.Item>
 
 
 
-                            <Form.Item name='project_tent_date'  label="Please select the tentative date to start the project" rules={[
+                            <Form.Item name='project_tent_date' label="Please select the tentative date to start the project" rules={[
                                 {
                                     required: true,
                                     message: 'Please enter the date to start project'
@@ -233,7 +237,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <DatePicker className='input_border' disabledDate={disabledDate} onChange={onChange} />
+                                <DatePicker disabledDate={disabledDate} onChange={onChange} />
                             </Form.Item>
                             <div className="flex justify-center text-center lg:text-left mt-2">
                                 <button
@@ -249,7 +253,7 @@ const ListingForm = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </section>
     )
 }

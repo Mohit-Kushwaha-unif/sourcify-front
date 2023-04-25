@@ -30,11 +30,12 @@ const ProjectDetails = () => {
         })
 
     }, [isTrue])
-    // console.log(formValues)
+    console.log(formValues)
 
     const showModal = () => {
-        if(userRole==1){
-            toast.error('You are not a sub-contractor', {
+
+         if(localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id){
+            toast.error('Can not send proposal to your own projects', {
                 position: toast.POSITION.TOP_RIGHT
               })
         }
@@ -55,6 +56,7 @@ const ProjectDetails = () => {
         formData.proposal = proposalVal
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
+         
             navigator('/dashboard')
         })
     }
@@ -143,7 +145,7 @@ const ProjectDetails = () => {
                                             <span class="block text-gray-700 font-bold mb-2" for="email">
                                                 Agency Name -
                                             </span>
-                                            {formValues.vendorDetail[0].agency_name}
+                                            {formValues.vendorDetail[0].agency_name || formValues.vendorDetail[0].entity}
 
                                         </div>
                                         <div class="mb-4 flex">
@@ -160,7 +162,7 @@ const ProjectDetails = () => {
                                         <span class="block text-gray-700 font-bold mb-2" for="email">
                                             Contact Person   -
                                         </span>
-                                        {formValues.vendorDetail[0].contact_person}
+                                        {formValues.vendorDetail[0].contact_person || formValues.vendorDetail[0].username}
                                     </div>
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="email">

@@ -33,6 +33,7 @@ const FindContractor = () => {
 
     })
   }, [])
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(9);
   const handlePageChange = (page, pageSize) => {
@@ -182,7 +183,7 @@ function proposalHandler(e) {
                   </div>
                   <div className='col-span-4 '>
                     <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
-                      <span className='white_p mr-3 font_700'>Hire me</span>
+                      <span className='white_p mr-3 font_700'>Contact</span>
                       <img src={right_red} />
                     </button>
                    

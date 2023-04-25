@@ -6,82 +6,66 @@ import { get_category, update_category } from '../../../../../services/category'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Collapse } from "antd";
+const { Panel } = Collapse;
+
 
 const Edit_category = ({ formValues }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [Child, setChild] = useState([])
     const [category, setCategory] = useState([])
-    const getAllCategoryNames = (categories) => {
-        let categoryNames = [];
 
-        const extractCategoryNames = (category) => {
 
-            if (category.sub_category && category.sub_category.length > 0) {
-                category.sub_category.forEach((subCategory) => {
-                    extractCategoryNames(subCategory);
-                });
-            }
-        };
 
-        const extractSubCategoryNames = (subCategories) => {
-            subCategories.forEach((subCategory) => {
-                categoryNames.push(subCategory.name);
-                if (subCategory.sub_category && subCategory.sub_category.length > 0) {
-                    extractSubCategoryNames(subCategory.sub_category);
-                }
-            });
-        };
+    const CategoryList = ({ categories, selectedCategoryId }) => {
+        if (category.length > 0) {
 
-        categories.forEach((category) => {
-            categoryNames.push(category.category)
-            if (category.sub_category && category.sub_category.length > 0) {
-                extractSubCategoryNames(category.sub_category);
-            }
-        });
+                const renderCategories = (categories) => {
+                  return categories.map((category) => (
+                    <Panel key={category._id} header={category.name}>
+                      {category.children.length > 0 && (
+                        <CategoryList
+                          categories={category.children}
+                          selectedCategoryId={selectedCategoryId}
+                        />
+                      )}
+                    </Panel>
+                  ));
+                };
+              
+                // Find the category object with the selectedCategoryId
+                const selectedCategory = categories.find(
+                  (category) => category._id === selectedCategoryId
+                );
+              
+                return (
+                  <Collapse defaultActiveKey={[selectedCategory?._id]}>
+                    {renderCategories(selectedCategory?.children || categories)}
+                  </Collapse>
+                );
+              };
+    }
 
-        return categoryNames;
-    };
+    // Usage example
+
 
     useEffect(() => {
         dispatch(get_category()).then((res) => {
-            const allCategoryNames = getAllCategoryNames(res);
-            setCategory(allCategoryNames);
+            setCategory(res);
         });
     }, []);
-    const renderCategoryList = (categories, depth = 0) => {
-        return (
-            <ul className="list-none">
-                {categories.map((category, index) => {
-                    const { name, sub_category } = category;
-                     
-                        console.log(category.category || sub_category,name)
-                        const subCategories =
-                            sub_category && sub_category.length > 0 ? renderCategoryList(sub_category, depth + 1) : null; // Recursively render sub-categories
 
-                        return (
-                            <li className="relative" key={index}>
-                                {/* Render custom bullet point with indentation based on depth */}
-                                <div style={{ paddingLeft: `${depth * 20}px` }}>
-                                    <span className="absolute top-[-0.25rem] left-0 mt-0.5">&#8226;</span>
-                                    {name}
-                                </div>
-                                {/* Render sub-categories */}
-                                {subCategories}
-                            </li>
-                        );
-                    
-                })}
-            </ul>
-        );
-    };
+
     function FormHandler(values) {
-        console.log(formValues)
-        values["cat_id"] = formValues._id
+        if(values.parent == "none"){
+            values.parent = null
+        }
+         
+        values["id"] = formValues._id
         dispatch(update_category(values)).then((res) => {
-            console.log(res)
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'success',
                 title: "Category Successfully Updated",
                 showConfirmButton: true,
@@ -95,20 +79,19 @@ const Edit_category = ({ formValues }) => {
     Object.keys(formValues).map((value) => {
 
         var obj = {}
-        if (value == "sub_category") {
-
-
-            obj["name"] = "sub_categories"
-            obj["value"] = formValues.sub_category
+       
+         if (value == "parent_cat" || value == "parent") {
+            obj["name"] = "parent"
+            obj["value"] = formValues.parent == null ? "none" : formValues.parent_cat._id
             initialValue.push(obj)
-
-        } else {
+        }
+        else {
             obj["name"] = value
             obj["value"] = formValues[value]
             initialValue.push(obj)
         }
     })
-    console.log(initialValue)
+
     return (
         <div className='grid grid-cols-5 gap-6  w-full p-2 px-3 '>
             <div className='col-span-2 pt-7 px-7 h-auto w-full bg-white p-3 rounded-xl '>
@@ -117,7 +100,7 @@ const Edit_category = ({ formValues }) => {
                     layout="vertical"
                     fields={[...initialValue]}
                     onFinish={FormHandler}>
-                    <Form.Item name="category" label="Category Name " rules={[
+                    <Form.Item name="name" label="Category Name " rules={[
                         {
                             required: true,
                             message: 'Please input your Category!'
@@ -126,7 +109,7 @@ const Edit_category = ({ formValues }) => {
                     >
                         <Input placeholder='Enter the Categoy name you want to add' />
                     </Form.Item>
-                    <Form.Item name="parent_cat" label="Select Work Segment " rules={[
+                    <Form.Item name="parent" label="Select Work Segment " rules={[
                         {
                             required: true,
                             message: 'Please input your Category!'
@@ -137,7 +120,8 @@ const Edit_category = ({ formValues }) => {
                             <Select.Option value="none">None</Select.Option>
                             {
                                 category.length > 0 && category.map((cat) => {
-                                    return <Select.Option value={cat}>{cat}</Select.Option>
+                                    console.log(cat)
+                                    return <Select.Option value={cat._id}>{cat.name}</Select.Option>
                                 })
                             }
                         </Select>
@@ -220,7 +204,10 @@ const Edit_category = ({ formValues }) => {
                         return  <li className='ml-5'>{dets}</li> 
                 })}
                 </ul> */}
-                {renderCategoryList([formValues])}
+                <CategoryList
+                    categories={category}
+                    selectedCategoryId={formValues._id}
+                />
             </div>
 
         </div>

@@ -5,6 +5,7 @@ import { AiOutlineMessage } from 'react-icons/ai'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing, get_listingBy_id } from '../../../services/listing'
+import Company_Dashboard from '../Company_Dashboard/Company_Dashboard'
 
 const Contractor_Dashboard = () => {
   const navigator = useNavigate()
@@ -172,7 +173,7 @@ const Contractor_Dashboard = () => {
             </div>
           </div>
         </section>
-
+       
         {/* <div className='ml-6 font-semibold'>Projects you might Like to work on </div>
         <div className='grid grid-cols-6'>
 
@@ -214,6 +215,7 @@ const Contractor_Dashboard = () => {
           </div>
         </div> */}
       </div>
+      <Company_Dashboard />
     </>
   )
 }

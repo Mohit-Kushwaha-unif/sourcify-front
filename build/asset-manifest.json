@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.5216964c.css",
-    "main.js": "/static/js/main.6182863d.js",
+    "main.css": "/static/css/main.f3dd15fb.css",
+    "main.js": "/static/js/main.2d900c70.js",
     "static/media/About_us_Hero_Banner.jpg": "/static/media/About_us_Hero_Banner.78a30544836eefe380b2.jpg",
     "static/media/build.jpg": "/static/media/build.642ddde7554973abce5b.jpg",
     "static/media/person.jpg": "/static/media/person.c273ba3dba30c5357137.jpg",
@@ -20,13 +20,12 @@
     "static/media/owner.jpg": "/static/media/owner.dc703d2c537f4acf1118.jpg",
     "static/media/proposal.png": "/static/media/proposal.3474cc44018f6a8a156e.png",
     "static/media/register.png": "/static/media/register.39b4c2d1cd720913ed6e.png",
-    "static/media/Sourcify Logo.png": "/static/media/Sourcify Logo.117991e9b3cca7e5ad9d.png",
     "index.html": "/index.html",
-    "main.5216964c.css.map": "/static/css/main.5216964c.css.map",
-    "main.6182863d.js.map": "/static/js/main.6182863d.js.map"
+    "main.f3dd15fb.css.map": "/static/css/main.f3dd15fb.css.map",
+    "main.2d900c70.js.map": "/static/js/main.2d900c70.js.map"
   },
   "entrypoints": [
-    "static/css/main.5216964c.css",
-    "static/js/main.6182863d.js"
+    "static/css/main.f3dd15fb.css",
+    "static/js/main.2d900c70.js"
   ]
 }

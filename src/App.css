@@ -587,11 +587,16 @@ input[type=number] {
   line-height: 19px !important;
 }
 
-.ant-select-selector{
-  border-radius: 6px !important;
-  background: #FFFFFF !important;
-  border-color:  #000000 !important;
-}
+
 .ant-select-arrow{
   color: #000000 !important;
+}
+
+.moderation_color{
+ background-color:  rgb(202 138 4 ) !important
+}
+
+
+.ant-input-search .ant-input-search-button{
+  height: 2.2rem !important;
 }

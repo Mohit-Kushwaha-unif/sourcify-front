@@ -56,5 +56,16 @@ export const search_vendor = (fromData)=>{
                 return reject(err);
             })
         })
+}
+
+export const remove_vendor = (fromData)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.delete(vendor_url+'/remove_vendor/'+fromData).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err);
+            })
+        })
     
 }

@@ -200,9 +200,9 @@ const Login = () => {
                 <p className="normal_text">
                   <span className='mr-0'> Don't have an account? </span>
                   <Link
-                    to='/'
+                    to='/register'
                     className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-                  >Sign Up</Link>
+                  >Register</Link>
                 </p>
               </div>
               <div className='flex justify-center mt-6'>
