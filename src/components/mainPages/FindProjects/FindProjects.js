@@ -84,14 +84,14 @@ const FindProjects = () => {
                     });
                 }
             });
-            console.log(projDet);
+           
             setProjectDetails([...projDet]);
         });
-        console.log(projDet);
+       
         setProjectDetails([...projDet]);
     }, [projects, dispatch]);
 
-    console.log({ projectDetails })
+  
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
@@ -142,11 +142,7 @@ const FindProjects = () => {
         if (localStorage.getItem("isLoggedIn") == false) {
             navigate('/login')
         }
-        if (userRole == 1) {
-            toast.error('You are not a sub-contractor', {
-                position: toast.POSITION.TOP_RIGHT
-            })
-        }
+        
         else {
             setIsCompany(true)
         }

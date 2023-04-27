@@ -15,15 +15,9 @@ const All_Listings = () => {
     var data = []
     var catData = []
     useEffect(() => {
-        
-
-       
-        tableDataMaker()
-          
+        tableDataMaker()       
         dispatch(get_category()).then((res)=>{
-           
-          
-            res.map((cat)=>{
+        res.map((cat)=>{
                 var dataa = {}
                 dataa["text"] = cat.name
                 dataa["value"] = cat.name
@@ -199,19 +193,20 @@ const All_Listings = () => {
                     className="flex w-full  flex-wrap h-full g-6 "
                 >
                     <div className="xl: w-full overflow-x-auto lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                       
+                        <div className="flex flex-row items-center justify-center lg:justify-start">
+                            <p className="headings mb-3 mr-4">All Listings</p>
+                        </div>
                         <button
                             onClick={() => navigator('/dashboard/listing-form')}
-                            className="primary_btn mb-5"
+                            className="brand_button padding_6_9 mb-5"
                         >
                             Add New Listing </button>
-                        <div className="flex flex-row items-center justify-center lg:justify-start">
-                            <p className="text-lg mb-0 mr-4">All Listings</p>
-                        </div>
                         <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
-                           <span className='my-6 md:mb-0'> Search in the table - </span>
+                           
 
                         <Input.Search
-                            className='md:w-[30%] mx-8'
+                            className='md:w-[30%] '
                             placeholder="Search by..."
                             onSearch={search}
                         />

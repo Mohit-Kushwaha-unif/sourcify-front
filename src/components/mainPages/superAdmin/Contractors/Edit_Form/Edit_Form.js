@@ -27,19 +27,13 @@ const Edit_Form = () => {
       console.log({activeTab})
       
   return (
-    <div className='flex align-center ml-30 w-full p-2 px-3'>
+    <div className='w-full container mt-5 '>
         {
-            formData!==1 &&  <Tabs centered defaultActiveKey="1" onChange={tabKeys} onTabClick={tabKeys} activeKey={activeTab}  className='w-full'>
-             <TabPane  tab="Basic Details" key="1"  disabled={activeTab!==tabKeys}>
+            formData!==1 &&  
               <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
-            </TabPane>
-            {/* <TabPane tab="Work Experience" key="2"  disabled={activeTab!==tabKeys}>
-             <Work_Experiece formValues = {formData} isClicked={tabKeys}/>
-            </TabPane>
-            <TabPane tab="Financial details" key="3"  disabled={activeTab!==tabKeys}>
-             <FinancialDetail formValues = {formData} isClicked={tabKeys}/>
-            </TabPane> */}
-          </Tabs>
+            
+            
+         
         }
    
     </div>

@@ -8,7 +8,7 @@ import { get_listing, get_listingBy_id } from '../../../services/listing'
 import Company_Dashboard from '../Company_Dashboard/Company_Dashboard'
 import { get_Vendor } from '../../../services/Vendor'
 
-const Contractor_Dashboard = () => {
+const Contractor_Dashboard = ({companyContractData}) => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
@@ -38,7 +38,6 @@ const Contractor_Dashboard = () => {
           contact?.Applied.map((applied, index) => {
 
             if (applied.listing_id != null) {
-                console.log(applied)
               data.push({
                 '_id': applied._id,
                 'key': index,
@@ -56,8 +55,10 @@ const Contractor_Dashboard = () => {
 
       // }
     })
+   
   }, [location])
 
+  
 
   function msgNavigationHandler(data) {
     contractors?.Applied.map((contDet) => {
@@ -71,10 +72,14 @@ const Contractor_Dashboard = () => {
       }
     })
   }
+  useEffect(()=>{
+    if(tableData.length >0)
+    {
+      companyContractData(tableData)
+    }
+  },[tableData])
+  
 
-  const projectHandler = (id) => {
-    navigator('/projectDetails', { state: id })
-  }
   const columns = [
     {
       title: 'S.No',
@@ -167,7 +172,7 @@ const Contractor_Dashboard = () => {
               <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>
+                  <p className="text-lg mb-1 mr-4 font-semibold">Projects in you shared Intrest</p>
                 </div>
                 <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
               </div>

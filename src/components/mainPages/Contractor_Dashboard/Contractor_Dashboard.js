@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd'
+import { Card, Col, Row, Space, Table, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AiOutlineMessage } from 'react-icons/ai'
@@ -6,16 +6,34 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing, get_listingBy_id } from '../../../services/listing'
 import Company_Dashboard from '../Company_Dashboard/Company_Dashboard'
+import Meta from 'antd/es/card/Meta'
 
 const Contractor_Dashboard = () => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
+
   const [project, setProjects] = useState([])
   var data = []
   const [tableData, setTableData] = useState([])
   const [lisitngs, setAllLisitngs] = useState([])
   const [contractors, setContractors] = useState([])
+  const [postedProjects, setPostedProjects] = useState(0)
+  const [activeProjects, setActiveProjects] = useState(0)
+  var count = 0
+  function Company_Data(val) {
+    console.log(val)
+    val.map((details) => {
+      if (details.status == 'Approved') {
+        count = count + 1
+        // setActiveProjects((prevActiveProjects) => prevActiveProjects + 1);
+      }
+
+    })
+    setActiveProjects(count)
+    setPostedProjects(val.length)
+  }
+
   useEffect(() => {
     dispatch(get_listing(location?.state)).then((res) => {
       var data = []
@@ -29,7 +47,6 @@ const Contractor_Dashboard = () => {
     })
     dispatch(get_contractor()).then((respnse) => {
       setContractors(respnse)
-      // if(res._id === formValues.vendorDetail._id){
       respnse.map((contact) => {
         if (contact.user_id?._id === localStorage.getItem('user_id')) {
           setContractors(contact)
@@ -37,7 +54,9 @@ const Contractor_Dashboard = () => {
           contact?.Applied.map((applied, index) => {
 
             if (applied.listing_id != null) {
-           
+              if (applied.status == 1) {
+                setActiveProjects((prevActiveProjects) => prevActiveProjects + 1);
+              }
               data.push({
                 '_id': applied._id,
                 'key': index,
@@ -61,9 +80,9 @@ const Contractor_Dashboard = () => {
   function msgNavigationHandler(data) {
     contractors?.Applied.map((contDet) => {
       if (contDet._id == data._id) {
-   
+
         dispatch(get_listingBy_id(contDet.listing_id._id)).then((res) => {
-         
+
           navigator('/messages', { state: { _id: res.listing.user_id } })
         })
 
@@ -157,13 +176,52 @@ const Contractor_Dashboard = () => {
   ];
   return (
     <>
-      <div>
-        <section className="container min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
-          <div className="px-2 h-auto text-gray-800">
+
+      <div >
+
+        <section className="container  min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
+
+          <div className='grid grid-cols-1 md:gap-x-6  mb-5 md:grid-cols-4'>
+
+            <Card title="Posted Projects " bordered={false}>
+              <div className='grid grid-cols-3 place-items-center'>
+
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects}</p>
+                <p className='col-span-2 text-lg'> You had posted {postedProjects} projects till now</p>
+              </div>
+            </Card>
+
+            <Card title="Shared Intreseted Projects" bordered={false}>
+              <div className='grid grid-cols-3 place-items-center'>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {tableData.length}</p>
+                <p className='col-span-2 text-lg'> You have shared your interest in {tableData.length} project</p>
+              </div>
+
+            </Card>
+
+
+            <Card title="Active Projects" bordered={false}>
+            <div className='grid grid-cols-3 place-items-center'>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {activeProjects}</p>
+                <p className='col-span-2 text-lg'> Your Ongoing Projects are {activeProjects}</p>
+              </div>
+              
+            </Card>
+
+            <Card title="All Projects" bordered={false}>
+            <div className='grid grid-cols-3 place-items-center'>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects + tableData.length}</p>
+                <p className='col-span-2 text-lg'> Your Total Number of projects</p>
+              </div>
+               
+            </Card>
+          </div>
+
+          <div className="px-2 h-auto text-gray-800 ">
             <div
               className="flex w-full flex-wrap h-full  "
             >
-              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6">
+              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6 rounded-xl">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>
@@ -173,7 +231,7 @@ const Contractor_Dashboard = () => {
             </div>
           </div>
         </section>
-       
+
         {/* <div className='ml-6 font-semibold'>Projects you might Like to work on </div>
         <div className='grid grid-cols-6'>
 
@@ -215,7 +273,7 @@ const Contractor_Dashboard = () => {
           </div>
         </div> */}
       </div>
-      <Company_Dashboard />
+      <Company_Dashboard dataTransfer={Company_Data} />
     </>
   )
 }

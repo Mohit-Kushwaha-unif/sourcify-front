@@ -33,7 +33,8 @@ const Sidebar = () => {
       }, [screenSize])
     return (
 
-        <div className="flex relative flex-col min-h-screen h-inherit bg-white w-[17%] px-4 p-3">
+        <div className="flex relative flex-col bg-gray-100 bg-opacity-80 min-h-screen h-inherit w-[17%] px-4 p-3 rounded-b-lg rounded-tr-lg border-2 border-transparent shadow-lg">
+
             <div className="space-y-5">
                 { <div className='z-10  absolute top-[-19px] left-[50px]'><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></div>}
              { showMenu&&  <>

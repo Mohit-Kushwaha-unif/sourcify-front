@@ -41,8 +41,8 @@ const Edit_category = ({ formValues }) => {
             );
 
             return (
-                <Collapse defaultActiveKey={[selectedCategory?._id]}>
-                    {renderCategories(selectedCategory?.children || categories)}
+                <Collapse  defaultActiveKey={[selectedCategory?._id]}>
+                    {renderCategories(selectedCategory?.children || [])}
                 </Collapse>
             );
         };
@@ -88,7 +88,7 @@ const Edit_category = ({ formValues }) => {
                     obj["name"] = "parent"
                     obj["value"] = formValues.parent == null ? "none" : formValues.parent_cat.name 
                     initialValue.push(obj)
-                    setCat_id(formValues.parent_cat._id)
+                    formValues.parent == null ? setCat_id(null) : setCat_id(formValues.parent_cat._id)
                 }
                 else if (value == "featured_img") {
                     setShowImg(true)

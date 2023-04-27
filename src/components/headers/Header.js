@@ -19,6 +19,7 @@ import { get_category } from '../../services/category';
 import SubHeader from './Sub-Header';
 import { toast, ToastContainer } from 'react-toastify'
 import { acc_status } from '../../store/actions/user';
+import { search_db } from '../../services/DB';
 
 const Header = () => {
 
@@ -135,34 +136,22 @@ const Header = () => {
   function submitHandler(e) {
     e.preventDefault()
     setIsOpen(false)
-    if (selected === "Vendor") {
-      dispatch(search_vendor(input)).then((res) => {
+  
+      dispatch(search_db(input)).then((res) => {
         setIsOpen(false)
-        navigate('/results', { state: { selected, input, res } })
-        // console.log(res)
-      })
-    }
-    else if (selected === "Listing") {
-      dispatch(search_listing(input)).then((res) => {
-        setIsOpen(false)
-        navigate('/results', { state: { selected, input, res } })
-        // console.log(res)
-      })
-
-    }
-    else {
-      dispatch(search_contractor(input)).then((res) => {
-        setIsOpen(false)
-        navigate('/results', { state: { selected, input, res } })
-        // console.log(res)
-      })
-    }
+        navigate('/results/'+input, { state: { selected, input, res } })
+     
+    })
   }
   const handleSettings = () => {
     // Handle settings logic
     setIsOpen(false)
     navigate('/update-profile')
   };
+  const handleMenus = ()=>{
+    setShowMenu(!showMenu);
+     setIsOpen(false)
+  }
   return (
     <>
       {
@@ -172,39 +161,36 @@ const Header = () => {
           <TopBar />
           <div className='bg-white'>
             <div className='container py-2'>
-              <header className=' grid grid-cols-2 md:grid-cols-12 '>
+            <header className={`${showMenu ? 'h-[370px]' : ''} md:h-auto grid grid-cols-2 md:grid-cols-12`}>
+
 
                 <div className='md:col-span-2 grid place-items-center '>
                   <div> <img className='  md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
                 </div>
 
-                <div className='absolute cursor-pointer text-2xl right-3 top-[3rem] md:hidden'><MenuOutlined onClick={() => { setShowMenu(!showMenu) }} /></div>
+                <div className='absolute cursor-pointer text-2xl right-3 top-[3rem] md:hidden'><MenuOutlined onClick={() => { handleMenus() }} /></div>
 
-                {/* {isLoggedIn && showMenu && <><NavLink to={'/dashboard'} className='navbar__item mr-2' >
-              Dashboard
-            </NavLink>
-              </>} */}
 
                 {showMenu && <>
-                  <div className='col-span-4 md:flex justify-between items-center place-content-center'>
+                  <div className='col-span-4 flex-col flex md:justify-between md:flex-row md:items-center md:place-content-center'>
 
-                    <NavLink className='header_text cursor-pointer' to={'/contractors'} >Find Contractors</NavLink>
-
-
-                    <NavLink className='header_text cursor-pointer' to={'/project_list'}>Find Projects</NavLink>
+                    <NavLink className='header_text flex cursor-pointer' to={'/contractors'} >Find Contractors</NavLink>
 
 
-                    <NavLink className='header_text cursor-pointer ' to={'/SourcifyWork'}>How it works</NavLink>
+                    <NavLink className='header_text flex cursor-pointer' to={'/project_list'}>Find Projects</NavLink>
+
+
+                    <NavLink className='header_text flex cursor-pointer ' to={'/SourcifyWork'}>How it works</NavLink>
                   </div>
                   {showMenu && <>
-                    <div className='grid place-items-center col-span-3 mx-4 ' >
-
-                      <Input placeholder='Search for contractors or projects ' className='input_radius' suffix={<img src={search_icon} />} />
-
+                    <div className='grid w-[40%] md:w-[80%]  md:place-items-center col-span-3 mx-4 ' >
+                    <form onSubmit={submitHandler}>
+                      <Input onChange={inputHandler} placeholder='Search for contractors or projects ' className='input_radius' suffix={<img src={search_icon} />} />
+                    </form>
                     </div>
                   </>
                   }
-                  <div className='col-span-3  md:flex flex-start items-center place-items-center'>
+                   <div className='col-span-3  md:flex flex-start items-center place-items-center'>
                     {isLoggedIn ?
                       <>
                         <NavLink to="/messages" className="mr-2">Messages</NavLink>
@@ -253,12 +239,13 @@ const Header = () => {
                   </div>
                 </>}
                 {isOpen && (
-                  <div className="absolute z-10 top-[13%] right-[18%]   w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute z-[999] top-[25%] md:top-[88px] w-[210px]  left-[43%]  md:left-[66%] bg-[rgba(244, 244, 244, 0.8)]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {showStatus && <div className='px-4 py-2'>
                         <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>Account status - </span>
                         <span>{accountStatus === 0 ? <Tag color="green">Live</Tag> : accountStatus === 1 ? <Tag color="yellow">Moderation</Tag> : <Tag color="volcano">Blocked</Tag>}</span>
                       </div>}
+                      <div className='px-4 py-2' onClick={()=>{navigate('/dashboard')}}>Dashboard</div>
                       {/* <button
                     onClick={handleSettings}
                     className="block px-4 py-2 text-sm w-full text-left"
@@ -280,7 +267,6 @@ const Header = () => {
                     Update Profile
                   </button> */}
 
-                      {/* <button className='navbar__button hover:text-white rounded-[25px]' onClick={logoutHandler} type="link">Logout </button> */}
                       <button
                         onClick={logoutHandler}
                         className="block px-4 py-2 text-sm w-full text-left"

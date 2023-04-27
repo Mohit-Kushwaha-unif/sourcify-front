@@ -90,11 +90,10 @@ const PersonalDetails = () => {
     newFileList[index] = event.target.files;
     setFileList(newFileList);
   };
-
+  
 
   useEffect(() => {
     dispatch(get_category()).then((res) => {
-      // console.log(res)
       res.map((cat) => {
         set_work_Segment((prev_state) => [...prev_state, cat.name])
       })
@@ -392,7 +391,7 @@ const PersonalDetails = () => {
               </div>
 
               {
-                !Array.isArray(formData) > 0 ?
+                !Array.isArray(formData) > 0 || formData == null ?
                   <Form
                     form={form}
                     labelCol={{
@@ -646,37 +645,36 @@ const PersonalDetails = () => {
                     </Form.Item>
 
                     {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                      return sub_cat.map((sub_category) => {
-                        return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
-                          {
-                            <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                              {
-                                required: true,
-                                message: 'Please select options',
-                              },
-                            ]}>
-                              <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                {sub_category.sub_category.map((item, index) => {
+                        return sub_cat.map((sub_category) => {
+                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                            {
+                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                {
+                                  required: true,
+                                  message: 'Please select options',
+                                },
+                              ]}>
+                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                  {sub_category.children.map((item, index) => {
 
-                                  return (
-                                    <Checkbox
-                                      key={item.sub_Category}
-                                      className={`ml-${index === 0 ? 2 : 0} `}
-                                      value={item.sub_Category}
-                                    >
-                                      <span>{item.sub_Category}</span>
-                                    </Checkbox>
-                                  );
-                                })}
-                              </Checkbox.Group>
+                                    return (
+                                      <Checkbox
+                                        key={item.name}
+                                        className={`ml-${index === 0 ? 2 : 0} `}
+                                        value={item.name}
+                                      >
+                                        <span>{item.name}</span>
+                                      </Checkbox>
+                                    );
+                                  })}
+                                </Checkbox.Group>
+                              </Form.Item>
+                            }
 
-                            </Form.Item>
-                          }
-
-                        </>
+                          </>
+                        })
                       })
-                    })
-                    }
+                      }
                     {/*******************************************/}
 
 
@@ -1106,7 +1104,7 @@ const PersonalDetails = () => {
                       </Form.Item>
                       {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                         return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
+                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
                             {
                               <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
                                 {
@@ -1115,15 +1113,15 @@ const PersonalDetails = () => {
                                 },
                               ]}>
                                 <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.sub_category.map((item, index) => {
+                                  {sub_category.children.map((item, index) => {
 
                                     return (
                                       <Checkbox
-                                        key={item.sub_Category}
+                                        key={item.name}
                                         className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.sub_Category}
+                                        value={item.name}
                                       >
-                                        <span>{item.sub_Category}</span>
+                                        <span>{item.name}</span>
                                       </Checkbox>
                                     );
                                   })}
@@ -1531,7 +1529,7 @@ const PersonalDetails = () => {
                       </Form.Item>
                       {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                         return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
+                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
                             {
                               <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
                                 {
@@ -1540,15 +1538,15 @@ const PersonalDetails = () => {
                                 },
                               ]}>
                                 <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.sub_category.map((item, index) => {
+                                  {sub_category.children.map((item, index) => {
 
                                     return (
                                       <Checkbox
-                                        key={item.sub_Category}
+                                        key={item.name}
                                         className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.sub_Category}
+                                        value={item.name}
                                       >
-                                        <span>{item.sub_Category}</span>
+                                        <span>{item.name}</span>
                                       </Checkbox>
                                     );
                                   })}

@@ -9,12 +9,13 @@ import useDocumentTitle from '../../Helper/useDocumentTitle'
 import Contractor_Dashboard from '../Contractor_Dashboard/Contractor_Dashboard'
 import ListingCard from './Listing/listingCard'
 // import Table from 'ant-responsive-table'
-const Company_Dashboard = () => {
+const Company_Dashboard = ({dataTransfer}) => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const [tableData, setTableData] = useState([])
   const [contractor, setContractors] = useState([])
   const [accountStatus, setaccountStatus] = useState()
+  var [activeProjects,setActiveProjects] = useState(0)
   var data = []
   var status = useSelector(state =>state.User.acc_status)
   useEffect(()=>{
@@ -22,10 +23,12 @@ const Company_Dashboard = () => {
   },[status])
   useDocumentTitle('Dashboard')
   
-  console.log({accountStatus})
   useEffect(() => {
     dispatch(get_listing_user(localStorage.getItem('user_id'))).then((res) => {
       res.map((tableData, index) => {
+        if( tableData.status === 0){
+          setActiveProjects(prevState =>prevState+1)
+        }
         data.push({
           '_id': tableData._id,
           'key': index,
@@ -35,11 +38,14 @@ const Company_Dashboard = () => {
         })
       })
       setTableData(data)
+      
     })
+
     dispatch(get_contractor()).then((res) => {
       setContractors(res)
     })
   }, [])
+  dataTransfer(tableData)
   function deleteHandler(id) {
     dispatch(remove_listing({ listing_id: id }))
   }
@@ -124,15 +130,8 @@ const Company_Dashboard = () => {
               className="flex w-full flex-wrap h-full  "
             >
               <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-                <button
-                 onClick={()=>{accountStatus!==0 ?  toast.error('Account is  not approved by admin', {
-                  position: toast.POSITION.TOP_RIGHT
-                }) : navigator('/dashboard/listing-form')}}
-                  className="save_Btn mb-6 px-6 "
-                >
-                  Add New Listing </button>
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-6 mr-4 font-semibold">Your Previous Listings</p>
+                  <p className="text-lg mb-6 mr-4 font-semibold">Your Posted Projects</p>
                 </div>
 
                 <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
@@ -140,45 +139,10 @@ const Company_Dashboard = () => {
             </div>
           </div>
         </section>
-        {/* <div className='px-6 '>
-          <p className='text-xl font-semibold  capitalize'>Sub-Contractors you might want to  work with </p>
-          <div class="p-10 grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-
-
-            {contractor.length > 0 && contractor.reverse().map((contract, index) => {
-              if (index < 5) {
-                return <>
-                  <div class="rounded-[25px] overflow-hidden shadow-lg ">
-                    <div class="px-6 py-4">
-                      <h1 className='font-bold mb-2'> Details</h1>
-                      <div class="font-semibold text-xl mb-2 capitalize"> <span className=''>Username- </span>
-                        <span className='text-[#FF5757] font-semibold'>{contract.username}</span></div>
-                      <h3 className='font-semibold mb-2 '>Working States</h3>
-                      {contract.prefferd_states.map((state) => {
-                        return <span class="inline-block bg-[#FF5757] font-medium rounded-full px-3 py-1 text-sm  text-[#ffffff] mb-2 mr-2">{state}</span>
-                      })
-                      }
-
-                    </div>
-                    <div class="px-6 pt-1 pb-2">
-                      <h3 className='font-semibold mb-2'>Working Sectors</h3>
-                      {
-                        contract.work_area.map((work) => {
-                          return <span class="inline-block text-center font-medium  bg-[#FF5757]  rounded-full px-3 py-1 text-sm  text-[#ffffff] mr-2 mb-2">{work.work_segment}</span>
-                        })
-                      }
-                    </div>
-                  </div>
-                </>
-              }
-            })}
-
-
-          </div>
-        </div> */}
+      
 
       </div>
-        {/* <Contractor_Dashboard/> */}
+       
 
     </>
   )

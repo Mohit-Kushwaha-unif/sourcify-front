@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import { get_category } from '../../services/category'
+import { search_db } from '../../services/DB'
 
 const Work_segment_foooter = () => {
     const dispatch = useDispatch()
-  
+    const navigate = useNavigate()
     const [category, setCategory] = useState([])
     
     useEffect(() => {
@@ -18,19 +20,24 @@ const Work_segment_foooter = () => {
         })
         
     }, [])
-
+    function searchHnadler(sub_cat){
+        dispatch(search_db(sub_cat)).then((res)=>{
+            navigate('/results/'+sub_cat,{state: {input:sub_cat,res}}) 
+        })
+       
+    }
   return (
     <div className='container'>
-    <h3 className='prime_h2_rale'>Work Segments</h3>
+    <h3 className='prime_h2_rale mb-3'>Work Segments</h3>
     {
         category.map((cat)=>{
             return <>
             <div className='mb-16'>
-            <p className='rale_text my-10'>{cat.name}</p>
+            <Link to={`#${cat.name}`} className='rale_text my-10 '>{cat.name}</Link>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
             {
                 cat.children.length > 0 && cat.children.map((cat_sub)=>{
-                  return  <div>{cat_sub.name}</div>
+                  return  <div className='mt-3 cursor-pointer' onClick={()=>searchHnadler(cat_sub.name)}>{cat_sub.name}</div>
                 })
             }
             </div>

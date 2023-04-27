@@ -607,3 +607,35 @@ input[type=number] {
 .ant-table-column-sorter-up{
   border: none !important;
 }
+
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  margin-top: 10px;
+  top: 100%;
+  left: 0;
+  width: 250px;
+  min-height: auto;
+  max-height: 300px;
+  overflow-y: scroll;
+  z-index: 999;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  padding: 8px;
+  /* Add other styling as needed */
+}
+
+/* Hide dropdown menu by default */
+.dropdown-menu {
+  display: none;
+}
+
+/* Show dropdown menu when parent div is being hovered */
+.p-1:hover .dropdown-menu {
+  display: block;
+}
+
+
+.padding_6_9{
+  padding: 6px 9px !important;
+}

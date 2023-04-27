@@ -156,7 +156,7 @@ const Pages = (props) => {
         <Route path="/admin/feedbacks" element={isAdmin==2 ?<><FeedBack/></> : <ResourceDenied/> }/>
         <Route path="/admin/view-feedback" element={isAdmin==2 ?<><ViewFeedback/></> : <ResourceDenied/> }/>
         <Route path="/messages" element={<Messages/>}/>
-        <Route path='/results' element={<SearchResult/>}/>
+        <Route path='/results/:query' element={<SearchResult/>}/>
         <Route path='/update-profile' element={<UpdateProfie/>}/>
         <Route path='/userRole' element={<UserRole/>}/>
         <Route path='/verify' element={<OTPForm/>}/>

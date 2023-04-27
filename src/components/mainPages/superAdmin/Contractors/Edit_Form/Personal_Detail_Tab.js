@@ -239,6 +239,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   }
   const onFinish = async (value) => {
+    
     value.status = contractor_status
     var Turnover = []
     Object.keys(value).map((key) => {
@@ -310,12 +311,16 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       formData.append(formKey, value[formKey])
     })
     formData.append("form_id", formValues._id)
+ 
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
       obj.contractor_id = res.data._id
       navigate('/admin/contractors-list')
-    })
+    }).catch((err)=>{
+      console.log(err)
+    }
+    )
 
 
 
@@ -379,7 +384,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }
   return (
     <>
-      <div className='bg-white p-3 rounded-xl '>
+      <div className='bg-white p-3 w-full rounded-xl '>
         <Form
           form={form}
           labelCol={{
@@ -627,35 +632,36 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
             </Select>
           </Form.Item>
           {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-            return sub_cat.map((sub_category) => {
-              return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
-                {
-                  <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                    {
-                      required: true,
-                      message: 'Please Select options!',
-                    },
-                  ]}>
-                    <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                      {sub_category.sub_category.map((item, index) => {
-                        return (
-                          <Checkbox
-                            key={item.sub_Category}
-                            className={`ml-${index === 0 ? 2 : 0} capitalize`}
-                            value={item.sub_Category}
-                          >
-                            {item.sub_Category}
-                          </Checkbox>
-                        );
-                      })}
-                    </Checkbox.Group>
-                  </Form.Item>
-                }
+                        return sub_cat.map((sub_category) => {
+                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                            {
+                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                {
+                                  required: true,
+                                  message: 'Please select options',
+                                },
+                              ]}>
+                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                  {sub_category.children.map((item, index) => {
 
-              </>
-            })
-          })
-          }
+                                    return (
+                                      <Checkbox
+                                        key={item.name}
+                                        className={`ml-${index === 0 ? 2 : 0} `}
+                                        value={item.name}
+                                      >
+                                        <span>{item.name}</span>
+                                      </Checkbox>
+                                    );
+                                  })}
+                                </Checkbox.Group>
+                              </Form.Item>
+                            }
+
+                          </>
+                        })
+                      })
+                      }
           {/*******************************************/}
           <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
             {
