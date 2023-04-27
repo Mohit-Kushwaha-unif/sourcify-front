@@ -2,17 +2,39 @@ import { Space,  Tag,Table, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { get_listing } from '../../../../../services/listing'
+import Swal from 'sweetalert2'
+import { get_category } from '../../../../../services/category'
+import { get_listing, remove_listing } from '../../../../../services/listing'
 // import Table from 'ant-responsive-table'
 const All_Listings = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
+    var [categories,setCategories] = useState([])
     var data = []
+    var catData = []
     useEffect(() => {
+        
+
+       
+        tableDataMaker()
+          
+        dispatch(get_category()).then((res)=>{
+           
+          
+            res.map((cat)=>{
+                var dataa = {}
+                dataa["text"] = cat.name
+                dataa["value"] = cat.name
+                catData.push(dataa)
+            })
+            setCategories([...catData])
+        })
+    }, [])
+
+    const tableDataMaker= ()=>{
         dispatch(get_listing()).then((res) => {
-            console.log(res);
             res = res.reverse()
             var dataTable = []
             res.map((tableData, index) => {
@@ -28,12 +50,37 @@ const All_Listings = () => {
                     'status': tableData.status ===1 ? "Moderation" : tableData.status ===0 ? "Approved": "Rejected"
                 })
             })
-            console.log({ data })
             setEntity( [...dataTable])
             setTableData(data)
         })
-    }, [])
-    console.log(entity)
+    }
+
+
+
+    function deleteHandler(id){
+        Swal.fire({
+            title: 'Do you want to delete this Project?',
+            showDenyButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Cancel`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                var formdata = new FormData()
+                formdata.append("listing_id",id )
+                dispatch(remove_listing(formdata)).then((res)=>{
+                    Swal.fire('Deleted!', '', 'success').then(()=>{
+                        window.location = '/admin/all-listing'
+                    })
+                })
+             
+            } else if (result.isDenied) {
+              Swal.fire('Not Deleted', '', 'info')
+            }
+          })
+    }
+
+
     const columns = [
         {
             title: 'S.No',
@@ -57,7 +104,6 @@ const All_Listings = () => {
             key: 'work_segment',
             render: (_,  work_segment ) => (
                 <>
-                    {console.log(work_segment)}
                     {Array.isArray(work_segment?.work_segment) ? work_segment?.work_segment.map((tag, index) => {
                         let color = tag.length > 5 ? 'geekblue' : 'green';
                         if (tag === 'loser') {
@@ -71,8 +117,12 @@ const All_Listings = () => {
                     }) : work_segment}
                 </>
             ),
-            showOnResponse: true,
-            showOnDesktop: true
+            filters: [
+              ...categories
+            ],
+            filterMode: 'tree',
+            filterSearch: true,
+            onFilter: (value, record) => record.work_segment.find((val)=> val ==value),
         },
         {
             title: 'Status',
@@ -117,11 +167,10 @@ const All_Listings = () => {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
-                console.log(record),
                 <Space size="middle">
                     <Link to='/edit-listing' state={{ _id: record?._id }}>Edit </Link>
                     {record?.status ==='Approved'&& <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>}
-                    <Link>Delete</Link>
+                    <Link onClick={()=>deleteHandler(record?._id)}>Delete</Link>
                     <Link></Link>
                 </Space>
                 
@@ -130,10 +179,7 @@ const All_Listings = () => {
             showOnDesktop: true
         },
     ];
-    const search = value => {
-        
-        console.log("PASS", { value ,tableData});
-    
+    const search = value => {        
         const filterTable = tableData.filter(o =>
           Object.keys(o).some(k =>
             String(o[k])
@@ -141,8 +187,10 @@ const All_Listings = () => {
               .includes(value.toLowerCase())
           )
         );
-    
         setTableData(filterTable );
+        if(value ==''){
+            tableDataMaker()
+        }
       };
     return (
         <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >

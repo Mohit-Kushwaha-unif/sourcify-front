@@ -600,3 +600,10 @@ input[type=number] {
 .ant-input-search .ant-input-search-button{
   height: 2.2rem !important;
 }
+
+.ant-table-column-sorter-down {
+  border: none !important;
+}
+.ant-table-column-sorter-up{
+  border: none !important;
+}

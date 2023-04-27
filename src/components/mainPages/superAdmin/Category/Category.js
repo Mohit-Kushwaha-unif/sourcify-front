@@ -4,6 +4,7 @@ import * as ContractorServices from '../../../../services/contractor'
 import { Space, Tag, Table } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { delete_category, get_category } from '../../../../services/category';
+import Swal from 'sweetalert2';
 // import Table from 'ant-responsive-table'
 const Category = () => {
   const navigator = useNavigate()
@@ -12,7 +13,6 @@ const Category = () => {
   var data = []
   const populateChildren = (subCategories) => {
     return subCategories.map((subCategory, index) => {
-      console.log(subCategory)
       const { _id, name, description, children } = subCategory;
       const childrens = children && Array.isArray(children) && children.length > 0 ? populateChildren(children) : [];
       if (children.length > 0) {
@@ -55,10 +55,18 @@ const Category = () => {
   }, []);
   console.log(tableData)
   const deleteHandler = (value) => {
-
+    Swal.fire({
+      title: 'Do you want to delete this Contractor?',
+      showDenyButton: true,
+      confirmButtonText: 'Delete',
+      denyButtonText: `Cancel`,
+  }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
     dispatch((delete_category(value))).then((res) => {
       window.location = '/admin/category-list'
     })
+      }})
   }
 
   const columns = [

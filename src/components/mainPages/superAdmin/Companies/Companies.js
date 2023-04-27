@@ -6,19 +6,24 @@ import { Space, Tag, Table, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { get_Vendor, remove_vendor } from '../../../../services/Vendor';
 import { tab } from '@testing-library/user-event/dist/tab';
+import Swal from 'sweetalert2';
 const Companies = () => {
     const dispatch = useDispatch([])
     const navigator = useNavigate()
     const data = []
-    const [entity,setEntity] = useState([])
+    const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
     useEffect(() => {
+        tableDataMaker()
+    }, [])
+
+    const tableDataMaker = () =>{
         var tableDataFilter = []
         dispatch(get_Vendor()).then((res) => {
-        
+
             res.map((tableData, index) => {
                 console.log(tableData);
-                
+
 
                 if (tableData != undefined) {
                     var tableCont = {}
@@ -42,7 +47,8 @@ const Companies = () => {
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }
+
     const search = value => {
         const filterTable = tableData.filter(o =>
             Object.keys(o).some(k =>
@@ -53,10 +59,23 @@ const Companies = () => {
         );
 
         setTableData(filterTable);
+        if(value ==''){
+            tableDataMaker()
+        }
     };
     function deleteHandler(id) {
-        dispatch(remove_vendor(id)).then((res)=>{
-            window.location = '/admin/companies'
+        Swal.fire({
+            title: 'Do you want to delete this Company?',
+            showDenyButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                dispatch(remove_vendor(id)).then((res) => {
+                    window.location = '/admin/companies'
+                })
+            }
         })
     }
     const columns = [
@@ -164,7 +183,7 @@ const Companies = () => {
                         </div>
                         <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
                             <span className='my-6 md:mb-0'> Search in the table - </span>
-        
+
                             <Input.Search
                                 className='md:w-[30%] mx-8'
                                 placeholder="Search by..."

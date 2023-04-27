@@ -18,7 +18,7 @@ const Add_Category = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [category, setCategory] = useState([])
-    
+    const [image,setImage] = useState()
       
       useEffect(() => {
         dispatch(get_category_for_ws()).then((res) => {
@@ -26,9 +26,22 @@ const Add_Category = () => {
         });
       }, []);
       
-      
+      const imageHandler =( e)=>{
+        console.log(e.target.files)
+        setImage(e.target.files[0])
+      }      
     function FormHandler(values){
-        dispatch(add_category(values)).then((res)=>{console.log(res)
+        if(image){
+            values.featured_img = image
+        }
+        var formData = new FormData()
+        Object.keys(values).map((formVal) => {
+            
+                formData.append(formVal, values[formVal])
+            
+
+        })
+        dispatch(add_category(formData)).then((res)=>{console.log(res)
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -64,7 +77,11 @@ const Add_Category = () => {
                     },
                 ]}
                 >
-                  <Select placeholder='Select the work segment'> 
+                  <Select placeholder='Select the work segment' 
+                   showSearch // enable search functionality
+                   filterOption={(input, option) =>
+                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                   }> 
                   <Select.Option value="none">None</Select.Option>
                   {
                      category.length > 0&& category.map((cat)=>{
@@ -145,7 +162,7 @@ const Add_Category = () => {
                 </Form.Item>   
                 <Form.Item name="featured_img" label="Select Category Image " 
                 >
-                <Input type='file' placeholder='Enter your category name' />
+                <Input type='file' onChange={imageHandler} placeholder='Enter your category name' />
                 </Form.Item>
                 <div className="flex items-center justify-center text-center  lg:text-left">
                     <button

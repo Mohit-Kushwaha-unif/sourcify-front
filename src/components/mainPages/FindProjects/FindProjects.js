@@ -50,13 +50,13 @@ const FindProjects = () => {
             })
         }
     }, [])
-console.log(projects)
+    console.log(projects)
     // 
     useLayoutEffect(() => {
         const projDet = [];
         dispatch(get_Vendor()).then((res) => {
             res.filter((vendor_det) => {
-               
+
                 if (vendor_det.user_id !== null) {
                     projects.find((pro_det) => {
                         if (vendor_det.user_id._id === pro_det.user_id) {
@@ -68,11 +68,11 @@ console.log(projects)
                     });
                 }
             });
-           
+
         });
         dispatch(get_contractor()).then((res) => {
             res.filter((vendor_det) => {
-               
+
                 if (vendor_det.user_id !== null) {
                     projects.find((pro_det) => {
                         if (vendor_det.user_id._id === pro_det.user_id) {
@@ -91,7 +91,7 @@ console.log(projects)
         setProjectDetails([...projDet]);
     }, [projects, dispatch]);
 
-    console.log({projectDetails})
+    console.log({ projectDetails })
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
@@ -127,20 +127,22 @@ console.log(projects)
     }
     const intresetHandler = (id) => {
         setListId(id)
-        if (id) {
-            dispatch(get_listingBy_id(id)).then((res) => {
-               
-                res.listing.proposals.map((detail) => {
-                    if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
 
-                        toast.success('You already shared your intrest', {
-                            position: toast.POSITION.TOP_RIGHT
-                        })
-                    }
-                })
+        dispatch(get_listingBy_id(id)).then((res) => {
+
+            res.listing.proposals.map((detail) => {
+                if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
+
+                    toast.success('You already shared your intrest', {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                }
             })
+        })
+        if (localStorage.getItem("isLoggedIn") == false) {
+            navigate('/login')
         }
-        else if (userRole == 1) {
+        if (userRole == 1) {
             toast.error('You are not a sub-contractor', {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -194,14 +196,14 @@ console.log(projects)
                         </Select>
                     </Form.Item>
 
-                    <Form.Item name="work_Segments" label="Select Company">
-                        <Input className=' mb-5' placeholder='Select Company' />
-                            {/* {
+                    <Form.Item name="work_Segments" label="Select work segment">
+                       <Select placeholder="select work segments">
+                        {
                                 work_segment.length > 0 && work_segment.map((cats) => {
-                                    return (<Select.Option value={cats.category}>{cats.category}</Select.Option>)
+                                    return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
                                 })
                             }
-                        </Select> */}
+                        </Select>
                     </Form.Item>
 
                 </Form>
@@ -283,7 +285,7 @@ console.log(projects)
                         className="primary_btn"
                         onClick={submitHandler}
                     >
-                        Send Proposal
+                        Share Interest
                     </button>
                 </Modal>
 

@@ -25,7 +25,6 @@ const Login = () => {
   const navigate = useNavigate();
   function formHandler(value) {
     dispatch(login(value)).then(res => {
-
       localStorage.setItem('accesstoken', res.accesstoken)
       localStorage.setItem('user_id', res.user._id)
       localStorage.setItem('email', res.user.email)
@@ -80,7 +79,7 @@ const Login = () => {
       }));
   }
   const responseMessage = (response, e) => {
-    console.log(response)
+   
 
     dispatch(googleLogin({ tokenId: response })).then((res) => {
       console.log(res)
@@ -140,18 +139,6 @@ const Login = () => {
             </div>
             <p className='text-sm mb-5'>Your sourcing journey begins here. Log in to Sourcify and unlock a world of new possibilities for your business.</p>
             <Form onFinish={formHandler}>
-
-
-              {/* */}
-
-
-
-
-              {/* <div
-                className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-              > */}
-              {/* <p className="text-center font-semibold mx-4 mb-0">Or</p> */}
-              {/* </div> */}
               <Form.Item
                 name="email"
                 rules={[
@@ -183,7 +170,7 @@ const Login = () => {
                     <Checkbox className='font-[Inter] text-[black] font-[400]'>Remember me</Checkbox>
                   </Form.Item>
                 </div>
-                <Link to="#!" className="font-[Inter] text-[#FF5757] hover:text-[#FF5757] font-[400] mb-3">Forgot password?</Link>
+                <Link to='/forgotPassword' className="font-[Inter] text-[#FF5757] hover:text-[#FF5757] font-[400] mb-3">Forgot password?</Link>
               </div>
 
               <div className="text-center lg:text-left">

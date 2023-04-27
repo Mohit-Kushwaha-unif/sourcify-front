@@ -5,6 +5,7 @@ import { Space, Tag, Table, Input } from 'antd';
 import "antd/dist/antd";
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Contractor = () => {
     const navigator = useNavigate()
@@ -13,6 +14,10 @@ const Contractor = () => {
     const [tableData, setTableData] = useState([])
     const data = [];
     useEffect(() => {
+        tableDataMaker()
+    }, [])
+
+    const tableDataMaker = () => {
         dispatch(ContractorServices.get_contractor()).then((res) => {
             var work_segment = []
             var dataTable = []
@@ -24,7 +29,7 @@ const Contractor = () => {
                 dataText.text = tableData.entity
                 dataText.value = tableData.entity
                 dataTable.push(dataText)
-               
+
                 data.push({
                     '_id': tableData._id,
                     'key': index,
@@ -37,19 +42,28 @@ const Contractor = () => {
             })
             console.log({ data })
             setTableData(data)
-            setEntity( dataTable)
+            setEntity(dataTable)
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }
 
     function deleteHandler(id) {
-        dispatch(ContractorServices.remove_contractor({ id: id })).then((res) => {
-            window.location = '/admin/contractors-list'
+        Swal.fire({
+            title: 'Do you want to delete this Contractor?',
+            showDenyButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                dispatch(ContractorServices.remove_contractor({ id: id })).then((res) => {
+                    window.location = '/admin/contractors-list'
 
+                })
+            }
         })
     }
-    console.log(...entity)
     const columns = [
         {
             title: 'S.No',
@@ -140,19 +154,22 @@ const Contractor = () => {
     ];
 
     const search = value => {
-        
-        console.log("PASS", { value ,tableData});
-    
+
+        console.log("PASS", { value, tableData });
+
         const filterTable = tableData.filter(o =>
-          Object.keys(o).some(k =>
-            String(o[k])
-              .toLowerCase()
-              .includes(value.toLowerCase())
-          )
+            Object.keys(o).some(k =>
+                String(o[k])
+                    .toLowerCase()
+                    .includes(value.toLowerCase())
+            )
         );
-    
-        setTableData(filterTable );
-      };
+
+        setTableData(filterTable);
+        if(value ==''){
+            tableDataMaker()
+        }
+    };
     return (
         <section className="min-h-screen flex  flex-col w-full  py-6 sm:px-6 lg:px-3" >
             <div className="px-2 h-auto text-gray-800">
@@ -169,15 +186,15 @@ const Contractor = () => {
                             <p className="text-lg mb-0 mr-4">Contractors List</p>
                         </div>
                         <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
-                           <span className='my-6 md:mb-0'> Search in the table - </span>
+                            <span className='my-6 md:mb-0'> Search in the table - </span>
 
-                        <Input.Search
-                            className='md:w-[30%] mx-8'
-                            placeholder="Search by..."
-                            onSearch={search}
-                        />
+                            <Input.Search
+                                className='md:w-[30%] mx-8'
+                                placeholder="Search by..."
+                                onSearch={search}
+                            />
                         </p>
-                        
+
                         <Table
 
                             columns={columns}

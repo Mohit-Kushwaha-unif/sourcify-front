@@ -116,3 +116,25 @@ export const sendmail = (fromdata)=>{
             })
         })
 }
+
+
+export const getAllUser = ()=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.get(user_url+'getAllUser').then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+}
+export const forgetPassword = (formVal)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.post(user_url+'forgetPassword',formVal).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+}

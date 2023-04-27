@@ -55,12 +55,14 @@ import Work_Segment from './Work_segment/Work_Segment'
 import Blogs from './Blogs/Blogs'
 import Blog from './Blogs/Blog'
 import Contact from './ContactUs/Contact'
+import ForgotPassword from './auth/ForgotPassword'
+import EmailScreen from './auth/EmailScreen'
+import ResetPassword from './auth/ResetPassword'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
 
   const isAdmin = useSelector(state => state.User.user_role);
-  console.log(isAdmin)
   var isLoggedIn = true
   if (localStorage.getItem('isLoggedIn') === null) {
     isLoggedIn = false
@@ -123,6 +125,9 @@ const Pages = (props) => {
         <Route path="/register" element={ <Regsiter/>} />
         {/* <Route path="/otp-verification" element={<OTPForm/>}/> */}
         <Route path="/login" element={<Login />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/passwordreset" element={<EmailScreen />} />
+        <Route path="/resetPassword/:id" element={<ResetPassword />} />
         <Route path="/about-us" element={<AboutUs/>}/>
         <Route path="/services" element={isAdmin==2 ?<Service/>: <ResourceDenied/>}/>
         <Route path="/editor" element={isAdmin==2 ?<><DraftEditor/></> : <ResourceDenied/>}/>

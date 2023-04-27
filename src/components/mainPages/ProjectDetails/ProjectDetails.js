@@ -33,7 +33,9 @@ const ProjectDetails = () => {
     console.log(formValues)
 
     const showModal = () => {
-
+        if(localStorage.getItem("isLoggedIn")=="false"){
+            navigator('/login')
+        }
          if(localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id){
             toast.error('Can not send proposal to your own projects', {
                 position: toast.POSITION.TOP_RIGHT

@@ -255,9 +255,6 @@ const PersonalDetails = () => {
     }
     value.role = 0;
 
-    // if (value.msme_image) {
-    //   value.msme_image = msmeImageD
-    // }
     Object.keys(value).map((formKey) => {
       formData.append(formKey, value[formKey])
     })
@@ -269,17 +266,10 @@ const PersonalDetails = () => {
         obj.contractor_id = res.data._id
 
         dispatch(update_user_info(obj)).then((response) => {
-          // isSaved(true)
+  
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(() => {
-
-
-
-            navigation('/')
-
+            navigation('/dashboard')
           })
-          // window.scroll(0, 0)
-          // console.log(response)
-          // navigation("/contractor-form/financial-detail")
         })
       })
     }

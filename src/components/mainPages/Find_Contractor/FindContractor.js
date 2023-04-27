@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { get_contractor, search_contractor } from '../../../services/contractor'
-import { List, Pagination, Card } from 'antd';
+import { List, Pagination } from 'antd';
 import dummy_img from '../../../assests/dummy_img.png'
 import star from '../../../assests/star.png'
 import right_red from '../../../assests/right_red.png'
@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import TextArea from 'antd/es/input/TextArea'
 import { send_message } from '../../../services/Messages'
+import { useNavigate } from 'react-router-dom'
 
 const FindContractor = () => {
   const [contractors, setContractors] = useState([])
@@ -23,7 +24,7 @@ const FindContractor = () => {
   const [proposalVal, setProposalVal] = useState('')
   const userRole = useSelector(state => state.User.user_role);
   const [form] = Form.useForm();
-
+  const navigator = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(get_contractor()).then((res) => {
@@ -53,17 +54,17 @@ const FindContractor = () => {
     }
   }, [screenSize])
 
-  const handleFormChange = (values) => {
+  const handleFormChange = () => {
     const { contractor, Location, work_segment } = form.getFieldsValue();
     console.log(contractor, Location, work_segment,)
     var formData = new FormData()
     if (contractor != undefined) {
       formData.append("contractor", contractor)
     }
-    if (Location != undefined) {
+     if (Location != undefined) {
       formData.append("Location", Location)
     }
-    if (work_segment != undefined) {
+     if (work_segment != undefined) {
       formData.append("work_segment", work_segment)
     }
 
@@ -75,7 +76,10 @@ const FindContractor = () => {
   }
 
   const contractHandler = (val) => {
-    if (userRole !=1) {
+    if(localStorage.getItem("isLoggedIn") == "false"){
+      navigator('/login')
+    }
+    else if (userRole !=1) {
       toast.error('You are not an Comapny', {
         position: toast.POSITION.TOP_RIGHT
       })
@@ -121,11 +125,11 @@ function proposalHandler(e) {
           </Form.Item>
 
           <Form.Item name="Location" label="Search Location">
-            <Input className='input_border mb-5' placeholder='Search for contractors' />
+            <Input className='input_border mb-5' placeholder='Search location' />
           </Form.Item>
 
           <Form.Item name="work_segment" label="Select Work Segments">
-            <Input className='input_border mb-5' placeholder='Search for contractors' />
+            <Input className='input_border mb-5' placeholder='Search work segments' />
           </Form.Item>
 
         </Form>

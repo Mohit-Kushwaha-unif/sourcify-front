@@ -240,7 +240,7 @@ const Header = () => {
                       </>
                     }
                     <div className='prime_button min-w-[41%]  cursor-pointer' onClick={() => {
-                      localStorage.getItem("isLoggedIn") == false ?
+                      localStorage.getItem("isLoggedIn") == "false" ?
                       toast.error('Please login first', {
                         position: toast.POSITION.TOP_RIGHT
                       })

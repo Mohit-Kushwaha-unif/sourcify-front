@@ -47,7 +47,14 @@ const EditListing = () => {
             set_user_id(res.listing.user_id._id)
             Object.keys(res.listing).map((value) => {
                 var obj = {}
-                if(value === "project_tent_date"){
+                if (value == 'project_bill_qty_image') {
+                    console.log("hi")
+                    setShowBillImg(res.listing[value])
+                }
+                else if (value == 'project_specification') {
+                    setShowSpecImg(res.listing[value])
+                }
+                else if(value === "project_tent_date"){
                     obj["name"] = value
                     obj["value"] = moment(res.listing[value])
                     initialValue.push(obj)
@@ -80,15 +87,6 @@ const EditListing = () => {
             setSelectedOptions(initialOptions)
             setSelectedItems(initialSelects)
             setInitialValues(initialValue)
-            initialValue.map((values) => {
-                if (values.name === 'project_bill_qty_image') {
-                    setShowBillImg(values.value)
-                }
-                if (values.name === 'project_specification') {
-                    setShowSpecImg(values.value)
-                }
-            })
-            // setInitialValues((prevState)=>[...prevState, initialOptions)])
         })
     }, [])
     console.log(formStatus)
@@ -195,50 +193,57 @@ const EditListing = () => {
                                 <TextArea placeholder='Enter Scope of your project' />
                             </Form.Item>
                             <div className='grid grid-cols-2 my-3'>
-                            {showSpecImg !== false && <div className='w-full h-full'>
-                                <a href={showSpecImg} download={"Specifiaction"}>
+                            {showSpecImg !== true ?<div className='w-full h-full grid grid-cols-2'>
+                                <span>
+                                <a href={showSpecImg} className="flex flex-col items-center text-center" download={"Specifiaction"}>
 
-                                    <FaFileExcel className='w-20 h-20' />
+                                    <FaFileExcel className='w-20 h-20 mb-3' />
 
                                     {"Specification file"}
                                 </a>
-                            </div>}
-                           
-                            {showbillImg !== false &&
-                                <div className='w-full h-full'>
-                                    <a href={showbillImg} download={"bill_img"}>
+                                </span>
+                                <span className='cursor-pointer text-red-400' onClick={()=>{setShowSpecImg(true)}}>Change Specification File</span>
+                            </div>:  
+                             <Form.Item name='project_specification' label="Work Specification" rules={[
+                                {
+                                    required: true,
+                                    message: 'Please attach your work specifications'
+                                },
+                            ]}
+                            >
+                                <Input type='file' max={1} onChange={specificationimageHandler} />
 
-                                        <FaFileExcel className='w-20 h-20' />
+                            </Form.Item>
+                            
+                        }
+                           
+                            {showbillImg !== false ?
+                                <div className='w-full h-full grid grid-cols-2'>
+                                      <span>
+                                    <a href={showbillImg} className="flex flex-col items-center text-center" download={"bill_img"}>
+
+                                        <FaFileExcel className='w-20 h-20 mb-3 '  />
 
                                         {"Bill File"}
                                     </a>
-                                </div> 
-                            }
-                            </div>
-                            {showSpecImg == true &&
-                                <Form.Item name='project_specification' className='mb-1 mt-0' label="Please Enter the Specification you want for Your Project" rules={[
+                                    </span>
+                                    <span className='cursor-pointer text-red-400' onClick={()=>{setShowSpecImg(true)}}>Change Bill File</span>
+                                </div> :
+                                <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your Contact Person Name'
+                                        message: 'Please attach your bill quantity'
                                     },
                                 ]}
                                 >
-                                    <Input type='file' max={1} onChange={specificationimageHandler} />
-
-                                </Form.Item>
-                            }
-                            { showbillImg == true&&
-                                <Form.Item name='project_bill_qty' className='mb-1 mt-0' label="Please attach Project bill Quantity" rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your Contact Person Name'
-                                    },
-                                ]}
-                                >
-
+    
                                     <Input type='file' max={1} onChange={imageHandler} />
                                 </Form.Item>
+                                
                             }
+                            </div>
+                         
+                          
 
                             <Form.Item name="wok_segment" className='mb-1' label="Select Category For Your Project" rules={[
                                 {

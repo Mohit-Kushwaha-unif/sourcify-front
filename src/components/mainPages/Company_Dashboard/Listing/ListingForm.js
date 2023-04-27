@@ -2,7 +2,7 @@ import { Calendar, Checkbox, DatePicker, Form, Input, Select } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
@@ -10,7 +10,8 @@ import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
 import { add_listing } from '../../../../services/listing'
-import { get_user_info, update_user } from '../../../../services/user'
+import { getAllUser, get_user_info, update_user } from '../../../../services/user'
+import { get_Vendor } from '../../../../services/Vendor'
 import useDocumentTitle from '../../../Helper/useDocumentTitle'
 
 const ListingForm = () => {
@@ -21,24 +22,18 @@ const ListingForm = () => {
     const [sub_cat, setSub_cat] = useState([])
     const [specificationImage, setSpecificationImage] = useState()
     const [selectedItems, setSelectedItems] = useState([]);
+    const [allUsers, setAllUsers] = useState([])
     const [image, set_ImageD] = useState()
+    const isAdmin = useSelector(state => state.User.user_role);
     useDocumentTitle('Add your Listing')
 
     useEffect(() => {
         if (localStorage.getItem("isLoggedIn") !== "true") {
             navigator('/login')
         }
-        // dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res)=>{
-        //     if(res.role == 0){
-        //         navigator('/dashboard')
-        //         toast.error('Your a contractor not allowed to post projects',{
-        //             position: toast.POSITION.TOP_RIGHT
-        //         })
-        //     }
-        //     else if(!res.vendor_id){
-        //         navigator('/vendor-form')
-        //     }
-        // })
+        dispatch(getAllUser()).then((res) => {
+            setAllUsers([...res])
+        })
         dispatch(get_category()).then((res) => {
 
             res.map((cat) => {
@@ -48,8 +43,6 @@ const ListingForm = () => {
             })
         })
     }, [])
-
-    console.log(categories)
 
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
 
@@ -69,7 +62,7 @@ const ListingForm = () => {
         })
 
         values["work_area"] = [...work_area]
-        if (localStorage.getItem("adminEmail") == null) {
+        if (isAdmin != 2) {
             values.user_id = localStorage.getItem("user_id")
         }
         values.status = 1
@@ -89,6 +82,7 @@ const ListingForm = () => {
         dispatch(add_listing(formData)).then((res) => {
             Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success')
         }).then(() => {
+            return false
             navigator('/dashboard')
         })
     }
@@ -119,6 +113,29 @@ const ListingForm = () => {
                         </div>
                         <Form labelAlign="left"
                             layout="vertical" onFinish={FormHandler}>
+                                {
+                                    isAdmin ==2 &&
+                                    <>
+                                    <p className='headings font_16 mb-3'>Select Users</p>
+                                    <Form.Item name='user_id' label="User Email" rules={[
+                                        {
+                                            required: true,
+                                            message: 'Write the description of your project'
+                                        },
+                                    ]}
+                                    >
+        
+                                        <Select   name="user_id" placeholder="Select user email"  options={allUsers.map((item) => ({
+                                                value: item._id,
+                                                label: item.email,
+                                            }))}>
+                                          
+                                        </Select>
+                                    </Form.Item>
+                                    <p className='headings font_16 mb-3'>Project Details</p>
+                                    </>
+                                }
+                           
                             <Form.Item name='project_discription' label="Project Description" rules={[
                                 {
                                     required: true,
@@ -165,14 +182,14 @@ const ListingForm = () => {
                                                         <Checkbox
                                                             key={item.sub_Category}
                                                             className={`ml-${index === 0 ? 2 : 0} `}
-                                                            value={item._id}
+                                                            value={item.name}
                                                         >
                                                             <span>{item.name}</span>
                                                         </Checkbox>
                                                     );
                                                 })}
                                             </Checkbox.Group>
-                                     
+
                                         </Form.Item>
                                     </>
 

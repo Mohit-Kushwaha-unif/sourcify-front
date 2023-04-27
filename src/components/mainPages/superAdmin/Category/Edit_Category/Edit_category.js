@@ -7,47 +7,46 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Collapse } from "antd";
+import { useLayoutEffect } from 'react';
 const { Panel } = Collapse;
 
 
 const Edit_category = ({ formValues }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [Child, setChild] = useState([])
+    const [showImg, setShowImg] = useState(false)
     const [category, setCategory] = useState([])
-
-
+    const [formValue, setFormValue] = useState([])
+    const [Cat_id, setCat_id] = useState()
 
     const CategoryList = ({ categories, selectedCategoryId }) => {
         if (category.length > 0) {
 
-                const renderCategories = (categories) => {
-                  return categories.map((category) => (
+            const renderCategories = (categories) => {
+                return categories.map((category) => (
                     <Panel key={category._id} header={category.name}>
-                      {category.children.length > 0 && (
-                        <CategoryList
-                          categories={category.children}
-                          selectedCategoryId={selectedCategoryId}
-                        />
-                      )}
+                        {category.children.length > 0 && (
+                            <CategoryList
+                                categories={category.children}
+                                selectedCategoryId={selectedCategoryId}
+                            />
+                        )}
                     </Panel>
-                  ));
-                };
-              
-                // Find the category object with the selectedCategoryId
-                const selectedCategory = categories.find(
-                  (category) => category._id === selectedCategoryId
-                );
-              
-                return (
-                  <Collapse defaultActiveKey={[selectedCategory?._id]}>
-                    {renderCategories(selectedCategory?.children || categories)}
-                  </Collapse>
-                );
-              };
-    }
+                ));
+            };
 
-    // Usage example
+            // Find the category object with the selectedCategoryId
+            const selectedCategory = categories.find(
+                (category) => category._id === selectedCategoryId
+            );
+
+            return (
+                <Collapse defaultActiveKey={[selectedCategory?._id]}>
+                    {renderCategories(selectedCategory?.children || categories)}
+                </Collapse>
+            );
+        };
+    }
 
 
     useEffect(() => {
@@ -58,10 +57,14 @@ const Edit_category = ({ formValues }) => {
 
 
     function FormHandler(values) {
-        if(values.parent == "none"){
+        if (values.parent == "none") {
             values.parent = null
         }
-         
+        else{
+            values.parent = Cat_id
+        }
+        
+
         values["id"] = formValues._id
         dispatch(update_category(values)).then((res) => {
             Swal.fire({
@@ -75,30 +78,42 @@ const Edit_category = ({ formValues }) => {
         })
     }
     var initialValue = []
+    useLayoutEffect(() => {
+        if (category.length > 0) {
+            Object.keys(formValues).map((value) => {
 
-    Object.keys(formValues).map((value) => {
+                var obj = {}
 
-        var obj = {}
-       
-         if (value == "parent_cat" || value == "parent") {
-            obj["name"] = "parent"
-            obj["value"] = formValues.parent == null ? "none" : formValues.parent_cat._id
-            initialValue.push(obj)
+                if (value == "parent_cat" || value == "parent") {
+                    obj["name"] = "parent"
+                    obj["value"] = formValues.parent == null ? "none" : formValues.parent_cat.name 
+                    initialValue.push(obj)
+                    setCat_id(formValues.parent_cat._id)
+                }
+                else if (value == "featured_img") {
+                    setShowImg(true)
+                }
+                else {
+                    obj["name"] = value
+                    obj["value"] = formValues[value]
+                    initialValue.push(obj)
+                }
+            })
+            setFormValue([...initialValue])
         }
-        else {
-            obj["name"] = value
-            obj["value"] = formValues[value]
-            initialValue.push(obj)
-        }
-    })
 
+    }, [formValues,category])
+    function selectHandle(val){
+
+        setCat_id(val)
+    }
     return (
         <div className='grid grid-cols-5 gap-6  w-full p-2 px-3 '>
             <div className='col-span-2 pt-7 px-7 h-auto w-full bg-white p-3 rounded-xl '>
                 <Form labelAlign="left" name="dynamic_form_nest_item"
                     className='w-full h-auto'
                     layout="vertical"
-                    fields={[...initialValue]}
+                    fields={[...formValue]}
                     onFinish={FormHandler}>
                     <Form.Item name="name" label="Category Name " rules={[
                         {
@@ -116,72 +131,33 @@ const Edit_category = ({ formValues }) => {
                         },
                     ]}
                     >
-                        <Select placeholder='Select the work segment'>
+                        <Select placeholder='Select the work segment' onSelect={selectHandle}>
                             <Select.Option value="none">None</Select.Option>
                             {
                                 category.length > 0 && category.map((cat) => {
-                                    console.log(cat)
                                     return <Select.Option value={cat._id}>{cat.name}</Select.Option>
                                 })
                             }
                         </Select>
                     </Form.Item>
-                    <Form.Item name="description" label="Description of Work Segment " rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Category!'
-                        },
-                    ]}
+                    <Form.Item name="description" label="Description of Work Segment " 
                     >
-                        <Input placeholder='Enter the Categoy name you want to add' />
+                        <Input placeholder='Enter the Categoy description' />
                     </Form.Item>
+                    {
+                        showImg ? 
+                        <div className='flex justify-between mb-5'>
+                        <a href={formValues.featured_img} target="_blank">Preview</a>
+                        <p className='cursor-pointer' onClick={()=>setShowImg(false)}>Change</p>
+                        </div>
+                        : <Form.Item className='mb-5' name="featured_img" label="Featured Image " 
+                        >
+                            <Input type='file' placeholder='Enter the Categoy name you want to add' />
+                        </Form.Item>
+                    }
 
-                    <Form.Item name="featured_img" label="Featured Image " rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Category!'
-                        },
-                    ]}
-                    >
-                        <Input placeholder='Enter the Categoy name you want to add' />
-                    </Form.Item>
-                    {/* <div className='mb-2 '>Click Button To Add its Sub Category <span className='intialValue'></span></div>
-                <Form.List name="sub_categories">
-                    {(fields, { add, remove }) => (
-                        <>
-                            {fields.map(({ key, name, ...restField }) => (
-                                <Space
-                                    key={key}
+                    
 
-                                    align="baseline"
-                                >
-                                    <div>
-                                        <div >
-                                            <Form.Item
-                                                {...restField}
-                                                name={[name, 'sub_Category']}
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: 'Missing Sub Category Name',
-                                                    },
-                                                ]}
-                                            >
-                                                <Input placeholder=" Enter Sub Category" style={{ width: '90%' }} />
-                                            </Form.Item>
-                                        </div>
-                                    </div>
-                                    <MinusCircleOutlined className='mr-4' onClick={() => remove(name)} />
-                                </Space>
-                            ))}
-                            <Form.Item>
-                                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                    Add field
-                                </Button>
-                            </Form.Item>
-                        </>
-                    )}
-                </Form.List> */}
                     <Form.Item
                     >
                         <div className="text-center flex justify-center lg:text-left">
@@ -197,13 +173,7 @@ const Edit_category = ({ formValues }) => {
             </div>
             <div className='col-span-3 bg-white w-full p-2 rounded-xl'>
                 <p>List of children</p>
-                {/* <ul>
-                { 
-                cats.length >0 && cats.map((dets)=>{
 
-                        return  <li className='ml-5'>{dets}</li> 
-                })}
-                </ul> */}
                 <CategoryList
                     categories={category}
                     selectedCategoryId={formValues._id}
