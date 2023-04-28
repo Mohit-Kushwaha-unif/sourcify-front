@@ -66,6 +66,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       })
     })
   }, [])
+
+
   const handleFileUpload = async (event, index) => {
     const { getFieldValue, setFieldsValue } = form;
     const Project = getFieldValue('Project');
@@ -80,9 +82,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         newProjectImg.push(res);
       });
     });
-
+  
     await Promise.all(uploadPromises);
-
+  
+    if (newProjectImg.length === 0) {
+      newProjectImg.push('');
+    }
+  
     setFieldsValue({
       Project: [
         ...Project.slice(0, index),
@@ -91,12 +97,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           project_img: newProjectImg,
         },
         ...Project.slice(index + 1),
+        
       ],
     });
-
+  
     newFileList[index] = event.target.files;
-    setFileList(newFileList);
+    // setFileList(newFileList);
   };
+  
+  
 
   const handleRemoveImage = (index, imgIndex) => {
     const newPreviewImg = [...previewImg];
@@ -239,7 +248,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   }
   const onFinish = async (value) => {
-    
+
     value.status = contractor_status
     var Turnover = []
     Object.keys(value).map((key) => {
@@ -260,7 +269,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         }
       })
     })
-
+    
 
     value["work_area_types"] = JSON.stringify([...work_area_types])
     var formData = new FormData()
@@ -792,17 +801,20 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
           <Form.List name="Project">
             {(fields, { add, remove }) => (
+            
               <>
+              
                 {fields.map((field, index) => {
                   const project = form.getFieldValue(['Project', index]);
                   const projectImg = project?.project_img;
                   const fileList = projectImg?.length > 0 ? projectImg : [];
                   var Imgind
+                 
 
                   return (
                     <div key={field.key}>
                       <div className="grid grid-cols-2 w-full">
-                        <p className="flex mb-3">#Project {index + 1} </p>
+                        <p className="flex mb-3">#Project {field.key + 1} </p>
                         <div className="float-right">
                           <span
                             className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
@@ -898,7 +910,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   <Button
                     className="flex justify-center items-baseline"
                     type="dashed"
-                    onClick={() => add()}
+                    onClick={() => {
+                      add(); 
+                     
+                    }}
                     block
                     icon={<PlusOutlined />}
                   >

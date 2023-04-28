@@ -41,6 +41,11 @@ const ProjectDetails = () => {
                 position: toast.POSITION.TOP_RIGHT
               })
         }
+         if(localStorage.getItem("status") !== "0"){
+            toast.error('Account not approved by admin', {
+                position: toast.POSITION.TOP_RIGHT
+              })
+        }
         else{
             setOpen(true);
         }
@@ -50,11 +55,9 @@ const ProjectDetails = () => {
         setOpen(false);
     };
     function submitHandler(value) {
-        // console.log(value)
         var formData = {}
         formData.contractor_id = localStorage.getItem('user_id')
         formData.listing_id = value
-        // formData.form_status = 1
         formData.proposal = proposalVal
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
@@ -63,7 +66,6 @@ const ProjectDetails = () => {
         })
     }
     function proposalHandler(e) {
-        // console.log(e.target.value)
         setProposalVal(e.target.value)
     }
     return (

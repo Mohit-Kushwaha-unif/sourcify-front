@@ -58,11 +58,13 @@ import Contact from './ContactUs/Contact'
 import ForgotPassword from './auth/ForgotPassword'
 import EmailScreen from './auth/EmailScreen'
 import ResetPassword from './auth/ResetPassword'
+import Dashboardss from './Company_Dashboard/Dashboard'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
 
   const isAdmin = useSelector(state => state.User.user_role);
+  console.log(isAdmin)
   var isLoggedIn = true
   if (localStorage.getItem('isLoggedIn') === null) {
     isLoggedIn = false
@@ -141,7 +143,7 @@ const Pages = (props) => {
         <Route path="/admin/category-list" element={isAdmin==2 ?<><Category/></> : <ResourceDenied/>}/>
         <Route path="/admin/category-form" element={isAdmin==2 ?<><Add_Category/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-categories" element={isAdmin==2 ?<><Tab/></> : <ResourceDenied/>}/>
-        <Route path="/dashboard" element={isAdmin==1 ? <Com_Dash/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
+        <Route path="/dashboard" element={isAdmin==1 ? <Dashboardss/>:isAdmin==0?<Contractor_Dashboard/> : <ResourceDenied/>}/>
         <Route path="/dashboard/listing-form" element={<ListingForm/>}/>
         <Route path="/admin/all-listing" element={isAdmin==2 ? <Listing/>: <ResourceDenied/>}/>
         <Route path="/admin/carausel-list" element={isAdmin==2 ? <CarauselList/>: <ResourceDenied/>}/>

@@ -18,6 +18,9 @@ const VendorForm = () => {
   const navigator = useNavigate()
   const [showMsg, setShowMsg] = useState(false)
   const [formData, setFormData] = useState([])
+  var [email, setEmail] = useState('')
+  var [number, setNumber] = useState('')
+  const [state, setState] = useState([])
   function FormHandler(values) {
     if (localStorage.getItem("adminEmail") == null) {
 
@@ -55,7 +58,11 @@ const VendorForm = () => {
       dispatch(Add_Vendor(values)).then((res) => {
         var obj = {}
         obj.id = values.user_id
-        localStorage.setItem("form_id", res.data._id)
+        if(!localStorage.getItem('adminEmail'))
+        {
+          localStorage.setItem("form_id", res.data._id)
+        }
+       
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res) => {
           setShowMsg(true)
@@ -74,30 +81,41 @@ const VendorForm = () => {
   }
 
   useEffect(() => {
+    if (localStorage.getItem("form_id")) {
+      dispatch(get_Vendor_by_id(localStorage.getItem("form_id"))).then((res) => {
+        setFormData(res)
 
-    dispatch(get_Vendor_by_id(localStorage.getItem("form_id"))).then((res) => {
-      setFormData(res)
-
-    })
+      })
+    }
   }, [])
   console.log(formData)
 
-  var email, number;
-  if (localStorage.getItem("adminEmail") == null) {
-    email = localStorage.getItem("email")
-    number = localStorage.getItem("number")
+  function emailHandler(e) {
+    setEmail(e.target.value)
   }
+
+  function inputHandler(e) {
+    setNumber(e.target.value)
+  }
+
+  var email, number;
+
+ 
   useEffect(() => {
     if (localStorage.getItem('adminEmail')) {
       form.resetFields();
-      number = null;
-      email = null
+    }
+    else{
+      setEmail(localStorage.getItem("email"))
+      setNumber(localStorage.getItem("number"))
     }
   }, [localStorage.getItem('adminEmail')])
-  const [state, setState] = useState([])
+
+
   function countrySelectHandler(country) {
     setState(state_cites[country])
   }
+  console.log(number, email)
   return (
     <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
       <div className="px-8 h-full text-gray-800">
@@ -323,7 +341,7 @@ const VendorForm = () => {
                         className="mb-1"
                       >
                         {
-                          number != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                          number != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" onChange={inputHandler} placeholder='Enter Your Number' />
                         }
 
                       </Form.Item>
@@ -337,7 +355,7 @@ const VendorForm = () => {
                       ]}
                       >
                         {
-                          email != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                          email != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input type='email' onChange={emailHandler} placeholder='Enter Your Email' />
                         }
 
                       </Form.Item>

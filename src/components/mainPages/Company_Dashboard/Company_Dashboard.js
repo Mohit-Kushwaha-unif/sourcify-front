@@ -29,6 +29,7 @@ const Company_Dashboard = ({dataTransfer}) => {
         if( tableData.status === 0){
           setActiveProjects(prevState =>prevState+1)
         }
+        console.log({tableData})
         data.push({
           '_id': tableData._id,
           'key': index,
@@ -37,6 +38,7 @@ const Company_Dashboard = ({dataTransfer}) => {
           'status': tableData.status === 1 ? "Moderation" : tableData.status === 0 ? "Approved" : "Rejected"
         })
       })
+     
       setTableData(data)
       
     })

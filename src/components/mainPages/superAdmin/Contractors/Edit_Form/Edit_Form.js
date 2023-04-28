@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Personal_Detail_Tab from './Personal_Detail_Tab';
 import * as Contact_Service from '../../../../../services/contractor'
-import Work_Experiece from './Work_Experiece';
-import FinancialDetail from './FinancialDetail';
 const Edit_Form = () => {
     const location = useLocation(state=>state)
     const dispatch = useDispatch()

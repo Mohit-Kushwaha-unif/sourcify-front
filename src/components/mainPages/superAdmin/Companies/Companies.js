@@ -21,7 +21,7 @@ const Companies = () => {
         var tableDataFilter = []
         dispatch(get_Vendor()).then((res) => {
 
-            res.map((tableData, index) => {
+            res.reverse().map((tableData, index) => {
                 console.log(tableData);
 
 

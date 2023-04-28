@@ -84,14 +84,14 @@ const FindProjects = () => {
                     });
                 }
             });
-           
+
             setProjectDetails([...projDet]);
         });
-       
+
         setProjectDetails([...projDet]);
     }, [projects, dispatch]);
 
-  
+
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
@@ -127,26 +127,48 @@ const FindProjects = () => {
     }
     const intresetHandler = (id) => {
         setListId(id)
-
+      
         dispatch(get_listingBy_id(id)).then((res) => {
-
-            res.listing.proposals.map((detail) => {
-                if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
-
-                    toast.success('You already shared your intrest', {
-                        position: toast.POSITION.TOP_RIGHT
-                    })
-                }
+          let foundInterest = false;
+          let foundOwnProject = false;
+          if (localStorage.getItem("user_id") == res.listing.user_id._id) {
+            console.log("im in")
+            console.log("2")
+            toast.error('Can not send proposal to your own projects', {
+              position: toast.POSITION.TOP_RIGHT
             })
+            foundOwnProject = true;
+          }
+          res.listing.proposals.forEach((detail) => {
+            if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
+              console.log("1")
+              toast.success('You already shared your intrest', {
+                position: toast.POSITION.TOP_RIGHT
+              })
+              foundInterest = true;
+            } 
+      
+
+            
+          })
+          console.log(foundInterest ,foundOwnProject)
+          if (!foundInterest && !foundOwnProject) {
+            if (localStorage.getItem("isLoggedIn") == "false") {
+              console.log("3")
+              navigate('/login')
+            } else if (localStorage.getItem('status') != 0) {
+              console.log("4")
+              toast.error('Account is not approved by admin', {
+                position: toast.POSITION.TOP_RIGHT
+              })
+            } else {
+              console.log("5")
+              setIsCompany(true)
+            }
+          }
         })
-        if (localStorage.getItem("isLoggedIn") == false) {
-            navigate('/login')
-        }
-        
-        else {
-            setIsCompany(true)
-        }
-    }
+      }
+      
     const hideModal = () => {
         setIsCompany(false);
     };
@@ -161,6 +183,7 @@ const FindProjects = () => {
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
             console.log(res)
+            hideModal()
         })
     }
     function proposalHandler(e) {
@@ -193,8 +216,8 @@ const FindProjects = () => {
                     </Form.Item>
 
                     <Form.Item name="work_Segments" label="Select work segment">
-                       <Select placeholder="select work segments">
-                        {
+                        <Select placeholder="select work segments">
+                            {
                                 work_segment.length > 0 && work_segment.map((cats) => {
                                     return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
                                 })

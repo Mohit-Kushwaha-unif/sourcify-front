@@ -273,7 +273,7 @@ const PersonalDetails = () => {
       })
     }
     else {
-      dispatch(Contractor_service.add_contractor(formData)).then((res) => {
+      dispatch(Contractor_service.Add_contractor(formData)).then((res) => {
         var obj = {}
         obj.id = value.user_id
         obj.contractor_id = res.user_data._id

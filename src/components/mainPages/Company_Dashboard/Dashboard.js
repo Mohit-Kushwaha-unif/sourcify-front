@@ -8,39 +8,7 @@ const Dashboard = () => {
   const [postedProjects, setPostedProjects] = useState(0)
   const [activeProjects, setActiveProjects] = useState(0)
   const [tableData, setTableData] = useState([])
-  const [tableShow1,setTableShow1] = useState(false)
-  const [tableShow2,setTableShow2] = useState(false)
-  const [tableShow3,setTableShow3] = useState(false)
-  const [tableShow4,setTableShow4] = useState(false)
-
-
-  function showTable(val){
-    if(val==1){
-      setTableShow1(true)
-      setTableShow2(false)
-      setTableShow3(false)
-      setTableShow4(false)
-    }
-    if(val==2){
-      setTableShow2(true)
-      setTableShow1(false)
-      setTableShow3(false)
-      setTableShow4(false)
-    }
-    if(val==3){
-      setTableShow3(true)
-      setTableShow2(false)
-      setTableShow1(false)
-      setTableShow4(false)
-    }
-    if(val==4){
-      setTableShow4(true)
-      setTableShow2(false)
-      setTableShow3(false)
-      setTableShow1(false)
-    }
-  }
-
+  console.log("hey")
   var count = 0
   function ContractData(val) {
     console.log(val)
@@ -62,7 +30,7 @@ const Dashboard = () => {
     <>
       <div className=' container grid grid-cols-1 md:gap-x-6  mb-5 md:grid-cols-4'>
 
-        <Card onClick={()=>showTable(1)} title="Posted Projects " bordered={false}>
+        <Card  title="Posted Projects " bordered={false}>
           <div className='grid grid-cols-3 place-items-center'>
 
             <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects}</p>
@@ -70,7 +38,7 @@ const Dashboard = () => {
           </div>
         </Card>
 
-        <Card onClick={()=>showTable(2)} title="Shared Intreseted Projects" bordered={false}>
+        <Card  title="Shared Intreseted Projects" bordered={false}>
           <div className='grid grid-cols-3 place-items-center'>
             <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {tableData.length}</p>
             <p className='col-span-2 text-lg'> You have shared your interest in {tableData.length} project</p>
@@ -79,7 +47,7 @@ const Dashboard = () => {
         </Card>
 
 
-        <Card onClick={()=>showTable(3)} title="Active Projects" bordered={false}>
+        <Card  title="Active Projects" bordered={false}>
           <div className='grid grid-cols-3 place-items-center'>
             <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {activeProjects}</p>
             <p className='col-span-2 text-lg'> Your Ongoing Projects are {activeProjects}</p>
@@ -87,7 +55,7 @@ const Dashboard = () => {
 
         </Card>
 
-        <Card onClick={()=>showTable(4)} title="All Projects" bordered={false}>
+        <Card  title="All Projects" bordered={false}>
           <div className='grid grid-cols-3 place-items-center'>
             <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects + tableData.length}</p>
             <p className='col-span-2 text-lg'> Your Total Number of projects</p>

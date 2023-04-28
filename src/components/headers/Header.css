@@ -22,8 +22,8 @@
     padding: 8px 6px; 
     /* 16px 12px; */
     cursor: pointer;
-    margin-left:0.4rem;
-    margin-right: 0.4rem;;
+    padding-left:0.4rem;
+    padding-right: 0.4rem;;
     vertical-align: middle;
 }
 .navbar__button{

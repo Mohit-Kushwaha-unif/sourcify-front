@@ -76,11 +76,17 @@ const FindContractor = () => {
   }
 
   const contractHandler = (val) => {
+ 
     if(localStorage.getItem("isLoggedIn") == "false"){
       navigator('/login')
     }
-    else if (userRole !=1) {
-      toast.error('You are not an Comapny', {
+    else if(localStorage.getItem("user_id") == val.user_id){
+      toast.error('It is your profile only', {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+    else if (localStorage.getItem('status') !=0) {
+      toast.error('Account is not approved by admin', {
         position: toast.POSITION.TOP_RIGHT
       })
     }
@@ -102,10 +108,10 @@ function submitHandler(event) {
   obj.isSeen = 0
   dispatch(send_message(obj)).then((res) => {
       console.log(res)
+      hideModal()
   })
 }
 function proposalHandler(e) {
-  // console.log(e.target.value)
   setProposalVal(e.target.value)
 }
   return (

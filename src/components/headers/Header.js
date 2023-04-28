@@ -7,7 +7,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
 
-import { search_listing } from '../../services/listing';
+import {TiMessages} from 'react-icons/ti'
 import { get_Vendor_by_id, search_vendor } from '../../services/Vendor';
 import { get_contractorBy_id, search_contractor } from '../../services/contractor';
 import { get_user_info } from '../../services/user';
@@ -65,6 +65,7 @@ const Header = () => {
           dispatch(get_contractorBy_id(res.contractor_id._id)).then((res) => {
             dispatch(acc_status(res.status))
             setAccountStatus(res.status)
+            localStorage.setItem('status',res.status)
           })
           setShowStatus(true)
           setUserName(res.contractor_id.username)
@@ -74,11 +75,13 @@ const Header = () => {
           dispatch(get_Vendor_by_id(res.vendor_id._id)).then((res) => {
             dispatch(acc_status(res.status))
             setAccountStatus(res.status)
+            localStorage.setItem('status',res.status)
           })
           setUserName(res.vendor_id.contact_person)
         }
         if (userName == '') {
           setUserName(localStorage.getItem('email').split('@')[0])
+          localStorage.setItem('status',res.status)
         }
       })
 
@@ -190,10 +193,11 @@ const Header = () => {
                     </div>
                   </>
                   }
-                   <div className='col-span-3  md:flex flex-start items-center place-items-center'>
+                   <div className='col-span-3  md:flex flex-start justify-between items-center place-items-center'>
                     {isLoggedIn ?
                       <>
-                        <NavLink to="/messages" className="mr-2">Messages</NavLink>
+                      
+                        <NavLink to="/messages" className=" h-5  flex items-center "><span className='mr-2'><TiMessages /></span>Chat</NavLink>
                         <button
                           onClick={() => setIsOpen(!isOpen)}
                           className="inline-flex h-[70%]  justify-center items-center  w-full "

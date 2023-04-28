@@ -9,6 +9,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
+import { get_contractor } from '../../../../services/contractor'
 import { add_listing } from '../../../../services/listing'
 import { getAllUser, get_user_info, update_user } from '../../../../services/user'
 import { get_Vendor } from '../../../../services/Vendor'
@@ -28,26 +29,43 @@ const ListingForm = () => {
     useDocumentTitle('Add your Listing')
 
     useEffect(() => {
+        var users =[];
         if (localStorage.getItem("isLoggedIn") !== "true") {
-            navigator('/login')
+            navigator('/login');
         }
-        dispatch(getAllUser()).then((res) => {
-            setAllUsers([...res])
-        })
+      
+        dispatch(get_Vendor()).then((res) => {
+          res.map((user) => {
+            if (user.status === 0) {
+              users.push(user);
+            }
+          });
+        }).then(() => {
+          dispatch(get_contractor()).then((res) => {
+            res.map((user) => {
+              if (user.status === 1) {
+                users.push(user);
+              }
+            });
+          }).then(() => {
+            setAllUsers([...users]);
+          });
+        });
+      
         dispatch(get_category()).then((res) => {
-
-            res.map((cat) => {
-                console.log(cat)
-                setSub_cat((prev_state) => [...prev_state, cat])
-                setCategories((prev_state) => [...prev_state, cat.name])
-            })
-        })
-    }, [])
+          res.map((cat) => {
+            setSub_cat((prev_state) => [...prev_state, cat]);
+            setCategories((prev_state) => [...prev_state, cat.name]);
+          });
+        });
+      
+      }, []);
+      
 
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
 
     const onChange = (date, dateString) => {
-        console.log(date, dateString);
+     
     };
     function FormHandler(values) {
         var work_area = []
@@ -68,7 +86,7 @@ const ListingForm = () => {
         values.status = 1
         values.project_bill_qty = image
         values.project_specification = specificationImage
-        console.log(values)
+    
         Object.keys(values).map((formVal) => {
             if (formVal == "work_area") {
                 formData.append(formVal, JSON.stringify(values[formVal]))
@@ -80,10 +98,9 @@ const ListingForm = () => {
         })
 
         dispatch(add_listing(formData)).then((res) => {
-            Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success')
-        }).then(() => {
-            return false
-            navigator('/dashboard')
+            Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success').then(()=>{
+                navigator('/dashboard')
+            })
         })
     }
     function specificationimageHandler(e) {
@@ -96,6 +113,7 @@ const ListingForm = () => {
         // Can not select days before today and today
         return current && current.valueOf() < Date.now();
     }
+ 
     function countrySelectHandler() { }
     return (
         <section className="container min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
@@ -116,7 +134,7 @@ const ListingForm = () => {
                                 {
                                     isAdmin ==2 &&
                                     <>
-                                    <p className='headings font_16 mb-3'>Select Users</p>
+                                    <p className='headings font_16 mb-3'>Select Company Name</p>
                                     <Form.Item name='user_id' label="User Email" rules={[
                                         {
                                             required: true,
@@ -126,8 +144,8 @@ const ListingForm = () => {
                                     >
         
                                         <Select   name="user_id" placeholder="Select user email"  options={allUsers.map((item) => ({
-                                                value: item._id,
-                                                label: item.email,
+                                                value: item.user_id._id,
+                                                label: item.entity || item.agency_name,
                                             }))}>
                                           
                                         </Select>
