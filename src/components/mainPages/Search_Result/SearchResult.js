@@ -27,7 +27,7 @@ const SearchResult = () => {
     const navigate = useNavigate()
     const contractHandler = (val) => {
         if(localStorage.getItem("isLoggedIn") == "false"){
-            navigator('/login')
+            navigate('/login')
           }
           else if(localStorage.getItem("user_id") == val.user_id._id|| localStorage.getItem("user_id") == val.user_id){
             toast.error('It is your profile only', {

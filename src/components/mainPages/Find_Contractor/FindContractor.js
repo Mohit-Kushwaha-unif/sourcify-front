@@ -25,7 +25,7 @@ const FindContractor = () => {
   const [proposalVal, setProposalVal] = useState('')
   const [loading,setLoading] = useState(true)
   const [form] = Form.useForm();
-  const navigator = useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(get_contractor()).then((res) => {
@@ -81,7 +81,7 @@ const FindContractor = () => {
   const contractHandler = (val) => {
  console.log(val.user_id)
     if(localStorage.getItem("isLoggedIn") == "false"){
-      navigator('/login')
+      navigate('/login')
     }
     else if(localStorage.getItem("user_id") == val.user_id._id|| localStorage.getItem("user_id") == val.user_id){
       toast.error('It is your profile only', {
