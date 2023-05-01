@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { get_category } from '../../services/category'
 import dropdown_icon from '../../assests/dropdown_icon.png'
 import { useNavigate } from 'react-router-dom'
@@ -8,28 +8,31 @@ const SubHeader = ({ filterValue }) => {
     const dispatch = useDispatch()
     const [category, setCategory] = useState([])
     const [hoverState, setHoverState] = useState({});
+    const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
+    console.log(WORK_SEGMENT)
     var navigate = useNavigate()
     const filterHandler = (event) => {
         navigate(`/work_segment#${event.target.textContent}`)
     }
     useEffect(() => {
-        dispatch(get_category()).then((res) => {
-            // console.log(res)
-            var data = []
-            res.map((cats) => {
+
+        var data = []
+        if (WORK_SEGMENT!= undefined && WORK_SEGMENT.length > 0) {
+            WORK_SEGMENT.map((cats) => {
                 data.push(cats)
             })
-            setCategory(data)
-        })
-    }, [])
+        }
+        setCategory(data)
+
+    }, [WORK_SEGMENT])
     const toggleHoverState = (cat) => {
         setHoverState({ ...hoverState, [cat]: !hoverState[cat] });
     }
-    function searchHnadler(sub_cat){
-        dispatch(search_db(sub_cat)).then((res)=>{
-            navigate('/results/'+sub_cat,{state: {input:sub_cat,res}}) 
+    function searchHnadler(sub_cat) {
+        dispatch(search_db(sub_cat)).then((res) => {
+            navigate('/results/' + sub_cat, { state: { input: sub_cat, res } })
         })
-       
+
     }
     return (
         <div className=' mt-1  sm:mb-1  flex  '>
@@ -50,7 +53,7 @@ const SubHeader = ({ filterValue }) => {
                                         {
                                             cats.children.map((sub_cat) => {
                                                 return <ul>
-                                                    <li className='py-1 px-5  h-auto  border-b-2 hover:bg-slate-100 ' onClick={()=>{searchHnadler(sub_cat.name)}}>{sub_cat.name}</li>
+                                                    <li className='py-1 px-5  h-auto  border-b-2 hover:bg-slate-100 ' onClick={() => { searchHnadler(sub_cat.name) }}>{sub_cat.name}</li>
                                                 </ul>
                                             })
                                         }

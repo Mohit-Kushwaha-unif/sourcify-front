@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { get_category } from '../../services/category'
 import { search_db } from '../../services/DB'
+import { Work_Segment } from '../../store/actions/user'
 
 const Work_segment_foooter = () => {
     const dispatch = useDispatch()
@@ -12,10 +13,12 @@ const Work_segment_foooter = () => {
     useEffect(() => {
         dispatch(get_category()).then((res) => {
             // console.log(res)
+            dispatch({ type: 'WORK_SEGEMENT', payload: res });
             var data = []
             res.map((cats) => {
                 data.push(cats)
             })
+            
             setCategory(data)
         })
         

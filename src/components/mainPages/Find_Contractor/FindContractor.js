@@ -1,4 +1,4 @@
-import { Input, Modal } from 'antd'
+import { Input, Modal, Select } from 'antd'
 import React from 'react'
 import { Form } from 'antd'
 import { useState } from 'react'
@@ -15,6 +15,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { send_message } from '../../../services/Messages'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Helper/Loader'
+import { get_category } from '../../../services/category'
 
 const FindContractor = () => {
   const [contractors, setContractors] = useState([])
@@ -27,6 +28,8 @@ const FindContractor = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [work_segment, set_work_segment] = useState([])
+  const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   useEffect(() => {
     dispatch(get_contractor()).then((res) => {
       res.map((cont) => {
@@ -36,6 +39,16 @@ const FindContractor = () => {
       })
 
     })
+    if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
+
+      set_work_segment([...WORK_SEGMENT])
+
+  }
+  else {
+      dispatch(get_category()).then((res) => {
+          set_work_segment([...res])
+      })
+  }
   }, [])
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,15 +146,21 @@ function proposalHandler(e) {
           onValuesChange={handleFormChange}
         >
           <Form.Item name="contractor" label="">
-            <Input className='input_border mb-5' placeholder='Search for contractors' />
+            <Input className=' mb-5' placeholder='Search for contractors' />
           </Form.Item>
 
           <Form.Item name="Location" label="Search Location">
-            <Input className='input_border mb-5' placeholder='Search location' />
+            <Input className=' mb-5' placeholder='Search location' />
           </Form.Item>
 
           <Form.Item name="work_segment" label="Select Work Segments">
-            <Input className='input_border mb-5' placeholder='Search work segments' />
+          <Select placeholder="select work segments" >
+                                    {
+                                        work_segment.length > 0 && work_segment.map((cats) => {
+                                            return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
+                                        })
+                                    }
+                                </Select>
           </Form.Item>
 
         </Form>

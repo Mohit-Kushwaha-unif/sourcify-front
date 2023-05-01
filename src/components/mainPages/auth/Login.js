@@ -89,9 +89,9 @@ const Login = () => {
       localStorage.setItem("isLoggedIn", true)
       // localStorage.setItem('number', )
       if (res.userdata.role === 1) {
-        console.log(Object.keys(res.data), Object.keys(res.data).includes == 'vendor_id')
-        if ("vendor_id" in res.data) {
-          localStorage.getItem('form_id', res.data.user.vendor_id)
+        console.log(Object.keys(res.userdata), Object.keys(res.userdata).includes == 'vendor_id')
+        if ("vendor_id" in res.userdata) {
+          localStorage.getItem('form_id', res.userdata.vendor_id)
           navigate('/dashboard')
           return
         }
@@ -102,8 +102,8 @@ const Login = () => {
 
       }
       if (res.userdata.role === 0) {
-        if ("contractor_id" in res.data) {
-          localStorage.getItem('form_id', res.data.user.contractor_id)
+        if ("contractor_id" in res.userdata) {
+          localStorage.getItem('form_id', res.userdata.contractor_id)
           navigate('/dashboard')
           return
         }

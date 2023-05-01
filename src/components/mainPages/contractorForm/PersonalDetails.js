@@ -57,6 +57,7 @@ const PersonalDetails = () => {
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
   const [year, setYear] = useState([])
+  const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false)
   const handleFileUpload = async (event, index) => {
@@ -94,11 +95,19 @@ const PersonalDetails = () => {
 
 
   useEffect(() => {
-    dispatch(get_category()).then((res) => {
-      res.map((cat) => {
+    if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
+      WORK_SEGMENT.map((cat) => {
         set_work_Segment((prev_state) => [...prev_state, cat.name])
       })
-    })
+
+    }
+    else {
+      dispatch(get_category()).then((res) => {
+        res.map((cat) => {
+          set_work_Segment((prev_state) => [...prev_state, cat.name])
+        })
+      })
+    }
   }, [])
 
 
@@ -364,1436 +373,1436 @@ const PersonalDetails = () => {
   };
   return (
     <>
-    {
-      loading ?
-      <Loader/> :
-      <>
+      {
+        loading ?
+          <Loader /> :
+          <>
 
-      <div className='w-full min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 '>
-        <div className="px-8 w-full h-full text-gray-800">
-          <div
-            className="flex w-full xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
-          >
-            <div className=" xl:mx-20 xl:w-11/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-              <div className="flex flex-row items-center justify-center lg:justify-start">
-                <p className="text-lg mb-0 mr-4">Basic Details</p>
-                {saved && <p className='text-[#FF5757]'>Your Profile Submitted Successfully</p>}
-              </div>
-              <div
-                className="flex items-center my-3 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-              >
-              </div>
+            <div className='w-full min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 '>
+              <div className="px-8 w-full h-full text-gray-800">
+                <div
+                  className="flex w-full xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
+                >
+                  <div className=" xl:mx-20 xl:w-11/12 lg:w-11/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                    <div className="flex flex-row items-center justify-center lg:justify-start">
+                      <p className="text-lg mb-0 mr-4">Basic Details</p>
+                      {saved && <p className='text-[#FF5757]'>Your Profile Submitted Successfully</p>}
+                    </div>
+                    <div
+                      className="flex items-center my-3 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                    >
+                    </div>
 
-              {
-                !Array.isArray(formData) > 0 || formData == null ?
-                  <Form
-                    form={form}
-                    labelCol={{
-                      span: 37,
-                    }}
-                    wrapperCol={{
-                      span: 44,
-                    }}
-
-                    layout="vertical"
-                    fields=
                     {
-                      [
-                        { "name": "email", "value": formData?.user_id?.email },
-                        { "name": "mobile_number", "value": formData?.user_id?.number },
-                        {
-                          name: "entity",
-                          "value": formData.entity
-                        },
-                        {
-                          name: ["Address"],
-                          value: [formData?.Address]
-                        },
-                        {
-                          name: ["State"],
-                          value: [formData?.State]
-                        },
-                        {
-                          name: ["City"],
-                          value: [formData?.City]
-                        },
-                        {
-                          name: "msme",
-                          value: formData?.msme
-                        },
-                        {
-                          name: ["pin_code"],
-                          value: [formData?.pin_code]
-                        },
+                      !Array.isArray(formData) > 0 || formData == null ?
+                        <Form
+                          form={form}
+                          labelCol={{
+                            span: 37,
+                          }}
+                          wrapperCol={{
+                            span: 44,
+                          }}
 
-                        {
-                          name: ["username"],
-                          value: [formData?.username]
-                        },
-                        {
-                          name: ["Designation"],
-                          value: [formData?.Designation]
-                        },
-                        {
-                          name: ["work_segment"],
-                          value: [...selectedItems]
-                        },
-                        {
-                          name: ["msme_number"],
-                          value: [initialpf]
-                        },
-                        {
-                          name: ["prefferd_state"],
-                          value: [...formVal_work_state]
-                        },
-                        ...selectedOptions,
-                        turnover,
-                        {
-                          name: ["Approved_Limit"],
-                          value: formData?.bank_overdraft?.length > 0 ? formData?.bank_overdraft[0].approved : ''
-                        },
-                        {
-                          name: ["consumed"],
-                          value: formData?.bank_overdraft?.length > 0 ? formData?.bank_overdraft[0].consumed : ''
-                        },
-                        {
-                          name: [`Turnover_${new Date().getFullYear()}`],
-                          value: year[0]
-                        },
-                        {
-                          name: [`Turnover_${new Date().getFullYear() - 1}`],
-                          value: year[1]
-                        },
-                        {
-                          name: [`Turnover_${new Date().getFullYear() - 2}`],
-                          value: year[2]
-                        },
-
-                        {
-                          name: ["pan_number"],
-                          value: formData.pan_number == "N/A" || formData.pan_number == "undefined" ? "N/A" : formData.pan_number
-                        },
-                        {
-                          name: ["gst_number"],
-                          value: formData.gst_number == "N/A" || formData.gst_number == "undefined" ? "N/A" : formData.gst_number
-                        },
-                        {
-                          name: ["Project"],
-                          value: [...project]
-                        }
-
-                      ]
-
-
-                    }
-                    size="default"
-                    labelAlign="left"
-                    scrollToFirstError={true}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-
-
-                  >
-                    {/**************  Entity Name *************/}
-                    <Form.Item name="entity" label="Name of Entity" rules={[
-                      {
-                        required: true,
-                        message: 'Please enter your entity name',
-                      },
-                    ]}>
-                      <Input placeholder='Enter the name of Your entity' />
-                    </Form.Item>
-                    <div className='form_email_mobile_flex flex-col md:flex-row '>
-                      <div className='form_flex_children mr-2'>
-                        <Form.Item label="Contact Person Full Name " name="username" rules={[
+                          layout="vertical"
+                          fields=
                           {
-                            required: true,
-                            message: 'Please enter your name',
-                          },
-                        ]}>
-                          <Input placeholder='Enter contact person name' />
-                        </Form.Item>
-                      </div>
-                      <div className='form_flex_children '>
-                        <Form.Item name="Designation" label="Designation">
-                          <Input placeholder='Enter the  designation' />
-                        </Form.Item>
-                      </div>
-                    </div>
-                    <div className='form_email_mobile_flex flex flex-col md:flex-row'>
-                      {/*****************Email*******************/}
-                      <div className='form_flex_children mr-2' >
-                        <Form.Item name="email" label="Email " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter  email'
-                          },
-                        ]} wrapperCol={{
-                          span: 56,
-                        }}>
+                            [
+                              { "name": "email", "value": formData?.user_id?.email },
+                              { "name": "mobile_number", "value": formData?.user_id?.number },
+                              {
+                                name: "entity",
+                                "value": formData.entity
+                              },
+                              {
+                                name: ["Address"],
+                                value: [formData?.Address]
+                              },
+                              {
+                                name: ["State"],
+                                value: [formData?.State]
+                              },
+                              {
+                                name: ["City"],
+                                value: [formData?.City]
+                              },
+                              {
+                                name: "msme",
+                                value: formData?.msme
+                              },
+                              {
+                                name: ["pin_code"],
+                                value: [formData?.pin_code]
+                              },
 
-                          {
-                            localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                              {
+                                name: ["username"],
+                                value: [formData?.username]
+                              },
+                              {
+                                name: ["Designation"],
+                                value: [formData?.Designation]
+                              },
+                              {
+                                name: ["work_segment"],
+                                value: [...selectedItems]
+                              },
+                              {
+                                name: ["msme_number"],
+                                value: [initialpf]
+                              },
+                              {
+                                name: ["prefferd_state"],
+                                value: [...formVal_work_state]
+                              },
+                              ...selectedOptions,
+                              turnover,
+                              {
+                                name: ["Approved_Limit"],
+                                value: formData?.bank_overdraft?.length > 0 ? formData?.bank_overdraft[0].approved : ''
+                              },
+                              {
+                                name: ["consumed"],
+                                value: formData?.bank_overdraft?.length > 0 ? formData?.bank_overdraft[0].consumed : ''
+                              },
+                              {
+                                name: [`Turnover_${new Date().getFullYear()}`],
+                                value: year[0]
+                              },
+                              {
+                                name: [`Turnover_${new Date().getFullYear() - 1}`],
+                                value: year[1]
+                              },
+                              {
+                                name: [`Turnover_${new Date().getFullYear() - 2}`],
+                                value: year[2]
+                              },
+
+                              {
+                                name: ["pan_number"],
+                                value: formData.pan_number == "N/A" || formData.pan_number == "undefined" ? "N/A" : formData.pan_number
+                              },
+                              {
+                                name: ["gst_number"],
+                                value: formData.gst_number == "N/A" || formData.gst_number == "undefined" ? "N/A" : formData.gst_number
+                              },
+                              {
+                                name: ["Project"],
+                                value: [...project]
+                              }
+
+                            ]
+
+
                           }
+                          size="default"
+                          labelAlign="left"
+                          scrollToFirstError={true}
+                          onFinish={onFinish}
+                          onFinishFailed={onFinishFailed}
+                          autoComplete="off"
 
-
-                        </Form.Item>
-                      </div>
-                      {/*******************************************/}
-
-                      {/************Mobile Number****************/}
-                      <div className='form_flex_children'>
-
-                        <Form.Item name="mobile_number" label="Mobile Number " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your mobile number'
-                          },
-                        ]}>
-                          {
-                            localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
-                          }
-                          {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
-                        </Form.Item>
-                      </div>
-                      {/*******************************************/}
-                    </div>
-                    <Form.Item name="Address" label="Office Address ">
-                      <Input placeholder='Enter your office address' />
-                    </Form.Item>
-                    <div className='flex flex-col md:flex-row '>
-                      <div className='form_flex_children mr-1'>
-                        <Form.Item name="State" label="State " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your State'
-                          },
-                        ]}
 
                         >
-
-                          <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                            showSearch // enable search functionality
-                            filterOption={(input, option) =>
-                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                            }>
-                            {Object.keys(state_cites).map((state) => {
-                              return (<Select.Option value={state}>{state}</Select.Option>)
-                            }
-                            )}
-                          </Select>
-                        </Form.Item>
-                      </div>
-                      <div className='form_flex_children mr-1'>
-                        <Form.Item name="City" label="City " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your City',
-                          },
-                        ]}>
-                          <Select id="country-state" name="City" placeholder="Select city"
-                            showSearch // enable search functionality
-                            filterOption={(input, option) =>
-                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                            }>
-                            {state.length > 0 && state.map((state) => {
-                              return (<Select.Option value={state}>{state}</Select.Option>)
-                            }
-                            )}
-                          </Select>
-                        </Form.Item>
-                      </div>
-                      <div className='form_flex_children'>
-                        <Form.Item name="pin_code" label="PIN Code " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your PIN code',
-
-                          },
-                        ]}>
-                          <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
-                        </Form.Item>
-                      </div>
-                    </div>
-                    {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formData.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
-                      <Input type="file" onChange={company_image_handler} />
-                    </Form.Item>
-                    }
-                    {/*******************************************/}
-
-                    {/**************  Work Segment *************/}
-                    <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
-                      {
-                        required: true,
-                        message: 'Please select your work segment'
-                      },
-                    ]}>
-                      <Select mode="multiple" onChange={setSelectedItems}
-                        allowClear placeholder="List of work segments">
-                        {work_segment.map((option, index) => {
-
-                          return <Select.Option key={index} value={option}>{option}</Select.Option>
-                        })}
-                      </Select>
-                    </Form.Item>
-
-                    {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                      return sub_cat.map((sub_category) => {
-                        return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
-                          {
-                            <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                              {
-                                required: true,
-                                message: 'Please select options',
-                              },
-                            ]}>
-                              <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                {sub_category.children.map((item, index) => {
-
-                                  return (
-                                    <Checkbox
-                                      key={item.name}
-                                      className={`ml-${index === 0 ? 2 : 0} `}
-                                      value={item.name}
-                                    >
-                                      <span>{item.name}</span>
-                                    </Checkbox>
-                                  );
-                                })}
-                              </Checkbox.Group>
-                            </Form.Item>
-                          }
-
-                        </>
-                      })
-                    })
-                    }
-                    {/*******************************************/}
-
-
-                    <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
-                      {
-                        required: true,
-                        message: 'Please enter your State'
-                      },
-                    ]}
-                    >
-
-                      <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
-                        <Select.Option value="All State">All State</Select.Option>
-                        {Object.keys(state_cites).map((state, index) => {
-                          return (<Select.Option key={index} value={state}>{state}</Select.Option>)
-                        }
-                        )}
-                      </Select>
-                    </Form.Item>
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
-                      <div>
-                        <Form.Item name="msme_number" className='mb-0' label="PF Number">
-                          {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                          <Input placeholder='Enter your PF number' />
-                        </Form.Item>
-
-                        {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
-                      </div>
-                      {console.log(showMSMEimage)}
-                      {showMSMEimage == true ? <div>
-                        <span className='flex mb-3 '>Copy of PF </span>
-                        <Link className='mr-16' to={formData.msme_image}>Preview</Link>
-                        <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowMSMEImage(false) }}>Change</span>
-
-                      </div>
-                        :
-                        <Form.Item name="msme_image" label="Copy of PF">
-                          <Input type='file' max={1} onChange={msme_img_value} />
-                        </Form.Item>
-
-                      }
-                      <div>
-
-                        <Form.Item name="pan_number" label="PAN Number" className='mb-0' >
-                          <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
-                        </Form.Item>
-                        {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
-
-                      </div>
-                      {showPANimage ? <div>
-                        <span className='flex mb-3 '>Copy of PAN </span>
-                        <Link className='mr-16' to={formData.pan_image}>Preview</Link>
-                        <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowPANimage(false) }}>Change</span>
-
-                      </div>
-                        : <Form.Item name="pan_image" label="Copy of PAN">
-                          <Input type='file' max={1} onChange={pan_img_value} />
-                        </Form.Item>}
-                      <div>
-                        <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                          <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
-                        </Form.Item>
-
-
-                        {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
-                      </div>
-                      {showGSTiMAGE == true ? <>
-                        <div>
-                          <span className='flex mb-3 '>Copy of GST </span>
-                          <Link className='mr-16' to={formData.gst_image}>Preview</Link>
-                          <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowGSTimage(false) }}>Change</span>
-                        </div>
-                      </> :
-                        <Form.Item name="gst_image" label="Copy of GST">
-                          <Input type='file' max={1} onChange={gst_img_value} />
-                        </Form.Item>}
-                    </div>
-                    <Form.Item name="msme" className='mt-3 md:mt-0' label="Do you have MSME registration?" required >
-                      <Radio.Group >
-                        <Radio value={"Yes"}>Yes</Radio>
-                        <Radio value={"No"}>No</Radio>
-                      </Radio.Group>
-                    </Form.Item>
-                    <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                      <p className="text-lg mb-0 mr-4">Financial Details</p>
-                    </div>
-                    <div
-                      className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                    >
-                    </div>
-
-                    <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
-                    <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                      <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
-                      >
-                        <Input type='number' placeholder='Please enter turnover amount' />
-                      </Form.Item>
-                      <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
-                      >
-
-                        <Input type='number' placeholder='Please enter turnover amount' />
-                      </Form.Item>
-                      <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
-                      >
-
-                        <Input type='number' placeholder='Please enter turnover amount' />
-                      </Form.Item>
-                    </div>
-                    <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
-                    <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-                      <Form.Item name="Approved_Limit" label="Approved Limit "
-                        className="mb-1"
-                      >
-
-                        <Input type='number' placeholder='Please enter  amount' />
-                      </Form.Item>
-                      <Form.Item name="consumed" label="Consumed " className="mt-0"
-                      >
-
-                        <Input type='number' placeholder='Please enter turnover amount' />
-                      </Form.Item>
-                    </div>
-                    <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                      <p className="text-lg mb-0 mr-4">Work Experience</p>
-                    </div>
-                    <div
-                      className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                    >
-                    </div>
-
-                    <p className='mt-5 mb-2 '>Projects</p>
-
-                    <Form.List name="Project">
-                      {(fields, { add, remove }) => (
-                        <>
-                          {fields.map((field, index) => (
-                            <div key={field.key}>
-                              <div className="grid grid-cols-2 w-full">
-                                <p className="flex mb-3">#Project {index + 1} </p>
-                                <div className="float-right">
-                                  <span
-                                    className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
-                                    onClick={() => remove(field.name)}
-                                  >
-                                    <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
-                                    Remove
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                                <Form.Item
-                                  {...field}
-                                  name={[field.name, 'Client_Name']}
-                                  fieldKey={[field.fieldKey, 'Client_Name']}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: 'Missing Client Name',
-                                    },
-                                  ]}
-                                >
-                                  <Input placeholder="Client Name" style={{ width: '100%' }} />
-                                </Form.Item>
-
-
-                                <Form.Item
-                                  {...field}
-                                  name={[field.name, 'Contract_Value']}
-                                  fieldKey={[field.fieldKey, 'Contract_Value']}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: 'Missing Contract Value',
-                                    },
-                                  ]}
-                                >
-                                  <Input type="number" placeholder="Contract Value" />
-                                </Form.Item>
-
-                                <Form.Item
-                                  {...field}
-                                  name={[field.name, 'Exec']}
-                                  fieldKey={[field.fieldKey, 'Exec']}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: 'Missing Year of Execution',
-                                    },
-                                  ]}
-                                >
-                                  <DatePicker
-                                    style={{ width: '100%' }}
-                                    disabledDate={disabledDate}
-                                    placeholder="Year of Execution"
-                                    picker="year"
-                                  />
-                                </Form.Item>
-
-                                {preview_img.length > 0 ? (
-                                  <>
-                                    <br />
-                                    <p className='text-[#FF5757]'>Project Images</p>
-                                    {preview_img.map((link, ind) => {
-                                      return (
-                                        <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
-                                          {ind === index &&
-                                            link.map(img => {
-                                              console.log({ img });
-                                              return <Link to={img}>Preview</Link>;
-                                            })}
-                                        </div>
-                                      );
-                                    })}
-                                  </>
-                                ) : (
-                                  <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
-                                    <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
-                                  </Form.Item>
-                                )}
-
-
-
-                              </div>
+                          {/**************  Entity Name *************/}
+                          <Form.Item name="entity" label="Name of Entity" rules={[
+                            {
+                              required: true,
+                              message: 'Please enter your entity name',
+                            },
+                          ]}>
+                            <Input placeholder='Enter the name of Your entity' />
+                          </Form.Item>
+                          <div className='form_email_mobile_flex flex-col md:flex-row '>
+                            <div className='form_flex_children mr-2'>
+                              <Form.Item label="Contact Person Full Name " name="username" rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter your name',
+                                },
+                              ]}>
+                                <Input placeholder='Enter contact person name' />
+                              </Form.Item>
                             </div>
-                          ))}
+                            <div className='form_flex_children '>
+                              <Form.Item name="Designation" label="Designation">
+                                <Input placeholder='Enter the  designation' />
+                              </Form.Item>
+                            </div>
+                          </div>
+                          <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                            {/*****************Email*******************/}
+                            <div className='form_flex_children mr-2' >
+                              <Form.Item name="email" label="Email " rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter  email'
+                                },
+                              ]} wrapperCol={{
+                                span: 56,
+                              }}>
 
-                          <Form.Item>
-                            <Button
-                              className="flex justify-center items-baseline"
-                              type="dashed"
-                              onClick={() => add()}
-                              block
-                              icon={<PlusOutlined />}
-                            >
-                              Add Project
-                            </Button>
+                                {
+                                  localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                                }
+
+
+                              </Form.Item>
+                            </div>
+                            {/*******************************************/}
+
+                            {/************Mobile Number****************/}
+                            <div className='form_flex_children'>
+
+                              <Form.Item name="mobile_number" label="Mobile Number " rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter your mobile number'
+                                },
+                              ]}>
+                                {
+                                  localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                                }
+                                {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
+                              </Form.Item>
+                            </div>
+                            {/*******************************************/}
+                          </div>
+                          <Form.Item name="Address" label="Office Address ">
+                            <Input placeholder='Enter your office address' />
                           </Form.Item>
-                        </>
-                      )}
-                    </Form.List>
+                          <div className='flex flex-col md:flex-row '>
+                            <div className='form_flex_children mr-1'>
+                              <Form.Item name="State" label="State " rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter your State'
+                                },
+                              ]}
 
-                    <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
-                      {/* <button
-                    type="submit"
-                    className="back_btn"  >
-                    Next
-                  </button> */}
-                      <button
-                        type="submit"
-                        className="save_Btn"  >
-                        Save
-                      </button>
-                    </div>
-                  </Form>
-                  :
-                  isAdmin != 2 ?
-                    <Form
-                      form={form}
-                      labelCol={{
-                        span: 37,
-                      }}
-                      wrapperCol={{
-                        span: 44,
-                      }}
+                              >
 
-                      layout="vertical"
-                      fields=
-                      {
-                        [
-                          { "name": "email", "value": localStorage.getItem("email") },
-                          { "name": "mobile_number", "value": localStorage.getItem("number") },
+                                <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
+                                  showSearch // enable search functionality
+                                  filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                  }>
+                                  {Object.keys(state_cites).map((state) => {
+                                    return (<Select.Option value={state}>{state}</Select.Option>)
+                                  }
+                                  )}
+                                </Select>
+                              </Form.Item>
+                            </div>
+                            <div className='form_flex_children mr-1'>
+                              <Form.Item name="City" label="City " rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter your City',
+                                },
+                              ]}>
+                                <Select id="country-state" name="City" placeholder="Select city"
+                                  showSearch // enable search functionality
+                                  filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                  }>
+                                  {state.length > 0 && state.map((state) => {
+                                    return (<Select.Option value={state}>{state}</Select.Option>)
+                                  }
+                                  )}
+                                </Select>
+                              </Form.Item>
+                            </div>
+                            <div className='form_flex_children'>
+                              <Form.Item name="pin_code" label="PIN Code " rules={[
+                                {
+                                  required: true,
+                                  message: 'Please enter your PIN code',
 
-                        ]
+                                },
+                              ]}>
+                                <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
+                              </Form.Item>
+                            </div>
+                          </div>
+                          {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formData.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
+                            <Input type="file" onChange={company_image_handler} />
+                          </Form.Item>
+                          }
+                          {/*******************************************/}
 
-
-                      }
-                      size="default"
-                      labelAlign="left"
-                      scrollToFirstError={true}
-                      onFinish={onFinish}
-                      onFinishFailed={onFinishFailed}
-                      autoComplete="off"
-
-
-                    >
-                      {/**************  Entity Name *************/}
-                      <Form.Item name="entity" label="Name of Entity" rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your entity name',
-                        },
-                      ]}>
-                        <Input placeholder='Enter the name of Your entity' />
-                      </Form.Item>
-                      <div className='form_email_mobile_flex flex-col md:flex-row '>
-                        <div className='form_flex_children mr-2'>
-                          <Form.Item label="Contact Person Full Name " name="username" rules={[
+                          {/**************  Work Segment *************/}
+                          <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
                             {
                               required: true,
-                              message: 'Please enter your name',
+                              message: 'Please select your work segment'
                             },
                           ]}>
-                            <Input placeholder='Enter contact person name' />
+                            <Select mode="multiple" onChange={setSelectedItems}
+                              allowClear placeholder="List of work segments">
+                              {work_segment.map((option, index) => {
+
+                                return <Select.Option key={index} value={option}>{option}</Select.Option>
+                              })}
+                            </Select>
                           </Form.Item>
-                        </div>
-                        <div className='form_flex_children '>
-                          <Form.Item name="Designation" label="Designation">
-                            <Input placeholder='Enter the designation' />
-                          </Form.Item>
-                        </div>
-                      </div>
-                      <div className='form_email_mobile_flex flex flex-col md:flex-row'>
-                        {/*****************Email*******************/}
-                        <div className='form_flex_children mr-2' >
-                          <Form.Item name="email" label="Email " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter  email'
-                            },
-                          ]} wrapperCol={{
-                            span: 56,
-                          }}>
 
-                            {
-                              localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
-                            }
+                          {selectedItems.length > 0 && selectedItems.map((sub_item) => {
+                            return sub_cat.map((sub_category) => {
+                              return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                                {
+                                  <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                    {
+                                      required: true,
+                                      message: 'Please select options',
+                                    },
+                                  ]}>
+                                    <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                      {sub_category.children.map((item, index) => {
+
+                                        return (
+                                          <Checkbox
+                                            key={item.name}
+                                            className={`ml-${index === 0 ? 2 : 0} `}
+                                            value={item.name}
+                                          >
+                                            <span>{item.name}</span>
+                                          </Checkbox>
+                                        );
+                                      })}
+                                    </Checkbox.Group>
+                                  </Form.Item>
+                                }
+
+                              </>
+                            })
+                          })
+                          }
+                          {/*******************************************/}
 
 
-                          </Form.Item>
-                        </div>
-                        {/*******************************************/}
-
-                        {/************Mobile Number****************/}
-                        <div className='form_flex_children'>
-
-                          <Form.Item name="mobile_number" label="Mobile Number " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your mobile number'
-                            },
-                          ]}>
-                            {
-                              localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
-                            }
-                            {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
-                          </Form.Item>
-                        </div>
-                        {/*******************************************/}
-                      </div>
-                      <Form.Item name="Address" label="Office Address ">
-                        <Input placeholder='Enter your office address' />
-                      </Form.Item>
-                      <div className='flex flex-col md:flex-row '>
-                        <div className='form_flex_children mr-1'>
-                          <Form.Item name="State" label="State " rules={[
+                          <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
                             {
                               required: true,
                               message: 'Please enter your State'
                             },
                           ]}
-
                           >
 
-                            <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                              showSearch // enable search functionality
-                              filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                              }>
-                              {Object.keys(state_cites).map((state) => {
-                                return (<Select.Option value={state}>{state}</Select.Option>)
+                            <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
+                              <Select.Option value="All State">All State</Select.Option>
+                              {Object.keys(state_cites).map((state, index) => {
+                                return (<Select.Option key={index} value={state}>{state}</Select.Option>)
                               }
                               )}
                             </Select>
                           </Form.Item>
-                        </div>
-                        <div className='form_flex_children mr-1'>
-                          <Form.Item name="City" label="City " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your city',
-                            },
-                          ]}>
-                            <Select id="country-state" name="City" placeholder="Select city"
-                              showSearch // enable search functionality
-                              filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                              }>
-                              {state.length > 0 && state.map((state) => {
-                                return (<Select.Option value={state}>{state}</Select.Option>)
-                              }
-                              )}
-                            </Select>
-                          </Form.Item>
-                        </div>
-                        <div className='form_flex_children'>
-                          <Form.Item name="pin_code" label="PIN Code " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your PIN code',
-
-                            },
-                          ]}>
-                            <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
-                          </Form.Item>
-                        </div>
-                      </div>
-                      <Form.Item name="company_image" label=" Business Profile">
-                        <Input type="file" onChange={company_image_handler} />
-                      </Form.Item>
-                      {/*******************************************/}
-
-                      {/**************  Work Segment *************/}
-                      <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
-                        {
-                          required: true,
-                          message: 'Please select your work segment'
-                        },
-                      ]}>
-                        <Select mode="multiple" onChange={setSelectedItems}
-                          allowClear placeholder="List of work segments">
-                          {work_segment.map((option, index) => {
-
-                            return <Select.Option key={index} value={option}>{option}</Select.Option>
-                          })}
-                        </Select>
-                      </Form.Item>
-                      {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                        return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
-                            {
-                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                                {
-                                  required: true,
-                                  message: 'Please select options',
-                                },
-                              ]}>
-                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.children.map((item, index) => {
-
-                                    return (
-                                      <Checkbox
-                                        key={item.name}
-                                        className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.name}
-                                      >
-                                        <span>{item.name}</span>
-                                      </Checkbox>
-                                    );
-                                  })}
-                                </Checkbox.Group>
+                          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
+                            <div>
+                              <Form.Item name="msme_number" className='mb-0' label="PF Number">
+                                {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                                <Input placeholder='Enter your PF number' />
                               </Form.Item>
+
+                              {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
+                            </div>
+                            {console.log(showMSMEimage)}
+                            {showMSMEimage == true ? <div>
+                              <span className='flex mb-3 '>Copy of PF </span>
+                              <Link className='mr-16' to={formData.msme_image}>Preview</Link>
+                              <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowMSMEImage(false) }}>Change</span>
+
+                            </div>
+                              :
+                              <Form.Item name="msme_image" label="Copy of PF">
+                                <Input type='file' max={1} onChange={msme_img_value} />
+                              </Form.Item>
+
                             }
+                            <div>
 
-                          </>
-                        })
-                      })
-                      }
-                      {/*******************************************/}
-                      <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your State'
-                        },
-                      ]}
-                      >
+                              <Form.Item name="pan_number" label="PAN Number" className='mb-0' >
+                                <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                              </Form.Item>
+                              {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
 
-                        <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
-                          <Select.Option value="All State">All State</Select.Option>
-                          {Object.keys(state_cites).map((state, index) => {
-                            return (<Select.Option key={index} value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
+                            </div>
+                            {showPANimage ? <div>
+                              <span className='flex mb-3 '>Copy of PAN </span>
+                              <Link className='mr-16' to={formData.pan_image}>Preview</Link>
+                              <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowPANimage(false) }}>Change</span>
 
-
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
-                        <div>
-                          <Form.Item name="msme_number" className='mb-0' label="PF Number" >
-                            {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                            <Input placeholder='Enter your PF number' />
-                          </Form.Item>
-
-                          {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
-                        </div>
-                        <Form.Item name="msme_image" label="Copy of PF">
-                          <Input type='file' max={1} onChange={msme_img_value} />
-                        </Form.Item>
-                        <div>
-
-                          <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
-                            <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
-                          </Form.Item>
-                          {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
-
-                        </div>
-                        <Form.Item name="pan_image" label="Copy of PAN">
-                          <Input type='file' max={1} onChange={pan_img_value} />
-                        </Form.Item>
-                        <div>
-                          <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                            <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
-                          </Form.Item>
+                            </div>
+                              : <Form.Item name="pan_image" label="Copy of PAN">
+                                <Input type='file' max={1} onChange={pan_img_value} />
+                              </Form.Item>}
+                            <div>
+                              <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                                <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                              </Form.Item>
 
 
-                          {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
-                        </div>
-                        <Form.Item name="gst_image" label="Copy of GST">
-                          <Input type='file' max={1} onChange={gst_img_value} />
-                        </Form.Item>
-                      </div>
-
-                      <Form.Item name="msme" label="Do you have MSME registration ?" required >
-                        <Radio.Group >
-                          <Radio value={"Yes"}>Yes</Radio>
-                          <Radio value={"No"}>No</Radio>
-                        </Radio.Group>
-                      </Form.Item>
-                      <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                        <p className="text-lg mb-0 mr-4">Financial Details</p>
-                      </div>
-                      <div
-                        className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                      >
-                      </div>
-
-                      <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
-                      <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                        <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
-                        >
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                        <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                        <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                      </div>
-                      <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
-                      <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-                        <Form.Item name="Approved_Limit" label="Approved Limit "
-                          className="mb-1"
-                        >
-
-                          <Input type='number' placeholder='Please enter  amount' />
-                        </Form.Item>
-                        <Form.Item name="consumed" label="Consumed " className="mt-0"
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                      </div>
-                      <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                        <p className="text-lg mb-0 mr-4">Work Experience</p>
-                      </div>
-                      <div
-                        className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                      >
-                      </div>
-
-                      <p className='mt-5 mb-2 '>Projects</p>
-
-                      <Form.List name="Project">
-                        {(fields, { add, remove }) => (
-                          <>
-                            {fields.map((field, index) => (
-                              <div key={field.key}>
-                                <div className="grid grid-cols-2 w-full">
-                                  <p className="flex mb-3">#Project {index + 1} </p>
-                                  <div className="float-right">
-                                    <span
-                                      className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
-                                      onClick={() => remove(field.name)}
-                                    >
-                                      <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
-                                      Remove
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Client_Name']}
-                                    fieldKey={[field.fieldKey, 'Client_Name']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Client Name',
-                                      },
-                                    ]}
-                                  >
-                                    <Input placeholder="Client Name" style={{ width: '100%' }} />
-                                  </Form.Item>
-
-
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Contract_Value']}
-                                    fieldKey={[field.fieldKey, 'Contract_Value']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Contract Value',
-                                      },
-                                    ]}
-                                  >
-                                    <Input type="number" placeholder="Contract Value" />
-                                  </Form.Item>
-
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Exec']}
-                                    fieldKey={[field.fieldKey, 'Exec']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Year of Execution',
-                                      },
-                                    ]}
-                                  >
-                                    <DatePicker
-                                      style={{ width: '100%' }}
-                                      disabledDate={disabledDate}
-                                      placeholder="Year of Execution"
-                                      picker="year"
-                                    />
-                                  </Form.Item>
-
-                                  {preview_img.length > 0 ? (
-                                    <>
-                                      <br />
-                                      <p className='text-[#FF5757]'>Project Images</p>
-                                      {preview_img.map((link, ind) => {
-                                        return (
-                                          <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
-                                            {ind === index &&
-                                              link.map(img => {
-                                                console.log({ img });
-                                                return <Link to={img}>Preview</Link>;
-                                              })}
-                                          </div>
-                                        );
-                                      })}
-                                    </>
-                                  ) : (
-                                    <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
-                                      <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
-                                    </Form.Item>
-                                  )}
-
-
-
-                                </div>
+                              {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
+                            </div>
+                            {showGSTiMAGE == true ? <>
+                              <div>
+                                <span className='flex mb-3 '>Copy of GST </span>
+                                <Link className='mr-16' to={formData.gst_image}>Preview</Link>
+                                <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowGSTimage(false) }}>Change</span>
                               </div>
-                            ))}
+                            </> :
+                              <Form.Item name="gst_image" label="Copy of GST">
+                                <Input type='file' max={1} onChange={gst_img_value} />
+                              </Form.Item>}
+                          </div>
+                          <Form.Item name="msme" className='mt-3 md:mt-0' label="Do you have MSME registration?" required >
+                            <Radio.Group >
+                              <Radio value={"Yes"}>Yes</Radio>
+                              <Radio value={"No"}>No</Radio>
+                            </Radio.Group>
+                          </Form.Item>
+                          <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                            <p className="text-lg mb-0 mr-4">Financial Details</p>
+                          </div>
+                          <div
+                            className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                          >
+                          </div>
 
-                            <Form.Item>
-                              <Button
-                                className="flex justify-center items-baseline"
-                                type="dashed"
-                                onClick={() => add()}
-                                block
-                                icon={<PlusOutlined />}
-                              >
-                                Add Project
-                              </Button>
+                          <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
+                          <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
+                            <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
+                            >
+                              <Input type='number' placeholder='Please enter turnover amount' />
                             </Form.Item>
-                          </>
-                        )}
-                      </Form.List>
+                            <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
+                            >
 
-                      <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
-                        {/* <button
+                              <Input type='number' placeholder='Please enter turnover amount' />
+                            </Form.Item>
+                            <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
+                            >
+
+                              <Input type='number' placeholder='Please enter turnover amount' />
+                            </Form.Item>
+                          </div>
+                          <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
+                          <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
+                            <Form.Item name="Approved_Limit" label="Approved Limit "
+                              className="mb-1"
+                            >
+
+                              <Input type='number' placeholder='Please enter  amount' />
+                            </Form.Item>
+                            <Form.Item name="consumed" label="Consumed " className="mt-0"
+                            >
+
+                              <Input type='number' placeholder='Please enter turnover amount' />
+                            </Form.Item>
+                          </div>
+                          <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                            <p className="text-lg mb-0 mr-4">Work Experience</p>
+                          </div>
+                          <div
+                            className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                          >
+                          </div>
+
+                          <p className='mt-5 mb-2 '>Projects</p>
+
+                          <Form.List name="Project">
+                            {(fields, { add, remove }) => (
+                              <>
+                                {fields.map((field, index) => (
+                                  <div key={field.key}>
+                                    <div className="grid grid-cols-2 w-full">
+                                      <p className="flex mb-3">#Project {index + 1} </p>
+                                      <div className="float-right">
+                                        <span
+                                          className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
+                                          onClick={() => remove(field.name)}
+                                        >
+                                          <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
+                                          Remove
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                      <Form.Item
+                                        {...field}
+                                        name={[field.name, 'Client_Name']}
+                                        fieldKey={[field.fieldKey, 'Client_Name']}
+                                        rules={[
+                                          {
+                                            required: true,
+                                            message: 'Missing Client Name',
+                                          },
+                                        ]}
+                                      >
+                                        <Input placeholder="Client Name" style={{ width: '100%' }} />
+                                      </Form.Item>
+
+
+                                      <Form.Item
+                                        {...field}
+                                        name={[field.name, 'Contract_Value']}
+                                        fieldKey={[field.fieldKey, 'Contract_Value']}
+                                        rules={[
+                                          {
+                                            required: true,
+                                            message: 'Missing Contract Value',
+                                          },
+                                        ]}
+                                      >
+                                        <Input type="number" placeholder="Contract Value" />
+                                      </Form.Item>
+
+                                      <Form.Item
+                                        {...field}
+                                        name={[field.name, 'Exec']}
+                                        fieldKey={[field.fieldKey, 'Exec']}
+                                        rules={[
+                                          {
+                                            required: true,
+                                            message: 'Missing Year of Execution',
+                                          },
+                                        ]}
+                                      >
+                                        <DatePicker
+                                          style={{ width: '100%' }}
+                                          disabledDate={disabledDate}
+                                          placeholder="Year of Execution"
+                                          picker="year"
+                                        />
+                                      </Form.Item>
+
+                                      {preview_img.length > 0 ? (
+                                        <>
+                                          <br />
+                                          <p className='text-[#FF5757]'>Project Images</p>
+                                          {preview_img.map((link, ind) => {
+                                            return (
+                                              <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
+                                                {ind === index &&
+                                                  link.map(img => {
+                                                    console.log({ img });
+                                                    return <Link to={img}>Preview</Link>;
+                                                  })}
+                                              </div>
+                                            );
+                                          })}
+                                        </>
+                                      ) : (
+                                        <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
+                                          <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
+                                        </Form.Item>
+                                      )}
+
+
+
+                                    </div>
+                                  </div>
+                                ))}
+
+                                <Form.Item>
+                                  <Button
+                                    className="flex justify-center items-baseline"
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    block
+                                    icon={<PlusOutlined />}
+                                  >
+                                    Add Project
+                                  </Button>
+                                </Form.Item>
+                              </>
+                            )}
+                          </Form.List>
+
+                          <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
+                            {/* <button
+                    type="submit"
+                    className="back_btn"  >
+                    Next
+                  </button> */}
+                            <button
+                              type="submit"
+                              className="save_Btn"  >
+                              Save
+                            </button>
+                          </div>
+                        </Form>
+                        :
+                        isAdmin != 2 ?
+                          <Form
+                            form={form}
+                            labelCol={{
+                              span: 37,
+                            }}
+                            wrapperCol={{
+                              span: 44,
+                            }}
+
+                            layout="vertical"
+                            fields=
+                            {
+                              [
+                                { "name": "email", "value": localStorage.getItem("email") },
+                                { "name": "mobile_number", "value": localStorage.getItem("number") },
+
+                              ]
+
+
+                            }
+                            size="default"
+                            labelAlign="left"
+                            scrollToFirstError={true}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            autoComplete="off"
+
+
+                          >
+                            {/**************  Entity Name *************/}
+                            <Form.Item name="entity" label="Name of Entity" rules={[
+                              {
+                                required: true,
+                                message: 'Please enter your entity name',
+                              },
+                            ]}>
+                              <Input placeholder='Enter the name of Your entity' />
+                            </Form.Item>
+                            <div className='form_email_mobile_flex flex-col md:flex-row '>
+                              <div className='form_flex_children mr-2'>
+                                <Form.Item label="Contact Person Full Name " name="username" rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your name',
+                                  },
+                                ]}>
+                                  <Input placeholder='Enter contact person name' />
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children '>
+                                <Form.Item name="Designation" label="Designation">
+                                  <Input placeholder='Enter the designation' />
+                                </Form.Item>
+                              </div>
+                            </div>
+                            <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                              {/*****************Email*******************/}
+                              <div className='form_flex_children mr-2' >
+                                <Form.Item name="email" label="Email " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter  email'
+                                  },
+                                ]} wrapperCol={{
+                                  span: 56,
+                                }}>
+
+                                  {
+                                    localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                                  }
+
+
+                                </Form.Item>
+                              </div>
+                              {/*******************************************/}
+
+                              {/************Mobile Number****************/}
+                              <div className='form_flex_children'>
+
+                                <Form.Item name="mobile_number" label="Mobile Number " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your mobile number'
+                                  },
+                                ]}>
+                                  {
+                                    localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                                  }
+                                  {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
+                                </Form.Item>
+                              </div>
+                              {/*******************************************/}
+                            </div>
+                            <Form.Item name="Address" label="Office Address ">
+                              <Input placeholder='Enter your office address' />
+                            </Form.Item>
+                            <div className='flex flex-col md:flex-row '>
+                              <div className='form_flex_children mr-1'>
+                                <Form.Item name="State" label="State " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your State'
+                                  },
+                                ]}
+
+                                >
+
+                                  <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
+                                    showSearch // enable search functionality
+                                    filterOption={(input, option) =>
+                                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                    }>
+                                    {Object.keys(state_cites).map((state) => {
+                                      return (<Select.Option value={state}>{state}</Select.Option>)
+                                    }
+                                    )}
+                                  </Select>
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children mr-1'>
+                                <Form.Item name="City" label="City " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your city',
+                                  },
+                                ]}>
+                                  <Select id="country-state" name="City" placeholder="Select city"
+                                    showSearch // enable search functionality
+                                    filterOption={(input, option) =>
+                                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                    }>
+                                    {state.length > 0 && state.map((state) => {
+                                      return (<Select.Option value={state}>{state}</Select.Option>)
+                                    }
+                                    )}
+                                  </Select>
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children'>
+                                <Form.Item name="pin_code" label="PIN Code " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your PIN code',
+
+                                  },
+                                ]}>
+                                  <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
+                                </Form.Item>
+                              </div>
+                            </div>
+                            <Form.Item name="company_image" label=" Business Profile">
+                              <Input type="file" onChange={company_image_handler} />
+                            </Form.Item>
+                            {/*******************************************/}
+
+                            {/**************  Work Segment *************/}
+                            <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
+                              {
+                                required: true,
+                                message: 'Please select your work segment'
+                              },
+                            ]}>
+                              <Select mode="multiple" onChange={setSelectedItems}
+                                allowClear placeholder="List of work segments">
+                                {work_segment.map((option, index) => {
+
+                                  return <Select.Option key={index} value={option}>{option}</Select.Option>
+                                })}
+                              </Select>
+                            </Form.Item>
+                            {selectedItems.length > 0 && selectedItems.map((sub_item) => {
+                              return sub_cat.map((sub_category) => {
+                                return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                                  {
+                                    <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                      {
+                                        required: true,
+                                        message: 'Please select options',
+                                      },
+                                    ]}>
+                                      <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                        {sub_category.children.map((item, index) => {
+
+                                          return (
+                                            <Checkbox
+                                              key={item.name}
+                                              className={`ml-${index === 0 ? 2 : 0} `}
+                                              value={item.name}
+                                            >
+                                              <span>{item.name}</span>
+                                            </Checkbox>
+                                          );
+                                        })}
+                                      </Checkbox.Group>
+                                    </Form.Item>
+                                  }
+
+                                </>
+                              })
+                            })
+                            }
+                            {/*******************************************/}
+                            <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
+                              {
+                                required: true,
+                                message: 'Please enter your State'
+                              },
+                            ]}
+                            >
+
+                              <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
+                                <Select.Option value="All State">All State</Select.Option>
+                                {Object.keys(state_cites).map((state, index) => {
+                                  return (<Select.Option key={index} value={state}>{state}</Select.Option>)
+                                }
+                                )}
+                              </Select>
+                            </Form.Item>
+
+
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
+                              <div>
+                                <Form.Item name="msme_number" className='mb-0' label="PF Number" >
+                                  {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                                  <Input placeholder='Enter your PF number' />
+                                </Form.Item>
+
+                                {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
+                              </div>
+                              <Form.Item name="msme_image" label="Copy of PF">
+                                <Input type='file' max={1} onChange={msme_img_value} />
+                              </Form.Item>
+                              <div>
+
+                                <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
+                                  <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                                </Form.Item>
+                                {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
+
+                              </div>
+                              <Form.Item name="pan_image" label="Copy of PAN">
+                                <Input type='file' max={1} onChange={pan_img_value} />
+                              </Form.Item>
+                              <div>
+                                <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                                  <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                                </Form.Item>
+
+
+                                {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
+                              </div>
+                              <Form.Item name="gst_image" label="Copy of GST">
+                                <Input type='file' max={1} onChange={gst_img_value} />
+                              </Form.Item>
+                            </div>
+
+                            <Form.Item name="msme" label="Do you have MSME registration ?" required >
+                              <Radio.Group >
+                                <Radio value={"Yes"}>Yes</Radio>
+                                <Radio value={"No"}>No</Radio>
+                              </Radio.Group>
+                            </Form.Item>
+                            <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                              <p className="text-lg mb-0 mr-4">Financial Details</p>
+                            </div>
+                            <div
+                              className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                            >
+                            </div>
+
+                            <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
+                            <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
+                              <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
+                              >
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                              <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                              <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                            </div>
+                            <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
+                            <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
+                              <Form.Item name="Approved_Limit" label="Approved Limit "
+                                className="mb-1"
+                              >
+
+                                <Input type='number' placeholder='Please enter  amount' />
+                              </Form.Item>
+                              <Form.Item name="consumed" label="Consumed " className="mt-0"
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                            </div>
+                            <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                              <p className="text-lg mb-0 mr-4">Work Experience</p>
+                            </div>
+                            <div
+                              className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                            >
+                            </div>
+
+                            <p className='mt-5 mb-2 '>Projects</p>
+
+                            <Form.List name="Project">
+                              {(fields, { add, remove }) => (
+                                <>
+                                  {fields.map((field, index) => (
+                                    <div key={field.key}>
+                                      <div className="grid grid-cols-2 w-full">
+                                        <p className="flex mb-3">#Project {index + 1} </p>
+                                        <div className="float-right">
+                                          <span
+                                            className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
+                                            onClick={() => remove(field.name)}
+                                          >
+                                            <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
+                                            Remove
+                                          </span>
+                                        </div>
+                                      </div>
+
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Client_Name']}
+                                          fieldKey={[field.fieldKey, 'Client_Name']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Client Name',
+                                            },
+                                          ]}
+                                        >
+                                          <Input placeholder="Client Name" style={{ width: '100%' }} />
+                                        </Form.Item>
+
+
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Contract_Value']}
+                                          fieldKey={[field.fieldKey, 'Contract_Value']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Contract Value',
+                                            },
+                                          ]}
+                                        >
+                                          <Input type="number" placeholder="Contract Value" />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Exec']}
+                                          fieldKey={[field.fieldKey, 'Exec']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Year of Execution',
+                                            },
+                                          ]}
+                                        >
+                                          <DatePicker
+                                            style={{ width: '100%' }}
+                                            disabledDate={disabledDate}
+                                            placeholder="Year of Execution"
+                                            picker="year"
+                                          />
+                                        </Form.Item>
+
+                                        {preview_img.length > 0 ? (
+                                          <>
+                                            <br />
+                                            <p className='text-[#FF5757]'>Project Images</p>
+                                            {preview_img.map((link, ind) => {
+                                              return (
+                                                <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
+                                                  {ind === index &&
+                                                    link.map(img => {
+                                                      console.log({ img });
+                                                      return <Link to={img}>Preview</Link>;
+                                                    })}
+                                                </div>
+                                              );
+                                            })}
+                                          </>
+                                        ) : (
+                                          <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
+                                            <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
+                                          </Form.Item>
+                                        )}
+
+
+
+                                      </div>
+                                    </div>
+                                  ))}
+
+                                  <Form.Item>
+                                    <Button
+                                      className="flex justify-center items-baseline"
+                                      type="dashed"
+                                      onClick={() => add()}
+                                      block
+                                      icon={<PlusOutlined />}
+                                    >
+                                      Add Project
+                                    </Button>
+                                  </Form.Item>
+                                </>
+                              )}
+                            </Form.List>
+
+                            <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
+                              {/* <button
                       type="submit"
                       className="back_btn"  >
                       Next
                     </button> */}
-                        <button
-                          type="submit"
-                          className="save_Btn"  >
-                          Save
-                        </button>
-                      </div>
-                    </Form>
-                    :
-                    <Form
-                      form={form}
-                      labelCol={{
-                        span: 37,
-                      }}
-                      wrapperCol={{
-                        span: 44,
-                      }}
+                              <button
+                                type="submit"
+                                className="save_Btn"  >
+                                Save
+                              </button>
+                            </div>
+                          </Form>
+                          :
+                          <Form
+                            form={form}
+                            labelCol={{
+                              span: 37,
+                            }}
+                            wrapperCol={{
+                              span: 44,
+                            }}
 
-                      layout="vertical"
-                      size="default"
-                      labelAlign="left"
-                      scrollToFirstError={true}
-                      onFinish={onFinish}
-                      onFinishFailed={onFinishFailed}
-                      autoComplete="off"
+                            layout="vertical"
+                            size="default"
+                            labelAlign="left"
+                            scrollToFirstError={true}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                            autoComplete="off"
 
-
-                    >
-                      {/**************  Entity Name *************/}
-                      <Form.Item name="entity" label="Name of Entity" rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your entity name',
-                        },
-                      ]}>
-                        <Input placeholder='Enter the name of Your entity' />
-                      </Form.Item>
-                      <div className='form_email_mobile_flex flex-col md:flex-row '>
-                        <div className='form_flex_children mr-2'>
-                          <Form.Item label="Contact Person Full Name " name="username" rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your name',
-                            },
-                          ]}>
-                            <Input placeholder='Enter contact person name' />
-                          </Form.Item>
-                        </div>
-                        <div className='form_flex_children '>
-                          <Form.Item name="Designation" label="Designation">
-                            <Input placeholder='Enter the designation' />
-                          </Form.Item>
-                        </div>
-                      </div>
-                      <div className='form_email_mobile_flex flex flex-col md:flex-row'>
-                        {/*****************Email*******************/}
-                        <div className='form_flex_children mr-2' >
-                          <Form.Item name="email" label="Email " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter  email'
-                            },
-                          ]} wrapperCol={{
-                            span: 56,
-                          }}>
-
-                            {
-                              localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
-                            }
-
-
-                          </Form.Item>
-                        </div>
-                        {/*******************************************/}
-
-                        {/************Mobile Number****************/}
-                        <div className='form_flex_children'>
-
-                          <Form.Item name="mobile_number" label="Mobile Number " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your mobile number'
-                            },
-                          ]}>
-                            {
-                              localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
-                            }
-                            {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
-                          </Form.Item>
-                        </div>
-                        {/*******************************************/}
-                      </div>
-                      <Form.Item name="Address" label="Office Address ">
-                        <Input placeholder='Enter your office address' />
-                      </Form.Item>
-                      <div className='flex flex-col md:flex-row '>
-                        <div className='form_flex_children mr-1'>
-                          <Form.Item name="State" label="State " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your State'
-                            },
-                          ]}
 
                           >
-
-                            <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                              showSearch // enable search functionality
-                              filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                              }>
-                              {Object.keys(state_cites).map((state) => {
-                                return (<Select.Option value={state}>{state}</Select.Option>)
-                              }
-                              )}
-                            </Select>
-                          </Form.Item>
-                        </div>
-                        <div className='form_flex_children mr-1'>
-                          <Form.Item name="City" label="City " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your city',
-                            },
-                          ]}>
-                            <Select id="country-state" name="City" placeholder="Select city"
-                              showSearch // enable search functionality
-                              filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                              }>
-                              {state.length > 0 && state.map((state) => {
-                                return (<Select.Option value={state}>{state}</Select.Option>)
-                              }
-                              )}
-                            </Select>
-                          </Form.Item>
-                        </div>
-                        <div className='form_flex_children'>
-                          <Form.Item name="pin_code" label="PIN Code " rules={[
-                            {
-                              required: true,
-                              message: 'Please enter your PIN code',
-
-                            },
-                          ]}>
-                            <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
-                          </Form.Item>
-                        </div>
-                      </div>
-                      <Form.Item name="company_image" label=" Business Profile">
-                        <Input type="file" onChange={company_image_handler} />
-                      </Form.Item>
-                      {/*******************************************/}
-
-                      {/**************  Work Segment *************/}
-                      <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
-                        {
-                          required: true,
-                          message: 'Please select your work segment'
-                        },
-                      ]}>
-                        <Select mode="multiple" onChange={setSelectedItems}
-                          allowClear placeholder="List of work segments">
-                          {work_segment.map((option, index) => {
-
-                            return <Select.Option key={index} value={option}>{option}</Select.Option>
-                          })}
-                        </Select>
-                      </Form.Item>
-                      {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                        return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
-                            {
-                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                                {
-                                  required: true,
-                                  message: 'Please select options',
-                                },
-                              ]}>
-                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.children.map((item, index) => {
-
-                                    return (
-                                      <Checkbox
-                                        key={item.name}
-                                        className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.name}
-                                      >
-                                        <span>{item.name}</span>
-                                      </Checkbox>
-                                    );
-                                  })}
-                                </Checkbox.Group>
-                              </Form.Item>
-                            }
-
-                          </>
-                        })
-                      })
-                      }
-                      {/*******************************************/}
-                      <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
-                        {
-                          required: true,
-                          message: 'Please enter your State'
-                        },
-                      ]}
-                      >
-
-                        <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
-                          <Select.Option value="All State">All State</Select.Option>
-                          {Object.keys(state_cites).map((state, index) => {
-                            return (<Select.Option key={index} value={state}>{state}</Select.Option>)
-                          }
-                          )}
-                        </Select>
-                      </Form.Item>
-
-
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
-                        <div>
-                          <Form.Item name="msme_number" className='mb-0' label="PF Number" >
-                            {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                            <Input placeholder='Enter your PF number' />
-                          </Form.Item>
-
-                          {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
-                        </div>
-                        <Form.Item name="msme_image" label="Copy of PF">
-                          <Input type='file' max={1} onChange={msme_img_value} />
-                        </Form.Item>
-                        <div>
-
-                          <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
-                            <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
-                          </Form.Item>
-                          {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
-
-                        </div>
-                        <Form.Item name="pan_image" label="Copy of PAN">
-                          <Input type='file' max={1} onChange={pan_img_value} />
-                        </Form.Item>
-                        <div>
-                          <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                            <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
-                          </Form.Item>
-
-
-                          {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
-                        </div>
-                        <Form.Item name="gst_image" label="Copy of GST">
-                          <Input type='file' max={1} onChange={gst_img_value} />
-                        </Form.Item>
-                      </div>
-
-                      <Form.Item name="msme" label="Do you have MSME registration ?" required >
-                        <Radio.Group >
-                          <Radio value={"Yes"}>Yes</Radio>
-                          <Radio value={"No"}>No</Radio>
-                        </Radio.Group>
-                      </Form.Item>
-                      <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                        <p className="text-lg mb-0 mr-4">Financial Details</p>
-                      </div>
-                      <div
-                        className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                      >
-                      </div>
-
-                      <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
-                      <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-                        <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
-                        >
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                        <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                        <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                      </div>
-                      <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
-                      <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-                        <Form.Item name="Approved_Limit" label="Approved Limit "
-                          className="mb-1"
-                        >
-
-                          <Input type='number' placeholder='Please enter  amount' />
-                        </Form.Item>
-                        <Form.Item name="consumed" label="Consumed " className="mt-0"
-                        >
-
-                          <Input type='number' placeholder='Please enter turnover amount' />
-                        </Form.Item>
-                      </div>
-                      <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-                        <p className="text-lg mb-0 mr-4">Work Experience</p>
-                      </div>
-                      <div
-                        className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-                      >
-                      </div>
-
-                      <p className='mt-5 mb-2 '>Projects</p>
-
-                      <Form.List name="Project">
-                        {(fields, { add, remove }) => (
-                          <>
-                            {fields.map((field, index) => (
-                              <div key={field.key}>
-                                <div className="grid grid-cols-2 w-full">
-                                  <p className="flex mb-3">#Project {index + 1} </p>
-                                  <div className="float-right">
-                                    <span
-                                      className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
-                                      onClick={() => remove(field.name)}
-                                    >
-                                      <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
-                                      Remove
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Client_Name']}
-                                    fieldKey={[field.fieldKey, 'Client_Name']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Client Name',
-                                      },
-                                    ]}
-                                  >
-                                    <Input placeholder="Client Name" style={{ width: '100%' }} />
-                                  </Form.Item>
-
-
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Contract_Value']}
-                                    fieldKey={[field.fieldKey, 'Contract_Value']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Contract Value',
-                                      },
-                                    ]}
-                                  >
-                                    <Input type="number" placeholder="Contract Value" />
-                                  </Form.Item>
-
-                                  <Form.Item
-                                    {...field}
-                                    name={[field.name, 'Exec']}
-                                    fieldKey={[field.fieldKey, 'Exec']}
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: 'Missing Year of Execution',
-                                      },
-                                    ]}
-                                  >
-                                    <DatePicker
-                                      style={{ width: '100%' }}
-                                      disabledDate={disabledDate}
-                                      placeholder="Year of Execution"
-                                      picker="year"
-                                    />
-                                  </Form.Item>
-
-                                  {preview_img.length > 0 ? (
-                                    <>
-                                      <br />
-                                      <p className='text-[#FF5757]'>Project Images</p>
-                                      {preview_img.map((link, ind) => {
-                                        return (
-                                          <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
-                                            {ind === index &&
-                                              link.map(img => {
-                                                console.log({ img });
-                                                return <Link to={img}>Preview</Link>;
-                                              })}
-                                          </div>
-                                        );
-                                      })}
-                                    </>
-                                  ) : (
-                                    <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
-                                      <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
-                                    </Form.Item>
-                                  )}
-
-
-
-                                </div>
-                              </div>
-                            ))}
-
-                            <Form.Item>
-                              <Button
-                                className="flex justify-center items-baseline"
-                                type="dashed"
-                                onClick={() => add()}
-                                block
-                                icon={<PlusOutlined />}
-                              >
-                                Add Project
-                              </Button>
+                            {/**************  Entity Name *************/}
+                            <Form.Item name="entity" label="Name of Entity" rules={[
+                              {
+                                required: true,
+                                message: 'Please enter your entity name',
+                              },
+                            ]}>
+                              <Input placeholder='Enter the name of Your entity' />
                             </Form.Item>
-                          </>
-                        )}
-                      </Form.List>
+                            <div className='form_email_mobile_flex flex-col md:flex-row '>
+                              <div className='form_flex_children mr-2'>
+                                <Form.Item label="Contact Person Full Name " name="username" rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your name',
+                                  },
+                                ]}>
+                                  <Input placeholder='Enter contact person name' />
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children '>
+                                <Form.Item name="Designation" label="Designation">
+                                  <Input placeholder='Enter the designation' />
+                                </Form.Item>
+                              </div>
+                            </div>
+                            <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                              {/*****************Email*******************/}
+                              <div className='form_flex_children mr-2' >
+                                <Form.Item name="email" label="Email " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter  email'
+                                  },
+                                ]} wrapperCol={{
+                                  span: 56,
+                                }}>
 
-                      <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
-                        {/* <button
+                                  {
+                                    localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                                  }
+
+
+                                </Form.Item>
+                              </div>
+                              {/*******************************************/}
+
+                              {/************Mobile Number****************/}
+                              <div className='form_flex_children'>
+
+                                <Form.Item name="mobile_number" label="Mobile Number " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your mobile number'
+                                  },
+                                ]}>
+                                  {
+                                    localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                                  }
+                                  {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
+                                </Form.Item>
+                              </div>
+                              {/*******************************************/}
+                            </div>
+                            <Form.Item name="Address" label="Office Address ">
+                              <Input placeholder='Enter your office address' />
+                            </Form.Item>
+                            <div className='flex flex-col md:flex-row '>
+                              <div className='form_flex_children mr-1'>
+                                <Form.Item name="State" label="State " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your State'
+                                  },
+                                ]}
+
+                                >
+
+                                  <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
+                                    showSearch // enable search functionality
+                                    filterOption={(input, option) =>
+                                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                    }>
+                                    {Object.keys(state_cites).map((state) => {
+                                      return (<Select.Option value={state}>{state}</Select.Option>)
+                                    }
+                                    )}
+                                  </Select>
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children mr-1'>
+                                <Form.Item name="City" label="City " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your city',
+                                  },
+                                ]}>
+                                  <Select id="country-state" name="City" placeholder="Select city"
+                                    showSearch // enable search functionality
+                                    filterOption={(input, option) =>
+                                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                    }>
+                                    {state.length > 0 && state.map((state) => {
+                                      return (<Select.Option value={state}>{state}</Select.Option>)
+                                    }
+                                    )}
+                                  </Select>
+                                </Form.Item>
+                              </div>
+                              <div className='form_flex_children'>
+                                <Form.Item name="pin_code" label="PIN Code " rules={[
+                                  {
+                                    required: true,
+                                    message: 'Please enter your PIN code',
+
+                                  },
+                                ]}>
+                                  <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
+                                </Form.Item>
+                              </div>
+                            </div>
+                            <Form.Item name="company_image" label=" Business Profile">
+                              <Input type="file" onChange={company_image_handler} />
+                            </Form.Item>
+                            {/*******************************************/}
+
+                            {/**************  Work Segment *************/}
+                            <Form.Item name="work_segment" label="Work Segment (you can select multiple options)" rules={[
+                              {
+                                required: true,
+                                message: 'Please select your work segment'
+                              },
+                            ]}>
+                              <Select mode="multiple" onChange={setSelectedItems}
+                                allowClear placeholder="List of work segments">
+                                {work_segment.map((option, index) => {
+
+                                  return <Select.Option key={index} value={option}>{option}</Select.Option>
+                                })}
+                              </Select>
+                            </Form.Item>
+                            {selectedItems.length > 0 && selectedItems.map((sub_item) => {
+                              return sub_cat.map((sub_category) => {
+                                return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                                  {
+                                    <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                      {
+                                        required: true,
+                                        message: 'Please select options',
+                                      },
+                                    ]}>
+                                      <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                        {sub_category.children.map((item, index) => {
+
+                                          return (
+                                            <Checkbox
+                                              key={item.name}
+                                              className={`ml-${index === 0 ? 2 : 0} `}
+                                              value={item.name}
+                                            >
+                                              <span>{item.name}</span>
+                                            </Checkbox>
+                                          );
+                                        })}
+                                      </Checkbox.Group>
+                                    </Form.Item>
+                                  }
+
+                                </>
+                              })
+                            })
+                            }
+                            {/*******************************************/}
+                            <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
+                              {
+                                required: true,
+                                message: 'Please enter your State'
+                              },
+                            ]}
+                            >
+
+                              <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
+                                <Select.Option value="All State">All State</Select.Option>
+                                {Object.keys(state_cites).map((state, index) => {
+                                  return (<Select.Option key={index} value={state}>{state}</Select.Option>)
+                                }
+                                )}
+                              </Select>
+                            </Form.Item>
+
+
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
+                              <div>
+                                <Form.Item name="msme_number" className='mb-0' label="PF Number" >
+                                  {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                                  <Input placeholder='Enter your PF number' />
+                                </Form.Item>
+
+                                {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
+                              </div>
+                              <Form.Item name="msme_image" label="Copy of PF">
+                                <Input type='file' max={1} onChange={msme_img_value} />
+                              </Form.Item>
+                              <div>
+
+                                <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
+                                  <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                                </Form.Item>
+                                {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
+
+                              </div>
+                              <Form.Item name="pan_image" label="Copy of PAN">
+                                <Input type='file' max={1} onChange={pan_img_value} />
+                              </Form.Item>
+                              <div>
+                                <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                                  <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                                </Form.Item>
+
+
+                                {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
+                              </div>
+                              <Form.Item name="gst_image" label="Copy of GST">
+                                <Input type='file' max={1} onChange={gst_img_value} />
+                              </Form.Item>
+                            </div>
+
+                            <Form.Item name="msme" label="Do you have MSME registration ?" required >
+                              <Radio.Group >
+                                <Radio value={"Yes"}>Yes</Radio>
+                                <Radio value={"No"}>No</Radio>
+                              </Radio.Group>
+                            </Form.Item>
+                            <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                              <p className="text-lg mb-0 mr-4">Financial Details</p>
+                            </div>
+                            <div
+                              className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                            >
+                            </div>
+
+                            <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
+                            <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
+                              <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
+                              >
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                              <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                              <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                            </div>
+                            <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
+                            <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
+                              <Form.Item name="Approved_Limit" label="Approved Limit "
+                                className="mb-1"
+                              >
+
+                                <Input type='number' placeholder='Please enter  amount' />
+                              </Form.Item>
+                              <Form.Item name="consumed" label="Consumed " className="mt-0"
+                              >
+
+                                <Input type='number' placeholder='Please enter turnover amount' />
+                              </Form.Item>
+                            </div>
+                            <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                              <p className="text-lg mb-0 mr-4">Work Experience</p>
+                            </div>
+                            <div
+                              className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+                            >
+                            </div>
+
+                            <p className='mt-5 mb-2 '>Projects</p>
+
+                            <Form.List name="Project">
+                              {(fields, { add, remove }) => (
+                                <>
+                                  {fields.map((field, index) => (
+                                    <div key={field.key}>
+                                      <div className="grid grid-cols-2 w-full">
+                                        <p className="flex mb-3">#Project {index + 1} </p>
+                                        <div className="float-right">
+                                          <span
+                                            className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
+                                            onClick={() => remove(field.name)}
+                                          >
+                                            <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
+                                            Remove
+                                          </span>
+                                        </div>
+                                      </div>
+
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Client_Name']}
+                                          fieldKey={[field.fieldKey, 'Client_Name']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Client Name',
+                                            },
+                                          ]}
+                                        >
+                                          <Input placeholder="Client Name" style={{ width: '100%' }} />
+                                        </Form.Item>
+
+
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Contract_Value']}
+                                          fieldKey={[field.fieldKey, 'Contract_Value']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Contract Value',
+                                            },
+                                          ]}
+                                        >
+                                          <Input type="number" placeholder="Contract Value" />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                          {...field}
+                                          name={[field.name, 'Exec']}
+                                          fieldKey={[field.fieldKey, 'Exec']}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message: 'Missing Year of Execution',
+                                            },
+                                          ]}
+                                        >
+                                          <DatePicker
+                                            style={{ width: '100%' }}
+                                            disabledDate={disabledDate}
+                                            placeholder="Year of Execution"
+                                            picker="year"
+                                          />
+                                        </Form.Item>
+
+                                        {preview_img.length > 0 ? (
+                                          <>
+                                            <br />
+                                            <p className='text-[#FF5757]'>Project Images</p>
+                                            {preview_img.map((link, ind) => {
+                                              return (
+                                                <div className={`grid grid-cols-1 md:grid-cols-${link.length} gap-4 mb-3`}>
+                                                  {ind === index &&
+                                                    link.map(img => {
+                                                      console.log({ img });
+                                                      return <Link to={img}>Preview</Link>;
+                                                    })}
+                                                </div>
+                                              );
+                                            })}
+                                          </>
+                                        ) : (
+                                          <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
+                                            <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
+                                          </Form.Item>
+                                        )}
+
+
+
+                                      </div>
+                                    </div>
+                                  ))}
+
+                                  <Form.Item>
+                                    <Button
+                                      className="flex justify-center items-baseline"
+                                      type="dashed"
+                                      onClick={() => add()}
+                                      block
+                                      icon={<PlusOutlined />}
+                                    >
+                                      Add Project
+                                    </Button>
+                                  </Form.Item>
+                                </>
+                              )}
+                            </Form.List>
+
+                            <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
+                              {/* <button
                     type="submit"
                     className="back_btn"  >
                     Next
                   </button> */}
-                        <button
-                          type="submit"
-                          className="save_Btn"  >
-                          Save
-                        </button>
-                      </div>
-                    </Form>
-              }
+                              <button
+                                type="submit"
+                                className="save_Btn"  >
+                                Save
+                              </button>
+                            </div>
+                          </Form>
+                    }
 
-            </div>
-          </div>
-        </div>
-      </div >
+                  </div>
+                </div>
+              </div>
+            </div >
+          </>
+      }
     </>
-    }
-   </>
   );
 };
 

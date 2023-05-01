@@ -3,7 +3,8 @@ const initialState = {
   isLoggedIn: false,
   userDetails: {},
   user_role: false,
-  accStatus: null
+  accStatus: null,
+  Work_segment: []
 };
 
 const State = (state = initialState, { type, payload }) => {
@@ -20,6 +21,8 @@ const State = (state = initialState, { type, payload }) => {
       return user_Role(state,payload)
       case 'ACC_STATUS':
       return acc_status(state,payload)
+      case 'WORK_SEGEMENT':
+      return Work_segment(state,payload)
       
     default:
       return state;
@@ -64,6 +67,14 @@ function acc_status(state, payload) {
   return {
     ...state,
     acc_status : payload
+  };
+}
+function Work_segment(state, payload) {
+  
+  state.Work_segment = payload
+  return {
+    ...state,
+    Work_segment : payload
   };
 }
 

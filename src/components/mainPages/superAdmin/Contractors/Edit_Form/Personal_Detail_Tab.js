@@ -13,7 +13,7 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as Contractor_service from '../../../../../services/contractor'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get_category } from '../../../../../services/category';
 import { DatePicker } from 'antd';
 import { AiFillDelete } from 'react-icons/ai'
@@ -53,21 +53,14 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [company_Image, set_company_imgae] = useState('')
   const [contractor_status, set_Contractor_status] = useState(1)
   const [form] = Form.useForm();
-
+  const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   var work_area_types = []
   var work_area = []
   var prefferd_state = []
   var work_area_types = []
 
   var years = []
-  useEffect(() => {
-    dispatch(get_category()).then((res) => {
 
-      res.map((cat) => {
-        setSub_cat((prev_state) => [...prev_state, cat])
-      })
-    })
-  }, [])
 
 
   const handleFileUpload = async (event, index) => {
@@ -228,12 +221,22 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }, [])
   console.log({ formValues })
   useEffect(() => {
+    if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
+
+      WORK_SEGMENT.map((cat) => {
+        set_work_Segment((prev_state) => [...prev_state, cat.category])
+      })
+
+  }
+  else {
     dispatch(get_category()).then((res) => {
-      console.log(res)
       res.map((cat) => {
+        setSub_cat((prev_state) => [...prev_state, cat])
         set_work_Segment((prev_state) => [...prev_state, cat.category])
       })
     })
+  }
+    
   }, [])
   function ValidateGSTNumber(event) {
     let text = event.target.value

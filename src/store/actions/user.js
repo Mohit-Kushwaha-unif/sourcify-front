@@ -5,7 +5,8 @@ import
     AUTH_LOGIN,
     AUTH_LOGOUT,
     USER_ROLE,
-    ACC_STATUS
+    ACC_STATUS,
+    WORK_SEGEMENT
   } from '../action-types';
 
 export const set_user_auth = (payload) =>
@@ -46,6 +47,12 @@ export function setValue(value) {
 export function acc_status(value) {
     return {
       type: ACC_STATUS,
+      payload: value
+    };
+  }
+export function Work_Segment(value) {
+    return {
+      type: WORK_SEGEMENT,
       payload: value
     };
   }

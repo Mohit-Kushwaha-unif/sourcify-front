@@ -27,6 +27,7 @@ const ListingForm = () => {
     const [allUsers, setAllUsers] = useState([])
     const [image, set_ImageD] = useState()
     const isAdmin = useSelector(state => state.User.user_role);
+    const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
     useDocumentTitle('Add your Listing')
 
     useEffect(() => {
@@ -52,13 +53,23 @@ const ListingForm = () => {
             setAllUsers([...users]);
           });
         });
+        if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
+
+            WORK_SEGMENT.map((cat) => {
+                setSub_cat((prev_state) => [...prev_state, cat]);
+                setCategories((prev_state) => [...prev_state, cat.name]);
+              });
       
-        dispatch(get_category()).then((res) => {
-          res.map((cat) => {
-            setSub_cat((prev_state) => [...prev_state, cat]);
-            setCategories((prev_state) => [...prev_state, cat.name]);
-          });
-        });
+        }
+        else {
+            dispatch(get_category()).then((res) => {
+                res.map((cat) => {
+                  setSub_cat((prev_state) => [...prev_state, cat]);
+                  setCategories((prev_state) => [...prev_state, cat.name]);
+                });
+              });
+        }
+       
       
       }, []);
       

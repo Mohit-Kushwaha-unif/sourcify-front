@@ -35,6 +35,9 @@ const Contractor_Dashboard = () => {
   }
 
   useEffect(() => {
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+            navigator('/login');
+        }
     dispatch(get_listing(location?.state)).then((res) => {
       var data = []
 

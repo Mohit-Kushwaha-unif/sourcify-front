@@ -23,8 +23,8 @@ const UserRole = () => {
         })
     }
     return (
-        <div className="flex flex-col justify-center items-center h-screen">
-            <div className=" rounded-lg px-6 py-4 md:w-1/2 lg:w-1/3 " >
+        <div className="flex flex-col justify-center items-center h-[250px]">
+            <div className=" rounded-lg   " >
                 <Form onFinish={formSubmit}>
                     <Form.Item
                         name="role"
@@ -38,18 +38,20 @@ const UserRole = () => {
                     >
 
                         <Radio.Group >
-                            <Radio value={1}>Vendor</Radio>
-                            <Radio value={0}>Contractor</Radio>
+                            <Radio value={1}>I'm a company hiring for  projects</Radio>
+                            <Radio value={0}>I'm Contractor looking for work</Radio>
                         </Radio.Group>
                     </Form.Item>
+                    <div className='center_content mt-5'>
                     <button
                   type="submit"
-                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  className=" brand_button"
                 >
                   Next
 
 
                 </button>
+                </div>
                 </Form>
             </div>
 

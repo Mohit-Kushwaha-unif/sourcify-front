@@ -29,6 +29,7 @@ const FindProjects = () => {
     const [isSearch, setIsSearch] = useState(false)
     const [proposalVal, setProposalVal] = useState('')
     const [form] = Form.useForm();
+    const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
     useEffect(() => {
         if (isSearch !== true) {
             dispatch(get_listing()).then((res) => {
@@ -46,14 +47,19 @@ const FindProjects = () => {
                 setProjects(filteredProjects)
                 setIsSearch(true)
             })
+            if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
 
-            dispatch(get_category()).then((res) => {
-                set_work_segment([...res])
-            })
+                set_work_segment([...WORK_SEGMENT])
+
+            }
+            else {
+                dispatch(get_category()).then((res) => {
+                    set_work_segment([...res])
+                })
+            }
+
         }
-    }, [])
-    console.log(projects)
-    // 
+    }, [WORK_SEGMENT])
     useLayoutEffect(() => {
         const projDet = [];
         dispatch(get_Vendor()).then((res) => {
@@ -92,10 +98,8 @@ const FindProjects = () => {
         });
 
         setProjectDetails([...projDet]);
-       
-    }, [projects, dispatch]);
-    console.log(loading)
 
+    }, [projects, dispatch]);
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);

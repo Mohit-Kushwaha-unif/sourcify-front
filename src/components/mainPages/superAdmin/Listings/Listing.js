@@ -20,20 +20,11 @@ const Listing = () => {
   return (
     <div className='flex align-center ml-30 w-full p-2 px-3'>
     {
-         <Tabs centered defaultActiveKey="1" onChange={tabKeys} activeKey={activeTab}  className='w-full'>
-         <TabPane  tab="All Projects" key="1" >
+        
           <All_Listings  isClicked = {tabKeys}/>
-        </TabPane>
-        {/* <TabPane tab="Under Review Listing" key="2">
-         < Under Review_listings  isClicked={tabKeys}/>
-        </TabPane>
-        <TabPane tab="Approved Listing" key="3">
-         <Approved_listing />
-        </TabPane>
-        <TabPane tab="Rejected Listing" key="4">
-         <Rejected_Listing />
-        </TabPane> */}
-      </Tabs>
+      
+  
+      
     }
     </div>
   )

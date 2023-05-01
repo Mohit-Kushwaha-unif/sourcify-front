@@ -3,13 +3,19 @@ import Company_Dashboard from './Company_Dashboard'
 import Company_contracts from './Company_contracts'
 import { Card } from 'antd'
 import { useState } from 'react'
-import Loader from '../../Helper/Loader'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Dashboard = () => {
   const [postedProjects, setPostedProjects] = useState(0)
   const [activeProjects, setActiveProjects] = useState(0)
   const [tableData, setTableData] = useState([])
-  console.log("hey")
+  const navigator = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      navigator('/login');
+  }
+  }, [])
   var count = 0
   function ContractData(val) {
     setTableData([...val])
