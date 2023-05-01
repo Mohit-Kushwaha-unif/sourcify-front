@@ -124,7 +124,7 @@ const ViewForm = () => {
             //         'success')
             // }
             // else if (formStatus === 1) {
-            //     Swal.fire('P has been put in Moderation',
+            //     Swal.fire('P has been put in Under Review',
             //         'It will live once admin accept it',
             //         'warning')
             // }
@@ -396,7 +396,7 @@ const ViewForm = () => {
                                             className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
-                                            Moderation
+                                            Under Review
 
                                         </button>}
                                     </div> : <div className='text-center lg:text-left mt-2 flex justify-around'>

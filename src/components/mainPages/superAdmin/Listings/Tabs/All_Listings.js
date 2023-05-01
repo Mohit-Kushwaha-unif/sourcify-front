@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { get_category } from '../../../../../services/category'
 import { get_listing, remove_listing } from '../../../../../services/listing'
+import Loader from '../../../../Helper/Loader'
 // import Table from 'ant-responsive-table'
 const All_Listings = () => {
     const dispatch = useDispatch()
@@ -12,10 +13,12 @@ const All_Listings = () => {
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
     var [categories,setCategories] = useState([])
+    const [loading,setLoading] = useState(true)
     var data = []
     var catData = []
     useEffect(() => {
         tableDataMaker()       
+        setLoading(false)
         dispatch(get_category()).then((res)=>{
         res.map((cat)=>{
                 var dataa = {}
@@ -24,7 +27,9 @@ const All_Listings = () => {
                 catData.push(dataa)
             })
             setCategories([...catData])
+            
         })
+      
     }, [])
 
     const tableDataMaker= ()=>{
@@ -41,7 +46,7 @@ const All_Listings = () => {
                     'key': index,
                     'entity': tableData.project_discription,
                     'work_segment': tableData.wok_segment,
-                    'status': tableData.status ===1 ? "Moderation" : tableData.status ===0 ? "Approved": "Rejected"
+                    'status': tableData.status ===1 ? "Under Review" : tableData.status ===0 ? "Approved": "Rejected"
                 })
             })
             setEntity( [...dataTable])
@@ -124,7 +129,7 @@ const All_Listings = () => {
             key: 'status',
             render: (text) => {
                 let color = 'Green'
-                if(text ==="Moderation"){
+                if(text ==="Under Review"){
                     color = 'yellow'
                    
                 }
@@ -142,8 +147,8 @@ const All_Listings = () => {
                     value: "Approved"
                 },
                 {
-                    text: "Moderation",
-                    value: "Moderation"
+                    text: "Under Review",
+                    value: "Under Review"
                 },
                 {
                     text: "Rejected",
@@ -187,7 +192,10 @@ const All_Listings = () => {
         }
       };
     return (
-        <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
+        <>
+        {
+            loading ?<Loader/>  :
+            <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
             <div className="px-2 h-auto text-gray-800">
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
@@ -195,13 +203,13 @@ const All_Listings = () => {
                     <div className="xl: w-full overflow-x-auto lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                        
                         <div className="flex flex-row items-center justify-center lg:justify-start">
-                            <p className="headings mb-3 mr-4">All Listings</p>
+                            <p className="headings mb-3 mr-4">All Projects</p>
                         </div>
                         <button
                             onClick={() => navigator('/dashboard/listing-form')}
                             className="brand_button padding_6_9 mb-5"
                         >
-                            Add New Listing </button>
+                            Add New Projects </button>
                         <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
                            
 
@@ -222,6 +230,8 @@ const All_Listings = () => {
                 </div>
             </div>
         </section>
+        }
+       </>
     )
 }
 

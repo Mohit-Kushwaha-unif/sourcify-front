@@ -20,26 +20,32 @@ const SearchResult = () => {
     const [proposalVal, setProposalVal] = useState('')
     var [projectDetails, setProjectDetails] = useState([])
     const userRole = useSelector(state => state.User.user_role);
-    const [form] = Form.useForm();
+    const [loading,setIsLoading] = useState(false);
     const [listID, setListId] = useState()
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const contractHandler = (val) => {
-        if (localStorage.getItem("isLoggedIn") == "false") {
-            navigate('/login')
-        }
-        else if (userRole != 1) {
-            toast.error('You are not an Comapny', {
-                position: toast.POSITION.TOP_RIGHT
+        if(localStorage.getItem("isLoggedIn") == "false"){
+            navigator('/login')
+          }
+          else if(localStorage.getItem("user_id") == val.user_id._id|| localStorage.getItem("user_id") == val.user_id){
+            toast.error('It is your profile only', {
+              position: toast.POSITION.TOP_RIGHT
             })
-        }
-        else {
+          }
+          else if (localStorage.getItem('status') !=0) {
+            toast.error('Account is not approved by admin', {
+              position: toast.POSITION.TOP_RIGHT
+            })
+          }
+          else{
             setHireContractor(val)
             setIsCompany(true)
-        }
+          }
     }
     useEffect(() => {
+        setIsLoading(true)
         const filteredProjects = location.state.res.listings.filter((proj_det) => {
             if (proj_det.status === 0) {
                 const hasContractStatus1 = proj_det.proposals.some((proposal_Status) => {
@@ -51,6 +57,7 @@ const SearchResult = () => {
 
         })
         setProjects(filteredProjects)
+        setIsLoading(false)
     }, [])
   
     const hideModal = () => {
@@ -58,14 +65,16 @@ const SearchResult = () => {
     };
     function submitHandler(event) {
         event.preventDefault();
-        console.log("value")
+        setIsLoading(true)
         var obj = {}
+        console.log(hireContractor)
         obj.from_id = localStorage.getItem("user_id")
-        obj.to_id = hireContractor.user_id._id
+        obj.to_id = hireContractor.user_id
         obj.message = proposalVal
         obj.isSeen = 0
         dispatch(send_message(obj)).then((res) => {
-            console.log(res)
+            setIsLoading(false)
+            hideModal()
         })
     }
     function proposalHandler(e) {

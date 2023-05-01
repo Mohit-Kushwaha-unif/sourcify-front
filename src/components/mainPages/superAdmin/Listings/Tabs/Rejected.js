@@ -21,7 +21,7 @@ const Rejected_Listing = () => {
                     'key': index,
                     'entity': tableData.project_discription,
                     'work_segment': tableData.wok_segment,
-                    'status': "Moderation" 
+                    'status': "Under Review" 
                 })}
             })
             console.log({ data })

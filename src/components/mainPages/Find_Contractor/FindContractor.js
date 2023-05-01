@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import TextArea from 'antd/es/input/TextArea'
 import { send_message } from '../../../services/Messages'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../../Helper/Loader'
 
 const FindContractor = () => {
   const [contractors, setContractors] = useState([])
@@ -22,14 +23,16 @@ const FindContractor = () => {
   const [column, setColumns] = useState(1)
   const [isCompany,setIsCompany] = useState(false)
   const [proposalVal, setProposalVal] = useState('')
-  const userRole = useSelector(state => state.User.user_role);
+  const [loading,setLoading] = useState(true)
   const [form] = Form.useForm();
   const navigator = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(get_contractor()).then((res) => {
       res.map((cont) => {
+        
         setContractors(prev => [...prev, cont])
+        setLoading(false)
       })
 
     })
@@ -76,11 +79,11 @@ const FindContractor = () => {
   }
 
   const contractHandler = (val) => {
- 
+ console.log(val.user_id)
     if(localStorage.getItem("isLoggedIn") == "false"){
       navigator('/login')
     }
-    else if(localStorage.getItem("user_id") == val.user_id){
+    else if(localStorage.getItem("user_id") == val.user_id._id|| localStorage.getItem("user_id") == val.user_id){
       toast.error('It is your profile only', {
         position: toast.POSITION.TOP_RIGHT
       })
@@ -100,7 +103,6 @@ const FindContractor = () => {
 };
 function submitHandler(event) {
   event.preventDefault();
-  console.log("value")
   var obj = {}
   obj.from_id = localStorage.getItem("user_id")
   obj.to_id = hireContractor.user_id._id
@@ -115,6 +117,10 @@ function proposalHandler(e) {
   setProposalVal(e.target.value)
 }
   return (
+    <>
+    {
+      loading?
+      <Loader/> :
     <div className='container grid grid-cols-1 md:grid-cols-7 md:gap-6 mb-16 mt-3'>
       <div className='col-span-2 h-[500px] w-full shadow-lg border-2 p-5' >
         <div className='relative '>
@@ -236,6 +242,9 @@ function proposalHandler(e) {
       </form>
       </div>
     </div>
+    }
+    </>
+    
   )
 }
 

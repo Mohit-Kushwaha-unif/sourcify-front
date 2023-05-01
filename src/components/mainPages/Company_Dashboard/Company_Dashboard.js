@@ -35,7 +35,7 @@ const Company_Dashboard = ({dataTransfer}) => {
           'key': index,
           'entity': tableData.project_discription,
           'work_segment': tableData.wok_segment,
-          'status': tableData.status === 1 ? "Moderation" : tableData.status === 0 ? "Approved" : "Rejected"
+          'status': tableData.status === 1 ? "Under Review" : tableData.status === 0 ? "Approved" : "Rejected"
         })
       })
      
@@ -93,7 +93,7 @@ const Company_Dashboard = ({dataTransfer}) => {
       key: 'status',
       render: (text) => {
         let color = 'Green'
-        if (text === "Moderation") {
+        if (text === "Under Review") {
           color = 'yellow'
 
         }

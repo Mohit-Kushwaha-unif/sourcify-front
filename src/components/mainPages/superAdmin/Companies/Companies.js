@@ -7,14 +7,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { get_Vendor, remove_vendor } from '../../../../services/Vendor';
 import { tab } from '@testing-library/user-event/dist/tab';
 import Swal from 'sweetalert2';
+import Loader from '../../../Helper/Loader';
 const Companies = () => {
     const dispatch = useDispatch([])
     const navigator = useNavigate()
     const data = []
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
+    const [loading,setLoading] = useState(false)
     useEffect(() => {
+        setLoading(true)
         tableDataMaker()
+        setLoading(false)
     }, [])
 
     const tableDataMaker = () =>{
@@ -37,7 +41,7 @@ const Companies = () => {
                         'username': tableData.contact_person,
                         'number': tableData.user_id?.number.toString(),
                         'email': tableData.user_id?.email,
-                        'status': tableData.status === 1 ? 'Moderation' : tableData.status === 0 ? 'Approved' : 'Rejected'
+                        'status': tableData.status === 1 ? 'Under Review' : tableData.status === 0 ? 'Approved' : 'Rejected'
 
                     })
                 }
@@ -123,7 +127,7 @@ const Companies = () => {
             key: 'status',
             render: (text) => {
                 let color = 'Green'
-                if (text === "Moderation") {
+                if (text === "Under Review") {
                     color = 'yellow'
 
                 }
@@ -141,8 +145,8 @@ const Companies = () => {
                     value: "Approved"
                 },
                 {
-                    text: "Moderation",
-                    value: "Moderation"
+                    text: "Under Review",
+                    value: "Under Review"
                 },
                 {
                     text: "Rejected",
@@ -167,7 +171,10 @@ const Companies = () => {
         },
     ];
     return (
-        <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
+        <>
+        {
+            loading ? <Loader/> :
+            <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
             <div className="px-2 h-auto text-gray-800">
                 <div
                     className="flex w-full  flex-wrap h-full g-6 "
@@ -200,6 +207,8 @@ const Companies = () => {
                 </div>
             </div>
         </section>
+        }
+       </>
     )
 }
 

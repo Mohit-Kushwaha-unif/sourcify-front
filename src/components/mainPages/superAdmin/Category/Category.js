@@ -5,12 +5,13 @@ import { Space, Tag, Table } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { delete_category, get_category } from '../../../../services/category';
 import Swal from 'sweetalert2';
+import Loader from '../../../Helper/Loader';
 // import Table from 'ant-responsive-table'
 const Category = () => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const [tableData, setTableData] = useState([])
-  var data = []
+  const [loading,setLoading] = useState(false)
   const populateChildren = (subCategories) => {
     return subCategories.map((subCategory, index) => {
       const { _id, name, description, children } = subCategory;
@@ -36,7 +37,9 @@ const Category = () => {
   };
 
   useEffect(() => {
+    setLoading(true)
     dispatch(get_category()).then((res) => {
+      setLoading(false)
       const data = res.map((table, index) => {
         const subCategories = table.children ? table.children : [];
         const children = populateChildren(subCategories);
@@ -53,7 +56,6 @@ const Category = () => {
       setTableData(data);
     });
   }, []);
-  console.log(tableData)
   const deleteHandler = (value) => {
     Swal.fire({
       title: 'Do you want to delete this Contractor?',
@@ -97,7 +99,11 @@ const Category = () => {
   ]
 
   return (
-    <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
+    <>
+    {
+      loading? <Loader/>
+      :
+      <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
       <div className="px-2 h-auto text-gray-800">
         <div
           className="flex w-full  flex-wrap h-full g-6 "
@@ -118,6 +124,9 @@ const Category = () => {
         </div>
       </div>
     </section>
+    }
+    </>
+    
   )
 }
 

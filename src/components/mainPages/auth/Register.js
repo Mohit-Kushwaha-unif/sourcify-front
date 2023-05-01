@@ -12,12 +12,15 @@ import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
+
 import RadioGroup from './RadioButtonMaker';
 import { useEffect, useState } from 'react';
+import Loader from '../../Helper/Loader';
 const Regsiter = () => {
   useDocumentTitle("Register Yourself")
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   useEffect(()=>{
     if(localStorage.getItem('isLoggedIn') === "true"){
@@ -35,7 +38,7 @@ const Regsiter = () => {
   ];
 
   function formHandler(values) {
-
+    setLoading(true)
     dispatch(userService.register(values))
       .then((res) => {
         console.log(res)
@@ -44,6 +47,7 @@ const Regsiter = () => {
         localStorage.setItem("number", res.user_data.number)
         localStorage.setItem("accesstoken", res.accesstoken)
         localStorage.setItem("isLoggedIn", true)
+        setLoading(false)
         dispatch(setValue(res.user_data.role))
         // if(res.user_data.otpVerfied !=true){
         //   navigate('/verify')
@@ -59,7 +63,10 @@ const Regsiter = () => {
   }
 
   return (
-    <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
+    <>
+    {
+      loading ? <Loader/> :
+      <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
       <div className="md:px-8  ">
         <div
           className="flex  justify-center   h-full "
@@ -154,6 +161,9 @@ const Regsiter = () => {
       </div>
 
     </section>
+    }
+    </>
+  
 
 
 

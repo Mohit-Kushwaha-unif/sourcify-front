@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { get_listing } from '../../../../../services/listing';
 
-const Moderation_listings = () => {
+const Approved = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
     const [formData, setFormData] = useState([])
@@ -107,4 +107,4 @@ const Moderation_listings = () => {
   )
 }
 
-export default Moderation_listings
+export default Approved

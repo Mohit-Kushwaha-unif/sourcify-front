@@ -19,17 +19,19 @@ import { DatePicker } from 'antd';
 import { AiFillDelete } from 'react-icons/ai'
 import moment from 'moment';
 import { upload_img } from '../../../../../services/upload';
+import Loader from '../../../../Helper/Loader';
 const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const location = useLocation()
   const [fileList, setFileList] = useState([]);
   const [preview_img, set_preveiwimg] = useState([])
-
+  const [loading,setLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isMSMEVisible, setIsMSMEVisible] = useState(false)
   const [msmeImageD, set_msmeImageD] = useState('')
   const [turnover, setTurnover] = useState([])
   const [state, setState] = useState([])
+  
   const [work_segment, set_work_Segment] = useState([])
   const [previewImg, setPreviewImg] = useState([]);
   const [year, setYear] = useState([])
@@ -160,7 +162,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const disabledDate = (current) => current && current > moment().endOf('year');
 
   useEffect(() => {
-    console.log(formValues.msme_image === undefined)
     if (formValues.msme_image !== "not provided") {
       setIsMSMEVisible(true)
     }
@@ -248,7 +249,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   }
   const onFinish = async (value) => {
-
+    setLoading(true)
     value.status = contractor_status
     var Turnover = []
     Object.keys(value).map((key) => {
@@ -325,6 +326,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       var obj = {}
       obj.id = value.user_id
       obj.contractor_id = res.data._id
+      setLoading(false)
       navigate('/admin/contractors-list')
     }).catch((err)=>{
       console.log(err)
@@ -393,6 +395,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }
   return (
     <>
+    {
+      loading ? <Loader/> :
       <div className='bg-white p-3 w-full rounded-xl '>
         <Form
           form={form}
@@ -952,15 +956,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
             {formValues.status != 1 &&
               <button
                 type="submit"
-                className="save_Btn moderation_color  hover:bg-yellow-400"
+                className="save_Btn Under Review_color  hover:bg-yellow-400"
                 onClick={() => { set_Contractor_status(1) }}
               >
-                Moderation
+                Under Review
               </button>
             }
           </div>
         </Form>
       </div>
+    }
+      
     </>
   );
 };

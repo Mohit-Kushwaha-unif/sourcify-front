@@ -6,15 +6,19 @@ import "antd/dist/antd";
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from '../../../Helper/Loader';
 
 const Contractor = () => {
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
+    const [loading,setLoading] = useState(false)
     const data = [];
     useEffect(() => {
+        setLoading(true)
         tableDataMaker()
+        setLoading(false)
     }, [])
 
     const tableDataMaker = () => {
@@ -37,7 +41,7 @@ const Contractor = () => {
                     'username': tableData.username,
                     'number': tableData.user_id?.number.toString(),
                     'email': tableData.user_id?.email,
-                    'status': tableData.status === 1 ? 'Moderation' : tableData.status === 0 ? 'Approved' : 'Rejected'
+                    'status': tableData.status === 1 ? 'Under Review' : tableData.status === 0 ? 'Approved' : 'Rejected'
                 })
             })
             console.log({ data })
@@ -110,7 +114,7 @@ const Contractor = () => {
             key: 'status',
             render: (text) => {
                 let color = 'Green'
-                if (text === "Moderation") {
+                if (text === "Under Review") {
                     color = 'yellow'
 
                 }
@@ -128,8 +132,8 @@ const Contractor = () => {
                     value: "Approved"
                 },
                 {
-                    text: "Moderation",
-                    value: "Moderation"
+                    text: "Under Review",
+                    value: "Under Review"
                 },
                 {
                     text: "Rejected",
@@ -171,41 +175,48 @@ const Contractor = () => {
         }
     };
     return (
-        <section className="min-h-screen flex  flex-col w-full  py-6 sm:px-6 lg:px-3" >
-            <div className="px-2 h-auto text-gray-800">
-                <div
-                    className="flex w-full  flex-wrap h-full g-6 "
-                >
-                    <div className="xl: w-full overflow-x-scroll   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-                       
-                        <div className="flex flex-row items-center justify-center lg:justify-start">
-                            <p className="headings mb-3">Contractors List</p>
-                        </div>
-                        <button
-                            onClick={() => navigator('/contractor-form')}
-                            className="brand_button px-2 padding_6_9 mb-3"
-                        >
-                            Add New Contractor </button>
-                        <p className='flex mt-3 mb-6 items-baseline flex-col  md:flex-row'>
-                          
-
-                            <Input.Search
-                                className='md:w-[30%] '
-                                placeholder="Search by..."
-                                onSearch={search}
-                            />
-                        </p>
-
-                        <Table
-
-                            columns={columns}
-                            dataSource={tableData}
-                            pagination={{ pageSize: 5 }}
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
+        <>
+        {
+            loading? 
+            <Loader/> :
+             <section className="min-h-screen flex  flex-col w-full  py-6 sm:px-6 lg:px-3" >
+             <div className="px-2 h-auto text-gray-800">
+                 <div
+                     className="flex w-full  flex-wrap h-full g-6 "
+                 >
+                     <div className="xl: w-full overflow-x-scroll   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                        
+                         <div className="flex flex-row items-center justify-center lg:justify-start">
+                             <p className="headings mb-3">Contractors List</p>
+                         </div>
+                         <button
+                             onClick={() => navigator('/contractor-form')}
+                             className="brand_button px-2 padding_6_9 mb-3"
+                         >
+                             Add New Contractor </button>
+                         <p className='flex mt-3 mb-6 items-baseline flex-col  md:flex-row'>
+                           
+ 
+                             <Input.Search
+                                 className='md:w-[30%] '
+                                 placeholder="Search by..."
+                                 onSearch={search}
+                             />
+                         </p>
+ 
+                         <Table
+ 
+                             columns={columns}
+                             dataSource={tableData}
+                             pagination={{ pageSize: 5 }}
+                         />
+                     </div>
+                 </div>
+             </div>
+         </section>
+}
+        </>
+       
     )
 }
 

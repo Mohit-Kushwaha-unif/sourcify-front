@@ -197,7 +197,7 @@ const Header = () => {
                     {isLoggedIn ?
                       <>
                       
-                        <NavLink to="/messages" className=" h-5  flex items-center "><span className='mr-2'><TiMessages /></span>Chat</NavLink>
+                        <NavLink to="/messages" className=" h-5  flex items-center header_text"><span className='mr-2'><TiMessages /></span><p className='header_text'>Chat</p></NavLink>
                         <button
                           onClick={() => setIsOpen(!isOpen)}
                           className="inline-flex h-[70%]  justify-center items-center  w-full "
@@ -247,7 +247,7 @@ const Header = () => {
                     <div className="py-1">
                       {showStatus && <div className='px-4 py-2'>
                         <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>Account status - </span>
-                        <span>{accountStatus === 0 ? <Tag color="green">Live</Tag> : accountStatus === 1 ? <Tag color="yellow">Moderation</Tag> : <Tag color="volcano">Blocked</Tag>}</span>
+                        <span>{accountStatus === 0 ? <Tag color="green">Live</Tag> : accountStatus === 1 ? <Tag color="yellow">Under Review</Tag> : <Tag color="volcano">Blocked</Tag>}</span>
                       </div>}
                       <div className='px-4 py-2' onClick={()=>{navigate('/dashboard')}}>Dashboard</div>
                       {/* <button

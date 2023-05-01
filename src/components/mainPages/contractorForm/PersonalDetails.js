@@ -23,6 +23,7 @@ import moment from 'moment';
 import { upload_img } from '../../../services/upload';
 import Swal from 'sweetalert2';
 import { logout } from '../../Helper/LogooutHelper';
+import Loader from '../../Helper/Loader';
 const PersonalDetails = () => {
   const isAdmin = useSelector(state => state.User.user_role);
   const location = useLocation()
@@ -57,7 +58,7 @@ const PersonalDetails = () => {
   const [company_Image, set_company_imgae] = useState('')
   const [year, setYear] = useState([])
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   const handleFileUpload = async (event, index) => {
     const { getFieldValue, setFieldsValue } = form;
     const Project = getFieldValue('Project');
@@ -90,7 +91,7 @@ const PersonalDetails = () => {
     newFileList[index] = event.target.files;
     setFileList(newFileList);
   };
-  
+
 
   useEffect(() => {
     dispatch(get_category()).then((res) => {
@@ -188,6 +189,7 @@ const PersonalDetails = () => {
 
   }, [])
   const onFinish = async (value) => {
+    setLoading(true)
     if (isAdmin == 2) {
       value.status = 0
     }
@@ -265,7 +267,7 @@ const PersonalDetails = () => {
         obj.contractor_id = res.data._id
 
         dispatch(update_user_info(obj)).then((response) => {
-  
+          setLoading(false)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(() => {
             navigation('/dashboard')
           })
@@ -278,15 +280,14 @@ const PersonalDetails = () => {
         obj.id = value.user_id
         obj.contractor_id = res.user_data._id
         dispatch(update_user_info(obj)).then((response) => {
-          // isSaved(true)
+          setLoading(false)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(() => {
 
             navigation('/')
 
           })
           window.scroll(0, 0)
-          // console.log(response)
-          // navigation("/contractor-form/financial-detail")
+
         })
       })
     }
@@ -315,18 +316,7 @@ const PersonalDetails = () => {
     setState(state_cites[country])
   }
 
-  // function msmeVerfication(event) {
-  //   let text = event.target.value
-  //   var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
-  //   if (text.length < 1) {
-  //     set_Valid_msme(false)
-  //   }
-  //   else if (regex.test(text)) {
-  //     set_Valid_msme(false)
-  //   } else {
-  //     set_Valid_msme(true)
-  //   }
-  // }
+
   const pancardValidation = (event) => {
     let text = event.target.value
     var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -374,6 +364,10 @@ const PersonalDetails = () => {
   };
   return (
     <>
+    {
+      loading ?
+      <Loader/> :
+      <>
 
       <div className='w-full min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 '>
         <div className="px-8 w-full h-full text-gray-800">
@@ -570,20 +564,20 @@ const PersonalDetails = () => {
                     </Form.Item>
                     <div className='flex flex-col md:flex-row '>
                       <div className='form_flex_children mr-1'>
-                      <Form.Item name="State" label="State " rules={[
+                        <Form.Item name="State" label="State " rules={[
                           {
                             required: true,
                             message: 'Please enter your State'
                           },
                         ]}
-                        
+
                         >
 
                           <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                           showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
+                            showSearch // enable search functionality
+                            filterOption={(input, option) =>
+                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                            }>
                             {Object.keys(state_cites).map((state) => {
                               return (<Select.Option value={state}>{state}</Select.Option>)
                             }
@@ -600,9 +594,9 @@ const PersonalDetails = () => {
                         ]}>
                           <Select id="country-state" name="City" placeholder="Select city"
                             showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
+                            filterOption={(input, option) =>
+                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                            }>
                             {state.length > 0 && state.map((state) => {
                               return (<Select.Option value={state}>{state}</Select.Option>)
                             }
@@ -645,36 +639,36 @@ const PersonalDetails = () => {
                     </Form.Item>
 
                     {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                        return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
-                            {
-                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
-                                {
-                                  required: true,
-                                  message: 'Please select options',
-                                },
-                              ]}>
-                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.children.map((item, index) => {
+                      return sub_cat.map((sub_category) => {
+                        return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                          {
+                            <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                              {
+                                required: true,
+                                message: 'Please select options',
+                              },
+                            ]}>
+                              <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                {sub_category.children.map((item, index) => {
 
-                                    return (
-                                      <Checkbox
-                                        key={item.name}
-                                        className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.name}
-                                      >
-                                        <span>{item.name}</span>
-                                      </Checkbox>
-                                    );
-                                  })}
-                                </Checkbox.Group>
-                              </Form.Item>
-                            }
+                                  return (
+                                    <Checkbox
+                                      key={item.name}
+                                      className={`ml-${index === 0 ? 2 : 0} `}
+                                      value={item.name}
+                                    >
+                                      <span>{item.name}</span>
+                                    </Checkbox>
+                                  );
+                                })}
+                              </Checkbox.Group>
+                            </Form.Item>
+                          }
 
-                          </>
-                        })
+                        </>
                       })
-                      }
+                    })
+                    }
                     {/*******************************************/}
 
 
@@ -1031,25 +1025,25 @@ const PersonalDetails = () => {
                       <div className='flex flex-col md:flex-row '>
                         <div className='form_flex_children mr-1'>
                           <Form.Item name="State" label="State " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your State'
-                          },
-                        ]}
-                        
-                        >
+                            {
+                              required: true,
+                              message: 'Please enter your State'
+                            },
+                          ]}
 
-                          <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                           showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
-                            {Object.keys(state_cites).map((state) => {
-                              return (<Select.Option value={state}>{state}</Select.Option>)
-                            }
-                            )}
-                          </Select>
-                        </Form.Item>
+                          >
+
+                            <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
+                              showSearch // enable search functionality
+                              filterOption={(input, option) =>
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                              }>
+                              {Object.keys(state_cites).map((state) => {
+                                return (<Select.Option value={state}>{state}</Select.Option>)
+                              }
+                              )}
+                            </Select>
+                          </Form.Item>
                         </div>
                         <div className='form_flex_children mr-1'>
                           <Form.Item name="City" label="City " rules={[
@@ -1060,9 +1054,9 @@ const PersonalDetails = () => {
                           ]}>
                             <Select id="country-state" name="City" placeholder="Select city"
                               showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
+                              filterOption={(input, option) =>
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                              }>
                               {state.length > 0 && state.map((state) => {
                                 return (<Select.Option value={state}>{state}</Select.Option>)
                               }
@@ -1456,25 +1450,25 @@ const PersonalDetails = () => {
                       <div className='flex flex-col md:flex-row '>
                         <div className='form_flex_children mr-1'>
                           <Form.Item name="State" label="State " rules={[
-                          {
-                            required: true,
-                            message: 'Please enter your State'
-                          },
-                        ]}
-                        
-                        >
+                            {
+                              required: true,
+                              message: 'Please enter your State'
+                            },
+                          ]}
 
-                          <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
-                           showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
-                            {Object.keys(state_cites).map((state) => {
-                              return (<Select.Option value={state}>{state}</Select.Option>)
-                            }
-                            )}
-                          </Select>
-                        </Form.Item>
+                          >
+
+                            <Select name="State" allowClear placeholder="Select state" onSelect={countrySelectHandler}
+                              showSearch // enable search functionality
+                              filterOption={(input, option) =>
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                              }>
+                              {Object.keys(state_cites).map((state) => {
+                                return (<Select.Option value={state}>{state}</Select.Option>)
+                              }
+                              )}
+                            </Select>
+                          </Form.Item>
                         </div>
                         <div className='form_flex_children mr-1'>
                           <Form.Item name="City" label="City " rules={[
@@ -1485,9 +1479,9 @@ const PersonalDetails = () => {
                           ]}>
                             <Select id="country-state" name="City" placeholder="Select city"
                               showSearch // enable search functionality
-                           filterOption={(input, option) =>
-                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
-                           }>
+                              filterOption={(input, option) =>
+                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                              }>
                               {state.length > 0 && state.map((state) => {
                                 return (<Select.Option value={state}>{state}</Select.Option>)
                               }
@@ -1798,6 +1792,8 @@ const PersonalDetails = () => {
         </div>
       </div >
     </>
+    }
+   </>
   );
 };
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { get_listing } from '../../../../../services/listing';
 
-const Moderation_listings = () => {
+const Under_Review_listings = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
     const [formData, setFormData] = useState([])
@@ -21,7 +21,7 @@ const Moderation_listings = () => {
                     'key': index,
                     'entity': tableData.project_discription,
                     'work_segment': tableData.wok_segment,
-                    'status': "Moderation" 
+                    'status': "Under Review" 
                 })}
             })
             console.log({ data })
@@ -106,4 +106,4 @@ const Moderation_listings = () => {
   )
 }
 
-export default Moderation_listings
+export default Under_Review_listings

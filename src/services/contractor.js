@@ -7,8 +7,7 @@ export const Add_contractor = (formData) => {
     return () =>
         new Promise((resolve, reject) => {
             Http.post(contractor_url + '/add_contractor', formData).then((res) => {
-              ;
-                if (localStorage.getItem("adminEmal")) {
+                if (!localStorage.getItem("adminEmal")) {
                     localStorage.setItem("form_id", res.data.user_data._id)
                 }
                 return resolve(res.data)

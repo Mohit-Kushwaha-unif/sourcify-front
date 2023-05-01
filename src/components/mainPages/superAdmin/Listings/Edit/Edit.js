@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Select } from 'antd'
+import { Checkbox, DatePicker, Form, Input, Select } from 'antd'
 import { FaFileExcel } from 'react-icons/fa';
 import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
@@ -8,8 +8,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import state_cites from '../../../../../assests/state_city.'
 import { get_category } from '../../../../../services/category'
-import { add_listing, get_listingBy_id, update_listing } from '../../../../../services/listing'
+import {  get_listingBy_id, update_listing } from '../../../../../services/listing'
 import moment from 'moment/moment';
+import Loader from '../../../../Helper/Loader';
 
 const EditListing = () => {
     const form = useForm()
@@ -24,6 +25,7 @@ const EditListing = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [image, set_ImageD] = useState()
+    const [loading,setLoading] = useState(false)
     const [specificationImage, setSpecificationImage] = useState()
     const [formStatus, setFormStatus] = useState()
     const [showbillImg, setShowBillImg] = useState(true)
@@ -42,8 +44,9 @@ const EditListing = () => {
     var initialValue = [];
     var initialOptions = []
     useEffect(() => {
+        setLoading(true)
         dispatch(get_listingBy_id(location.state._id)).then((res) => {
-            // console.log({res.   })
+             
             set_user_id(res.listing.user_id._id)
             Object.keys(res.listing).map((value) => {
                 var obj = {}
@@ -54,18 +57,18 @@ const EditListing = () => {
                 else if (value == 'project_specification') {
                     setShowSpecImg(res.listing[value])
                 }
-                else if(value === "project_tent_date"){
+                else if (value === "project_tent_date") {
                     obj["name"] = value
                     obj["value"] = moment(res.listing[value])
                     initialValue.push(obj)
                 }
-                else{
+                else {
                     obj["name"] = value
                     obj["value"] = res.listing[value]
                     initialValue.push(obj)
                 }
-              
-                
+
+
                 if (value === "wok_segment") {
                     res.listing[value].map((options) => {
                         initialSelects.push(options)
@@ -82,6 +85,7 @@ const EditListing = () => {
                         })
                     })
                 }
+                setLoading(false)
             })
             setFormStatus(res.listing.status)
             setSelectedOptions(initialOptions)
@@ -89,7 +93,6 @@ const EditListing = () => {
             setInitialValues(initialValue)
         })
     }, [])
-    console.log(formStatus)
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
     function FormHandler(values) {
 
@@ -116,7 +119,7 @@ const EditListing = () => {
                     'success')
             }
             else if (formStatus === 1) {
-                Swal.fire('Listitng has been put in Moderation',
+                Swal.fire('Listitng has been put in Under Review',
                     'It will live once admin accept it',
                     'warning')
             }
@@ -126,16 +129,15 @@ const EditListing = () => {
                     'Admin has rejected this listing',
                     'error')
             }
-            if(isAdmin ==2)
-            {navigator('/admin/all-listing')}
-            else{
+            if (isAdmin == 2) { navigator('/admin/all-listing') }
+            else {
                 navigator('/dashboard')
             }
         })
     }
     const onChange = (date, dateString) => {
         console.log(date, dateString);
-        
+
     };
     function disabledDate(current) {
         // Can not select days before today and today
@@ -149,7 +151,10 @@ const EditListing = () => {
     }
     function countrySelectHandler() { }
     return (
-        <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
+        <>
+        {
+            loading  ? <Loader/> :
+            <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
                 <div
                     className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
@@ -193,57 +198,57 @@ const EditListing = () => {
                                 <TextArea placeholder='Enter Scope of your project' />
                             </Form.Item>
                             <div className='grid grid-cols-2 my-3'>
-                            {showSpecImg !== true ?<div className='w-full h-full grid grid-cols-2'>
-                                <span>
-                                <a href={showSpecImg} className="flex flex-col items-center text-center" download={"Specifiaction"}>
+                                {showSpecImg !== true ? <div className='w-full h-full grid grid-cols-2'>
+                                    <span>
+                                        <a href={showSpecImg} className="flex flex-col items-center text-center" download={"Specifiaction"}>
 
-                                    <FaFileExcel className='w-20 h-20 mb-3' />
+                                            <FaFileExcel className='w-20 h-20 mb-3' />
 
-                                    {"Specification file"}
-                                </a>
-                                </span>
-                                <span className='cursor-pointer text-red-400' onClick={()=>{setShowSpecImg(true)}}>Change Specification File</span>
-                            </div>:  
-                             <Form.Item name='project_specification' label="Work Specification" rules={[
-                                {
-                                    required: true,
-                                    message: 'Please attach your work specifications'
-                                },
-                            ]}
-                            >
-                                <Input type='file' max={1} onChange={specificationimageHandler} />
-
-                            </Form.Item>
-                            
-                        }
-                           
-                            {showbillImg !== false ?
-                                <div className='w-full h-full grid grid-cols-2'>
-                                      <span>
-                                    <a href={showbillImg} className="flex flex-col items-center text-center" download={"bill_img"}>
-
-                                        <FaFileExcel className='w-20 h-20 mb-3 '  />
-
-                                        {"Bill File"}
-                                    </a>
+                                            {"Specification file"}
+                                        </a>
                                     </span>
-                                    <span className='cursor-pointer text-red-400' onClick={()=>{setShowSpecImg(true)}}>Change Bill File</span>
+                                    <span className='cursor-pointer text-red-400' onClick={() => { setShowSpecImg(true) }}>Change Specification File</span>
                                 </div> :
-                                <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please attach your bill quantity'
-                                    },
-                                ]}
-                                >
-    
-                                    <Input type='file' max={1} onChange={imageHandler} />
-                                </Form.Item>
-                                
-                            }
+                                    <Form.Item name='project_specification' label="Work Specification" rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please attach your work specifications'
+                                        },
+                                    ]}
+                                    >
+                                        <Input type='file' max={1} onChange={specificationimageHandler} />
+
+                                    </Form.Item>
+
+                                }
+
+                                {showbillImg !== false ?
+                                    <div className='w-full h-full grid grid-cols-2'>
+                                        <span>
+                                            <a href={showbillImg} className="flex flex-col items-center text-center" download={"bill_img"}>
+
+                                                <FaFileExcel className='w-20 h-20 mb-3 ' />
+
+                                                {"Bill File"}
+                                            </a>
+                                        </span>
+                                        <span className='cursor-pointer text-red-400' onClick={() => { setShowSpecImg(true) }}>Change Bill File</span>
+                                    </div> :
+                                    <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please attach your bill quantity'
+                                        },
+                                    ]}
+                                    >
+
+                                        <Input type='file' max={1} onChange={imageHandler} />
+                                    </Form.Item>
+
+                                }
                             </div>
-                         
-                          
+
+
 
                             <Form.Item name="wok_segment" className='mb-1' label="Select Category For Your Project" rules={[
                                 {
@@ -267,112 +272,115 @@ const EditListing = () => {
                             </Form.Item>
                             {selectedItems.length > 0 && selectedItems.map((sub_item) => {
                                 return sub_cat.map((sub_category) => {
-                                    return sub_item === sub_category.category && sub_category.sub_category != 'N/A' && <>
-                                        <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category For ${sub_item}`} rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please Select options!',
-                                            },
-                                        ]}>
-                                            <Select
-                                                mode="multiple"
-                                                placeholder="Select Categories"
-                                                // value={selectedItems}
-                                                // onChange={setSelectedItems}
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                                options={sub_category.sub_category.map((item) => ({
-                                                    value: item.sub_Category,
-                                                    label: item.sub_Category,
-                                                }))}
-                                            />
-                                        </Form.Item>
+                                    return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                                        {
+                                            <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please select options',
+                                                },
+                                            ]}>
+                                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                                                    {sub_category.children.map((item, index) => {
+
+                                                        return (
+                                                            <Checkbox
+                                                                key={item.name}
+                                                                className={`ml-${index === 0 ? 2 : 0} `}
+                                                                value={item.name}
+                                                            >
+                                                                <span>{item.name}</span>
+                                                            </Checkbox>
+                                                        );
+                                                    })}
+                                                </Checkbox.Group>
+                                            </Form.Item>
+                                        }
+
                                     </>
-
-
                                 })
                             })
+                        }
 
-                            }
-
-                            <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your State!'
-                                },
-                            ]}
+                                < Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your State!'
+                                    },
+                                ]}
                             >
 
-                                <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" onSelect={countrySelectHandler}>
-                                    <Select.Option value="All State">All State</Select.Option>
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
-                            </Form.Item>
-                           {initialValues.length >0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label="Please select the tentative date to start the project" rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Contact Person Name'
-                                },
-                            ]}
-                            >
-                            
-                            <DatePicker disabledDate={disabledDate} onChange={onChange}  />
-                            </Form.Item>}
-
+                            <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" onSelect={countrySelectHandler}>
+                                <Select.Option value="All State">All State</Select.Option>
+                                {Object.keys(state_cites).map((state) => {
+                                    return (<Select.Option value={state}>{state}</Select.Option>)
+                                }
+                                )}
+                            </Select>
+                        </Form.Item>
+                        {initialValues.length > 0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label="Please select the tentative date to start the project" rules={[
                             {
-                                isAdmin === 2 ?
-                                    <div className="text-center lg:text-left mt-2 flex justify-around">
-                                        {console.log({initialValues})}
-                                        {initialValues.length > 0 && initialValues[7].value != 2 &&
-                                            <button
-                                                type="submit"
-                                                onClick={() => setFormStatus(2)}
-                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                            >
+                                required: true,
+                                message: 'Please input your Contact Person Name'
+                            },
+                        ]}
+                        >
 
-                                                Reject
+                            <DatePicker disabledDate={disabledDate} onChange={onChange} />
+                        </Form.Item>}
 
-                                            </button>}
-                                        {initialValues.length > 0 && initialValues[7].value != 0 && <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(0)}
-                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Accept
-
-                                        </button>}
-                                        {initialValues.length > 0 && initialValues[7].value != 1 && <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Moderation
-
-                                        </button>}
-                                    </div> : <div className='text-center lg:text-left mt-2 flex justify-around'>
+                        {
+                            isAdmin === 2 ?
+                                <div className="text-center lg:text-left mt-2 flex justify-around">
+                                    {console.log({ initialValues })}
+                                    {initialValues.length > 0 && initialValues[7].value != 2 &&
                                         <button
                                             type="submit"
-                                            onClick={() => setFormStatus(1)}
-                                            className="save_Btn"
+                                            onClick={() => setFormStatus(2)}
+                                            className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
                                         >
 
-                                            Update
+                                            Reject
 
-                                        </button>
-                                    </div>
-                            }
+                                        </button>}
+                                    {initialValues.length > 0 && initialValues[7].value != 0 && <button
+                                        type="submit"
+                                        onClick={() => setFormStatus(0)}
+                                        className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                                    >
 
-                        </Form>
-                    </div>
+                                        Accept
+
+                                    </button>}
+                                    {initialValues.length > 0 && initialValues[7].value != 1 && <button
+                                        type="submit"
+                                        onClick={() => setFormStatus(1)}
+                                        className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                                    >
+
+                                        Under Review
+
+                                    </button>}
+                                </div> : <div className='text-center lg:text-left mt-2 flex justify-around'>
+                                    <button
+                                        type="submit"
+                                        onClick={() => setFormStatus(1)}
+                                        className="save_Btn"
+                                    >
+
+                                        Update
+
+                                    </button>
+                                </div>
+                        }
+
+                    </Form>
                 </div>
             </div>
-        </section>
+        </div>
+        </section >
+        }
+       </>
     )
 }
 

@@ -11,6 +11,7 @@ import { update_user } from '../../../services/user';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../Helper/LogooutHelper';
+import Loader from '../../Helper/Loader';
 const VendorForm = () => {
   const isAdmin = useSelector(state => state.User.user_role);
   const [form] = Form.useForm();
@@ -18,10 +19,12 @@ const VendorForm = () => {
   const navigator = useNavigate()
   const [showMsg, setShowMsg] = useState(false)
   const [formData, setFormData] = useState([])
+  const [loading,setLoading] = useState(false)
   var [email, setEmail] = useState('')
   var [number, setNumber] = useState('')
   const [state, setState] = useState([])
   function FormHandler(values) {
+    setLoading(true)
     if (localStorage.getItem("adminEmail") == null) {
 
       values.user_id = localStorage.getItem("user_id")
@@ -44,10 +47,11 @@ const VendorForm = () => {
         dispatch(update_user(obj)).then((res) => {
           setShowMsg(true)
           window.scroll(0, 0)
+          setLoading(false)
+
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(() => {
 
-
-
+           
             navigator('/dashboard')
 
           })
@@ -66,12 +70,9 @@ const VendorForm = () => {
         obj.vendor_id = res.data._id
         dispatch(update_user(obj)).then((res) => {
           setShowMsg(true)
+          setLoading(false)
           Swal.fire('Profile Submitted', 'Your profile is submitted for admin approval', 'success').then(() => {
-
-
-
-            navigator('/')
-
+          navigator('/dashboard')
           })
           window.scroll(0, 0)
         })
@@ -117,7 +118,10 @@ const VendorForm = () => {
   }
   console.log(number, email)
   return (
-    <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
+    <>
+    {
+      loading? <Loader/> : 
+      <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
       <div className="px-8 h-full text-gray-800">
         <div
           className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
@@ -439,6 +443,9 @@ const VendorForm = () => {
         </div>
       </div>
     </section>
+    }
+    </>
+  
   )
 }
 

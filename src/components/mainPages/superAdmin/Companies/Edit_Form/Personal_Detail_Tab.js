@@ -4,18 +4,22 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { update_vendor } from '../../../../../services/Vendor'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../../../../Helper/Loader'
 
 const Personal_Detail_Tab = (formValues) => {
   const navigate = useNavigate()
   const [contractor_status,set_Contractor_status] = useState(1)
   const [state, setState] = useState([])
+  const [loading,setLoading] = useState(false)
   const [initialState, setInitialState] = useState(formValues.formValues.State)
   const dispatch = useDispatch()
   function FormHandler(values) {
+    setLoading(true)
     values.status = contractor_status
     values.form_id = formValues.formValues._id;
     values.user_id = formValues.formValues.user_id
     dispatch(update_vendor(values)).then((res) => {
+      setLoading(false)
       navigate('/admin/companies')
     }).catch((err) => {
       console.log(err)
@@ -27,7 +31,6 @@ const Personal_Detail_Tab = (formValues) => {
     setState(state_cites[country])
   }
   var initialValue = []
-  console.log(formValues.formValues)
   Object.keys(formValues.formValues).map((initial) => {
     var obj = {}
     console.log(initial == "user_id")
@@ -46,9 +49,11 @@ const Personal_Detail_Tab = (formValues) => {
     console.log({ obj })
     initialValue.push(obj)
   })
-  console.log(initialValue)
   return (
-    <div className='bg-white p-3 rounded-xl '>
+    <>
+    {
+      loading ? <Loader/>
+      :<div className='bg-white p-3 rounded-xl '>
 
       <Form labelAlign="left"
         fields={[...initialValue, {
@@ -186,15 +191,18 @@ const Personal_Detail_Tab = (formValues) => {
                 {formValues.formValues.status !=1 &&
                   <button
                     type="submit"
-                    className="save_Btn moderation_color  hover:bg-yellow-400"  
+                    className="save_Btn Under Review_color  hover:bg-yellow-400"  
                     onClick={()=>{set_Contractor_status(1)}} 
                     >
-                    Moderation
+                    Under Review
                   </button>
                   }
                 </div>
       </Form>
     </div>
+    }
+    </>
+    
 
   )
 }

@@ -5,20 +5,25 @@ import TabPane from 'antd/es/tabs/TabPane'
 import { useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { get_category_by_id } from '../../../../../services/category'
+import Loader from '../../../../Helper/Loader'
 const Tab = () => {
     const location = useLocation(state=>state)
     const dispatch = useDispatch()
     const [formData,setFormData]= useState(1)
+    const [loading,setLoading] = useState(false)
     useEffect(()=>{
-        console.log(location.state._id)
+        setLoading(true)
         dispatch(get_category_by_id(location.state._id)).then((res)=>{
-            console.log(res);
+          setLoading(false)
                 setFormData(res)
             })
     },[])
     
   return (
-    <div className='flex align-center ml-30 w-full p-2 px-3'>
+    <>
+    {
+      loading ? <Loader/> :
+       <div className='flex align-center ml-30 w-full p-2 px-3'>
     
          <Tabs centered defaultActiveKey="1"   className='w-full'>
          <TabPane  tab="Work Segment Details" key="1" >
@@ -28,6 +33,9 @@ const Tab = () => {
     
 
 </div>
+    }
+    </>
+   
   )
 }
 

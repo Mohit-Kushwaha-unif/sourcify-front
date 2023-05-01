@@ -13,10 +13,11 @@ import { get_contractor } from '../../../../services/contractor'
 import { add_listing } from '../../../../services/listing'
 import { getAllUser, get_user_info, update_user } from '../../../../services/user'
 import { get_Vendor } from '../../../../services/Vendor'
+import Loader from '../../../Helper/Loader'
 import useDocumentTitle from '../../../Helper/useDocumentTitle'
 
 const ListingForm = () => {
-    const form = useForm()
+    const [loading,setLoading] = useState(false)
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const [categories, setCategories] = useState([])
@@ -68,6 +69,7 @@ const ListingForm = () => {
      
     };
     function FormHandler(values) {
+        setLoading(true)
         var work_area = []
         var formData = new FormData()
         Object.keys(values).map((val_item) => {
@@ -98,6 +100,7 @@ const ListingForm = () => {
         })
 
         dispatch(add_listing(formData)).then((res) => {
+            setLoading(false)
             Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success').then(()=>{
                 navigator('/dashboard')
             })
@@ -116,7 +119,12 @@ const ListingForm = () => {
  
     function countrySelectHandler() { }
     return (
-        <section className="container min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
+        <>
+        {
+            loading? 
+            <Loader/>
+            :
+            <section className="container min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
                 <div
                     className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
@@ -290,6 +298,9 @@ const ListingForm = () => {
             </div>
             <ToastContainer />
         </section>
+        }
+        </>
+      
     )
 }
 

@@ -5,19 +5,21 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Personal_Detail_Tab from './Personal_Detail_Tab';
 import * as Contact_Service from '../../../../../services/contractor'
+import Loader from '../../../../Helper/Loader';
 const Edit_Form = () => {
     const location = useLocation(state=>state)
     const dispatch = useDispatch()
+    const [loading,setLoading] = useState(false)
     const [formData,setFormData]= useState(1)
     const [activeTab,setActiveTab] = useState("1")
     useEffect(()=>{
+      setLoading(true)
         dispatch(Contact_Service.get_contractorBy_id(location.state._id)).then((res)=>{
-            console.log(location.state._id);
                 setFormData(res)
+                setLoading(false)
             })
     },[])
       function tabKeys(valueOfTab){
-        console.log({valueOfTab})
         setActiveTab(valueOfTab)
         return false
       }
@@ -25,16 +27,22 @@ const Edit_Form = () => {
       console.log({activeTab})
       
   return (
-    <div className='w-full container mt-5 '>
-        {
-            formData!==1 &&  
-              <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
-            
-            
-         
-        }
+    <>
+    {
+      loading? <Loader/> :
+      <div className='w-full container mt-5 '>
+      {
+          formData!==1 &&  
+            <Personal_Detail_Tab formValues = {formData}  isClicked = {tabKeys}/>
+          
+          
+       
+      }
+ 
+  </div>
+}
+    </>
    
-    </div>
   )
 }
 
