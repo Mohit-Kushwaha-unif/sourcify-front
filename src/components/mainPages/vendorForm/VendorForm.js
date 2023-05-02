@@ -22,6 +22,7 @@ const VendorForm = () => {
   const [loading,setLoading] = useState(false)
   var [email, setEmail] = useState('')
   var [number, setNumber] = useState('')
+  var [isNumber,setIsNumber] = useState(false)
   const [state, setState] = useState([])
   function FormHandler(values) {
     setLoading(true)
@@ -107,6 +108,10 @@ const VendorForm = () => {
       form.resetFields();
     }
     else{
+      if(localStorage.getItem("number"))
+      {
+        setIsNumber(true)
+      }
       setEmail(localStorage.getItem("email"))
       setNumber(localStorage.getItem("number"))
     }
@@ -116,7 +121,6 @@ const VendorForm = () => {
   function countrySelectHandler(country) {
     setState(state_cites[country])
   }
-  console.log(number, email)
   return (
     <>
     {
@@ -207,7 +211,7 @@ const VendorForm = () => {
                         className="mb-1"
                       >
                         {
-                          number != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                         isNumber && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
                         }
 
                       </Form.Item>
@@ -345,7 +349,7 @@ const VendorForm = () => {
                         className="mb-1"
                       >
                         {
-                          number != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" onChange={inputHandler} placeholder='Enter Your Number' />
+                         isNumber && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" onChange={inputHandler} placeholder='Enter Your Number' />
                         }
 
                       </Form.Item>

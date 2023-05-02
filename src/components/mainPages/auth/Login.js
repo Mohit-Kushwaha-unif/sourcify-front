@@ -87,6 +87,7 @@ const Login = () => {
       localStorage.setItem('user_id', res.userdata._id)
       localStorage.setItem('email', res.userdata.email)
       localStorage.setItem("isLoggedIn", true)
+      dispatch(setValue(res.userdata.role))
       // localStorage.setItem('number', )
       if (res.userdata.role === 1) {
         console.log(Object.keys(res.userdata), Object.keys(res.userdata).includes == 'vendor_id')

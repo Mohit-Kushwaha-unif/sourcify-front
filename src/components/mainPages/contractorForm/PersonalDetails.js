@@ -188,8 +188,6 @@ const PersonalDetails = () => {
         else {
           setStateInitialpf(formData.msme_number)
         }
-
-        console.log({ res })
         if (res.company_image && res.company_image.includes("http")) {
           setShowCompany_Img(true)
         }
@@ -286,7 +284,7 @@ const PersonalDetails = () => {
     else {
       dispatch(Contractor_service.Add_contractor(formData)).then((res) => {
         var obj = {}
-        obj.id = value.user_id
+        obj.id = res.user_data.user_id
         obj.contractor_id = res.user_data._id
         dispatch(update_user_info(obj)).then((response) => {
           setLoading(false)

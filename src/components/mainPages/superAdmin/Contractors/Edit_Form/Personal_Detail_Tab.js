@@ -24,14 +24,14 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const location = useLocation()
   const [fileList, setFileList] = useState([]);
   const [preview_img, set_preveiwimg] = useState([])
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isMSMEVisible, setIsMSMEVisible] = useState(false)
   const [msmeImageD, set_msmeImageD] = useState('')
   const [turnover, setTurnover] = useState([])
   const [state, setState] = useState([])
-  
+  const isAdmin = useSelector(state => state.User.user_role);
   const [work_segment, set_work_Segment] = useState([])
   const [previewImg, setPreviewImg] = useState([]);
   const [year, setYear] = useState([])
@@ -52,6 +52,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
   const [contractor_status, set_Contractor_status] = useState(1)
+  const [workArea,setWorkArea]= useState([])
   const [form] = Form.useForm();
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   var work_area_types = []
@@ -77,13 +78,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         newProjectImg.push(res);
       });
     });
-  
+
     await Promise.all(uploadPromises);
-  
+
     if (newProjectImg.length === 0) {
       newProjectImg.push('');
     }
-  
+
     setFieldsValue({
       Project: [
         ...Project.slice(0, index),
@@ -92,15 +93,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           project_img: newProjectImg,
         },
         ...Project.slice(index + 1),
-        
+
       ],
     });
-  
+
     newFileList[index] = event.target.files;
     // setFileList(newFileList);
   };
-  
-  
+
+
 
   const handleRemoveImage = (index, imgIndex) => {
     const newPreviewImg = [...previewImg];
@@ -127,15 +128,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     const { getFieldValue, setFieldsValue } = form;
     const Project = getFieldValue('Project');
     const project = Project[index];
-    
+
     const newProjectImg = [...project.project_img];
     const file = event.target.files[0];
     var formData = new FormData();
     formData.append("File", file);
-  
+
     dispatch(upload_img(formData)).then((res) => {
       newProjectImg.push(res);
-  
+
       setFieldsValue({
         Project: [
           ...Project.slice(0, index),
@@ -148,7 +149,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       });
     });
   };
-  
+
 
 
 
@@ -209,7 +210,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if (formValues.company_image && formValues.company_image.includes("http")) {
       setShowCompany_Img(true)
     }
-
+    if (formValues.work_area) {
+      formValues.work_area.map((work) => {
+        work_area.push(work.work_segment)
+      })
+    }
+    setWorkArea([...work_area])
     setProjects(projects)
     setTurnover(data)
     setSelectedOptions(work_area_types)
@@ -219,25 +225,29 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     }
     setStateInitialValue(location.state?.email)
   }, [])
-  console.log({ formValues })
   useEffect(() => {
+    var data = []
     if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
+      const segmentNames = WORK_SEGMENT.map((cat) => cat.name);
+      set_work_Segment(segmentNames);
+      WORK_SEGMENT.map((cat) =>
+      data.push(cat) );
+      setSub_cat(data)
+    }
+  }, []);
 
-      WORK_SEGMENT.map((cat) => {
-        set_work_Segment((prev_state) => [...prev_state, cat.category])
-      })
-
-  }
-  else {
-    dispatch(get_category()).then((res) => {
-      res.map((cat) => {
-        setSub_cat((prev_state) => [...prev_state, cat])
-        set_work_Segment((prev_state) => [...prev_state, cat.category])
-      })
-    })
-  }
-    
-  }, [])
+  useEffect(() => {
+    var data = []
+    if (work_segment.length === 0) {
+      dispatch(get_category()).then((res) => {
+        const segmentNames = res.map((cat) => cat.name);
+        set_work_Segment(segmentNames);
+       res.map((cat) =>
+       data.push(cat) );
+      setSub_cat(data)
+      });
+    }
+  }, []);
   function ValidateGSTNumber(event) {
     let text = event.target.value
     var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
@@ -253,7 +263,9 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }
   const onFinish = async (value) => {
     setLoading(true)
-    value.status = contractor_status
+   
+    value.status = contractor_status 
+   
     var Turnover = []
     Object.keys(value).map((key) => {
       if (key.includes('Turnover')) {
@@ -265,6 +277,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     value.Project = JSON.stringify(value.Project)
     value.Turnover = JSON.stringify(Turnover)
     var work_area_types = []
+ 
     Object.keys(value).map((val_item) => {
       value.work_segment.map((work) => {
         if (val_item === work) {
@@ -273,7 +286,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         }
       })
     })
-    
+
 
     value["work_area_types"] = JSON.stringify([...work_area_types])
     var formData = new FormData()
@@ -323,15 +336,22 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     Object.keys(value).map((formKey) => {
       formData.append(formKey, value[formKey])
     })
+    console.log(formValues)
     formData.append("form_id", formValues._id)
- 
+    formData.append("user_id",formValues.user_id._id)
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
       obj.contractor_id = res.data._id
       setLoading(false)
-      navigate('/admin/contractors-list')
-    }).catch((err)=>{
+      if (isAdmin != 2) {
+        navigate('/dashboard')
+      }
+      else {
+        navigate('/admin/contractors-list')
+      }
+
+    }).catch((err) => {
       console.log(err)
     }
     )
@@ -368,25 +388,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     setState(state_cites[country])
   }
 
-  function msmeVerfication(event) {
-    let text = event.target.value
-    setStateInitialpf(text)
-    console.log(text)
-    var regex = /^[A-Z]{2}[\\s\\/]?[A-Z]{3}[\\s\\/]?[0-9]{7}[\\s\\/]?[0-9]{3}[\\s\\/]?[0-9]{7}$/;
-    if (text.length < 1) {
-      set_Valid_msme(false)
-    }
-    else if (regex.test(text)) {
-      set_Valid_msme(false)
-    } else {
-      set_Valid_msme(true)
-    }
-  }
 
-  var work_area = []
-  formValues.work_area.map((work) => {
-    work_area.push(work.work_segment)
-  })
+
   function pan_img_value(e) {
     set_panImageD(e.target.files[0])
   }
@@ -396,580 +399,601 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   function company_image_handler(e) {
     set_company_imgae(e.target.files[0])
   }
+  function selectChangeHandler(val) {
+    console.log(val)
+    work_area = []
+    setSelectedItems(val)
+    setWorkArea(val)
+
+  }
   return (
     <>
-    {
-      loading ? <Loader/> :
-      <div className='bg-white p-3 w-full rounded-xl '>
-        <Form
-          form={form}
-          labelCol={{
-            span: 37,
-          }}
-          wrapperCol={{
-            span: 44,
-          }}
+      {
+        loading ? <Loader /> :
+          <div className='bg-white p-3 w-full rounded-xl '>
+            <Form
+              form={form}
+              labelCol={{
+                span: 37,
+              }}
+              wrapperCol={{
+                span: 44,
+              }}
 
-          layout="vertical"
+              layout="vertical"
 
-          fields={[
-            {
-              name: ["entity"],
-              value: [formValues.entity]
-            },
-            {
-              name: ['prefferd_state'],
-              value: [...formValues.prefferd_states]
-            },
-            {
-              name: ["email"],
-              value: [formValues.user_id.email]
-            },
-            {
-              name: ["mobile_number"],
-              value: [formValues.user_id.number]
-            },
-            {
-              name: ["Address"],
-              value: [formValues.Address]
-            },
-            {
-              name: ["State"],
-              value: [formValues.State]
-            },
-            {
-              name: ["City"],
-              value: [formValues.City]
-            },
-            {
-              name: ["pin_code"],
-              value: [formValues.pin_code]
-            },
-
-            {
-              name: ["username"],
-              value: [formValues.username]
-            },
-            {
-              name: ["Designation"],
-              value: [formValues.Designation]
-            },
-            {
-              name: ["work_segment"],
-              value: [...work_area]
-            },
-            {
-              name: ["msme_number"],
-              value: [initialpf]
-            },
-            ...selectedOptions
-            ,
-            {
-              name: "msme",
-              value: formValues?.msme
-            },
-            turnover,
-            {
-              name: ["Approved_Limit"],
-              value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : ''
-            },
-            {
-              name: ["consumed"],
-              value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : ''
-            },
-            {
-              name: [`Turnover_${new Date().getFullYear()}`],
-              value: year[0]
-            },
-            {
-              name: [`Turnover_${new Date().getFullYear() - 1}`],
-              value: year[1]
-            },
-            {
-              name: [`Turnover_${new Date().getFullYear() - 2}`],
-              value: year[2]
-            },
-
-            {
-              name: ["pan_number"],
-              value: formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" : formValues.pan_number
-            },
-            {
-              name: ["gst_number"],
-              value: formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number
-            },
-            {
-              name: ["Project"],
-              value: [...project]
-            }
-
-          ]
-
-
-          }
-          size="default"
-          labelAlign="left"
-          scrollToFirstError={true}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-
-
-        >
-          {/**************  Entity Name *************/}
-          <Form.Item name="entity" label="Name of entity" rules={[
-            {
-              required: true,
-              message: 'Please enter your entity name',
-            },
-          ]}>
-            <Input placeholder='Enter the name of Your entity' />
-          </Form.Item>
-          <div className='form_email_mobile_flex flex-col md:flex-row '>
-            <div className='form_flex_children mr-2'>
-              <Form.Item label="Contact person full name " name="username" rules={[
+              fields={[
                 {
-                  required: true,
-                  message: 'Please enter your Name',
+                  name: ["entity"],
+                  value: [formValues.entity]
                 },
-              ]}>
-                <Input placeholder='Enter contact person name' />
-              </Form.Item>
-            </div>
-            <div className='form_flex_children '>
-              <Form.Item name="Designation" label="Designation">
-                <Input placeholder='Enter the  designation' />
-              </Form.Item>
-            </div>
-          </div>
-          <div className='form_email_mobile_flex flex flex-col md:flex-row'>
-            {/*****************Email*******************/}
-            <div className='form_flex_children mr-2' >
-              <Form.Item name="email" label="Email " rules={[
                 {
-                  required: true,
-                  message: 'Please enter  email'
+                  name: ['prefferd_state'],
+                  value: [...formValues.prefferd_states]
                 },
-              ]} wrapperCol={{
-                span: 56,
-              }}>
+                {
+                  name: ["email"],
+                  value: [formValues.user_id.email]
+                },
+                {
+                  name: ["mobile_number"],
+                  value: [formValues.user_id.number]
+                },
+                {
+                  name: ["Address"],
+                  value: [formValues.Address]
+                },
+                {
+                  name: ["State"],
+                  value: [formValues.State]
+                },
+                {
+                  name: ["City"],
+                  value: [formValues.City]
+                },
+                {
+                  name: ["pin_code"],
+                  value: [formValues.pin_code]
+                },
 
                 {
-                  localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                  name: ["username"],
+                  value: [formValues.username]
+                },
+                {
+                  name: ["Designation"],
+                  value: [formValues.Designation]
+                },
+                {
+                  name: ["work_segment"],
+                  value: [...workArea]
+                },
+                {
+                  name: ["msme_number"],
+                  value: [initialpf]
+                },
+                ...selectedOptions
+                ,
+                {
+                  name: "msme",
+                  value: formValues?.msme
+                },
+                turnover,
+                {
+                  name: ["Approved_Limit"],
+                  value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : ''
+                },
+                {
+                  name: ["consumed"],
+                  value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : ''
+                },
+                {
+                  name: [`Turnover_${new Date().getFullYear()}`],
+                  value: year[0]
+                },
+                {
+                  name: [`Turnover_${new Date().getFullYear() - 1}`],
+                  value: year[1]
+                },
+                {
+                  name: [`Turnover_${new Date().getFullYear() - 2}`],
+                  value: year[2]
+                },
+
+                {
+                  name: ["pan_number"],
+                  value: formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" : formValues.pan_number
+                },
+                {
+                  name: ["gst_number"],
+                  value: formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number
+                },
+                {
+                  name: ["Project"],
+                  value: [...project]
                 }
 
+              ]
 
-              </Form.Item>
-            </div>
-            {/*******************************************/}
 
-            {/************Mobile Number****************/}
-            <div className='form_flex_children'>
+              }
+              size="default"
+              labelAlign="left"
+              scrollToFirstError={true}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
 
-              <Form.Item name="mobile_number" label="Mobile number " rules={[
+
+            >
+              {/**************  Entity Name *************/}
+              <Form.Item name="entity" label="Name of entity" rules={[
                 {
                   required: true,
-                  message: 'Please enter your mobile number'
+                  message: 'Please enter your entity name',
                 },
               ]}>
-                {
-                  localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
-                }
-                {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
+                <Input placeholder='Enter the name of Your entity' />
               </Form.Item>
-            </div>
-            {/*******************************************/}
-          </div>
-          <Form.Item name="Address" label="Office address ">
-            <Input placeholder='Enter Your Office address' />
-          </Form.Item>
-          <div className='flex flex-col md:flex-row '>
-            <div className='form_flex_children mr-1'>
-              <Form.Item name="State" label="State " rules={[
+              <div className='form_email_mobile_flex flex-col md:flex-row '>
+                <div className='form_flex_children mr-2'>
+                  <Form.Item label="Contact person full name " name="username" rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your Name',
+                    },
+                  ]}>
+                    <Input placeholder='Enter contact person name' />
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children '>
+                  <Form.Item name="Designation" label="Designation">
+                    <Input placeholder='Enter the  designation' />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className='form_email_mobile_flex flex flex-col md:flex-row'>
+                {/*****************Email*******************/}
+                <div className='form_flex_children mr-2' >
+                  <Form.Item name="email" label="Email " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter  email'
+                    },
+                  ]} wrapperCol={{
+                    span: 56,
+                  }}>
+
+                    {
+                      localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                    }
+
+
+                  </Form.Item>
+                </div>
+                {/*******************************************/}
+
+                {/************Mobile Number****************/}
+                <div className='form_flex_children'>
+
+                  <Form.Item name="mobile_number" label="Mobile number " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your mobile number'
+                    },
+                  ]}>
+                    {
+                      localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                    }
+                    {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
+                  </Form.Item>
+                </div>
+                {/*******************************************/}
+              </div>
+              <Form.Item name="Address" label="Office address ">
+                <Input placeholder='Enter Your Office address' />
+              </Form.Item>
+              <div className='flex flex-col md:flex-row '>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="State" label="State " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your State'
+                    },
+                  ]}>
+
+                    <Select name="State" placeholder="Select state" onSelect={countrySelectHandler}>
+                      {Object.keys(state_cites).map((state) => {
+                        return (<Select.Option value={state}>{state}</Select.Option>)
+                      }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children mr-1'>
+                  <Form.Item name="City" label="City " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your City',
+                    },
+                  ]}>
+                    <Select id="country-state" name="City" placeholder="Select city">
+                      {state.length > 0 && state.map((state) => {
+                        return (<Select.Option value={state}>{state}</Select.Option>)
+                      }
+                      )}
+                    </Select>
+                  </Form.Item>
+                </div>
+                <div className='form_flex_children'>
+                  <Form.Item name="pin_code" label="PIN code " rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your PIN code',
+
+                    },
+                  ]}>
+                    <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
+                  </Form.Item>
+                </div>
+              </div>
+              {/*******************************************/}
+              {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formValues.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
+                <Input type="file" onChange={company_image_handler} />
+              </Form.Item>
+              }
+              {/**************  Work Segment *************/}
+              <Form.Item name="work_segment" label="Work segment" rules={[
+                {
+                  required: true,
+                  message: 'Please select your Work Segment'
+                },
+              ]}>
+                <Select mode="multiple" onChange={selectChangeHandler}
+                  allowClear placeholder="List of work segments">
+                  {work_segment.map((option, index) => {
+                    return <Select.Option key={index} value={option}>{option}</Select.Option>
+                  })}
+                </Select>
+              </Form.Item>
+         
+              {selectedItems.length > 0 && selectedItems.map((sub_item) => {
+                    
+                return sub_cat.map((sub_category) => {
+                  console.log(sub_category.name,"in",sub_item)
+                  return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
+                    {
+
+                      <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                        {
+                          required: true,
+                          message: 'Please select options',
+                        },
+                      ]}>
+                        <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                          {sub_category.children.map((item, index) => {
+
+                            return (
+                              <Checkbox
+                                key={item.name}
+                                className={`ml-${index === 0 ? 2 : 0} `}
+                                value={item.name}
+                              >
+                                <span>{item.name}</span>
+                              </Checkbox>
+                            );
+                          })}
+                        </Checkbox.Group>
+                      </Form.Item>
+                    }
+
+                  </>
+                })
+              })
+              }
+              {/*******************************************/}
+              <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
                 {
                   required: true,
                   message: 'Please enter your State'
                 },
-              ]}>
+              ]}
+              >
 
-                <Select name="State" placeholder="Select state" onSelect={countrySelectHandler}>
-                  {Object.keys(state_cites).map((state) => {
-                    return (<Select.Option value={state}>{state}</Select.Option>)
+                <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
+                  <Select.Option value="All State">All State</Select.Option>
+                  {Object.keys(state_cites).map((state, index) => {
+                    return (<Select.Option key={index} value={state}>{state}</Select.Option>)
                   }
                   )}
                 </Select>
               </Form.Item>
-            </div>
-            <div className='form_flex_children mr-1'>
-              <Form.Item name="City" label="City " rules={[
-                {
-                  required: true,
-                  message: 'Please enter your City',
-                },
-              ]}>
-                <Select id="country-state" name="City" placeholder="Select city">
-                  {state.length > 0 && state.map((state) => {
-                    return (<Select.Option value={state}>{state}</Select.Option>)
-                  }
-                  )}
-                </Select>
-              </Form.Item>
-            </div>
-            <div className='form_flex_children'>
-              <Form.Item name="pin_code" label="PIN code " rules={[
-                {
-                  required: true,
-                  message: 'Please enter your PIN code',
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
+                <div>
+                  <Form.Item name="msme_number" className='mb-0' label="PF Number" >
+                    {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
+                    <Input placeholder='Enter your PF number' />
+                  </Form.Item>
 
-                },
-              ]}>
-                <Input maxLength={6} minLength={6} placeholder="Enter 6 digit PIN code" />
-              </Form.Item>
-            </div>
-          </div>
-          {/*******************************************/}
-          {showCompnay_Img ? <> <label className='flex mb-3'> Business Profile</label> <Link className='mr-16' to={formValues.company_image} >Preview</Link> <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowCompany_Img(false) }}>Change</span></> : <Form.Item name="company_image" label="Company Image">
-            <Input type="file" onChange={company_image_handler} />
-          </Form.Item>
-          }
-          {/**************  Work Segment *************/}
-          <Form.Item name="work_segment" label="Work segment" rules={[
-            {
-              required: true,
-              message: 'Please select your Work Segment'
-            },
-          ]}>
-            <Select mode="multiple" onChange={setSelectedItems}
-              allowClear placeholder="List of work segments">
-              {work_segment.map((option, index) => {
+                  {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
+                </div>
+                {showMSMEimage == true ? <div>
+                  <span className='flex mb-3 '>Copy of PF </span>
+                  <Link className='mr-16' to={formValues.msme_image}>Preview</Link>
+                  <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowMSMEImage(false) }}>Change</span>
 
-                return <Select.Option key={index} value={option}>{option}</Select.Option>
-              })}
-            </Select>
-          </Form.Item>
-          {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                        return sub_cat.map((sub_category) => {
-                          return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
-                            {
-                              <Form.Item name={sub_item} className='mb-1' label={`Select Sub Category for ${sub_item}`} rules={[
+                </div>
+                  :
+                  <Form.Item name="msme_image" label="Copy of PF">
+                    <Input type='file' max={1} onChange={msme_img_value} />
+                  </Form.Item>
+
+                }
+                <div>
+
+                  <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
+                    <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                  </Form.Item>
+                  {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
+
+                </div>
+                {showPANimage ? <div>
+                  <span className='flex mb-3 '>Copy of PAN </span>
+                  <Link className='mr-16' to={formValues.pan_image}>Preview</Link>
+                  <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowPANimage(false) }}>Change</span>
+
+                </div>
+                  : <Form.Item name="pan_image" label="Copy of PAN">
+                    <Input type='file' max={1} onChange={pan_img_value} />
+                  </Form.Item>}
+                <div>
+                  <Form.Item name="gst_number" className='mb-0' label="GST Number">
+                    <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                  </Form.Item>
+
+
+                  {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
+                </div>
+                {showGSTiMAGE == true ? <>
+                  <div>
+                    <span className='flex mb-3 '>Copy of GST </span>
+                    <Link className='mr-16' to={formValues.gst_image}>Preview</Link>
+                    <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowGSTimage(false) }}>Change</span>
+                  </div>
+                </> :
+                  <Form.Item name="gst_image" label="Copy of GST">
+                    <Input type='file' max={1} onChange={gst_img_value} />
+                  </Form.Item>}
+              </div>
+              <Form.Item name="msme" label="Do you have MSME registration?" required >
+                <Radio.Group >
+                  <Radio value={"Yes"}>Yes</Radio>
+                  <Radio value={"No"}>No</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                <p className="text-lg mb-0 mr-4">Financial Details</p>
+              </div>
+              <div
+                className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+              >
+              </div>
+
+              <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
+              <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
+                <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
+                >
+                  <Input type='number' placeholder='Please enter turnover amount' />
+                </Form.Item>
+                <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
+                >
+
+                  <Input type='number' placeholder='Please enter turnover amount' />
+                </Form.Item>
+                <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
+                >
+
+                  <Input type='number' placeholder='Please enter turnover amount' />
+                </Form.Item>
+              </div>
+              <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
+              <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
+                <Form.Item name="Approved_Limit" label="Approved Limit "
+                  className="mb-1"
+                >
+
+                  <Input type='number' placeholder='Please enter  amount' />
+                </Form.Item>
+                <Form.Item name="consumed" label="Consumed " className="mt-0"
+                >
+
+                  <Input type='number' placeholder='Please enter turnover amount' />
+                </Form.Item>
+              </div>
+              <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
+                <p className="text-lg mb-0 mr-4">Work Experience</p>
+              </div>
+              <div
+                className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+              >
+              </div>
+              <p className='mt-5 mb-2 '>Projects</p>
+
+              <Form.List name="Project">
+                {(fields, { add, remove }) => (
+
+                  <>
+
+                    {fields.map((field, index) => {
+                      const project = form.getFieldValue(['Project', index]);
+                      const projectImg = project?.project_img;
+                      const fileList = projectImg?.length > 0 ? projectImg : [];
+                      var Imgind
+
+
+                      return (
+                        <div key={field.key}>
+                          <div className="grid grid-cols-2 w-full">
+                            <p className="flex mb-3">#Project {field.key + 1} </p>
+                            <div className="float-right">
+                              <span
+                                className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
+                                onClick={() => remove(field.name)}
+                              >
+                                <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
+                                Remove
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'Client_Name']}
+                              fieldKey={[field.fieldKey, 'Client_Name']}
+                              rules={[
                                 {
                                   required: true,
-                                  message: 'Please select options',
+                                  message: 'Missing Client Name',
                                 },
-                              ]}>
-                                <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
-                                  {sub_category.children.map((item, index) => {
-
-                                    return (
-                                      <Checkbox
-                                        key={item.name}
-                                        className={`ml-${index === 0 ? 2 : 0} `}
-                                        value={item.name}
-                                      >
-                                        <span>{item.name}</span>
-                                      </Checkbox>
-                                    );
-                                  })}
-                                </Checkbox.Group>
-                              </Form.Item>
-                            }
-
-                          </>
-                        })
-                      })
-                      }
-          {/*******************************************/}
-          <Form.Item name="prefferd_state" label="Preferred state to work " rules={[
-            {
-              required: true,
-              message: 'Please enter your State'
-            },
-          ]}
-          >
-
-            <Select mode="multiple" name="prefferd_state" placeholder="Select state" >
-              <Select.Option value="All State">All State</Select.Option>
-              {Object.keys(state_cites).map((state, index) => {
-                return (<Select.Option key={index} value={state}>{state}</Select.Option>)
-              }
-              )}
-            </Select>
-          </Form.Item>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-3 '>
-            <div>
-              <Form.Item name="msme_number" className='mb-0' label="PF Number" >
-                {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                <Input placeholder='Enter your PF number' />
-              </Form.Item>
-
-              {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
-            </div>
-            {showMSMEimage == true ? <div>
-              <span className='flex mb-3 '>Copy of PF </span>
-              <Link className='mr-16' to={formValues.msme_image}>Preview</Link>
-              <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowMSMEImage(false) }}>Change</span>
-
-            </div>
-              :
-              <Form.Item name="msme_image" label="Copy of PF">
-                <Input type='file' max={1} onChange={msme_img_value} />
-              </Form.Item>
-
-            }
-            <div>
-
-              <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
-                <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
-              </Form.Item>
-              {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
-
-            </div>
-            {showPANimage ? <div>
-              <span className='flex mb-3 '>Copy of PAN </span>
-              <Link className='mr-16' to={formValues.pan_image}>Preview</Link>
-              <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowPANimage(false) }}>Change</span>
-
-            </div>
-              : <Form.Item name="pan_image" label="Copy of PAN">
-                <Input type='file' max={1} onChange={pan_img_value} />
-              </Form.Item>}
-            <div>
-              <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
-              </Form.Item>
-
-
-              {valid_gst && <span style={{ color: '#ff4d4f' }}>Please Enter valid GST Number*</span>}
-            </div>
-            {showGSTiMAGE == true ? <>
-              <div>
-                <span className='flex mb-3 '>Copy of GST </span>
-                <Link className='mr-16' to={formValues.gst_image}>Preview</Link>
-                <span className='cursor-pointer hover:text-red-600' onClick={() => { setShowGSTimage(false) }}>Change</span>
-              </div>
-            </> :
-              <Form.Item name="gst_image" label="Copy of GST">
-                <Input type='file' max={1} onChange={gst_img_value} />
-              </Form.Item>}
-          </div>
-          <Form.Item name="msme" label="Do you have MSME registration?" required >
-            <Radio.Group >
-              <Radio value={"Yes"}>Yes</Radio>
-              <Radio value={"No"}>No</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-            <p className="text-lg mb-0 mr-4">Financial Details</p>
-          </div>
-          <div
-            className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-          >
-          </div>
-
-          <div className=' mt-5 mb-2'>Last Three Years Turnovers</div>
-          <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
-            <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
-            >
-              <Input type='number' placeholder='Please enter turnover amount' />
-            </Form.Item>
-            <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
-            >
-
-              <Input type='number' placeholder='Please enter turnover amount' />
-            </Form.Item>
-            <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
-            >
-
-              <Input type='number' placeholder='Please enter turnover amount' />
-            </Form.Item>
-          </div>
-          <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
-          <div className='grid grid-cols-1  md:grid-cols-2 gap-2'>
-            <Form.Item name="Approved_Limit" label="Approved Limit "
-              className="mb-1"
-            >
-
-              <Input type='number' placeholder='Please enter  amount' />
-            </Form.Item>
-            <Form.Item name="consumed" label="Consumed " className="mt-0"
-            >
-
-              <Input type='number' placeholder='Please enter turnover amount' />
-            </Form.Item>
-          </div>
-          <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
-            <p className="text-lg mb-0 mr-4">Work Experience</p>
-          </div>
-          <div
-            className="flex items-center my-1 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-          >
-          </div>
-          <p className='mt-5 mb-2 '>Projects</p>
-
-          <Form.List name="Project">
-            {(fields, { add, remove }) => (
-            
-              <>
-              
-                {fields.map((field, index) => {
-                  const project = form.getFieldValue(['Project', index]);
-                  const projectImg = project?.project_img;
-                  const fileList = projectImg?.length > 0 ? projectImg : [];
-                  var Imgind
-                 
-
-                  return (
-                    <div key={field.key}>
-                      <div className="grid grid-cols-2 w-full">
-                        <p className="flex mb-3">#Project {field.key + 1} </p>
-                        <div className="float-right">
-                          <span
-                            className="mb-3 text-[#FF5757] cursor-pointer underline float-right "
-                            onClick={() => remove(field.name)}
-                          >
-                            <AiFillDelete className="ml-2 cursor-pointer w-5 h-5 float-right" />
-                            Remove
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                        <Form.Item
-                          {...field}
-                          name={[field.name, 'Client_Name']}
-                          fieldKey={[field.fieldKey, 'Client_Name']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Missing Client Name',
-                            },
-                          ]}
-                        >
-                          <Input placeholder="Client Name" style={{ width: '100%' }} />
-                        </Form.Item>
-
-                        <Form.Item
-                          {...field}
-                          name={[field.name, 'Contract_Value']}
-                          fieldKey={[field.fieldKey, 'Contract_Value']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Missing Contract Value',
-                            },
-                          ]}
-                        >
-                          <Input type="number" placeholder="Contract Value" />
-                        </Form.Item>
-
-                        <Form.Item
-                          {...field}
-                          name={[field.name, 'Exec']}
-                          fieldKey={[field.fieldKey, 'Exec']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Missing Year of Execution',
-                            },
-                          ]}
-                        >
-                          <DatePicker
-                            style={{ width: '100%' }}
-                            disabledDate={disabledDate}
-                            placeholder="Year of Execution"
-                            picker="year"
-                          />
-                        </Form.Item>
-                        <Form.Item className='my-3'></Form.Item>
-                        <p className='text-[#FF5757]'>Project Images</p>
-                        {fileList.length > 0 ? (
-                          <>
-                            <br />
-                           
-                            {fileList.map((img, ind) => {
-                              Imgind= ind
-                              return (
-                                <div className={`grid grid-cols-1 md:grid-cols-${fileList.length} gap-4 mb-3`}>
-                                  <Link to={img}>{`Image ${ind + 1}`}</Link>
-                                  <Button type="link" className='text-red-400 text-underline hover:none' onClick={() => handleRemoveImage(index, ind)}>
-                                    Remove
-                                  </Button>
-                                </div>
-                              );
-                            })}
-                            <p className='mb-3'>Add More Images</p>
-                            <br/>
-                            <Form.Item>
-                              <input type='file' name='myFile' onChange={event => handleUpdateFileUpload(event, index)} multiple />
+                              ]}
+                            >
+                              <Input placeholder="Client Name" style={{ width: '100%' }} />
                             </Form.Item>
-                          </>
-                        ) : (
-                          <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
-                            <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
-                          </Form.Item>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
 
-                <Form.Item>
-                  <Button
-                    className="flex justify-center items-baseline"
-                    type="dashed"
-                    onClick={() => {
-                      add(); 
-                     
-                    }}
-                    block
-                    icon={<PlusOutlined />}
-                  >
-                    Add Project
-                  </Button>
-                </Form.Item>
-              </>
-            )}
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'Contract_Value']}
+                              fieldKey={[field.fieldKey, 'Contract_Value']}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: 'Missing Contract Value',
+                                },
+                              ]}
+                            >
+                              <Input type="number" placeholder="Contract Value" />
+                            </Form.Item>
 
-          </Form.List>
+                            <Form.Item
+                              {...field}
+                              name={[field.name, 'Exec']}
+                              fieldKey={[field.fieldKey, 'Exec']}
+                              rules={[
+                                {
+                                  required: true,
+                                  message: 'Missing Year of Execution',
+                                },
+                              ]}
+                            >
+                              <DatePicker
+                                style={{ width: '100%' }}
+                                disabledDate={disabledDate}
+                                placeholder="Year of Execution"
+                                picker="year"
+                              />
+                            </Form.Item>
+                            <Form.Item className='my-3'></Form.Item>
+                            <p className='text-[#FF5757]'>Project Images</p>
+                            {fileList.length > 0 ? (
+                              <>
+                                <br />
 
-          <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
-            {/* <button
+                                {fileList.map((img, ind) => {
+                                  Imgind = ind
+                                  return (
+                                    <div className={`grid grid-cols-1 md:grid-cols-${fileList.length} gap-4 mb-3`}>
+                                      <Link to={img}>{`Image ${ind + 1}`}</Link>
+                                      <Button type="link" className='text-red-400 text-underline hover:none' onClick={() => handleRemoveImage(index, ind)}>
+                                        Remove
+                                      </Button>
+                                    </div>
+                                  );
+                                })}
+                                <p className='mb-3'>Add More Images</p>
+                                <br />
+                                <Form.Item>
+                                  <input type='file' name='myFile' onChange={event => handleUpdateFileUpload(event, index)} multiple />
+                                </Form.Item>
+                              </>
+                            ) : (
+                              <Form.Item {...field} name={[field.name, 'project_img']} valuePropName='fileList'>
+                                <input type='file' name='myFile' onChange={event => handleFileUpload(event, index)} multiple />
+                              </Form.Item>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    <Form.Item>
+                      <Button
+                        className="flex justify-center items-baseline"
+                        type="dashed"
+                        onClick={() => {
+                          add();
+
+                        }}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Add Project
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+
+              </Form.List>
+
+              <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
+                {/* <button
                     type="submit"
                     className="back_btn"  >
                     Next
                   </button> */}
-            {formValues.status != 2 &&
-              <button
-                type="submit"
-                className="back_btn"
-                onClick={() => { set_Contractor_status(2) }}
-              >
-                Reject
-              </button>}
+                {isAdmin == 2 && formValues.status != 2 &&
+                  <button
+                    type="submit"
+                    className="back_btn"
+                    onClick={() => { set_Contractor_status(2) }}
+                  >
+                    Reject
+                  </button>}
 
-            {formValues.status != 0 &&
-              <button
-                type="submit"
-                className="save_Btn"
-                onClick={() => { set_Contractor_status(0) }}
-              >
-                Accept
-              </button>
-            }
-            {formValues.status != 1 &&
-              <button
-                type="submit"
-                className="save_Btn Under Review_color  hover:bg-yellow-400"
-                onClick={() => { set_Contractor_status(1) }}
-              >
-                Under Review
-              </button>
-            }
+                {isAdmin == 2 && formValues.status != 0 &&
+                  <button
+                    type="submit"
+                    className="save_Btn"
+                    onClick={() => { set_Contractor_status(0) }}
+                  >
+                    Accept
+                  </button>
+                }
+                {isAdmin == 2 && formValues.status != 1 &&
+                  <button
+                    type="submit"
+                    className="save_Btn Under Review_color  hover:bg-yellow-400"
+                    onClick={() => { set_Contractor_status(1) }}
+                  >
+                    Under Review
+                  </button>
+                }
+                {
+                  isAdmin != 2 &&
+                  <div className='content_center w-full'>
+                    <button
+                      type="submit"
+                      className="save_Btn   hover:bg-yellow-400"
+                    >
+                      Update
+                    </button>
+                  </div>
+                }
+              </div>
+            </Form>
           </div>
-        </Form>
-      </div>
-    }
-      
+      }
+
     </>
   );
 };

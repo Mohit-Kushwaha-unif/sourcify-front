@@ -28,6 +28,7 @@ const Dashboard = () => {
       }
 
     })
+    console.log(count)
     setActiveProjects(count)
     setPostedProjects(val.length);
     

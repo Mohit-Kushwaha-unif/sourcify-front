@@ -164,7 +164,7 @@ const Header = () => {
           <TopBar />
           <div className='bg-white'>
             <div className='container py-2'>
-            <header className={`${showMenu ? 'h-[370px]' : ''} md:h-auto grid grid-cols-2 md:grid-cols-12`}>
+            <header className={`${showMenu ? 'h-[370px]' : ''} md:h-auto grid grid-cols-2 mb-[28px] md:mb-0 md:grid-cols-12`}>
 
 
                 <div className='md:col-span-2 grid place-items-center '>
@@ -200,7 +200,7 @@ const Header = () => {
                         <NavLink to="/messages" className=" h-5  flex items-center header_text"><span className='mr-2'><TiMessages /></span><p className='header_text'>Chat</p></NavLink>
                         <button
                           onClick={() => setIsOpen(!isOpen)}
-                          className="inline-flex h-[70%]  justify-center items-center  w-full "
+                          className="inline-flex h-[70%]  md:justify-center items-center  w-full "
                         >
                           <img src={profile} />
                           {/* <span>{userName}</span> */}
@@ -243,14 +243,14 @@ const Header = () => {
                   </div>
                 </>}
                 {isOpen && (
-                  <div className="absolute z-[999] top-[25%] md:top-[88px] w-[210px]  left-[43%]  md:left-[66%] bg-[rgba(244, 244, 244, 0.8)]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute z-[999] top-[42%] md:top-[88px] w-[210px]  left-[43%]  md:left-[66%] bg-[rgba(244, 244, 244, 0.8)]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {showStatus && <div className='px-4 py-2'>
                         <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>Account status - </span>
                         <span>{accountStatus === 0 ? <Tag color="green">Live</Tag> : accountStatus === 1 ? <Tag color="yellow">Under Review</Tag> : <Tag color="volcano">Blocked</Tag>}</span>
                       </div>}
                       <div className='px-4 py-2' onClick={()=>{navigate('/dashboard')}}>Dashboard</div>
-                      {/* <button
+                      <button
                     onClick={handleSettings}
                     className="block px-4 py-2 text-sm w-full text-left"
                   >
@@ -269,7 +269,7 @@ const Header = () => {
                       />
                     </svg>
                     Update Profile
-                  </button> */}
+                  </button>
 
                       <button
                         onClick={logoutHandler}

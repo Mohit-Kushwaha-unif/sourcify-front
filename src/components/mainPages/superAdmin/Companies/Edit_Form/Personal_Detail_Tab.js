@@ -1,13 +1,14 @@
 import { Form, Input, Select, Button } from 'antd'
 import state_cites from '../../../../../assests/state_city.'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { update_vendor } from '../../../../../services/Vendor'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../../../Helper/Loader'
 
 const Personal_Detail_Tab = (formValues) => {
   const navigate = useNavigate()
+  const isAdmin = useSelector(state => state.User.user_role);
   const [contractor_status,set_Contractor_status] = useState(1)
   const [state, setState] = useState([])
   const [loading,setLoading] = useState(false)
@@ -20,7 +21,14 @@ const Personal_Detail_Tab = (formValues) => {
     values.user_id = formValues.formValues.user_id
     dispatch(update_vendor(values)).then((res) => {
       setLoading(false)
-      navigate('/admin/companies')
+      if(isAdmin!=2 )
+      {
+        navigate('/dashboard')
+      }
+      else{
+        navigate('/admin/companies')
+      }
+     
     }).catch((err) => {
       console.log(err)
     })
@@ -46,7 +54,6 @@ const Personal_Detail_Tab = (formValues) => {
       obj.name = initial;
       obj.value = formValues.formValues[initial]
     }
-    console.log({ obj })
     initialValue.push(obj)
   })
   return (
@@ -170,7 +177,7 @@ const Personal_Detail_Tab = (formValues) => {
                     className="back_btn"  >
                     Next
                   </button> */}
-                  {formValues.formValues.status !=2 &&
+                  {formValues.formValues.status !=2 && isAdmin == 2 &&
                    <button
                    type="submit"
                   className="back_btn"
@@ -179,7 +186,7 @@ const Personal_Detail_Tab = (formValues) => {
                   Reject
                 </button> }
                  
-                {formValues.formValues.status !=0 &&
+                {formValues.formValues.status !=0 && isAdmin == 2 &&
                   <button
                     type="submit"
                     className="save_Btn"
@@ -188,7 +195,7 @@ const Personal_Detail_Tab = (formValues) => {
                     Accept
                   </button>
                   }
-                {formValues.formValues.status !=1 &&
+                {formValues.formValues.status !=1 && isAdmin == 2 &&
                   <button
                     type="submit"
                     className="save_Btn Under Review_color  hover:bg-yellow-400"  
@@ -197,6 +204,17 @@ const Personal_Detail_Tab = (formValues) => {
                     Under Review
                   </button>
                   }
+                  {
+                  isAdmin != 2 &&
+                  <div className='content_center w-full'>
+                    <button
+                      type="submit"
+                      className="save_Btn   hover:bg-yellow-400"
+                    >
+                      Update
+                    </button>
+                  </div>
+                }
                 </div>
       </Form>
     </div>
