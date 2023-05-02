@@ -14,6 +14,8 @@ const Messages = () => {
     const [to_id, set_To_id] = useState()
     const [messages, setMessages] = useState([]);
     const [contacts, setContacts] = useState([])
+    const originalContactsRef = useRef([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [header, setHeader] = useState()
     const [run, setRUN] = useState(false)
     const [message, setMessage] = useState("");
@@ -49,7 +51,9 @@ const Messages = () => {
                     sideContacts.push(sideObj)
                 }
             })
+            
             setContacts(prevState => [...prevState, ...sideContacts])
+            originalContactsRef.current = contacts
             setDidMount(true)
         })
 
@@ -108,6 +112,7 @@ const Messages = () => {
                     time: new Date(),
                 };
                 setContacts((prevState) => [...prevState, sideObj]);
+                originalContactsRef.current = contacts
                 setHeader(sideObj);
                 return
             }
@@ -123,6 +128,7 @@ const Messages = () => {
 
             setContacts((prevState) => [...prevState, sideObj]);
             setHeader(sideObj);
+            originalContactsRef.current = contacts
             return
         }
     }, [to_id, contacts.length, contractorId, id, didMount]);
@@ -155,6 +161,13 @@ const Messages = () => {
             })
         }
     }, [chat_id])
+    function inputHandler(event) {
+        setSearchTerm(event.target.value.toLowerCase());
+      }
+      const filteredContacts = contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(searchTerm)
+    );
+
     const sendMessage = (text) => {
         var obj = {}
         obj.from_id = from_id
@@ -240,6 +253,7 @@ const Messages = () => {
                         <input
                             type="text"
                             placeholder="Search contacts"
+                            onChange={inputHandler}
                             className="w-full px-5 py-[4.5px] h-auto outline-none rounded-[25px] border-gray-200 border rounded-lg"
                         />
 
@@ -247,7 +261,7 @@ const Messages = () => {
 
                     {/* Contacts List */}
                     <div className="flex-grow border-b-2 scrollbar border-slate-100 scrollbar overflow-y-auto bg-[#ffffff]">
-                        {contacts.length > 0 && contacts.map((contact, index) => (
+                        {filteredContacts.length > 0 && filteredContacts.map((contact, index) => (
                             <div
                                 key={index}
                                 className="flex border-b-2 border-slate-100 items-center py-2 px-4 hover:bg-gray-300 cursor-pointer"
