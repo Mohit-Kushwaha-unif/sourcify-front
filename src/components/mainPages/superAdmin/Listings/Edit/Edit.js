@@ -1,4 +1,4 @@
-import { Checkbox, DatePicker, Form, Input, Select } from 'antd'
+import { Checkbox, DatePicker, Form, Input, Radio, Select } from 'antd'
 import { FaFileExcel } from 'react-icons/fa';
 import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
@@ -110,25 +110,8 @@ const EditListing = () => {
 
         values.user_id = user_id
         values.listing_id = location.state._id
-        values.status = formStatus
-
         dispatch(update_listing(values)).then((res) => {
-            if (formStatus === 0) {
-                Swal.fire('Listitng Has Been Accepted',
-                    'It will live soon',
-                    'success')
-            }
-            else if (formStatus === 1) {
-                Swal.fire('Listitng has been put in Under Review',
-                    'It will live once admin accept it',
-                    'warning')
-            }
-
-            else {
-                Swal.fire('Listitng has been  rejected',
-                    'Admin has rejected this listing',
-                    'error')
-            }
+           
             if (isAdmin == 2) { navigator('/admin/all-listing') }
             else {
                 navigator('/dashboard')
@@ -330,41 +313,21 @@ const EditListing = () => {
                         </Form.Item>}
 
                         {
-                            isAdmin === 2 ?
-                                <div className="text-center lg:text-left mt-2 flex justify-around">
-                                    {console.log({ initialValues })}
-                                    {initialValues.length > 0 && initialValues[7].value != 2 &&
-                                        <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(2)}
-                                            className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Reject
-
-                                        </button>}
-                                    {initialValues.length > 0 && initialValues[7].value != 0 && <button
-                                        type="submit"
-                                        onClick={() => setFormStatus(0)}
-                                        className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                    >
-
-                                        Accept
-
-                                    </button>}
-                                    {initialValues.length > 0 && initialValues[7].value != 1 && <button
-                                        type="submit"
-                                        onClick={() => setFormStatus(1)}
-                                        className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
-                                    >
-
-                                        Under Review
-
-                                    </button>}
-                                </div> : <div className='text-center lg:text-left mt-2 flex justify-around'>
+                            isAdmin === 2 &&
+                                <div className="text-center lg:text-left mt-2 ">
+                                  
+                                    <Form.Item name="status" className='flex justify-between'>
+                                    <Radio.Group >
+                                        <Radio value={1} >Under Review</Radio>
+                                        <Radio value={2}>Reject</Radio>
+                                        <Radio value={0}>Accept</Radio>
+                                    </Radio.Group>
+                                    </Form.Item>
+                                    
+                                </div> }
+                                 <div className='text-center lg:text-left mt-2 flex justify-around'>
                                     <button
                                         type="submit"
-                                        onClick={() => setFormStatus(1)}
                                         className="save_Btn"
                                     >
 
@@ -372,7 +335,7 @@ const EditListing = () => {
 
                                     </button>
                                 </div>
-                        }
+                        
 
                     </Form>
                 </div>

@@ -130,7 +130,7 @@ const VendorForm = () => {
         <div
           className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
         >
-          <div className="overflow-hidden xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+          <div className={`overflow-hidden ${isAdmin ==2 ?"w-full" : "xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 "} mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6`}>
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="text-lg mb-0 mr-4">Onboarding Form</p>
             </div>

@@ -138,3 +138,13 @@ export const forgetPassword = (formVal)=>{
             })
         })
 }
+export const saveSubscription = (formVal)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.post(user_url+'saveSubscription',formVal).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+}

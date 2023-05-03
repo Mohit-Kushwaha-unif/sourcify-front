@@ -23,19 +23,15 @@ const Messages = () => {
     const messagesEndRef = useRef(null);
     const messageContainerRef = useRef(null)
     const chat_id = header?.id ? header.id : "-"
-
-
     const contractorId = location.state?.contractor_id?._id;
-    const id = location.state?._id._id;
-    // console.log(location.state?.contractor_id?.contractor_id, id)
+    const id = location.state?._id._id || location.state?._id;
+   
     useEffect(() => {
         if (contractorId || id) {
             set_To_id(contractorId || id);
         }
     }, [])
 
-
-    // console.log(to_id)
     useEffect(() => {
         var sideContacts = []
         dispatch((getContacts({ from_id }))).then((res) => {
@@ -242,7 +238,7 @@ const Messages = () => {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 scrollbar   overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-5 scrollbar w-full   overflow-y-auto">
 
 
             <div className="col-span-1  bg-gray-200 ">

@@ -34,7 +34,9 @@ const Companies = () => {
                     tableCont.text = tableData.agency_name
                     tableCont.value = tableData.agency_name
                     tableDataFilter.push(tableCont)
+                    if (tableData.user_id) {
                     data.push({
+                        'user_id': tableData.user_id,
                         '_id': tableData._id,
                         'key': index,
                         'entity': tableData.agency_name,
@@ -44,6 +46,7 @@ const Companies = () => {
                         'status': tableData.status === 1 ? 'Under Review' : tableData.status === 0 ? 'Approved' : 'Rejected'
 
                     })
+                }
                 }
             })
             setEntity([...tableDataFilter])
@@ -164,6 +167,7 @@ const Companies = () => {
                 console.log(_, record),
                 <Space size="middle">
                     <Link to='/admin/edit-company' state={{ _id: record?._id }}>Edit </Link>
+                    <Link to='/messages' state={{ _id: record?.user_id }}>Messages </Link>
                     <Link onClick={() => deleteHandler(record?._id)}>Delete</Link>
                 </Space>
             ),

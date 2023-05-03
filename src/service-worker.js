@@ -7,11 +7,13 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
-import { clientsClaim } from 'workbox-core';
+import { clientsClaim,setCacheNameDetails } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
+import {debug} from 'workbox-precaching';
+console.log("im in")
 
 clientsClaim();
 
@@ -70,3 +72,37 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener('push', function(event) {
+  console.log('Push event received:', event);
+  if (event.data) {
+    const notification = JSON.parse(event.data.text());
+    const options = {
+      body: notification.body,
+      icon: notification.icon,
+      data: {
+        url: notification.url
+      }
+    };
+    event.waitUntil(self.registration.showNotification(notification.title, options));
+  }
+});
+
+setCacheNameDetails({
+  prefix: 'sourcify',
+  suffix: 'v1',
+  precache: 'precache',
+  runtime: 'runtime-cache'
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.url.endsWith('service-worker.js')) {
+    event.respondWith(
+      fetch(event.request).then((response) => {
+        response = new Response(response.body, {
+          headers: { 'Content-Type': 'application/javascript' }
+        });
+        return response;
+      })
+    );
+  }
+});

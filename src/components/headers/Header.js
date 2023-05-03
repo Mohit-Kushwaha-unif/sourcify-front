@@ -243,7 +243,7 @@ const Header = () => {
                   </div>
                 </>}
                 {isOpen && (
-                  <div className="absolute z-[999] top-[42%] md:top-[88px] w-[210px]  left-[43%]  md:left-[66%] bg-[rgba(244, 244, 244, 0.8)]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute z-[999] top-[42%] md:top-[88px] w-[210px]  left-[43%]  md:left-[66%] bg-[white]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {showStatus && <div className='px-4 py-2'>
                         <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>Account status - </span>

@@ -263,9 +263,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }
   const onFinish = async (value) => {
     setLoading(true)
-   
-    value.status = contractor_status 
-   
     var Turnover = []
     Object.keys(value).map((key) => {
       if (key.includes('Turnover')) {
@@ -426,6 +423,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 {
                   name: ["entity"],
                   value: [formValues.entity]
+                },
+                {
+                  name: ['status'],
+                  value: formValues.status
                 },
                 {
                   name: ['prefferd_state'],
@@ -944,42 +945,21 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 )}
 
               </Form.List>
-
+              <Form.Item name="status" className='flex justify-between'>
+                                    <Radio.Group >
+                                        <Radio value={1} >Under Review</Radio>
+                                        <Radio value={2}>Reject</Radio>
+                                        <Radio value={0}>Accept</Radio>
+                                    </Radio.Group>
+                                    </Form.Item>
               <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"
                     className="back_btn"  >
                     Next
                   </button> */}
-                {isAdmin == 2 && formValues.status != 2 &&
-                  <button
-                    type="submit"
-                    className="back_btn"
-                    onClick={() => { set_Contractor_status(2) }}
-                  >
-                    Reject
-                  </button>}
-
-                {isAdmin == 2 && formValues.status != 0 &&
-                  <button
-                    type="submit"
-                    className="save_Btn"
-                    onClick={() => { set_Contractor_status(0) }}
-                  >
-                    Accept
-                  </button>
-                }
-                {isAdmin == 2 && formValues.status != 1 &&
-                  <button
-                    type="submit"
-                    className="save_Btn Under Review_color  hover:bg-yellow-400"
-                    onClick={() => { set_Contractor_status(1) }}
-                  >
-                    Under Review
-                  </button>
-                }
-                {
-                  isAdmin != 2 &&
+              
+               
                   <div className='content_center w-full'>
                     <button
                       type="submit"
@@ -988,7 +968,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       Update
                     </button>
                   </div>
-                }
+                
               </div>
             </Form>
           </div>

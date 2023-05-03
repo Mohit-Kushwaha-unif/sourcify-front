@@ -1,0 +1,13 @@
+AddType application/javascript .js
+AddType text/plain .json
+AddType application/json .json
+AddType text/cache-manifest .appcache
+AddType application/x-web-app-manifest+json .webapp
+AddType application/octet-stream .webapp
+AddType text/xml .xml
+AddType image/svg+xml .svg
+AddType text/html .html
+AddType text/css .css
+AddType image/png .png
+AddType image/jpeg .jpeg
+AddType image/gif .gif
