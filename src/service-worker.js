@@ -76,8 +76,9 @@ self.addEventListener('push', function(event) {
   console.log('Push event received:', event);
   if (event.data) {
     const notification = JSON.parse(event.data.text());
+    console.log(notification)
     const options = {
-      body: notification.body,
+      body: notification.title,
       icon: notification.icon,
       data: {
         url: notification.url

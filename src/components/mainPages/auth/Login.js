@@ -24,33 +24,9 @@ const Login = () => {
   useDocumentTitle("Login")
   const navigate = useNavigate();
   function formHandler(value) {
-    dispatch(login(value)).then(async (res) => {
-      try {
-        if ('PushManager' in window) {
-          console.log('Push notifications are supported!');
-        } else {
-          console.log('Push notifications are not supported.');
-        }
-        const applicationServerKey = urlBase64ToUint8Array('BDsKi0brT6nWwWKVm8OKulj4qOkhDz16lfX4pa-lHMY_tV8D016VV9HRKOn9KLZ7M2ytZnNjBZQekrGN2RoXCKk');
-        const registration = await navigator.serviceWorker.ready;
-        console.log("1")
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey
-        });
-        console.log("2")
-        var obj = {}
-        obj["subscription"] = JSON.stringify(subscription)
-        obj["id"] = res.user._id
-        dispatch(saveSubscription(obj)).then((response) => {
-          console.log(response)
-        })
-      
-      } catch (error) {
-        console.error('Error registering service worker:', error);
-      }
-
-
+    dispatch(login(value)).then(res => {
+      registerServiceWorker()
+     
       localStorage.setItem('accesstoken', res.accesstoken)
       localStorage.setItem('user_id', res.user._id)
       localStorage.setItem('email', res.user.email)
@@ -60,7 +36,7 @@ const Login = () => {
       if (res.user.role === 1) {
         dispatch(get_Vendor()).then((res) => {
           var user_exist = res.filter((user_data) => {
-
+           
 
             if (user_data.user_id != null && user_data.user_id._id == localStorage.getItem('user_id'))
               return user_data
@@ -74,7 +50,7 @@ const Login = () => {
 
             localStorage.setItem("form_id", userDetails.user.vendor_id)
             // navigate('/vendor-form')
-            navigate('/dashboard')
+             navigate('/dashboard')
 
           }
         })
@@ -87,7 +63,7 @@ const Login = () => {
       else
         if (res.user.contractor_id) {
           localStorage.setItem("form_id", res.user.contractor_id)
-
+        
           navigate('/dashboard')
         }
         else {
@@ -120,7 +96,6 @@ const Login = () => {
         applicationServerKey
       });
       console.log("2")
-      return subscription
       console.log('Subscription:', JSON.stringify(subscription));
     } catch (error) {
       console.error('Error registering service worker:', error);
@@ -128,7 +103,7 @@ const Login = () => {
   }
 
   const responseMessage = (response, e) => {
-
+   
 
     dispatch(googleLogin({ tokenId: response })).then((res) => {
       console.log(res)
@@ -145,7 +120,7 @@ const Login = () => {
           navigate('/dashboard')
           return
         }
-        else {
+        else{
           navigate('/vendor-form')
           return
         }
@@ -157,7 +132,7 @@ const Login = () => {
           navigate('/dashboard')
           return
         }
-        else {
+        else{
           navigate('/contractor-form')
           return
         }
@@ -172,7 +147,7 @@ const Login = () => {
   const logins = useGoogleLogin({
     onSuccess: codeResponse => responseMessage(codeResponse),
     onError: response => errorMessage(response),
-
+    
   });
   const errorMessage = (response) => {
     console.log(response)
@@ -263,9 +238,9 @@ const Login = () => {
             </div>
             <div className='social_buttons mb-16'>
               <div className='bg-[#FF5757] mb-3 rounded-[6px] cursor-pointer'>
-
-                <div onClick={() => logins()} className='brand_button'>Login with Google</div>
-
+                
+                  <div onClick={() => logins()} className='brand_button'>Login with Google</div>
+             
               </div>
 
               {/* <div className='bg-[#00272B] rounded-[6px]'>
