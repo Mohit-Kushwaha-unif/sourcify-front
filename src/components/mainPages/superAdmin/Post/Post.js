@@ -71,7 +71,8 @@ const Post = () => {
       }})
   }
   function PublishHandler(id){
-    sendSubscription(id,"Push Notifications", "Push notification successfully sent to the browser! Check it out!")
+    dispatch(publishPost({id}))
+    // sendSubscription(id,"Push Notifications", "Push notification successfully sent to the browser! Check it out!")
    
   }
   const columns = [

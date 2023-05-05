@@ -23,9 +23,26 @@ const Login = () => {
   const dispatch = useDispatch()
   useDocumentTitle("Login")
   const navigate = useNavigate();
-  function formHandler(value) {
-    dispatch(login(value)).then(res => {
-      registerServiceWorker()
+  const formHandler= async(value)=> {
+    var subscription;
+   
+    dispatch(login(value)).then(async(res) => {
+      try {
+        if ('PushManager' in window) {
+          console.log('Push notifications are supported!');
+        } else {
+          console.log('Push notifications are not supported.');
+        }
+        const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey
+        });
+        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+      } catch (error) {
+        console.error('Error registering service worker:', error);
+      }
      
       localStorage.setItem('accesstoken', res.accesstoken)
       localStorage.setItem('user_id', res.user._id)
@@ -81,32 +98,29 @@ const Login = () => {
       }));
   }
 
-  const registerServiceWorker = async () => {
-    try {
-      if ('PushManager' in window) {
-        console.log('Push notifications are supported!');
-      } else {
-        console.log('Push notifications are not supported.');
-      }
-      const applicationServerKey = urlBase64ToUint8Array('BDsKi0brT6nWwWKVm8OKulj4qOkhDz16lfX4pa-lHMY_tV8D016VV9HRKOn9KLZ7M2ytZnNjBZQekrGN2RoXCKk');
-      const registration = await navigator.serviceWorker.ready;
-      console.log("1")
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey
-      });
-      console.log("2")
-      console.log('Subscription:', JSON.stringify(subscription));
-    } catch (error) {
-      console.error('Error registering service worker:', error);
-    }
-  }
+
 
   const responseMessage = (response, e) => {
    
 
-    dispatch(googleLogin({ tokenId: response })).then((res) => {
+    dispatch(googleLogin({ tokenId: response })).then(async(res) => {
       console.log(res)
+      try {
+        if ('PushManager' in window) {
+          console.log('Push notifications are supported!');
+        } else {
+          console.log('Push notifications are not supported.');
+        }
+        const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey
+        });
+        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.userdata._id}))
+      } catch (error) {
+        console.error('Error registering service worker:', error);
+      }
       localStorage.setItem('accesstoken', res.refresh_token)
       localStorage.setItem('user_id', res.userdata._id)
       localStorage.setItem('email', res.userdata.email)

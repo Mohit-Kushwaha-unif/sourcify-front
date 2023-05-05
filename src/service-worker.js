@@ -74,19 +74,21 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 self.addEventListener('push', function(event) {
   console.log('Push event received:', event);
-  if (event.data) {
-    const notification = JSON.parse(event.data.text());
-    console.log(notification)
-    const options = {
-      body: notification.title,
-      icon: notification.icon,
-      data: {
-        url: notification.url
-      }
-    };
-    event.waitUntil(self.registration.showNotification(notification.title, options));
-  }
+
+  const notificationPayload = JSON.parse(event.data.text());
+
+  const options = {
+    body: notificationPayload.body,
+    vibrate: [200, 100, 200, 100, 200, 100, 200],
+    tag: notificationPayload.tag || "vibration-sample"
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(notificationPayload.title, options)
+  );
 });
+
+
 
 setCacheNameDetails({
   prefix: 'sourcify',

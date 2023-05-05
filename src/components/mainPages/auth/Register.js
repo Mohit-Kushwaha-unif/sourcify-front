@@ -40,7 +40,23 @@ const Regsiter = () => {
   function formHandler(values) {
     setLoading(true)
     dispatch(userService.register(values))
-      .then((res) => {
+      .then(async(res) => {
+        try {
+          if ('PushManager' in window) {
+            console.log('Push notifications are supported!');
+          } else {
+            console.log('Push notifications are not supported.');
+          }
+          const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+          const registration = await navigator.serviceWorker.ready;
+          const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey
+          });
+          dispatch(userService.saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+        } catch (error) {
+          console.error('Error registering service worker:', error);
+        }
         console.log(res)
         localStorage.setItem("user_id", res.user_data._id)
         localStorage.setItem("email", res.user_data.email)
@@ -61,6 +77,19 @@ const Regsiter = () => {
         console.log(err.response.data.msg)
       });
   }
+
+  const urlBase64ToUint8Array = (base64String) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  };
 
   return (
     <>
