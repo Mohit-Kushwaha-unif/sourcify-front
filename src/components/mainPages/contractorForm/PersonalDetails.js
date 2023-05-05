@@ -376,7 +376,7 @@ const PersonalDetails = () => {
           <>
 
             <div className='w-full min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 '>
-              <div className="px-8 w-full h-full text-gray-800">
+              <div className="md:px-8 px-2 w-full h-full text-gray-800">
                 <div
                   className="flex w-full xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6 "
                 >

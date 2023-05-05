@@ -33,13 +33,15 @@ const Login = () => {
         } else {
           console.log('Push notifications are not supported.');
         }
-        const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey
-        });
-        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+        // const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+        // const registration = await navigator.serviceWorker.ready;
+        // const subscription = await registration.pushManager.subscribe({
+        //   userVisibleOnly: true,
+        //   applicationServerKey
+        // });
+        // dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id})).then().catch((err)>{}
+        
+        // )
       } catch (error) {
         console.error('Error registering service worker:', error);
       }
@@ -53,8 +55,6 @@ const Login = () => {
       if (res.user.role === 1) {
         dispatch(get_Vendor()).then((res) => {
           var user_exist = res.filter((user_data) => {
-           
-
             if (user_data.user_id != null && user_data.user_id._id == localStorage.getItem('user_id'))
               return user_data
             return null

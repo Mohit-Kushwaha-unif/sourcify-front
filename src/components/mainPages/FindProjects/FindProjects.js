@@ -8,7 +8,6 @@ import state_cites from '../../../assests/state_city.'
 import moment from 'moment'
 import { get_category } from '../../../services/category'
 import { get_Vendor } from '../../../services/Vendor'
-import { useForm } from 'antd/es/form/Form'
 import TextArea from 'antd/es/input/TextArea'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Helper/Loader'
@@ -283,9 +282,9 @@ const FindProjects = () => {
                                             })
                                         }
                                         <p className='my-5'>{proj_det.pro_details.project_discription}</p>
-                                        <div className='flex pt-3'>
-                                            <button className='prime_button_sec  mr-5 h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }}>Share Interest</button>
-                                            <button className='brand_button h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }}>View Project Details</button>
+                                        <div className='flex flex-col md:flex-row pt-3'>
+                                            <button className='prime_button_sec mb-3 md:mb-0  md:mr-5 h-auto md:h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }}>Share Interest</button>
+                                            <button className='brand_button h-auto md:h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }}>View Project Details</button>
                                         </div>
                                     </div>
                                 })

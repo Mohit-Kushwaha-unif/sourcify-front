@@ -72,10 +72,10 @@ const Footer = () => {
                 </div>
               </div>
               <div className='border_footer mb-3'></div>
-              <div className="pb-5 flex justify-between">
-                <img src={Sourcify_white} className="w-[10%] image-box bg-white" />
-                <p className='white_p'>Copyright 2023, Shras Technologies Private Limited </p>
-                <p className='white_p'>Designed & Developed by uniftec.com</p>
+              <div className="pb-5 flex md:flex-row flex-col justify-between">
+                <img src={Sourcify_white} className="md:w-[10%] md:mb-0 mb-3  image-box bg-white" />
+                <p className='white_p text-center'>Copyright 2023, Shras Technologies Private Limited </p>
+                <p className='white_p text-center'>Designed & Developed by uniftec.com</p>
               </div>
             </div>
           </footer>

@@ -99,12 +99,12 @@ const Dashboard = () => {
             <div className='container contractor mb-24'>
                 <h2 className='prime_h2_rale mb-3'>Find Top Contractors</h2>
                 <p className='text-[#FF5757] underline mb-16 cursor-pointer' onClick={()=>{navigator('/work_segment')}}>Browse all Work Segments</p>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 mb-10 '>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 mb-10  '>
 
                     {
                         category.map((cats) => {
-                            return <div onClick={() => navigator('/all_contractors', { state: cats })} className="p-16 shadow-md  rounded-[6px] " >
-                                <img src={carbon_clean} className="center_content"/>
+                            return <div onClick={() => navigator('/all_contractors', { state: cats })} className="p-16 shadow-md center_content flex-col  rounded-[6px] " >
+                                <img src={carbon_clean} />
                                <p className='text-center'>{cats.name}</p> 
                             </div>
                         })
@@ -117,32 +117,32 @@ const Dashboard = () => {
 
 
             </div>
-            <div className=' bg-[#00272B] mb-24 p-16'>
+            <div className=' bg-[#00272B] mb-24 py-16 md:p-16'>
                 <p className='center_content mb-5 white_h3 cursor-pointer' onClick={()=> navigator('/SourcifyWork')}>
                     How it works
                 </p>
-                <p className='center_content white_p '>
+                <p className='center_content text-center white_p '>
                     Create your free account, register as a contractor to find projects or post projects
                 </p>
                 <p className='center_content white_p mb-16'>to find contractors to get work done.</p>
-                <div className='grid container  gap-6 grid-cols-1 md:grid-cols-3 mb-16'>
+                <div className='grid container  gap-y-6 grid-cols-1 md:grid-cols-3 mb-16'>
                     <div className='grid_card_design'>
-                        <img src={register} className="grid_img_design" alt="Register Account" />
-                        <h2 className='grid_heading'>Register Account</h2>
+                        <img src={register} className="grid_img_design w-full" alt="Register Account" />
+                        <h2 className='grid_heading text-center'>Register Account</h2>
                         <p className='text-center'>
                             Create your free account, register as a contractor to find projects or post projects to find contractors to get work done.
                         </p>
                     </div>
-                    <div className='grid_card_design'>
+                    <div className='grid_card_design '>
                         <img src={post} className="grid_img_design" alt="Post Projects" />
-                        <h2 className='grid_heading' >Post Projects</h2>
+                        <h2 className='grid_heading text-center' >Post Projects</h2>
                         <p className='text-center'>
                             Companies looking for contractors can post their projects and hire contractors to get the work done.
                         </p>
                     </div>
                     <div className='grid_card_design'>
                         <img src={proposal} className="grid_img_design" alt="Share Interests" />
-                        <h2 className='grid_heading'>Share Interest</h2>
+                        <h2 className='grid_heading text-center'>Share Interest</h2>
                         <p className='text-center'>
                             Contractors looking for projects can share their interest
                             for the projects listed by top companies.

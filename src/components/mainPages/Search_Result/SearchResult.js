@@ -156,7 +156,7 @@ const SearchResult = () => {
 
 
 
-            <Title level={2}> Search Result for <span className='text-color'>Projects</span>   which includes <span className='text-color'>{location.state.input} </span></Title>
+            <div className='header_text font_18 mb-5' level={2}> Search Result for <span className='text-color'>Projects</span>   which includes <span className='text-color'>{location.state.input} </span></div>
             {
                 projectDetails.length > 0 ? projectDetails.map((proj_det) => {
 
@@ -191,9 +191,9 @@ const SearchResult = () => {
                     </div>
                 })
                     :
-                    <p>Nothing to show</p>}
+                    <p className='text-center text-sm md:text-md  mb-5'>Nothing to show</p>}
 
-            <Title level={2}> Search Result for <span className='text-color'>Contractors</span>   which includes <span className='text-color'>{location.state.input} </span></Title>
+            <div className='header_text font_18  mb-5' level={2}> Search Result for <span className='text-color'>Contractors</span>   which includes <span className='text-color'>{location.state.input} </span></div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                 {location.state.res.contractors.length > 0 ? location.state.res.contractors.map((item) => {
 
@@ -237,8 +237,9 @@ const SearchResult = () => {
 
                 })
                     :
-
-                    <p>Nothing to show</p>}
+                <div className='col-span-3 center-content'>
+                    <p className='text-center text-sm md:text-md  mb-5'>Nothing to show</p>
+                    </div>}
             </div>
             <ToastContainer />
 
