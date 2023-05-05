@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Helper/LogooutHelper'
 
 import { TiMessages } from 'react-icons/ti'
+import { RxCross2 } from 'react-icons/rx'
 import { get_Vendor_by_id, search_vendor } from '../../services/Vendor';
 import { get_contractorBy_id, search_contractor } from '../../services/contractor';
 import { get_user_info } from '../../services/user';
@@ -34,6 +35,7 @@ const Header = () => {
   const [accountStatus, setAccountStatus] = useState()
   const [showStatus, setShowStatus] = useState(false)
   const [category, setCategory] = useState([])
+  const [mobilView,setMobileView] = useState(false)
   const isAdmin = useSelector(state => state.User.user_role);
   useEffect(() => {
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
@@ -90,8 +92,10 @@ const Header = () => {
     window.addEventListener('resize', setDimension);
     if (screenSize <= 759) {
       // setShowMenu(true)
+      setMobileView(true)
       setShowMenu(false)
     } else {
+      setMobileView(false)
       setShowMenu(true)
     }
   }, [screenSize])
@@ -159,8 +163,9 @@ const Header = () => {
           <TopBar />
           <div className='bg-white'>
             <div className='container py-2'>
-              <header className={`${showMenu ? 'h-[370px]' : ''} md:h-auto grid grid-cols-7 md:place-items-center md:mb-[28px] md:mb-0 md:grid-cols-9`}>
-
+              <header  className={`${showMenu && mobilView ? 'container fixed left-0 top-0 z-[1035] h-screen w-60 -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] translate-x-0 dark:bg-zinc-800' : ''} md:h-auto md:grid  md:place-items-center  md:mb-0 md:grid-cols-9`}>
+             
+                  <div className={`${mobilView && !showMenu ? "grid grid-cols-7": ''}`}>
                 <div className='col-span-2 md:col-span-1 mr-3 md:mr-0 '>
                   <div> <img className='  md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
                 </div>
@@ -169,14 +174,14 @@ const Header = () => {
                     <div className='col-span-3 md:hidden flex  mx-3 my-3 mr-3'>
                       <span className='mr-2 '><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text'>Messages</p></NavLink>
                     </div>
-                    <button
+                    <div
                       onClick={() => setIsOpen(!isOpen)}
-                      className="inline-flex md:hidden col-span-1 h-[70%] my-2 md:justify-center items-center  w-full "
+                      className="inline-flex md:hidden col-span-1 h-[70%] my-2 mr-8 md:justify-center items-center  w-full "
                     >
                       <img src={profile} />
                       {/* <span>{userName}</span> */}
                       <svg
-                        className=" w-[10px] ml-2"
+                        className=" w-[10px]   mr-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -189,30 +194,33 @@ const Header = () => {
                           d="M19 9l-7 7-7-7"
                         />
                       </svg>
-                    </button>
+                    </div>
 
                   </>
                   : <div className=' ml-8 col-span-4 md:hidden grid grid-cols-4'>
                     <Link className='flex col-span-2   my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'>Register</p>  </Link>
                     <Link className='flex col-span-2  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'> Login </p> </Link>
                   </div>}
+                  </div>
+                {!showMenu?
+                <div className='absolute col-span-1 cursor-pointer text-2xl right-3 top-[2rem] md:hidden'><MenuOutlined  onClick={() => { handleMenus() }} /></div>
+                :
+                <div className='absolute col-span-1 cursor-pointer text-2xl right-3 top-[2rem] md:hidden'>< RxCross2 onClick={() => { handleMenus() }} /></div>
 
-                <div className='absolute col-span-1 cursor-pointer text-2xl right-3 top-[2rem] md:hidden'><MenuOutlined onClick={() => { handleMenus() }} /></div>
-
-
+                  }
                 {showMenu && <>
                   <div className='md:col-span-3 col-span-7 md:grid grid-cols-1 md:grid-cols-3  md:items-center '>
 
-                    <NavLink className='header_text flex justify-center cursor-pointer ml-2' to={'/contractors'} >Find Contractors</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ml-2' to={'/contractors'} >Find Contractors</NavLink>
 
 
-                    <NavLink className='header_text flex justify-center cursor-pointer  ' to={'/project_list'}>Find Projects</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ' to={'/project_list'}>Find Projects</NavLink>
 
 
-                    <NavLink className='header_text flex justify-center cursor-pointer ' to={'/SourcifyWork'}>How it works</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3' to={'/SourcifyWork'}>How it works</NavLink>
                   </div>
                   {showMenu && <>
-                    <div className='grid  col-span-7  md:col-span-2 w-full ' >
+                    <div className='grid  col-span-7  md:col-span-2 w-full md:mb-0 mb-3 ' >
                       <form onSubmit={submitHandler} className="w-full">
                         <Input onChange={inputHandler} placeholder='Search for contractors or projects ' className='input_radius w-full' suffix={<img src={search_icon} />} />
                       </form>
@@ -338,7 +346,7 @@ const Header = () => {
                     </div>
                   </div>
                 )}
-
+                
               </header>
               <SubHeader />
             </div>
