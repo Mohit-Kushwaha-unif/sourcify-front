@@ -13,7 +13,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import {debug} from 'workbox-precaching';
-console.log("im in")
+import logo from './assests/Sourcify Logo.png'
 
 clientsClaim();
 
@@ -80,7 +80,8 @@ self.addEventListener('push', function(event) {
   const options = {
     body: notificationPayload.body,
     vibrate: [200, 100, 200, 100, 200, 100, 200],
-    tag: notificationPayload.tag || "vibration-sample"
+    tag: notificationPayload.tag || "vibration-sample",
+    icon: logo,
   };
 
   event.waitUntil(
