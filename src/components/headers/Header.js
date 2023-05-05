@@ -192,9 +192,9 @@ const Header = () => {
                     </button>
 
                   </>
-                  : <div className=' ml-8 col-span-4 grid grid-cols-4'>
-                    <Link className='flex col-span-2  md:hidden  my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'>Register</p>  </Link>
-                    <Link className='flex col-span-2 md:hidden  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'> Login </p> </Link>
+                  : <div className=' ml-8 col-span-4 md:hidden grid grid-cols-4'>
+                    <Link className='flex col-span-2   my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'>Register</p>  </Link>
+                    <Link className='flex col-span-2  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'> Login </p> </Link>
                   </div>}
 
                 <div className='absolute col-span-1 cursor-pointer text-2xl right-3 top-[2rem] md:hidden'><MenuOutlined onClick={() => { handleMenus() }} /></div>
