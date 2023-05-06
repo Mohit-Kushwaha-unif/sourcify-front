@@ -32,19 +32,19 @@
 // const db_url= 'http://13.48.248.80:5000/db'
 // const post_url= 'http://13.48.248.80:5000/post'
 //Demo url
-const user_url = 'https://sourcify-frontd.onrender.com/user/';
-const contractor_url = 'https://sourcify-frontd.onrender.com/contractor';
-const content_url = 'https://sourcify-frontd.onrender.com/content';
-const vendor_url = 'https://sourcify-frontd.onrender.com/vendor';
-const category_url = 'https://sourcify-frontd.onrender.com/category';
-const listing_url = 'https://sourcify-frontd.onrender.com/listing';
-const FeedBack_url = 'https://sourcify-frontd.onrender.com/feedback'
-const About_url = 'https://sourcify-frontd.onrender.com/about'
-const Slug_url = 'https://sourcify-frontd.onrender.com/slug'
-const Message_url= 'https://sourcify-frontd.onrender.com/messages' 
-const carausel_url= 'https://sourcify-frontd.onrender.com/carausel'
-const social_url= 'https://sourcify-frontd.onrender.com/auth'
-const media_url= 'https://sourcify-frontd.onrender.com/media'
-const db_url= 'https://sourcify-frontd.onrender.com/db'
-const post_url= 'https://sourcify-frontd.onrender.com/post'
+const user_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/user/';
+const contractor_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/contractor';
+const content_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/content';
+const vendor_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/vendor';
+const category_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/category';
+const listing_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/listing';
+const FeedBack_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/feedback'
+const About_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/about'
+const Slug_url = 'https://sourcify-back-o8lc8.ondigitalocean.app/slug'
+const Message_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/messages' 
+const carausel_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/carausel'
+const social_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/auth'
+const media_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/media'
+const db_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/db'
+const post_url= 'https://sourcify-back-o8lc8.ondigitalocean.app/post'
 export { user_url,social_url, Slug_url,contractor_url,content_url,vendor_url,category_url,listing_url,FeedBack_url,About_url,Message_url , carausel_url,media_url,db_url,post_url};
