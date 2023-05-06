@@ -125,7 +125,7 @@ const Dashboard = () => {
                     Create your free account, register as a contractor to find projects or post projects
                 </p>
                 <p className='center_content white_p mb-16'>to find contractors to get work done.</p>
-                <div className='grid container  gap-y-6 grid-cols-1 md:grid-cols-3 mb-16'>
+                <div className='grid container md:gap-x-6  gap-y-6 grid-cols-1 md:grid-cols-3 mb-16'>
                     <div className='grid_card_design'>
                         <img src={register} className="grid_img_design w-full" alt="Register Account" />
                         <h2 className='grid_heading text-center'>Register Account</h2>
