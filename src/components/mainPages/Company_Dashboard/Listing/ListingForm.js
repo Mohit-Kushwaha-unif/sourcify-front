@@ -153,8 +153,8 @@ const ListingForm = () => {
                                 {
                                     isAdmin ==2 &&
                                     <>
-                                    <p className='headings font_16 mb-3'>Select Company Name</p>
-                                    <Form.Item name='user_id' label="User Email" rules={[
+                                    <p className='headings font_16 mb-1'>Select Company Name</p>
+                                    <Form.Item name='user_id' label="" rules={[
                                         {
                                             required: true,
                                             message: 'Write the description of your project'

@@ -38,7 +38,7 @@ input::placeholder {
 
   border-radius: 6px;
   padding: 12px 9px;
-  background: #00272B;
+  background: #00272B !important;
   font-weight: 600;
   font-size: 16px;
   display: flex;

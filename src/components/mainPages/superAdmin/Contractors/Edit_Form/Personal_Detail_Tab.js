@@ -945,13 +945,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 )}
 
               </Form.List>
-              <Form.Item name="status" className='flex justify-between'>
-                                    <Radio.Group >
-                                        <Radio value={1} >Under Review</Radio>
-                                        <Radio value={2}>Reject</Radio>
-                                        <Radio value={0}>Accept</Radio>
-                                    </Radio.Group>
-                                    </Form.Item>
+              {
+                isAdmin ==2 && 
+                <Form.Item name="status" className='flex justify-between'>
+                <Radio.Group >
+                    <Radio value={1} >Under Review</Radio>
+                    <Radio value={2}>Reject</Radio>
+                    <Radio value={0}>Accept</Radio>
+                </Radio.Group>
+                </Form.Item>
+              }
+             
               <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"

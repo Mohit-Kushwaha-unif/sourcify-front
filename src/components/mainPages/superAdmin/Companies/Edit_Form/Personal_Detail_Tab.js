@@ -171,7 +171,9 @@ const Personal_Detail_Tab = (formValues) => {
                   </Form.Item>
                 </div>
               </div>
-              <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
+              {
+                isAdmin ==2 &&
+                <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"
                     className="back_btn"  >
@@ -187,6 +189,8 @@ const Personal_Detail_Tab = (formValues) => {
 
 
               </div>
+              }
+             
               <div className='center_content '>
                 <button
                   type="submit"
