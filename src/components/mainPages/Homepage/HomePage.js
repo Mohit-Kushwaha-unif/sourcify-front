@@ -23,6 +23,7 @@ import down_arrow from '../../../assests/down_arrow.png'
 
 import right from '../../../assests/right.png'
 import Insight from '../Blogs/Insight';
+import Regsiter from '../auth/Register';
 const Dashboard = () => {
     const dispatch = useDispatch()
     const navigator = useNavigate()
@@ -58,8 +59,8 @@ const Dashboard = () => {
                                 With our platform, businesses can easily find and connect with vetted contractors and suppliers who meet
                                 their specific needs. </p>
                             <div className='flex flex-col md:flex-row  '>
-                                <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' onClick={()=>navigator('/register')}>Register as a Contractor</button>
-                                <button className='brand_button justify-center text-center w-auto' onClick={()=>navigator('/dashboard/listing-form')}>Post Project</button>
+                                <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' onClick={() => navigator('/register')}>Register as a Contractor</button>
+                                <button className='brand_button justify-center text-center w-auto' onClick={() => navigator('/dashboard/listing-form')}>Post Project</button>
                             </div>
                         </div>
                     </div>
@@ -74,31 +75,44 @@ const Dashboard = () => {
             </div>
             <div className=' bg-[#00272B] mb-24'>
                 <div className='container'>
-                <div className=' grid grid-cols-1 md:grid-cols-4 py-8 mx-4 md:mx-0 gap-y-10 place-content-center'>
+                    <div className=' grid grid-cols-1 md:grid-cols-4 py-8 mx-4 md:mx-0 gap-y-10 place-content-center'>
 
-                    <div className='flex items-center  place-items-start'>
-                        <img src={frame_charge} className="mr-5" />
-                        <p className='white_h3'>Free of Charge</p>
+                        <div className='flex items-center  place-items-start'>
+                            <img src={frame_charge} className="mr-5" />
+                            <p className='white_h3'>Free of Charge</p>
+                        </div>
+                        <div className='flex items-center  place-items-start'>
+                            <img src={web} className="mr-5" />
+                            <p className='white_h3'>Top-notch Contractors</p>
+                        </div>
+                        <div className='flex items-center  place-items-start'>
+                            <img src={bookmark} className="mr-5" />
+                            <p className='white_h3'>Easy & Transparent</p>
+                        </div>
+                        <div className='flex items-center  place-items-start'>
+                            <img src={checked} className="mr-5" />
+                            <p className='white_h3'>Collaboration made easy</p>
+                        </div>
                     </div>
-                    <div className='flex items-center  place-items-start'>
-                        <img src={web} className="mr-5" />
-                        <p className='white_h3'>Top-notch Contractors</p>
-                    </div>
-                    <div className='flex items-center  place-items-start'>
-                        <img src={bookmark} className="mr-5" />
-                        <p className='white_h3'>Easy & Transparent</p>
-                    </div>
-                    <div className='flex items-center  place-items-start'>
-                        <img src={checked} className="mr-5" />
-                        <p className='white_h3'>Collaboration made easy</p>
-                    </div>
-                </div>
                 </div>
             </div>
 
-            <div className='container contractor mb-24'>
-                <h2 className='prime_h2_rale mb-3'>Find Top Contractors</h2>
-                <p className='text-[#FF5757] underline mb-16 cursor-pointer' onClick={()=>{navigator('/work_segment')}}>Browse all Work Segments</p>
+            <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
+                <div>
+                    <h2 className='prime_h2_rale mb-3'>Register Yourself</h2>
+                    <br/>
+                    <p>Welcome to our registration page! We're excited to have you join our community. <br/><br/>
+
+                        To get started, please provide us with some basic information so we can create your account. This includes your  email address, mobile number, and a password of your choice.
+
+                        Once you've filled out the required fields and accepted our terms and conditions, click the "Register" button to create your account. After that, you'll receive a confirmation email with a link to activate your account.
+
+                        <br/> <br/>With your new account, you'll be able to access all the features and benefits of our platform. This includes personalized recommendations, exclusive content, and the ability to connect with other members of our community.
+
+                        <br/><br/>Thank you for choosing to register with us. We look forward to seeing you around </p>
+                </div>
+                <Regsiter />
+                {/* <p className='text-[#FF5757] underline mb-16 cursor-pointer' onClick={()=>{navigator('/work_segment')}}>Browse all Work Segments</p>
                 <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 mb-10  '>
 
                     {
@@ -113,12 +127,12 @@ const Dashboard = () => {
                     <button  onClick={()=>{navigator('/work_segment')}} className=' prime_button'>
                         See All Work Segments
                     </button>
-                </div>
+                </div> */}
 
 
             </div>
             <div className=' bg-[#00272B] mb-24 py-16 md:p-16'>
-                <p className='center_content mb-5 white_h3 cursor-pointer' onClick={()=> navigator('/SourcifyWork')}>
+                <p className='center_content mb-5 white_h3 cursor-pointer' onClick={() => navigator('/SourcifyWork')}>
                     How it works
                 </p>
                 <p className='center_content text-center white_p '>
@@ -152,7 +166,7 @@ const Dashboard = () => {
 
                 </div>
                 <div className='center_content '>
-                    <button className='brand_button' onClick={()=>navigator('/SourcifyWork')}>See How Sourcify Works <img src={right} /> </button>
+                    <button className='brand_button' onClick={() => navigator('/SourcifyWork')}>See How Sourcify Works <img src={right} /> </button>
                 </div>
             </div>
             <div className='absolute border-2  border-[#FF5757] right-[47%] left-[47%]'> </div>
@@ -189,8 +203,8 @@ const Dashboard = () => {
 
                 </div>
             </div>
-          <Insight/>
-          
+            <Insight />
+
         </div>
     )
 }

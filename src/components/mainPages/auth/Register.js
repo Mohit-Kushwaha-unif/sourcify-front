@@ -5,7 +5,7 @@ import {
   Checkbox,
   Radio
 } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 import useDocumentTitle from '../../Helper/useDocumentTitle';
@@ -22,6 +22,8 @@ const Regsiter = () => {
   const navigate = useNavigate();
   const [loading,setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
+  const location = useLocation()
+
   useEffect(()=>{
     if(localStorage.getItem('isLoggedIn') === "true"){
       navigate('/')
@@ -57,7 +59,6 @@ const Regsiter = () => {
         } catch (error) {
           console.error('Error registering service worker:', error);
         }
-        console.log(res)
         localStorage.setItem("user_id", res.user_data._id)
         localStorage.setItem("email", res.user_data.email)
         localStorage.setItem("number", res.user_data.number)
@@ -100,7 +101,7 @@ const Regsiter = () => {
         <div
           className="flex  justify-center   h-full "
         >
-          <div className="card">
+          <div className={`${location.pathname =="/" ? '': 'card'}`}>
             <div className="flex flex-row items-center justify-center lg:justify-start">
               <p className="headings mb-5 mt-5 mr-4">Create Account </p>
             </div>
