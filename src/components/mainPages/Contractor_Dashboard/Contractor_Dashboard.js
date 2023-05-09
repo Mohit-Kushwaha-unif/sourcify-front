@@ -227,7 +227,7 @@ const Contractor_Dashboard = () => {
               <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6 rounded-xl">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-1 mr-4 font-semibold">Your Previous Projects</p>
+                  <p className="text-lg mb-1 mr-4 font-semibold">Projects in you shared Intrests</p>
                 </div>
                 <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
               </div>
