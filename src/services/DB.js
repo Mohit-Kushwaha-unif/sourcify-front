@@ -13,3 +13,15 @@ export const search_db = (fromData)=>{
         })
     
 }
+
+export const adminSearch = (fromData)=>{
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.post(db_url+'/db_Search',fromData).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err);
+            })
+        })
+    
+}

@@ -28,42 +28,42 @@ const Footer = () => {
               <div className="grid grid-cols-1 mb-10  md:grid-cols-12 footer">
 
                 <div className="col-span-3  mt-3 md:col-span-3  md:mt-0">
-                  <h3 className='white_h3'>Quick Links</h3>
+                  <h3 className='white_h3'data-translate="hi">Quick Links</h3>
                   <ul>
-                    <li className='pt-3'> <Link className='cursor-pointer white_p' to={'/register'}>Register as Contractor</Link></li>
-                    <li className='pt-3'> <Link className='cursor-pointer white_p' to={'/privacy-policy'}>Post Projects</Link></li>
-                    <li className='pt-3'> <Link className='cursor-pointer white_p' to={'/privacy-policy'}>Work Segments</Link></li>
-                    <li className='pt-3'> <Link className='cursor-pointer white_p' to={'/contractors'}>Find Contractors</Link></li>
+                    <li className='pt-3'> <Link className='cursor-pointer white_p'  data-translate="hi" to={'/register'}>Register as Contractor</Link></li>
+                    <li className='pt-3'> <Link className='cursor-pointer white_p'  data-translate="hi" to={'/privacy-policy'}>Post Projects</Link></li>
+                    <li className='pt-3'> <Link className='cursor-pointer white_p'  data-translate="hi" to={'/privacy-policy'}>Work Segments</Link></li>
+                    <li className='pt-3'> <Link className='cursor-pointer white_p'  data-translate="hi" to={'/contractors'}>Find Contractors</Link></li>
                   </ul>
                 </div>
                 <div className="col-span-3 md:col-span-3">
-                  <h3 className='white_h3'>Resources</h3>
+                  <h3 className='white_h3'data-translate="hi">Resources</h3>
                   <ul>
-                    <li className='pt-3'><Link className='cursor-pointer white_p ' to={'/about-us'}>About Sourcify</Link></li>
-                    <li className='pt-3'><Link className='cursor-pointer white_p ' to={'/SourcifyWork'}>How Sourcify Works</Link></li>
-                    <li className='pt-3'><Link className='cursor-pointer white_p ' to={'/contact-us'}>Contact us</Link></li>
-                    <li className='pt-3'><Link className='cursor-pointer white_p ' to={'/privacy-policy'}>Terms of Services</Link></li>
-                    <li className='pt-3'><Link className='cursor-pointer white_p ' to={'/privacy-policy'}>Privacy Policy</Link></li>
+                    <li className='pt-3'><Link className='cursor-pointer white_p ' data-translate="hi"  to={'/about-us'}>About Sourcify</Link></li>
+                    <li className='pt-3'><Link className='cursor-pointer white_p ' data-translate="hi"  to={'/SourcifyWork'}>How Sourcify Works</Link></li>
+                    <li className='pt-3'><Link className='cursor-pointer white_p ' data-translate="hi"  to={'/contact-us'}>Contact us</Link></li>
+                    <li className='pt-3'><Link className='cursor-pointer white_p ' data-translate="hi"  to={'/privacy-policy'}>Terms of Services</Link></li>
+                    <li className='pt-3'><Link className='cursor-pointer white_p ' data-translate="hi"  to={'/privacy-policy'}>Privacy Policy</Link></li>
                   </ul>
                 </div>
 
                 <div className="mb-3 col-span-3">
-                  <h3 className='white_h3 '>Resources</h3>
+                  <h3 className='white_h3 'data-translate="hi">Resources</h3>
                   <ul >
-                    <li> <Link className='cursor-pointer white_p pt-3' to={'/blogs'}>Blog</Link></li>
-                    <li> <Link className='cursor-pointer white_p pt-3' to={'/support'}>Help & FAQ</Link></li>
-                    <li> <Link className='cursor-pointer white_p pt-3' to={'/contact-us'}>Contact us</Link></li>
+                    <li> <Link className='cursor-pointer white_p p  t-3' data-translate="hi"to={'/blogs'}>Blog</Link></li>
+                    <li> <Link className='cursor-pointer white_p p  t-3' data-translate="hi"to={'/support'}>Help & FAQ</Link></li>
+                    <li> <Link className='cursor-pointer white_p p  t-3'data-translate="hi" to={'/contact-us'}>Contact us</Link></li>
                   </ul>
                 </div>
 
                 <div className="mb-3 col-span-3">
-                  <h3 className='white_h3 '>Connect with us</h3>
+                  <h3 className='white_h3 '  data-translate="hi">Connect with us</h3>
                   <img src={fb} className='mb-3' />
-                  <p className='white_p mb-5 pt-3'>Write us at</p>
-                  <p className='white_h3 font_18 mb-3'> Subscribe to our Newsletter</p>
+                  <p className='white_p m  b-5 pt-3' data-translate="hi">Write us at</p>
+                  <p className='white_h3 font_18 mb-3' data-translate="hi"> Subscribe to our Newsletter</p>
                   <p className='flex mb-5'>
                     <span className='mr-3' > <img src={email} /></span>
-                    <span className='white_p' > info@sourcify.in</span>
+                    <span className='white_p'  > info@sourcify.in</span>
                   </p>
                   <form className='flex '>
                     <Input type="text" placeholder='Enter your email address' className='mb-3 w-[80%] news_input' />
@@ -74,8 +74,8 @@ const Footer = () => {
               <div className='border_footer mb-3'></div>
               <div className="pb-5 flex md:flex-row flex-col justify-between">
                 <img src={Sourcify_white} className="md:w-[10%] md:mb-0 mb-3  image-box bg-white" />
-                <p className='white_p text-center'>Copyright 2023, Shras Technologies Private Limited </p>
-                <p className='white_p text-center'>Designed & Developed by uniftec.com</p>
+                <p className='white_p t data-translate="hi" ext-center' data-translate="hi">Copyright 2023, Shras Technologies Private Limited </p>
+                <p className='white_p t data-translate="hi" ext-center' data-translate="hi">Designed & Developed by uniftec.com</p>
               </div>
             </div>
           </footer>

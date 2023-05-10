@@ -5,13 +5,7 @@ import { useDispatch } from 'react-redux'
 import { get_category } from '../../../services/category'
 import carbon_clean from '../../../assests/carbon_clean.png'
 const Work_Segment = () => {
-    const [category, setCategory] = useState([])
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(get_category()).then((res) => {
-            setCategory([...res])
-        })
-    }, [])
+    
     return (
         <div className='container mt-3 '>
             

@@ -61,6 +61,7 @@ import ResetPassword from './auth/ResetPassword'
 import Dashboardss from './Company_Dashboard/Dashboard'
 import Post from './superAdmin/Post/Post'
 import Add_Post from './superAdmin/Post/Add_Edit/Add_Post'
+import DashboardAdmin from './superAdmin/Dashboard/DashboardAdmin'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -169,10 +170,11 @@ const Pages = (props) => {
         <Route path='/everify/:token' element={<EmailForm/>}/>
         <Route path= '/privacy-policy' element={<Privacy/>}/>
         <Route path='/admin' element={<Navigate to="/admin/contractors-list" />} />
+        <Route path='/admin/dashboard' element={<DashboardAdmin/>} />
         <Route path='/SourcifyWork' element={< SourcifyWork/>} />
         <Route path='/contractors' element={< FindContractor/>} />
         <Route path='/project_list' element={< FindProjects/>} />
-        <Route path='/work_segment' element={ <Work_Segment/> } />
+        <Route path='/Work_Segment' element={ <Work_Segment/> } />
         <Route path='/blogs' element={ <Blogs/> } />
         <Route path='/blog' element={ <Blog/> } />
         <Route path='/contact-us' element={ <Contact/> } />

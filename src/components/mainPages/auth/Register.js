@@ -49,13 +49,13 @@ const Regsiter = () => {
           } else {
             console.log('Push notifications are not supported.');
           }
-          const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
-          const registration = await navigator.serviceWorker.ready;
-          const subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey
-          });
-          dispatch(userService.saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+          // const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+          // const registration = await navigator.serviceWorker.ready;
+          // const subscription = await registration.pushManager.subscribe({
+          //   userVisibleOnly: true,
+          //   applicationServerKey
+          // });
+          // dispatch(userService.saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
         } catch (error) {
           console.error('Error registering service worker:', error);
         }
@@ -103,9 +103,9 @@ const Regsiter = () => {
         >
           <div className={`${location.pathname =="/" ? '': 'card'}`}>
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="headings mb-5 mt-5 mr-4">Create Account </p>
+              <p className="headings mb-5 mt-5 mr-4" ><span data-translate="hi">Create Account</span> </p>
             </div>
-            <p className='text-sm mb-8'>Sign up for Sourcify today and experience the power of our platform firsthand.</p>
+            <p className='text-sm mb-8' ><span data-translate="hi">Sign up for Sourcify today and experience the power of our platform firsthand.</span></p>
             
             <Form labelAlign="left"
 
@@ -139,7 +139,7 @@ const Regsiter = () => {
                 <Input className='input_border mb-3' placeholder="Email address" />
 
               </Form.Item >
-              {isError && <p className='text-[red] mb-3'>Email already exists </p>}
+              {isError && <p className='text-[red] mb-3' data-translate="hi">Email already exists </p>}
               <Form.Item
                 name="number"
                 rules={[
@@ -169,20 +169,21 @@ const Regsiter = () => {
 
               </Form.Item>
 
-              <p className=' font-[Inter] text-[14px]'> <span>By continuing, I agree to the</span>  <Link to={'/privacy-policy'}><span className='text-[#FF5757] font-[700]'>Terms of Use</span> & <span className='text-[#FF5757] font-[700]'>Privacy Policy</span></Link></p> 
+              <p className=' font-[Inter] text-[14px]'> <span data-translate="hi">By continuing, I agree to the</span>  <Link to={'/privacy-policy'}><span className='text-[#FF5757] font-[700]'>Terms of Use</span> & <span className='text-[#FF5757] font-[700]'>Privacy Policy</span></Link></p> 
               <div className="text-center mt-5 mb-16 lg:text-left ">
                 <button
                   type="submit"
                   className="brand_button w-full mb-3"
+                  data-translate="hi"
                 >
                   Sign Up
                 </button>
                 <p className="font-[Inter] text-[14px]  mt-2 pt-1 mb-0">
-                <span className='mr-2'>Already Have an account?</span> 
+                <span className='mr-2' data-translate="hi">Already Have an account?</span> 
                   <Link
                     to='/login'
                     className="text-[#FF5757]  font-[700] hover:text-[#FF5757] focus:text-red-700 transition duration-200 ease-in-out"
-                  >Login here</Link>
+                    data-translate="hi" >Login here</Link>
                 </p>
               </div>
             </Form>

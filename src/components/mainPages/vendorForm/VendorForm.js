@@ -132,7 +132,7 @@ const VendorForm = () => {
         >
           <div className={`overflow-hidden ${isAdmin ==2 ?"w-full" : "xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12 "} mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6`}>
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="text-lg mb-0 mr-4">Onboarding Form</p>
+              <p className="text-lg mb-0 mr-4" data-translate="hi">Onboarding Form</p>
             </div>
             {showMsg && <p className='text-[#FF5757] text-base'> Your Profile has been saved successfully</p>}
             <div

@@ -33,16 +33,32 @@ const Sidebar = () => {
       }, [screenSize])
     return (
 
-        <div className="flex relative flex-col bg-gray-100 bg-opacity-80 min-h-screen h-inherit w-[17%] px-4 p-3 rounded-b-lg rounded-tr-lg border-2 border-transparent shadow-lg">
+        <div className="flex relative flex-col bg-[#023047] text-white bg-opacity-80 min-h-screen h-inherit w-[17%] px-4 p-3 rounded-b-lg rounded-tr-lg border-2 border-transparent shadow-lg">
 
             <div className="space-y-5">
                 { <div className='z-10  absolute top-[-19px] left-[50px]'><MenuOutlined onClick={() => setShowMenu(!showMenu)} className='md:hidden flex-end absolute right-[21px] top-[37px] ' /></div>}
              { showMenu&&  <>
                 <div className="flex items-center mt-3">
-                    <h2 className="text-xl font-bold">Dashboard</h2>
+                    <h2 className="text-xl font-bold">Menu</h2>
                 </div>
                <div className="flex-1">
                     <ul className="pt-2 pb-4 space-y-1 text-sm flex flex-col justify-center ">
+                        <li className="rounded-sm">
+                            <NavLink
+                                to="/admin/dashboard"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                            >
+                                {/* <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" className="w-6 h-6">
+                                    <g>
+                                        <path fill="none" d="M0 0h24v24H0z" />
+                                        <path d="M19 7h5v2h-5V7zm-2 5h7v2h-7v-2zm3 5h4v2h-4v-2zM2 22a8 8 0 1 1
+                                 16 0h-2a6 6 0 1 0-12 0H2zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685
+                                  6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
+                                    </g> </svg> */}
+                                <span>Dashboard</span>
+                            </NavLink>
+                        </li>
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/contractors-list"

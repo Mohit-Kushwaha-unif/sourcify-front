@@ -10,7 +10,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { send_message } from '../../../services/Messages'
 import { get_Vendor } from '../../../services/Vendor'
 import moment from 'moment'
-import { get_listingBy_id } from '../../../services/listing'
+import { get_listingBy_id, update_listing } from '../../../services/listing'
 import { get_contractor } from '../../../services/contractor'
 const SearchResult = () => {
     const { Title } = Typography
@@ -20,29 +20,30 @@ const SearchResult = () => {
     const [proposalVal, setProposalVal] = useState('')
     var [projectDetails, setProjectDetails] = useState([])
     const userRole = useSelector(state => state.User.user_role);
-    const [loading,setIsLoading] = useState(false);
+    const [loading, setIsLoading] = useState(false);
     const [listID, setListId] = useState()
+    const [projModel, setProjModel] = useState(false)
     const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const contractHandler = (val) => {
-        if(localStorage.getItem("isLoggedIn") == "false"){
+        if (localStorage.getItem("isLoggedIn") == "false") {
             navigate('/login')
-          }
-          else if(localStorage.getItem("user_id") == val.user_id._id|| localStorage.getItem("user_id") == val.user_id){
+        }
+        else if (localStorage.getItem("user_id") == val.user_id._id || localStorage.getItem("user_id") == val.user_id) {
             toast.error('It is your profile only', {
-              position: toast.POSITION.TOP_RIGHT
+                position: toast.POSITION.TOP_RIGHT
             })
-          }
-          else if (localStorage.getItem('status') !=0) {
+        }
+        else if (localStorage.getItem('status') != 0) {
             toast.error('Account is not approved by admin', {
-              position: toast.POSITION.TOP_RIGHT
+                position: toast.POSITION.TOP_RIGHT
             })
-          }
-          else{
+        }
+        else {
             setHireContractor(val)
             setIsCompany(true)
-          }
+        }
     }
     useEffect(() => {
         setIsLoading(true)
@@ -59,9 +60,12 @@ const SearchResult = () => {
         setProjects(filteredProjects)
         setIsLoading(false)
     }, [])
-  
+
     const hideModal = () => {
         setIsCompany(false);
+    };
+    const hideprojModal = () => {
+        setProjModel(false);
     };
     function submitHandler(event) {
         event.preventDefault();
@@ -81,7 +85,19 @@ const SearchResult = () => {
         // console.log(e.target.value)
         setProposalVal(e.target.value)
     }
+    function projectIntHandler() {
+        var formData = {}
+        formData.contractor_id = localStorage.getItem('user_id')
 
+        formData.listing_id = listID
+        // formData.form_status = 1
+        formData.proposal = proposalVal
+        formData.contract_status = 0
+        dispatch(update_listing(formData)).then((res) => {
+            console.log(res)
+            hideprojModal()
+        })
+    }
     useLayoutEffect(() => {
         const projDet = [];
         dispatch(get_Vendor()).then((res) => {
@@ -131,69 +147,62 @@ const SearchResult = () => {
             res.listing.proposals.map((detail) => {
                 if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
 
-                    toast.success('You already shared your intrest', {
+                    toast.success('You already shared your interest', {
                         position: toast.POSITION.TOP_RIGHT
                     })
                 }
+                else if (localStorage.getItem("isLoggedIn") == false) {
+                    navigate('/login')
+                }
+                else {
+                    setProjModel(true)
+                }
             })
         })
-        if (localStorage.getItem("isLoggedIn") == false) {
-            navigate('/login')
-        }
-        if (userRole == 1) {
-            toast.error('You are not a sub-contractor', {
-                position: toast.POSITION.TOP_RIGHT
-            })
-        }
-        else {
-            setIsCompany(true)
-        }
+
     }
-   
+
     return (
 
         <div className='container'>
-
-
-
-            <div className='header_text font_18 mb-5' level={2}> Search Result for <span className='text-color'>Projects</span>   which includes <span className='text-color'>{location.state.input} </span></div>
+            <div className='font-[600] font_18 mb-5' level={2}> Search Result for <span className='text-color'>Projects</span>   which includes <span className='text-color'>{location.state.input} </span></div>
             {
                 projectDetails.length > 0 ? projectDetails.map((proj_det) => {
 
                     return <div className='project_card p-6 border-2  mb-5'>
-                        <h2 className='prime_h2 font_18 mb-3'>Project Name</h2>
+                        <h2 className='prime_h2 font_18 mb-3' data-translate="hi">Project Name</h2>
                         <div className='grid grid-cols-3 gap-2 mb-3'>
                             <div>
-                                <span>Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
+                                <span data-translate="hi">Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
                             </div>
                             <div>
-                                <span>Posting Date: </span> <span>{moment(proj_det.pro_details.created_at).format('DD-MM-YYYY')}</span>
+                                <span data-translate="hi">Posting Date: </span> <span>{moment(proj_det.pro_details.created_at).format('DD-MM-YYYY')}</span>
                             </div>
                             <div>
-                                <span>Location: </span> <span>{proj_det.vendor_det.State}</span>
+                                <span data-translate="hi">Location: </span> <span>{proj_det.vendor_det.State}</span>
                             </div>
                         </div>
-                        <span className=' text-[#808080]'>Work Segments:</span>
+                        <span className=' text-[#808080]' data-translate="hi">Work Segments:</span>
                         {
                             proj_det.pro_details.wok_segment.map((segment, index) => {
                                 if (index === proj_det.pro_details.wok_segment.length - 1) {
-                                    return <span> {segment}</span>;
+                                    return <span data-translate="hi"> {segment}</span>;
                                 } else {
-                                    return <span> {segment},</span>;
+                                    return <span data-translate="hi"> {segment},</span>;
                                 }
                             })
                         }
-                        <p className='my-5'>{proj_det.pro_details.project_discription}</p>
+                        <p className='my-5' data-translate="hi">{proj_det.pro_details.project_discription}</p>
                         <div className='flex pt-3'>
-                            <button className='prime_button_sec  mr-5 h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }}>Share Interest</button>
-                            <button className='brand_button h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }}>View Project Details</button>
+                            <button className='prime_button_sec  mr-5 h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }} data-translate="hi" >Share Interest</button>
+                            <button className='brand_button h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }} data-translate="hi">View Project Details</button>
                         </div>
                     </div>
                 })
                     :
-                    <p className='text-center text-sm md:text-md  mb-5'>Nothing to show</p>}
+                    <p className=' text-sm md:text-md  mb-5' data-translate="hi">Nothing to show</p>}
 
-            <div className='header_text font_18  mb-5' level={2}> Search Result for <span className='text-color'>Contractors</span>   which includes <span className='text-color'>{location.state.input} </span></div>
+            <div className='font-[600]  font_18  mb-5' level={2} > <span data-translate="hi">Search Result for</span>  <span className='text-color' data-translate="hi">Contractors</span> <span data-translate="hi">which includes</span>   <span className='text-color'>{location.state.input} </span></div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                 {location.state.res.contractors.length > 0 ? location.state.res.contractors.map((item) => {
 
@@ -202,8 +211,8 @@ const SearchResult = () => {
                             <img src={dummy_img} className='rounded-[50px]' />
                         </div>
                         <div className='col-span-3'>
-                            <div className='font-bold text-[18px]'> {item.username} </div>
-                            <div className='text-[#808080] text-[16px]'>{item.City} , {item.State} </div>
+                            <div className='font-bold text-[18px]' data-translate="hi"> {item.username} </div>
+                            <div className='text-[#808080] text-[16px]' data-translate="hi">{item.City} , {item.State} </div>
                             <div className='flex'>
                                 <span className='mr-1'><img src={star} /></span>
                                 <span className='mr-1'><img src={star} /></span>
@@ -213,13 +222,13 @@ const SearchResult = () => {
                         </div>
                         <div className='col-span-4 mt-2'>
                             <p className='font-[inter]'>
-                                <span className='text-sm text-[#808080]'>Work Segments: </span>
+                                <span className='text-sm text-[#808080]' data-translate="hi">Work Segments: </span>
                                 <span>
                                     {item.work_area.length > 0 && item.work_area.map((work, index) => {
                                         if (index === item.work_area.length - 1) {
-                                            return <span key={work.work_segment}>{work.work_segment}</span>;
+                                            return <span data-translate="hi" key={work.work_segment}>{work.work_segment}</span>;
                                         } else {
-                                            return <span key={work.work_segment}>{work.work_segment}, </span>;
+                                            return <span data-translate="hi" key={work.work_segment}>{work.work_segment}, </span>;
                                         }
                                     })}
                                 </span>
@@ -227,7 +236,7 @@ const SearchResult = () => {
                         </div>
                         <div className='col-span-4 '>
                             <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
-                                <span className='white_p mr-3 font_700'>Contact</span>
+                                <span className='white_p mr-3 font_700' data-translate="hi">Contact</span>
                                 <img src={right_red} />
                             </button>
 
@@ -237,8 +246,8 @@ const SearchResult = () => {
 
                 })
                     :
-                <div className='col-span-3 center-content'>
-                    <p className='text-center text-sm md:text-md  mb-5'>Nothing to show</p>
+                    <div className='col-span-3 center-content'>
+                        <p className=' text-sm md:text-md  mb-5'>Nothing to show</p>
                     </div>}
             </div>
             <ToastContainer />
@@ -253,14 +262,35 @@ const SearchResult = () => {
                     footer={false}
                 >
                     <div className='mb-4'>
-                        <TextArea placeholder='Add Your Proposal' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
+                        <TextArea placeholder='Send message' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
                     </div>
                     <button
                         type="submit"
                         className="primary_btn"
                         onClick={submitHandler}
                     >
-                        Send Proposal
+                        Send
+                    </button>
+                </Modal>
+            </form>
+            <form onSubmit={projectIntHandler}>
+                <Modal
+                    title="Share your interest in this project"
+                    open={projModel}
+                    onOk={projectIntHandler}
+                    onCancel={hideprojModal}
+                    bordered={false}
+                    footer={false}
+                >
+                    <div className='mb-4'>
+                        <TextArea placeholder='Your message' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
+                    </div>
+                    <button
+                        type="submit"
+                        className="primary_btn"
+                        onClick={projectIntHandler}
+                    >
+                        Share Interest
                     </button>
                 </Modal>
             </form>

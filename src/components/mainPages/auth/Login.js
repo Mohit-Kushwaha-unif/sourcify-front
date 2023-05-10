@@ -33,13 +33,13 @@ const Login = () => {
         } else {
           console.log('Push notifications are not supported.');
         }
-        const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey
-        });
-        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+        // const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+        // const registration = await navigator.serviceWorker.ready;
+        // const subscription = await registration.pushManager.subscribe({
+        //   userVisibleOnly: true,
+        //   applicationServerKey
+        // });
+        // dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
       } catch (error) {
         console.error('Error registering service worker:', error);
       }
@@ -184,9 +184,9 @@ const Login = () => {
         >
           <div className="card">
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="headings  mt-5 mb-3 mr-4">Welcome Back ! </p>
+              <p className="headings  mt-5 mb-3 mr-4" data-translate="hi">Welcome Back ! </p>
             </div>
-            <p className='text-sm mb-5'>Your sourcing journey begins here. Log in to Sourcify and unlock a world of new possibilities for your business.</p>
+            <p className='text-sm mb-5' data-translate="hi">Your sourcing journey begins here. Log in to Sourcify and unlock a world of new possibilities for your business.</p>
             <Form onFinish={formHandler}>
               <Form.Item
                 name="email"
@@ -211,15 +211,15 @@ const Login = () => {
                 <Input.Password className='input_border md:mb-5' placeholder='Enter your password' />
               </Form.Item>
               <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                <div className="form-group form-check">
+                <div className="form-group form-check" >
                   <Form.Item
                     name="remember"
                     valuePropName="checked"
                   >
-                    <Checkbox className='font-[Inter] text-[black] font-[400]'>Remember me</Checkbox>
+                    <Checkbox className='font-[Inter] text-[black] font-[400]' ><span data-translate="hi"> Remember me</span></Checkbox>
                   </Form.Item>
                 </div>
-                <Link to='/forgotPassword' className="font-[Inter] text-[#FF5757] hover:text-[#FF5757] font-[400] mb-3">Forgot password?</Link>
+                <Link to='/forgotPassword' className="font-[Inter] text-[#FF5757] hover:text-[#FF5757] font-[400] mb-3"><span data-translate="hi"> Forgot password? </span></Link>
               </div>
 
               <div className="text-center lg:text-left">
@@ -227,6 +227,7 @@ const Login = () => {
                   <button
                     type="submit"
                     className="prime_button "
+                    data-translate="hi"
                   >
                     Login
 
@@ -234,11 +235,11 @@ const Login = () => {
                   </button>
                 </div>
                 <p className="normal_text">
-                  <span className='mr-0'> Don't have an account? </span>
+                  <span className='mr-0' data-translate="hi"> Don't have an account? </span>
                   <Link
                     to='/register'
                     className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-                  >Register</Link>
+                    data-translate="hi" >Register</Link>
                 </p>
               </div>
               <div className='flex justify-center mt-6'>
@@ -246,12 +247,12 @@ const Login = () => {
               </div>
             </Form>
             <div className='center_content mb-5'>
-              <span className='text-[28px] font-bold'>or</span>
+              <span className='text-[28px] font-bold'data-translate="hi">or</span>
             </div>
             <div className='social_buttons mb-16'>
               <div className='bg-[#FF5757] mb-3 rounded-[6px] cursor-pointer'>
                 
-                  <div onClick={() => logins()} className='brand_button'>Login with Google</div>
+                  <div onClick={() => logins()} className='brand_button' data-translate="hi">Login with Google</div>
              
               </div>
 

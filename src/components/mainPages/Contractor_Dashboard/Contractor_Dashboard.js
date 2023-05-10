@@ -184,40 +184,40 @@ const Contractor_Dashboard = () => {
 
         <section className="container  min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
 
-          <div className='grid grid-cols-1 md:gap-x-6  mb-5 md:grid-cols-4'>
-
-            <Card title="Posted Projects " bordered={false}>
-              <div className='grid grid-cols-3 place-items-center'>
-
-                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects}</p>
-                <p className='col-span-2 text-lg'> You had posted {postedProjects} projects till now</p>
-              </div>
-            </Card>
-
-            <Card title="Shared Intreseted Projects" bordered={false}>
-              <div className='grid grid-cols-3 place-items-center'>
-                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {tableData.length}</p>
-                <p className='col-span-2 text-lg'> You have shared your interest in {tableData.length} project</p>
-              </div>
-
-            </Card>
-
-
-            <Card title="Active Projects" bordered={false}>
+          <div className='grid grid-cols-1 md:gap-x-6  mb-5 md:grid-cols-3'>
+          <Card title="Active Projects" bordered={false}>
             <div className='grid grid-cols-3 place-items-center'>
-                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {activeProjects}</p>
-                <p className='col-span-2 text-lg'> Your Ongoing Projects are {activeProjects}</p>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'data-translate="hi"> {activeProjects}</p>
+                <p className='col-span-2 text-lg' data-translate="hi"> Your Ongoing Projects are {activeProjects}</p>
               </div>
               
             </Card>
+           
+            <Card title="Shown Interest " bordered={false}>
+              <div className='grid grid-cols-3 place-items-center'>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'data-translate="hi"> {tableData.length}</p>
+                <p className='col-span-2 text-lg'data-translate="hi"> You have shared your interest in {tableData.length} project</p>
+              </div>
 
-            <Card title="All Projects" bordered={false}>
+            </Card>
+            <Card title="Posted Projects " bordered={false}>
+              <div className='grid grid-cols-3 place-items-center'>
+
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'data-translate="hi"> {postedProjects}</p>
+                <p className='col-span-2 text-lg'data-translate="hi"> You had posted {postedProjects} projects till now</p>
+              </div>
+            </Card>
+
+
+            
+
+            {/* <Card title="All Projects" bordered={false}>
             <div className='grid grid-cols-3 place-items-center'>
-                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'> {postedProjects + tableData.length}</p>
-                <p className='col-span-2 text-lg'> Your Total Number of projects</p>
+                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'data-translate="hi"> {postedProjects + tableData.length}</p>
+                <p className='col-span-2 text-lg'data-translate="hi"> Your Total Number of projects</p>
               </div>
                
-            </Card>
+            </Card> */}
           </div>
 
           <div className="px-2 h-auto text-gray-800 ">
@@ -227,9 +227,9 @@ const Contractor_Dashboard = () => {
               <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6 rounded-xl">
 
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-1 mr-4 font-semibold">Projects in you shared Intrests</p>
+                  <p className="text-lg mb-1 mr-4 font-semibold" data-translate="hi">Projects in which you have shown interests</p>
                 </div>
-                <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
+                <Table  columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />
               </div>
             </div>
           </div>

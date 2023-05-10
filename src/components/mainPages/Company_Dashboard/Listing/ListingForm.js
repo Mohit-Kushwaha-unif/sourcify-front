@@ -26,6 +26,7 @@ const ListingForm = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const [allUsers, setAllUsers] = useState([])
     const [image, set_ImageD] = useState()
+    const [state, setState] = useState([])
     const isAdmin = useSelector(state => state.User.user_role);
     const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
     useDocumentTitle('Add your Listing')
@@ -128,7 +129,9 @@ const ListingForm = () => {
         return current && current.valueOf() < Date.now();
     }
  
-    function countrySelectHandler() { }
+    function countrySelectHandler(country) {
+        setState(state_cites[country])
+      }
     return (
         <>
         {
@@ -142,7 +145,7 @@ const ListingForm = () => {
                 >
                     <div className={ `${isAdmin==2? "w-full":"xl:mx-20 xl:w-11/12 lg:w-5/12 md:w-8/12" } mb-12 md:mb-0 bg-white border-2 border-black-600 rounded-xl p-6`}>
                         <div className="flex flex-row items-center justify-center lg:justify-start">
-                            <p className="text-lg mb-0 mr-4">Enter Your Project Details</p>
+                            <p className="text-lg mb-0 mr-4" data-translate="hi">Enter Your Project Details</p>
                         </div>
                         <div
                             className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
@@ -173,25 +176,25 @@ const ListingForm = () => {
                                     </>
                                 }
                            
-                            <Form.Item name='project_discription' label="Project Description" rules={[
+                            <Form.Item name='project_discription' label="Project Name" rules={[
                                 {
                                     required: true,
-                                    message: 'Write the description of your project'
+                                    message: 'Write the name of your project'
                                 },
                             ]}
                             >
 
-                                <TextArea placeholder='Enter project description' />
+                                <TextArea placeholder='Enter project name' />
                             </Form.Item>
-                            <Form.Item name="wok_segment" label="Select category for your project" rules={[
+                            <Form.Item name="wok_segment" label="Select work segment for your project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please select category for your project',
+                                    message: 'Please select  work segment for your project',
                                 },
                             ]}>
                                 <Select
                                     mode="multiple"
-                                    placeholder="Select categories"
+                                    placeholder="Select work segment"
                                     value={selectedItems}
                                     onChange={setSelectedItems}
                                     style={{
@@ -234,22 +237,51 @@ const ListingForm = () => {
                                 })
                             })
                             }
-                            <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                                {
-                                    required: true,
-                                    message: 'Please select the states for work'
-                                },
-                            ]}
-                            >
+                             <div className='flex flex-col md:flex-row  '>
+                    <div className='form_flex_children mr-1'>
+                      <Form.Item name="prefferd_state" label="Project State " rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your state'
+                        },
+                      ]}>
 
-                                <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" onSelect={countrySelectHandler}>
-                                    <Select.Option value="All State">All State</Select.Option>
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
-                            </Form.Item>
+                        <Select id="country-state"
+                          name="State" placeholder="Select state" onSelect={countrySelectHandler}
+                          showSearch // enable search functionality
+                          filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                          }>
+                          {Object.keys(state_cites).map((state) => {
+                            return (<Select.Option value={state}>{state}</Select.Option>)
+                          }
+                          )}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                    <div className='form_flex_children mr-1'>
+                      <Form.Item name="City" label="City " rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your city',
+                        },
+                      ]}>
+                        <Select id="country-state"
+                          name="City" placeholder="Select city"
+                          showSearch // enable search functionality
+                          filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                          }>
+                          {state.length > 0 && state.map((state) => {
+                            return (<Select.Option value={state}>{state}</Select.Option>)
+                          }
+                          )}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                   
+                  </div>
+                           
                             <Form.Item name='project_scope' label="Scope of Work" rules={[
                                 {
                                     required: true,
@@ -270,10 +302,10 @@ const ListingForm = () => {
                                 <Input type='file' max={1} onChange={specificationimageHandler} />
 
                             </Form.Item>
-                            <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
+                            <Form.Item name='project_bill_qty' label="Please attach Bill of Quantity" rules={[
                                 {
                                     required: true,
-                                    message: 'Please attach your bill quantity'
+                                    message: 'Please attach your Bill of Quantity'
                                 },
                             ]}
                             >

@@ -22,9 +22,10 @@ function RadioGroup(props) {
             value={option.value}
             checked={value == option.value}
             onChange={handleChange}
+            
             className="absolute top-[10px]  form-radio h-3 w-3 text-[#3182ce] transition duration-150 ease-in-out rounded-full"
           />
-          <span className={`border-b-2 ml-5 pb-3 ${option.className} ${value == option.value ? 'border-[#FF5757]  ' : ''}`}>{option.label}</span>
+          <span data-translate="hi" className={`border-b-2 ml-5 pb-3 ${option.className} ${value == option.value ? 'border-[#FF5757]  ' : ''}`}>{option.label}</span>
 
         </label>
       ))}

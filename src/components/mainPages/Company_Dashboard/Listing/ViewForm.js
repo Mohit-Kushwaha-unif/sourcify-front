@@ -10,6 +10,8 @@ import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
 import { get_listingBy_id, update_listing } from '../../../../services/listing'
 import moment from 'moment/moment';
+import { get_contractor } from '../../../../services/contractor';
+import { get_Vendor } from '../../../../services/Vendor';
 
 const ViewForm = () => {
     const form = useForm()
@@ -30,6 +32,8 @@ const ViewForm = () => {
     const [proposal_id, setProposalId] = useState()
     const [showbillImg, setShowBillImg] = useState(true)
     const [showSpecImg, setShowSpecImg] = useState(true)
+    const [contact, setContact] = useState([])
+    const [state, setState] = useState([])
     useEffect(() => {
         dispatch(get_category()).then((res) => {
             res.map((cat) => {
@@ -38,6 +42,21 @@ const ViewForm = () => {
                 setCategories((prev_state) => [...prev_state, cat.category])
             })
         })
+        var data = []
+        dispatch(get_contractor()).then((res) => {
+            res.map((val) => {
+
+                setContact((prev) => [...prev, val])
+
+            })
+        })
+        dispatch(get_Vendor()).then((res) => {
+            res.map((val) => {
+                setContact((prev) => [...prev, val])
+
+            })
+        })
+
     }, [])
 
     var initialSelects = []
@@ -46,7 +65,7 @@ const ViewForm = () => {
     useEffect(() => {
 
         dispatch(get_listingBy_id(location.state._id)).then((res) => {
-            console.log({ res })
+            // console.log({ res })
             set_user_id(res.listing.user_id._id)
             Object.keys(res.listing).map((value) => {
                 var obj = {}
@@ -78,13 +97,28 @@ const ViewForm = () => {
                         })
                     })
                 }
+                if (value == "proposals") {
+
+                    contact.map((contDetails) => {
+                        res.listing[value].map((listVal) => {
+                            console.log(listVal.contractor_id._id, contDetails.user_id._id)
+                            if (listVal.contractor_id._id == contDetails.user_id._id)
+
+                                listVal.agency = contDetails.agency_name || contDetails.entity
+
+                        })
+
+                    })
+
+                }
             })
+
             setFormStatus(res.listing.status)
             setSelectedOptions(initialOptions)
             setSelectedItems(initialSelects)
             setInitialValues(initialValue)
             initialValue.map((values) => {
-                console.log({ values })
+                // console.log({ values })
                 if (values.name === 'project_bill_qty_image') {
                     setShowBillImg(values.value)
                 }
@@ -94,8 +128,8 @@ const ViewForm = () => {
             })
             // setInitialValues((prevState)=>[...prevState, initialOptions)])
         })
-    }, [])
-    console.log(initialValues)
+    }, [contact])
+    // console.log(initialValues)
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
     function FormHandler(values) {
 
@@ -154,7 +188,9 @@ const ViewForm = () => {
     function imageHandler(e) {
         set_ImageD(e.target.files[0])
     }
-    function countrySelectHandler() { }
+    function countrySelectHandler(country) {
+        setState(state_cites[country])
+      }
     return (
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="px-8 h-full text-gray-800">
@@ -164,6 +200,7 @@ const ViewForm = () => {
                     <div className="xl:ml-20 xl:w-11/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                         <div className="flex flex-row items-center justify-center lg:justify-between">
                             <p className="text-lg mb-0 mr-4"> Project Details</p>
+
                             {isAdmin === 2 && Object.keys(initialValues).map((value) => {
                                 if (initialValues[value].name === 'proposals') {
                                     return initialValues[value].value.map((acceptedBy) => {
@@ -210,7 +247,7 @@ const ViewForm = () => {
 
                                         <FaFileExcel className='w-20 h-20' />
 
-                                       <span>{"Specifcation File"}</span> 
+                                        <span>{"Specifcation File"}</span>
                                     </a>
                                 </div>}
 
@@ -301,41 +338,71 @@ const ViewForm = () => {
 
                             }
 
-                            <Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your State!'
-                                },
-                            ]}
-                            >
+                            <div className='flex flex-col md:flex-row  '>
+                                <div className='form_flex_children mr-1'>
+                                    <Form.Item name="prefferd_state" label="Project State " rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please enter your state'
+                                        },
+                                    ]}>
 
-                                <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" onSelect={countrySelectHandler}>
-                                    <Select.Option value="All State">All State</Select.Option>
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
-                            </Form.Item>
-                            {initialValues.length > 0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label=" tentative date to start the project" rules={[
+                                        <Select id="country-state"
+                                            name="State" placeholder="Select state" onSelect={countrySelectHandler}
+                                            showSearch // enable search functionality
+                                            filterOption={(input, option) =>
+                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                            }>
+                                            {Object.keys(state_cites).map((state) => {
+                                                return (<Select.Option value={state}>{state}</Select.Option>)
+                                            }
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+                                </div>
+                                <div className='form_flex_children mr-1'>
+                                    <Form.Item name="City" label="City " rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please enter your city',
+                                        },
+                                    ]}>
+                                        <Select id="country-state"
+                                            name="City" placeholder="Select city"
+                                            showSearch // enable search functionality
+                                            filterOption={(input, option) =>
+                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                                            }>
+                                            {state.length > 0 && state.map((state) => {
+                                                return (<Select.Option value={state}>{state}</Select.Option>)
+                                            }
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+                                </div>
+
+                            </div>
+                            {initialValues.length > 0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label=" Tentative date to start the project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please select tentative date'
                                 },
                             ]}
                             >
 
                                 <DatePicker disabledDate={disabledDate} onChange={onChange} />
                             </Form.Item>}
-                            <Title level={4}>Proposals</Title>
+                            <Title level={4}>Interest Recieved</Title>
                             {
                                 initialValues.length > 0 && initialValues.map((proposal) => {
 
                                     if (proposal.name === "proposals") {
 
                                         return proposal.value.map((details) => {
+                                            console.log({ details })
                                             return <>
-                                                <p>Submitted By  - {details.contractor_id.email}</p>
+
+                                                <p>Submitted By  - {details.agency}</p>
                                                 <TextArea value={details.proposal} />
                                                 {details.contract_status === 0 ? <div className='flex mt-3 justify-evenly'>
 

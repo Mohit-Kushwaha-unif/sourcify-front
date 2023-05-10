@@ -639,3 +639,8 @@ input[type=number] {
 .padding_6_9{
   padding: 6px 9px !important;
 }
+
+
+.font_24{
+  font-size: 24px !important;
+}

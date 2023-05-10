@@ -37,7 +37,7 @@ const ProjectDetails = () => {
             navigator('/login')
         }
          if(localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id || localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id._id){
-            toast.error('Can not send proposal to your own projects', {
+            toast.error('Can not Share Interest to your own projects', {
                 position: toast.POSITION.TOP_RIGHT
               })
         }
@@ -181,7 +181,7 @@ const ProjectDetails = () => {
                                     </div>
 
                                     <Modal
-                                        title="Modal"
+                                        title="Share your interest in this project"
                                         open={open}
                                         onOk={submitHandler}
                                         onCancel={hideModal}
@@ -190,14 +190,14 @@ const ProjectDetails = () => {
                                     // width={1140}
                                     >
                                         <div className='mb-4'>
-                                            <TextArea placeholder='Add Your Proposal' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
+                                            <TextArea placeholder='Your message' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
                                         </div>
                                         <button
                                             type="submit"
                                             onClick={() => submitHandler(formValues.listing._id)}
                                             className="primary_btn"
                                         >
-                                            Send Proposal
+                                            Share Interest
 
 
                                         </button>
@@ -216,7 +216,7 @@ const ProjectDetails = () => {
                                     onClick={showModal}
                                     className="primary_btn "
                                 >
-                                    Send Proposal
+                                    Share Interest
 
 
                                 </button>

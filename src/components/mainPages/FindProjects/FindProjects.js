@@ -1,5 +1,5 @@
 import { Form, Input, Modal, Pagination, Select } from 'antd'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,6 +18,7 @@ const FindProjects = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [work_segment, set_work_segment] = useState([])
     var [projectDetails, setProjectDetails] = useState([])
+    var [OprojectDetails, setoProjectDetails] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const userRole = useSelector(state => state.User.user_role);
@@ -28,6 +29,9 @@ const FindProjects = () => {
     const [isSearch, setIsSearch] = useState(false)
     const [proposalVal, setProposalVal] = useState('')
     const [form] = Form.useForm();
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [sub_cat, setSubCat] = useState([])
+    const [projectsOnPage, setProjectsOnPage] = useState([])
     const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
     useEffect(() => {
         if (isSearch !== true) {
@@ -47,12 +51,13 @@ const FindProjects = () => {
                 setIsSearch(true)
             })
             if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
-
+                setSubCat((prev_state) => [...prev_state, WORK_SEGMENT]);
                 set_work_segment([...WORK_SEGMENT])
 
             }
             else {
                 dispatch(get_category()).then((res) => {
+                    setSubCat((prev_state) => [...prev_state, res]);
                     set_work_segment([...res])
                 })
             }
@@ -94,17 +99,19 @@ const FindProjects = () => {
             });
 
             setProjectDetails([...projDet]);
+            setoProjectDetails([...projDet]);
         });
 
         setProjectDetails([...projDet]);
+        setoProjectDetails([...projDet]);
 
     }, [projects, dispatch]);
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
     };
-    const handleFormChange = (values) => {
-        const { Project_name, Location, work_Segments } = form.getFieldsValue();
+    const handleFormChange = () => {
+        const { Project_name, Location, work_Segments, work_area_type } = form.getFieldsValue();
         var formData = new FormData()
         if (Project_name != undefined) {
             formData.append("Project_name", Project_name)
@@ -114,6 +121,9 @@ const FindProjects = () => {
         }
         if (work_Segments != undefined) {
             formData.append("work_Segments", work_Segments)
+        }
+        if (work_area_type != undefined) {
+            formData.append("work_area_type", work_area_type)
         }
         dispatch(search_listing(formData)).then((res) => {
             const filteredProjects = res.filter((proj_det) => {
@@ -139,7 +149,7 @@ const FindProjects = () => {
             let foundInterest = false;
             let foundOwnProject = false;
             if (localStorage.getItem("user_id") == res.listing.user_id._id) {
-                toast.error('Can not send proposal to your own projects', {
+                toast.error('Can not Share Interest to your own projects', {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 foundOwnProject = true;
@@ -147,7 +157,7 @@ const FindProjects = () => {
             res.listing.proposals.forEach((detail) => {
                 if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
                     console.log("1")
-                    toast.success('You already shared your intrest', {
+                    toast.success('You already shared your interest', {
                         position: toast.POSITION.TOP_RIGHT
                     })
                     foundInterest = true;
@@ -156,7 +166,6 @@ const FindProjects = () => {
 
 
             })
-            console.log(foundInterest, foundOwnProject)
             if (!foundInterest && !foundOwnProject) {
                 if (localStorage.getItem("isLoggedIn") == "false") {
                     console.log("3")
@@ -195,9 +204,41 @@ const FindProjects = () => {
         // console.log(e.target.value)
         setProposalVal(e.target.value)
     }
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const projectsOnPage = projectDetails.slice(startIndex, endIndex);
+    useEffect(() => {
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        setProjectsOnPage(projectDetails.slice(startIndex, endIndex));
+
+
+    }, [projectDetails])
+    function pagination(projectDetails) {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        setProjectsOnPage(projectDetails.slice(startIndex, endIndex));
+    }
+    function inputHandler(e) {
+        if (e.target.value === "") {
+            pagination(OprojectDetails);
+        }
+        else{
+            const FILTER = projectsOnPage.filter((proj_det) => {
+
+                if (proj_det.vendor_det?.agency_name) {
+                    return proj_det.vendor_det?.agency_name.toLowerCase().includes(e.target.value.toLowerCase());
+                } else if (proj_det.vendor_det?.entity) {
+                    return proj_det.vendor_det?.entity.toLowerCase().includes(e.target.value.toLowerCase());
+                }
+                else if (e.target.value == "") {
+                    return OprojectDetails
+                }
+            });
+            console.log(FILTER);
+            setProjectsOnPage(FILTER);
+        }
+        
+    }
+
     return (
         <>
             {loading ? <Loader />
@@ -213,9 +254,9 @@ const FindProjects = () => {
                             form={form}
                             onValuesChange={handleFormChange}
                         >
-                            <Form.Item name="Project_name" label="">
-                                <Input className=' mb-5' placeholder='Search for projects' />
-                            </Form.Item>
+                            <label className=' text-black font-[inter] font-[16px] pt-5'>Company Name</label>
+
+                            <Input className='mt-2 mb-5' placeholder='Search for projects' onChange={inputHandler} />
 
                             <Form.Item name="Location" label="Search Location">
                                 <Select className=' mb-5' placeholder='Add Location' >
@@ -227,7 +268,7 @@ const FindProjects = () => {
                             </Form.Item>
 
                             <Form.Item name="work_Segments" label="Select work segment">
-                                <Select placeholder="select work segments">
+                                <Select placeholder="select work segments" onChange={setSelectedItems}>
                                     {
                                         work_segment.length > 0 && work_segment.map((cats) => {
                                             return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
@@ -235,7 +276,37 @@ const FindProjects = () => {
                                     }
                                 </Select>
                             </Form.Item>
+                            <p className='font-[inter]'>
+                                {selectedItems.length > 0 &&
+                                    sub_cat[0].map((sub_category) => {
 
+                                        return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
+                                            <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
+                                                <Select>
+                                                    {sub_category.children.map((item, index) => {
+
+                                                        return (
+                                                            <Select.Option
+                                                                key={item.sub_Category}
+                                                                className={`ml-${index === 0 ? 2 : 0} `}
+                                                                value={item.name}
+                                                            >
+                                                                <span>{item.name}</span>
+                                                            </Select.Option>
+                                                        );
+                                                    })}
+
+                                                </Select>
+
+
+                                            </Form.Item>
+                                        </>
+
+
+                                    })
+
+                                }
+                            </p>
                         </Form>
                     </div>
 
@@ -300,7 +371,7 @@ const FindProjects = () => {
                         </div>
 
                         <Modal
-                            title="Share Your Intrest in this project"
+                            title="Share your interest in this project"
                             open={isCompany}
                             onOk={submitHandler}
                             onCancel={hideModal}
@@ -308,7 +379,7 @@ const FindProjects = () => {
                             footer={false}
                         >
                             <div className='mb-4'>
-                                <TextArea placeholder='Add Your Proposal' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
+                                <TextArea placeholder='Your message' onChange={proposalHandler} value={proposalVal} name='proposal' className='w-full' />
                             </div>
                             <button
                                 type="submit"

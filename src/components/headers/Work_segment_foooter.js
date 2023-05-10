@@ -30,17 +30,18 @@ const Work_segment_foooter = () => {
        
     }
   return (
-    <div className='container'>
-    <h3 className='prime_h2_rale mb-3'>Work Segments</h3>
+    <div className='bg-[#00272B10] py-16'>
+    <div className='container  '>
+    <h3 className='prime_h2_rale mb-8' data-translate="hi">Work Segments</h3>
     {
         category.map((cat)=>{
             return <>
             <div className='mb-16'>
-            <Link to={`#${cat.name}`} className='rale_text my-10 '>{cat.name}</Link>
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+            <Link to={`#${cat.name}`} className='rale_text my-10 font_24 'data-translate="hi">{cat.name}</Link>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-[5px]'>
             {
                 cat.children.length > 0 && cat.children.map((cat_sub)=>{
-                  return  <div className='mt-3 cursor-pointer' onClick={()=>searchHnadler(cat_sub.name)}>{cat_sub.name}</div>
+                  return  <div className='mt-3 cursor-pointer' onClick={()=>searchHnadler(cat_sub.name)} data-translate="hi">{cat_sub.name}</div>
                 })
             }
             </div>
@@ -48,6 +49,7 @@ const Work_segment_foooter = () => {
             </>
         })
     }
+</div>
 </div>
   )
 }

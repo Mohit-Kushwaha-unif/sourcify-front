@@ -133,7 +133,7 @@ const Company_Dashboard = ({dataTransfer}) => {
             >
               <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                 <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <p className="text-lg mb-6 mr-4 font-semibold">Your Posted Projects</p>
+                  <p className="text-lg mb-6 mr-4 font-semibold" data-translate="hi">Your Posted Projects</p>
                 </div>
 
                 <Table columns={columns} dataSource={tableData} pagination={{ pageSize: 5 }} />

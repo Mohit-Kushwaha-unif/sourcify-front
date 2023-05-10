@@ -35,14 +35,19 @@ const Messages = () => {
     useEffect(() => {
         var sideContacts = []
         dispatch((getContacts({ from_id }))).then((res) => {
-
+          
             res.map((msg) => {
                 var exist = sideContacts.some(val => val.id == msg.id)
                 if (!exist && msg.id != localStorage.getItem("user_id")) {
-                    // console.log(msg)
                     var sideObj = {}
                     sideObj.id = msg.id;
                     sideObj.name = msg.name;
+                    if(msg.role ==2){
+                        sideObj.name = "Team Sourcify"
+                    }
+                    else{
+                        sideObj.name = msg.name;
+                    }
                     sideObj.status = "online"
                     sideContacts.push(sideObj)
                 }
@@ -262,13 +267,14 @@ const Messages = () => {
                                 key={index}
                                 className="flex border-b-2 border-slate-100 items-center py-2 px-4 hover:bg-gray-300 cursor-pointer"
                                 onClick={() => updateMessages(contact)}
-                            >
-                                <Avatar
+                            ><Avatar
                                     name={contact.name}
                                     size="40"
                                     round={true}
                                     className="mr-2"
                                 />
+                                
+                                
                                 {/* <div
                                         className={`w-2 h-2 rounded-full mr-2 ${contact.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
                                             }`}

@@ -30,6 +30,7 @@ const EditListing = () => {
     const [formStatus, setFormStatus] = useState()
     const [showbillImg, setShowBillImg] = useState(true)
     const [showSpecImg, setShowSpecImg] = useState(true)
+    const [state, setState] = useState([])
     useEffect(() => {
         dispatch(get_category()).then((res) => {
             res.map((cat) => {
@@ -132,7 +133,9 @@ const EditListing = () => {
     function imageHandler(e) {
         set_ImageD(e.target.files[0])
     }
-    function countrySelectHandler() { }
+    function countrySelectHandler(country) {
+        setState(state_cites[country])
+      }
     return (
         <>
         {
@@ -217,10 +220,10 @@ const EditListing = () => {
                                         </span>
                                         <span className='cursor-pointer text-red-400' onClick={() => { setShowSpecImg(true) }}>Change Bill File</span>
                                     </div> :
-                                    <Form.Item name='project_bill_qty' label="Please attach Project bill Quantity" rules={[
+                                    <Form.Item name='project_bill_qty' label="Please attach Bill of Quantity" rules={[
                                         {
                                             required: true,
-                                            message: 'Please attach your bill quantity'
+                                            message: 'Please attach your Bill of Quantity'
                                         },
                                     ]}
                                     >
@@ -233,15 +236,15 @@ const EditListing = () => {
 
 
 
-                            <Form.Item name="wok_segment" className='mb-1' label="Select Category For Your Project" rules={[
+                            <Form.Item name="wok_segment" className='mb-1' label="Select  work segment For Your Project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Address!',
+                                    message: 'Please select work segment!',
                                 },
                             ]}>
                                 <Select
                                     mode="multiple"
-                                    placeholder="Select Categories"
+                                    placeholder="Select  work segment"
                                     value={selectedItems}
                                     onChange={setSelectedItems}
                                     style={{
@@ -285,22 +288,50 @@ const EditListing = () => {
                             })
                         }
 
-                                < Form.Item name="prefferd_state" label="Preffered State to Work " rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your State!'
-                                    },
-                                ]}
-                            >
+<div className='flex flex-col md:flex-row  '>
+                    <div className='form_flex_children mr-1'>
+                      <Form.Item name="prefferd_state" label="Project State " rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your state'
+                        },
+                      ]}>
 
-                            <Select id="country-state" mode="multiple" name="prefferd_state" placeholder="Select State" onSelect={countrySelectHandler}>
-                                <Select.Option value="All State">All State</Select.Option>
-                                {Object.keys(state_cites).map((state) => {
-                                    return (<Select.Option value={state}>{state}</Select.Option>)
-                                }
-                                )}
-                            </Select>
-                        </Form.Item>
+                        <Select id="country-state"
+                          name="State" placeholder="Select state" onSelect={countrySelectHandler}
+                          showSearch // enable search functionality
+                          filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                          }>
+                          {Object.keys(state_cites).map((state) => {
+                            return (<Select.Option value={state}>{state}</Select.Option>)
+                          }
+                          )}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                    <div className='form_flex_children mr-1'>
+                      <Form.Item name="City" label="City " rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your city',
+                        },
+                      ]}>
+                        <Select id="country-state"
+                          name="City" placeholder="Select city"
+                          showSearch // enable search functionality
+                          filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 // case-insensitive search
+                          }>
+                          {state.length > 0 && state.map((state) => {
+                            return (<Select.Option value={state}>{state}</Select.Option>)
+                          }
+                          )}
+                        </Select>
+                      </Form.Item>
+                    </div>
+                   
+                  </div>
                         {initialValues.length > 0 && <Form.Item name='project_tent_date' className='mb-1 mt-0' label="Please select the tentative date to start the project" rules={[
                             {
                                 required: true,

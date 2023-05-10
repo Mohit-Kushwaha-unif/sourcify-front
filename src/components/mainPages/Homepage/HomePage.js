@@ -53,14 +53,14 @@ const Dashboard = () => {
 
 
                         <div className='mt-5 '>
-                            <h2 className='prime_h2 mb-5'>Bringing Businesses &
+                            <h2 className='prime_h2 mb-5' data-translate="hi">Bringing Businesses &
                                 Contractors Together</h2>
-                            <p className='section_text mb-5'>Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
+                            <p className='section_text mb-5'data-translate="hi">Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
                                 With our platform, businesses can easily find and connect with vetted contractors and suppliers who meet
                                 their specific needs. </p>
                             <div className='flex flex-col md:flex-row  '>
-                                <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' onClick={() => navigator('/register')}>Register as a Contractor</button>
-                                <button className='brand_button justify-center text-center w-auto' onClick={() => navigator('/dashboard/listing-form')}>Post Project</button>
+                                <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>
+                                <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => navigator('/dashboard/listing-form')}>Post Project</button>
                             </div>
                         </div>
                     </div>
@@ -79,19 +79,19 @@ const Dashboard = () => {
 
                         <div className='flex items-center  place-items-start'>
                             <img src={frame_charge} className="mr-5" />
-                            <p className='white_h3'>Free of Charge</p>
+                            <p className='white_h3'data-translate="hi">Free of Charge</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={web} className="mr-5" />
-                            <p className='white_h3'>Top-notch Contractors</p>
+                            <p className='white_h3'data-translate="hi">Top-notch Contractors</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={bookmark} className="mr-5" />
-                            <p className='white_h3'>Easy & Transparent</p>
+                            <p className='white_h3'data-translate="hi">Easy & Transparent</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={checked} className="mr-5" />
-                            <p className='white_h3'>Collaboration made easy</p>
+                            <p className='white_h3'data-translate="hi">Collaboration made easy</p>
                         </div>
                     </div>
                 </div>
@@ -99,9 +99,9 @@ const Dashboard = () => {
 
             <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
                 <div>
-                    <h2 className='prime_h2_rale mb-3'>Register Yourself</h2>
+                    <h2 className='prime_h2_rale mb-3'data-translate="hi">Register Yourself</h2>
                     <br/>
-                    <p>Welcome to our registration page! We're excited to have you join our community. <br/><br/>
+                    <p data-translate="hi">Welcome to our registration page! We're excited to have you join our community. <br/><br/>
 
                         To get started, please provide us with some basic information so we can create your account. This includes your  email address, mobile number, and a password of your choice.
 
@@ -132,32 +132,32 @@ const Dashboard = () => {
 
             </div>
             <div className=' bg-[#00272B] mb-24 py-16 md:p-16'>
-                <p className='center_content mb-5 white_h3 cursor-pointer' onClick={() => navigator('/SourcifyWork')}>
+                <p data-translate="hi" className='center_content mb-5 white_h3 cursor-pointer' onClick={() => navigator('/SourcifyWork')}>
                     How it works
                 </p>
-                <p className='center_content text-center white_p '>
+                <p data-translate="hi" className='center_content text-center white_p '>
                     Create your free account, register as a contractor to find projects or post projects
                 </p>
-                <p className='center_content white_p mb-16'>to find contractors to get work done.</p>
+                <p data-translate="hi" className='center_content white_p mb-16'>to find contractors to get work done.</p>
                 <div className='grid container md:gap-x-6  gap-y-6 grid-cols-1 md:grid-cols-3 mb-16'>
                     <div className='grid_card_design'>
                         <img src={register} className="grid_img_design w-full" alt="Register Account" />
-                        <h2 className='grid_heading text-center'>Register Account</h2>
-                        <p className='text-center'>
+                        <h2 data-translate="hi" className='grid_heading text-center'>Register Account</h2>
+                        <p data-translate="hi" className='text-center'>
                             Create your free account, register as a contractor to find projects or post projects to find contractors to get work done.
                         </p>
                     </div>
                     <div className='grid_card_design '>
                         <img src={post} className="grid_img_design" alt="Post Projects" />
-                        <h2 className='grid_heading text-center' >Post Projects</h2>
-                        <p className='text-center'>
+                        <h2 data-translate="hi" className='grid_heading text-center' >Post Projects</h2>
+                        <p data-translate="hi" className='text-center'>
                             Companies looking for contractors can post their projects and hire contractors to get the work done.
                         </p>
                     </div>
                     <div className='grid_card_design'>
                         <img src={proposal} className="grid_img_design" alt="Share Interests" />
-                        <h2 className='grid_heading text-center'>Share Interest</h2>
-                        <p className='text-center'>
+                        <h2 data-translate="hi" className='grid_heading text-center'>Share Interest</h2>
+                        <p data-translate="hi" className='text-center'>
                             Contractors looking for projects can share their interest
                             for the projects listed by top companies.
                         </p>
@@ -166,38 +166,38 @@ const Dashboard = () => {
 
                 </div>
                 <div className='center_content '>
-                    <button className='brand_button' onClick={() => navigator('/SourcifyWork')}>See How Sourcify Works <img src={right} /> </button>
+                    <button data-translate="hi" className='brand_button' onClick={() => navigator('/SourcifyWork')}>See How Sourcify Works <img src={right} /> </button>
                 </div>
             </div>
             <div className='absolute border-2  border-[#FF5757] right-[47%] left-[47%]'> </div>
 
             <div className='relative'>
-                <h2 className='center_content  mt-32  prime_h2_rale mb-5'>Why Sourcify</h2>
-                <p className='text-center md:px-80 mb-16'> Sourcify is the ideal platform for businesses looking to streamline their sourcing and supply chain operations. With our platform businesses can access a wide network of contractors
+                <h2 data-translate="hi" className='center_content  mt-32  prime_h2_rale mb-5'>Why Sourcify</h2>
+                <p data-translate="hi" className='text-center md:px-80 mb-16'> Sourcify is the ideal platform for businesses looking to streamline their sourcing and supply chain operations. With our platform businesses can access a wide network of contractors
                     and contractors can get projects from top companies</p>
             </div>
             <div className='container grid grid-cols-1 md:grid-cols-2 gap-8 mb-24'>
                 <img src={sourc_img} className="" alt="why sourcify image" />
                 <div className='mt-3'>
                     <div className='flex my-3'>
-                        <img className='h-full mr-3' src={down_arrow} />
-                        <p className='text-[#FF5757] font-semibold text-[21px] '>Innovation Free of Cost</p>
+                        <img className='h-full mr-3'  src={down_arrow} />
+                        <p data-translate="hi" className='text-[#FF5757] font-semibold text-[21px] '>Innovation Free of Cost</p>
                     </div>
-                    <p className='mb-8'>
+                    <p data-translate="hi" className='mb-8'>
                         Sourcify drives innovation free of cost through data-driven insights and technology. Sourcify provides a comprehensive platform for businesses to manage their sourcin g and supply chain operations
                     </p>
                     <div className='flex my-3'>
                         <img className='h-full mr-3' src={mssg} />
-                        <p className='text-[#FF5757] font-semibold text-[21px] '> Communication and Collaboration </p>
+                        <p data-translate="hi" className='text-[#FF5757] font-semibold text-[21px] '> Communication and Collaboration </p>
                     </div>
-                    <p className='mb-8'>
+                    <p data-translate="hi" className='mb-8'>
                         Sourcify facilitates communication and collaboration between businesses and contractors, enabling them to work together seamlessly. With Sourcify, businesses can communicate with their contractors and suppliers in real-time, ensuring that everyone is on the same page.
                     </p>
                     <div className='flex my-3'>
                         <img className='h-full mr-3' src={personalized} />
-                        <p className='text-[#FF5757] font-semibold text-[21px] '>Personalized Support</p>
+                        <p data-translate="hi"  className='text-[#FF5757] font-semibold text-[21px] '>Personalized Support</p>
                     </div>
-                    <p className='mb-8'>
+                    <p data-translate="hi" className='mb-8'>
                         Sourcify offers personalized support from a team of experts with sourcing and supply chain expertise. With Sourcify, businesses have access to a dedicated account manager who can provide customized solutions and support throughout the sourcing process.
                     </p>
 

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { get_user_info, update_user } from '../../../services/user'
 import useDocumentTitle from '../../Helper/useDocumentTitle'
-
+import { toast, ToastContainer } from 'react-toastify'
 const UpdateProfie = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -47,11 +47,13 @@ const UpdateProfie = () => {
         })
         // setInitialValue(formValue)
     },[])
-    console.log(initialValue)
     const FormHandler = (value) => {
         value.id = localStorage.getItem('user_id')
         dispatch(update_user(value)).then((res)=>{
             console.log(res)
+            toast.success('Value Updated', {
+                position: toast.POSITION.TOP_RIGHT
+              })
         })
      }
 
@@ -75,6 +77,7 @@ const UpdateProfie = () => {
      }
     return (
         <section className="container min-h-min  flex flex-col  w-full " >
+                <ToastContainer/>
             <div className=" h-auto text-gray-800">
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-auto "

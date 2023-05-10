@@ -172,7 +172,7 @@ const Header = () => {
                 {isLoggedIn ?
                   <>
                     <div className='col-span-3 md:hidden flex  mx-3 my-3 mr-3'>
-                      <span className='mr-2 '><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text'>Messages</p></NavLink>
+                      <span className='mr-2 '><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text' data-translate="hi">Messages</p></NavLink>
                     </div>
                     <div
                       onClick={() => setIsOpen(!isOpen)}
@@ -198,8 +198,8 @@ const Header = () => {
 
                   </>
                   : <div className=' ml-8 col-span-4 md:hidden grid grid-cols-4'>
-                    <Link className='flex col-span-2   my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'>Register</p>  </Link>
-                    <Link className='flex col-span-2  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'> Login </p> </Link>
+                    <Link className='flex col-span-2   my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'data-translate="hi">Register</p>  </Link>
+                    <Link className='flex col-span-2  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'data-translate="hi"> Login </p> </Link>
                   </div>}
                   </div>
                 {!showMenu?
@@ -211,13 +211,13 @@ const Header = () => {
                 {showMenu && <>
                   <div className='md:col-span-3 col-span-7 md:grid grid-cols-1 md:grid-cols-3  md:items-center '>
 
-                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ml-2' to={'/contractors'} >Find Contractors</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ml-2' to={'/contractors'}data-translate="hi" >Find Contractors</NavLink>
 
 
-                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ' to={'/project_list'}>Find Projects</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ' to={'/project_list'}data-translate="hi">Find Projects</NavLink>
 
 
-                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3' to={'/SourcifyWork'}>How it works</NavLink>
+                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3' to={'/SourcifyWork'}data-translate="hi">How it works</NavLink>
                   </div>
                   {showMenu && <>
                     <div className='grid  col-span-7  md:col-span-2 w-full md:mb-0 mb-3 ' >
@@ -233,7 +233,7 @@ const Header = () => {
 
                         <NavLink to="/messages" className="hidden  md:flex items-baseline mr-3 header_text">
                           <span className='mr-2'><TiMessages /></span>
-                          <p className='header_text'>Messages</p>
+                          <p className='header_text'data-translate="hi">Messages</p>
                         </NavLink>
 
                         <button
@@ -264,14 +264,14 @@ const Header = () => {
                         <Link className='flex items-center mr-3 hidden md:inline-block' to='/register'>
                           <span className='flex items-center'>
                             <img src={edit_icon} className='mr-1' />
-                            <p className='header_text'>Register</p>
+                            <p className='header_text'data-translate="hi">Register</p>
                           </span>
                         </Link>
 
                         <Link className='flex items-center mr-3 hidden md:inline-block' to='/login'>
                           <span className='flex items-center'>
                             <img src={profile} className='mr-1' />
-                            <p className='header_text'>Login</p>
+                            <p className='header_text'data-translate="hi">Login</p>
                           </span>
                         </Link>
 
@@ -286,7 +286,7 @@ const Header = () => {
                           : accountStatus !== 0 ? toast.error('Account is  not approved by admin', {
                             position: toast.POSITION.TOP_RIGHT
                           }) : navigate('/dashboard/listing-form')
-                      }}>
+                      }} data-translate="hi">
                         Post Project
                       </div>
                     </div>
@@ -318,7 +318,8 @@ const Header = () => {
                             d="M19 9l-7 7-7-7"
                           />
                         </svg>
-                        Update Profile
+                        <span data-translate="hi">Update Profile</span>
+                       
                       </button>
 
                       <button
@@ -339,7 +340,8 @@ const Header = () => {
                             d="M17 8l4 4m0 0l-4 4m4-4H3"
                           />
                         </svg>
-                        Logout
+                        <span data-translate="hi">Logout</span>
+                       
                       </button>
 
 

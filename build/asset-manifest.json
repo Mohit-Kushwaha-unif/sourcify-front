@@ -1,7 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.8a4afb31.css",
-    "main.js": "/static/js/main.1644ff7c.js",
+    "main.css": "/static/css/main.90c269b4.css",
+    "main.js": "/static/js/main.d742108e.js",
+    "static/js/498.9c39cec2.chunk.js": "/static/js/498.9c39cec2.chunk.js",
+    "static/js/703.31e56b59.chunk.js": "/static/js/703.31e56b59.chunk.js",
+    "static/js/598.ac67d1e0.chunk.js": "/static/js/598.ac67d1e0.chunk.js",
     "static/media/About_us_Hero_Banner.jpg": "/static/media/About_us_Hero_Banner.78a30544836eefe380b2.jpg",
     "static/media/build.jpg": "/static/media/build.642ddde7554973abce5b.jpg",
     "static/media/person.jpg": "/static/media/person.c273ba3dba30c5357137.jpg",
@@ -22,11 +25,14 @@
     "static/media/register.png": "/static/media/register.39b4c2d1cd720913ed6e.png",
     "static/media/Sourcify Logo.png": "/static/media/Sourcify Logo.117991e9b3cca7e5ad9d.png",
     "index.html": "/index.html",
-    "main.8a4afb31.css.map": "/static/css/main.8a4afb31.css.map",
-    "main.1644ff7c.js.map": "/static/js/main.1644ff7c.js.map"
+    "main.90c269b4.css.map": "/static/css/main.90c269b4.css.map",
+    "main.d742108e.js.map": "/static/js/main.d742108e.js.map",
+    "498.9c39cec2.chunk.js.map": "/static/js/498.9c39cec2.chunk.js.map",
+    "703.31e56b59.chunk.js.map": "/static/js/703.31e56b59.chunk.js.map",
+    "598.ac67d1e0.chunk.js.map": "/static/js/598.ac67d1e0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8a4afb31.css",
-    "static/js/main.1644ff7c.js"
+    "static/css/main.90c269b4.css",
+    "static/js/main.d742108e.js"
   ]
 }
