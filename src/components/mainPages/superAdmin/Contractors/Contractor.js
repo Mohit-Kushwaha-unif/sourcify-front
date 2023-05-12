@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag, Table, Input } from 'antd';
+import { Space, Tag, Table, Input, Card } from 'antd';
 import "antd/dist/antd";
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,6 +13,9 @@ const Contractor = () => {
     const dispatch = useDispatch()
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
+    const [reviewData,setReviewData] = useState([])
+    const [approvedData,setApprovedData] = useState([])
+    const [rejectedData,setRejectedData] = useState([])
     const [loading, setLoading] = useState(false)
     const data = [];
     useEffect(() => {
@@ -34,7 +37,13 @@ const Contractor = () => {
                 dataText.value = tableData.entity
                 dataTable.push(dataText)
                 console.log(tableData)
+                var approv = 0
+                var review = 0
+                var grant = 0
                 if (tableData.user_id) {
+                    if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
+                    if(tableData.status === 0){setApprovedData((PREV)=>[...PREV, tableData]) }
+                    if(tableData.status === 2){setRejectedData((PREV)=>[...PREV, tableData]) }
                     data.push({
                         'user_id': tableData.user_id,
                         '_id': tableData._id,
@@ -191,23 +200,38 @@ const Contractor = () => {
                                 <div className="xl: w-full overflow-x-scroll   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
 
                                     <div className="flex flex-row items-center justify-center lg:justify-start">
-                                        <p className="headings mb-3">Contractors List</p>
+                                        <p className="headings mb-3">Contractors </p>
                                     </div>
-                                    <button
-                                        onClick={() => navigator('/contractor-form')}
-                                        className="brand_button px-2 padding_6_9 mb-3"
-                                    >
-                                        Add New Contractor </button>
-                                    <p className='flex mt-3 mb-6 items-baseline flex-col  md:flex-row'>
+                                    <div className='flex md:flex-row flex-col justify-between'>
+                                        <button
+                                            onClick={() => navigator('/contractor-form')}
+                                            className="brand_button px-2 padding_6_9 mb-3"
+                                        >
+                                            Add New Contractor </button>
+                                        <p className='w-[40%]'>
 
 
-                                        <Input.Search
-                                            className='md:w-[30%] '
-                                            placeholder="Search by..."
-                                            onSearch={search}
-                                        />
-                                    </p>
-
+                                            <Input.Search
+                                                className='w-full '
+                                                placeholder="Search by..."
+                                                onSearch={search}
+                                            />
+                                        </p>
+                                    </div>
+                                    <div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
+                                    <Card className='bg-gray-200 h-[50px] shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                       
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Active " bordered={false}>
+                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{approvedData.length}</p>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Under Review  " bordered={false}>
+                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{reviewData.length}</p>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Rejected " bordered={false}>
+                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{rejectedData.length}</p>
+                                    </Card>
+                                    </div>
                                     <Table
 
                                         columns={columns}

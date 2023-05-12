@@ -62,6 +62,7 @@ import Dashboardss from './Company_Dashboard/Dashboard'
 import Post from './superAdmin/Post/Post'
 import Add_Post from './superAdmin/Post/Add_Edit/Add_Post'
 import DashboardAdmin from './superAdmin/Dashboard/DashboardAdmin'
+import Report from './superAdmin/Report/ReportGenerator'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -139,6 +140,7 @@ const Pages = (props) => {
         <Route path="/admin/edit-contractors" element={isAdmin==2 ?<><Edit_Form/></> : <ResourceDenied/>}/>
         <Route path="/edit-contractors" element={<><Edit_Form/></>}/>
         <Route path="/admin/about-us" element={isAdmin==2 ?<><About_us/></> : <ResourceDenied/>}/>
+        <Route path="/admin/report" element={isAdmin==2 ?<Report/> : <ResourceDenied/>}/>
         <Route path="/admin/companies" element={isAdmin==2 ?<><Companies/></> : <ResourceDenied/>}/>
         <Route path="/admin/edit-company" element={isAdmin==2 ?<><EditForm_Vendor/></> : <ResourceDenied/>}/>
         <Route path="/edit-company" element={<><EditForm_Vendor/></>}/>

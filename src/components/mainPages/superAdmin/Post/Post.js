@@ -78,7 +78,7 @@ const Post = () => {
   const columns = [
 
     {
-      title: 'Work Segment',
+      title: 'Title',
       dataIndex: 'category',
       key: 'category',
       render: (_, record) => <Link to='/admin/edit-categories' state={{ _id: record?._id }}>{record.category}</Link>,
@@ -116,7 +116,7 @@ const Post = () => {
           <div className="xl: w-full overflow-x-scroll lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
             
             <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="headings mb-3 mr-4">Post List</p>
+              <p className="headings mb-3 mr-4">Notification List</p>
             </div>
             <button
               onClick={() => navigator('/admin/post-form')}

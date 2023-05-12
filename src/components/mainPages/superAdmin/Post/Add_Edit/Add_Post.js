@@ -19,7 +19,7 @@ const AddPost = () => {
   return (
     <div className="flex h-auto align-center ml-30 w-full p-2 px-3">
       <div className="pt-7 px-7 h-auto w-full bg-white p-3 rounded-xl">
-        <h1 className="mb-3">Enter Project Details</h1>
+        <h1 className="mb-3">Enter Notification Details</h1>
         <Form
           labelAlign="left"
           layout="vertical"
@@ -36,12 +36,12 @@ const AddPost = () => {
             ]}
             className="mb-1"
           >
-            <Input placeholder="Enter Title of Post" />
+            <Input placeholder="Enter Title of Notification" />
           </Form.Item>
 
           <Form.Item
             name="description"
-            label="Description of Post"
+            label="Description of Notification"
             rules={[
               {
                 required: true,
