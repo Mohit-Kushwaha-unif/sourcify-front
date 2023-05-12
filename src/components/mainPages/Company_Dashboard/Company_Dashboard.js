@@ -47,7 +47,10 @@ const Company_Dashboard = ({dataTransfer}) => {
       setContractors(res)
     })
   }, [])
-  dataTransfer(tableData)
+  useEffect(()=>{
+    dataTransfer(tableData)
+  },[tableData])
+  
   function deleteHandler(id) {
     dispatch(remove_listing({ listing_id: id }))
   }
