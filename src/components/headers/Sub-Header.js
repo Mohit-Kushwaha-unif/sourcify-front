@@ -10,23 +10,39 @@ const SubHeader = ({ filterValue }) => {
     const [hoverState, setHoverState] = useState({});
     const [language, setLanguage] = useState(); // Default language is English
     const location = useLocation()
-    useEffect(()=>{
+    const [screenSize, getDimension] = useState(window.innerWidth);
+    const [mobilView,setMobileView] = useState(false)
+    const setDimension = () => {
+        getDimension(window.innerWidth)
+    }
+    useEffect(() => {
+        window.addEventListener('resize', setDimension);
+        if (screenSize <= 759) {
+          // setShowMenu(true)
+          setMobileView(true)
+         
+        } else {
+          setMobileView(false)
+        
+        }
+      }, [screenSize])
+    useEffect(() => {
         setLanguage(localStorage.getItem("lan"))
-    },[])
+    }, [localStorage])
     const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
     console.log(WORK_SEGMENT)
     var navigate = useNavigate()
     const filterHandler = (event) => {
         navigate(`/work_segment#${event.target.textContent}`)
     }
-    
 
 
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-    localStorage.setItem("lan",event.target.value)
-    window.location = location.pathname
-  };
+
+    const handleLanguageChange = (event) => {
+        setLanguage(event.target.value);
+        localStorage.setItem("lan", event.target.value)
+        window.location = location.pathname
+    };
 
     useEffect(() => {
 
@@ -75,23 +91,25 @@ const SubHeader = ({ filterValue }) => {
                                 )}
                             </div>
 
-                           
+
                         </div>
-                        
+
                     )
                 })
             }
-            <div className='container relative'>
-            <div className='float-right'>
-                                <label htmlFor="language">Select language:</label>
-                                <select id="language" value={language} onChange={handleLanguageChange}>
-                                    <option value="en">English</option>
-                                    <option value="hi">हिंदी</option>
-                                </select>
-                            
-                            </div>
+
+          {!mobilView &&  <div className='container relative'>
+          <div className='float-right'>
+                <label htmlFor="language">Language:</label>
+                <select id="language" value={language} onChange={handleLanguageChange}>
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                </select>
+
             </div>
-             
+            </div>}
+
+
         </div>
 
     )

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import sourciyfwork from '../../../assests/sourciyfwork.png'
 
 const SourcifyWork = () => {
@@ -57,7 +58,7 @@ const SourcifyWork = () => {
                 
                 </div>
                 <div className='center_content'>
-                    <button className='prime_button_sec 'data-translate="hi">Register as Contractor</button>
+                    <Link to='/register' className='prime_button_sec 'data-translate="hi">Register as Contractor</Link>
                 </div>
             </div>
             <div className='container company_section mb-24'>
@@ -102,7 +103,7 @@ const SourcifyWork = () => {
                     
                 </div>
                 <div className='center_content'>
-                    <button className='brand_button 'data-translate="hi">Register as Company to Post Projects</button>
+                    <Link to='/register' className='brand_button 'data-translate="hi">Register as Company to Post Projects</Link>
                 </div>
             </div>
            

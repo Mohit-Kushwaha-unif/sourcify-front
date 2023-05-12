@@ -37,6 +37,8 @@ const Header = () => {
   const [category, setCategory] = useState([])
   const [mobilView,setMobileView] = useState(false)
   const isAdmin = useSelector(state => state.User.user_role);
+  const [language, setLanguage] = useState(); // Default language is English
+  const location = useLocation()
   useEffect(() => {
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
       setisLoggedIn(false)
@@ -44,6 +46,9 @@ const Header = () => {
       setisLoggedIn(localStorage.getItem('isLoggedIn'))
     }
   }, [localStorage.getItem('isLoggedIn')])
+  useEffect(() => {
+    setLanguage(localStorage.getItem("lan"))
+}, [localStorage])
   useEffect(() => {
     dispatch(get_category()).then((res) => {
       // console.log(res)
@@ -109,25 +114,12 @@ const Header = () => {
       setisLoggedIn(false)
     })
   }
-  const items = [
-    {
-      key: '1',
-      label: (
-        <Link rel="noopener noreferrer" to="/all_projects">
-          Projects
-        </Link>
-      ),
-    },
-    {
-      key: '2',
-      label: (
-        <Link rel="noopener noreferrer" to="/all_contractors">
-          Contractors
-        </Link>
-      ),
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+    localStorage.setItem("lan", event.target.value)
+    window.location = location.pathname
+};
 
-    },
-  ];
 
 
   function inputHandler(e) {
@@ -289,6 +281,16 @@ const Header = () => {
                       }} data-translate="hi">
                         Post Project
                       </div>
+                      {
+                  mobilView &&<div className='mt-3 center_content'>
+                  <label htmlFor="language">Language:</label>
+                  <select id="language" value={language} onChange={handleLanguageChange}>
+                      <option value="en">English</option>
+                      <option value="hi">हिंदी</option>
+                  </select>
+  
+              </div>
+                }
                     </div>
                   </div>
                 </>}
@@ -346,9 +348,11 @@ const Header = () => {
 
 
                     </div>
+                   
                   </div>
+                  
                 )}
-                
+               
               </header>
               <SubHeader />
             </div>

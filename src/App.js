@@ -10,13 +10,13 @@ function App() {
   const [language, setLanguage] = useState('en'); // replace 'hi' with your desired language code
   const location = useLocation()
   var path = location.pathname
-  
+
   const handleLanguageSelect = (selectedLanguage) => {
     setLanguage(selectedLanguage);
   };
   useEffect(() => {
-    if(localStorage.getItem("isModal") !=="false")
-   {   Swal.fire({
+    if (localStorage.getItem("isModal") !== "false") {
+      Swal.fire({
         title: '<strong>Select <u>language</u></strong>',
         icon: 'info',
         html:
@@ -34,40 +34,41 @@ function App() {
         if (result.isConfirmed) {
           handleLanguageSelect('en');
           localStorage.setItem("isModal", false)
-          localStorage.setItem("lan","en")
+          localStorage.setItem("lan", "en")
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           handleLanguageSelect('hi');
           localStorage.setItem("isModal", false)
-          localStorage.setItem("lan","hi")
+          localStorage.setItem("lan", "hi")
         }
-      });}
+      });
+    }
 
-    if(localStorage.getItem("lan") =="hi"){
-    translateToHindi("hi")
-  }
-    if(localStorage.getItem("lan") =="en"){
-    translateToHindi("en")
-  }
-  }, [language,path,localStorage]);
+    if (localStorage.getItem("lan") == "hi") {
+      translateToHindi("hi")
+    }
+    if (localStorage.getItem("lan") == "en") {
+      translateToHindi("en")
+    }
+  }, [language, path, localStorage]);
   function translateToHindi(ln) {
     const apiKey = "AIzaSyDK-YBCVq3NGJFwjOpIJfqf3Vb23pu7AG4";
-    const targetLanguage =ln
-  
+    const targetLanguage = ln
+
     // Translate all elements with the data-translate attribute
-    document.querySelectorAll("[data-translate]").forEach(function(el) {
+    document.querySelectorAll("[data-translate]").forEach(function (el) {
       const textToTranslate = el.textContent;
       translateText(textToTranslate, apiKey, targetLanguage)
-        .then(function(translatedText) {
+        .then(function (translatedText) {
           el.textContent = translatedText;
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Translation failed.", error);
         });
     });
-  
+
     // Translate all image alt and title attributes
-  
-  
+
+
     // Translate all CSS content
     // document.querySelectorAll("*").forEach(function (el) {
     //   const cssTextToTranslate = el.getAttribute("style");
@@ -81,7 +82,7 @@ function App() {
     //       });
     //   }
     // });
-  
+
     // Translate all input tags
     document.querySelectorAll("input").forEach(function (input) {
       const placeholderToTranslate = input.getAttribute("placeholder");
@@ -105,22 +106,38 @@ function App() {
           });
       }
     });
-    document.querySelectorAll("label").forEach(function(label) {
-      const textToTranslate = label.textContent;
+    const formLabels = document.querySelectorAll("form label:not([for^='checkbox']):not([for^='radio'])");
+
+    // Translate the text of each label element
+    formLabels.forEach(function(label) {
+      const textToTranslate = label.childNodes[0].nodeValue; // Get the text node of the label
       translateText(textToTranslate, apiKey, targetLanguage)
         .then(function(translatedText) {
-          label.textContent = translatedText;
+          label.childNodes[0].nodeValue = translatedText; // Update the text node of the label
         })
         .catch(function(error) {
           console.log("Translation failed.", error);
         });
-    });
-    
+    }
+    )
+    // document.querySelectorAll("label:not([for^='checkbox']):not([for^='radio'])").forEach(function(label) {
+
+    //   const textToTranslate = label.textContent;
+    //   translateText(textToTranslate, apiKey, targetLanguage)
+    //     .then(function(translatedText) {
+    //       label.textContent = translatedText;
+    //     })
+    //     .catch(function(error) {
+    //       console.log("Translation failed.", error);
+    //     });
+    // });
+
+
 
   }
-  
-  
-  
+
+
+
   function translateText(textToTranslate, apiKey, targetLanguage) {
     return fetch(
       `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
@@ -135,16 +152,16 @@ function App() {
         }),
       }
     )
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         return data.data.translations[0].translatedText;
       });
   }
   return (
     <div className="App">
-      
+
       <Header />
       <Pages />
       <Footer />
