@@ -163,7 +163,7 @@ const EditListing = () => {
                         <Form labelAlign="left"
                             fields={[...initialValues, ...selectedOptions]}
                             layout="vertical" onFinish={FormHandler}>
-                            <Form.Item name='project_discription' className='mb-1 mt-0' label="Write the Description of Your Project" rules={[
+                            <Form.Item name='project_discription' className='mb-1 mt-0' label="Write the Name of your project" rules={[
                                 {
                                     required: true,
                                     message: 'Please input your Contact Person Name'

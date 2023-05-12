@@ -160,7 +160,7 @@ const ListingForm = () => {
                                     <Form.Item name='user_id' label="" rules={[
                                         {
                                             required: true,
-                                            message: 'Write the description of your project'
+                                            message: 'Write the Name of your project'
                                         },
                                     ]}
                                     >

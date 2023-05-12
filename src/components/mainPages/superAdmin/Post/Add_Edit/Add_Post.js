@@ -45,7 +45,7 @@ const AddPost = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input description of your project',
+                message: 'Please input Name of your project',
               },
             ]}
             className="mb-1 mt-0"

@@ -17,6 +17,7 @@ const Contractor_Dashboard = () => {
   var data = []
   const [tableData, setTableData] = useState([])
   const [lisitngs, setAllLisitngs] = useState([])
+  const [render,setRender] = useState(false)
   const [contractors, setContractors] = useState([])
   const [postedProjects, setPostedProjects] = useState(0)
   const [activeProjects, setActiveProjects] = useState(0)
@@ -73,6 +74,7 @@ const Contractor_Dashboard = () => {
           })
         }
         setTableData(data)
+        setRender(true)
       })
 
       // }
@@ -91,10 +93,6 @@ const Contractor_Dashboard = () => {
 
       }
     })
-  }
-
-  const projectHandler = (id) => {
-    navigator('/projectDetails', { state: id })
   }
   const columns = [
     {
@@ -166,20 +164,12 @@ const Contractor_Dashboard = () => {
 
       }
     },
-    // {
-    //     title: 'Action',
-    //     key: 'action',
-    //     render: (_, record) => (
-    //         <Space size="middle">
-    //             <Link to='/edit-listing' state={{ _id: record._id }}>Edit </Link>
-    //             <Link>Delete</Link>
-    //         </Space>
-    //     ),
-    // },
+
   ];
   return (
     <>
 
+     
       <div >
 
         <section className="container  min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
@@ -219,7 +209,7 @@ const Contractor_Dashboard = () => {
                
             </Card> */}
           </div>
-
+          <Company_Dashboard dataTransfer={Company_Data} />
           <div className="px-2 h-auto text-gray-800 ">
             <div
               className="flex w-full flex-wrap h-full  "
@@ -235,48 +225,9 @@ const Contractor_Dashboard = () => {
           </div>
         </section>
 
-        {/* <div className='ml-6 font-semibold'>Projects you might Like to work on </div>
-        <div className='grid grid-cols-6'>
-
-          <div className='p-6 col-span-5'><div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {
-              lisitngs.length > 0 && lisitngs.map((res) => {
-                
-                return <div className='grid grid-cols-2 rounded-lg border-2 h-auto  '>
-                  <div class="relative w-full font-semibold col-span-2 p-4 h-auto text-xl">
-                    <h2 class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project Description</span> <span className='overflow-hidden text-ellipsis text-[#FF5757] truncate'> {res.project_discription}</span></h2>
-                    <p class="font-semibold  mt-4 overflow-hidden text-ellipsis  truncate"><span>Project scope</span><span className='max-w-2xl overflow-hidden text-ellipsis text-[#FF5757] truncate"'> {res.project_scope }</span></p>
-                    <div class="mt-4 flex items-center">
-                      <div class=" wrap  pt-4 pb-2">
-                      <h3 className=' mb-2'>Working Sectors</h3>
-                        {
-                          res.wok_segment.map((work) => {
-                            return <span class="inline-block wrap bg-[#FF5757] rounded-full px-3  text-sm font-semibold text-[#ffffff] py-2 mr-2 mb-2">{work}</span>
-                          })
-                        }
-                      </div>
-
-                    </div>
-
-                    <button
-                      type="submit"
-                      onClick={() => projectHandler(res._id)}
-                      className="md:absolute right-1 bottom-0 primary_btn mb-3 mr-3"
-                    >
-                      View Details
-                    </button>
-
-
-                  </div>
-                </div>
-              })
-            }
-
-          </div>
-          </div>
-        </div> */}
       </div>
-      <Company_Dashboard dataTransfer={Company_Data} />
+    
+      
     </>
   )
 }
