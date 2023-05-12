@@ -91,13 +91,21 @@ const ProjectDetails = () => {
                                         </label>
                                         {formValues.listing.project_scope ? formValues.listing.project_scope : 'Not Provided'}
                                     </div>
-                                    <div class="mb-4">
+                                    <div class=" grid md:grid-cols-2  gap-5">
+                                        <div>
                                         <label class="block text-gray-700 font-bold mb-2" for="email">
-                                            Preferred State
+                                            Project State
                                         </label>
                                         {formValues?.listing.prefferd_state.map((states) => {
                                             return <Tag>{states}</Tag>
                                         })}
+                                        </div>
+                                        <div>
+                                        <label class="block text-gray-700 font-bold mb-2" for="email">
+                                            City
+                                        </label>
+                                        <Tag>{formValues?.listing?.City}</Tag>
+                                        </div>
 
                                     </div>
                                     <div class="mb-4">

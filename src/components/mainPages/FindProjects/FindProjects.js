@@ -109,6 +109,9 @@ const FindProjects = () => {
     const handlePageChange = (page, pageSize) => {
         setCurrentPage(page);
         setPageSize(pageSize);
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        setProjectsOnPage(projectDetails.slice(startIndex, endIndex));
     };
     const handleFormChange = () => {
         const { Project_name, Location, work_Segments, work_area_type } = form.getFieldsValue();
@@ -211,7 +214,7 @@ const FindProjects = () => {
         setProjectsOnPage(projectDetails.slice(startIndex, endIndex));
 
 
-    }, [projectDetails])
+    }, [projectDetails, currentPage, pageSize])
     function pagination(projectDetails) {
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;

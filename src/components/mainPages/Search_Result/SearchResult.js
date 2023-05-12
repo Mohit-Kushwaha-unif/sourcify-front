@@ -114,8 +114,8 @@ const SearchResult = () => {
                     });
                 }
             });
-
         });
+        setProjectDetails([...projDet]);
         dispatch(get_contractor()).then((res) => {
             res.filter((vendor_det) => {
 
@@ -133,7 +133,7 @@ const SearchResult = () => {
             console.log(projDet);
             setProjectDetails([...projDet]);
         });
-        setProjectDetails([...projDet]);
+        
     }, [projects, dispatch]);
 
     const projectHandler = (id) => {
@@ -205,44 +205,44 @@ const SearchResult = () => {
             <div className='font-[600]  font_18  mb-5' level={2} > <span data-translate="hi">Search Result for</span>  <span className='text-color' data-translate="hi">Contractors</span> <span data-translate="hi">which includes</span>   <span className='text-color'>{location.state.input} </span></div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                 {location.state.res.contractors.length > 0 ? location.state.res.contractors.map((item) => {
+                    if (item.status == 0) {
+                        return <div className='grid grid-cols-4 gap-2 w-full border-2 h-[300px] scrollbar  shadow-md p-4 py-6 overflow-auto'>
+                            <div className='col-span-1 '>
+                                <img src={dummy_img} className='rounded-[50px]' />
+                            </div>
+                            <div className='col-span-3'>
+                                <div className='font-bold text-[18px]' data-translate="hi"> {item.username} </div>
+                                <div className='text-[#808080] text-[16px]' data-translate="hi">{item.City} , {item.State} </div>
+                                <div className='flex'>
+                                    <span className='mr-1'><img src={star} /></span>
+                                    <span className='mr-1'><img src={star} /></span>
+                                    <span className='mr-1'><img src={star} /></span>
+                                    <span className='mr-1'><img src={star} /></span>
+                                </div>
+                            </div>
+                            <div className='col-span-4 mt-2'>
+                                <p className='font-[inter]'>
+                                    <span className='text-sm text-[#808080]' data-translate="hi">Work Segments: </span>
+                                    <span>
+                                        {item.work_area.length > 0 && item.work_area.map((work, index) => {
+                                            if (index === item.work_area.length - 1) {
+                                                return <span data-translate="hi" key={work.work_segment}>{work.work_segment}</span>;
+                                            } else {
+                                                return <span data-translate="hi" key={work.work_segment}>{work.work_segment}, </span>;
+                                            }
+                                        })}
+                                    </span>
+                                </p>
+                            </div>
+                            <div className='col-span-4 '>
+                                <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
+                                    <span className='white_p mr-3 font_700' data-translate="hi">Contact</span>
+                                    <img src={right_red} />
+                                </button>
 
-                    return <div className='grid grid-cols-4 gap-2 w-full border-2 h-[300px] scrollbar  shadow-md p-4 py-6 overflow-auto'>
-                        <div className='col-span-1 '>
-                            <img src={dummy_img} className='rounded-[50px]' />
-                        </div>
-                        <div className='col-span-3'>
-                            <div className='font-bold text-[18px]' data-translate="hi"> {item.username} </div>
-                            <div className='text-[#808080] text-[16px]' data-translate="hi">{item.City} , {item.State} </div>
-                            <div className='flex'>
-                                <span className='mr-1'><img src={star} /></span>
-                                <span className='mr-1'><img src={star} /></span>
-                                <span className='mr-1'><img src={star} /></span>
-                                <span className='mr-1'><img src={star} /></span>
                             </div>
                         </div>
-                        <div className='col-span-4 mt-2'>
-                            <p className='font-[inter]'>
-                                <span className='text-sm text-[#808080]' data-translate="hi">Work Segments: </span>
-                                <span>
-                                    {item.work_area.length > 0 && item.work_area.map((work, index) => {
-                                        if (index === item.work_area.length - 1) {
-                                            return <span data-translate="hi" key={work.work_segment}>{work.work_segment}</span>;
-                                        } else {
-                                            return <span data-translate="hi" key={work.work_segment}>{work.work_segment}, </span>;
-                                        }
-                                    })}
-                                </span>
-                            </p>
-                        </div>
-                        <div className='col-span-4 '>
-                            <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
-                                <span className='white_p mr-3 font_700' data-translate="hi">Contact</span>
-                                <img src={right_red} />
-                            </button>
-
-                        </div>
-                    </div>
-
+                    }
 
                 })
                     :

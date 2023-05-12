@@ -37,7 +37,7 @@ const Work_segment_foooter = () => {
         category.map((cat)=>{
             return <>
             <div className='mb-16' id={cat.name}>
-            <Link to={`#${cat.name}`} className='rale_text my-10 font_24 'data-translate="hi">{cat.name}</Link>
+            <Link to={`/work_segment/#${cat.name}`} className='rale_text my-10 font_24 'data-translate="hi">{cat.name}</Link>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-[5px]'>
             {
                 cat.children.length > 0 && cat.children.map((cat_sub)=>{
