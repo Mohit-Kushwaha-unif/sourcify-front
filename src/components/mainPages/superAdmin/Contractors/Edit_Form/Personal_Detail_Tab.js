@@ -291,6 +291,9 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if (localStorage.getItem("adminEmail") == null) {
       value.user_id = localStorage.getItem("user_id")
     }
+    else{
+      formData.append("user_id",formValues.user_id._id)
+    }
     value.role = 0;
 
     if (value.msme_image) {
@@ -335,7 +338,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     })
     console.log(formValues)
     formData.append("form_id", formValues._id)
-    formData.append("user_id",formValues.user_id._id)
+   
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
