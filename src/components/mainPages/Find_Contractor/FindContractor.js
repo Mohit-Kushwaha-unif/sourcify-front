@@ -37,7 +37,18 @@ const FindContractor = () => {
   useEffect(() => {
     dispatch(get_contractor()).then((res) => {
       res.map((cont) => {
-        setContractors(prev => [...prev, cont])
+
+        if(cont.status ==0){
+          if(localStorage.getItem("user_id") && localStorage.getItem("user_id") !=cont.user_id )
+          {
+            setContractors(prev => [...prev, cont])
+          }
+          else{
+            setContractors(prev => [...prev, cont])
+          }
+          }
+          
+       
         setLoading(false)
       })
 
@@ -92,9 +103,23 @@ const FindContractor = () => {
     }
     
     dispatch(search_contractor(formData)).then((res) => {
+      setContractors([])
+      res.map((cont) => {
+        if(cont.status ==0){
+          if(localStorage.getItem("user_id") && localStorage.getItem("user_id") !=cont.user_id )
+          {
+            setContractors((prev)=> [...prev,cont])
+          }
+          else{
+            setContractors((prev)=> [...prev,cont])
+          }
+          }
+          
+       
+        setLoading(false)
+      })
 
-
-      setContractors([...res])
+      
     })
   }
 
@@ -233,7 +258,7 @@ const FindContractor = () => {
                   dataSource={contractors.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
                   renderItem={item => (
                     <List.Item >
-                      <div className='grid grid-cols-4 gap-2 w-full border-2 h-[300px] scrollbar  shadow-md p-4 py-6 overflow-auto'>
+                      <div className='grid grid-cols-4 gap-2 w-full border-2 h-[300px] scrollbar  shadow-md p-4 py-6 ' style={{ overflowWrap: 'break-word' }}>
                         <div className='col-span-1 '>
                           <img src={dummy_img} className='rounded-[50px]' />
                         </div>
@@ -262,12 +287,13 @@ const FindContractor = () => {
                           </p>
 
                         </div>
-                        <div className='col-span-4 '>
+                        <div className='col-span-4 realtive '>
+                          <div className='absolute bottom-5'>
                           <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
                             <span className='white_p mr-3 font_700'>Contact</span>
                             <img src={right_red} />
                           </button>
-
+                          </div>
                         </div>
                       </div>
                     </List.Item>

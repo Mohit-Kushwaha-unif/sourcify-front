@@ -559,6 +559,13 @@ input[type=number] {
 .scrollbar::-webkit-scrollbar {
   width: 1px;
 }
+.sleak_scrollbar::-webkit-scrollbar {
+  width: 1px I !important;
+}
+.sleak_scrollbar::-webkit-scrollbar-track {
+  width: 1px I !important;
+
+}
 
 
 .scrollbar::-webkit-scrollbar-track {

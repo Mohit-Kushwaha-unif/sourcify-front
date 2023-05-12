@@ -33,7 +33,7 @@ const SubHeader = ({ filterValue }) => {
     console.log(WORK_SEGMENT)
     var navigate = useNavigate()
     const filterHandler = (event) => {
-        navigate(`/work_segment#${event.target.textContent}`)
+        navigate(`/work_segment/#${event.target.textContent}`)
     }
 
 
@@ -65,21 +65,21 @@ const SubHeader = ({ filterValue }) => {
 
     }
     return (
-        <div className=' mt-1  sm:mb-1  flex  '>
+        <div className=' mt-1  sm:mb-1  flex  md:flex-row flex-col   '>
             {
                 category.length > 0 && category.map((cats) => {
                     return (
                         <div
-                            className='p-1 mt-3 mr-10 flex items-baseline place-content-center cursor-pointer'
+                            className='p-1 mt-3 mr-10 flexitems-baseline place-content-center cursor-pointer'
                             onMouseEnter={() => toggleHoverState(cats)}
                             onMouseLeave={() => toggleHoverState(cats)}
                         >
                             <div className='relative flex items-baseline' >
                                 <p onClick={filterHandler} className='header_text  sm:mb-1 mr-3' data-translate="hi">{cats.name}</p>
-                                <img className='max-h-[50%]' src={dropdown_icon} />
+                               {!mobilView && <img className='max-h-[50%]' src={dropdown_icon} />}
 
-                                {cats.children.length > 0 && hoverState[cats] && (
-                                    <div className="dropdown-menu text-sm    scrollbar">
+                                {!mobilView &&cats.children.length > 0 && hoverState[cats] && (
+                                    <div className="dropdown-menu text-sm sleak_scrollbar">
                                         {
                                             cats.children.map((sub_cat) => {
                                                 return <ul>

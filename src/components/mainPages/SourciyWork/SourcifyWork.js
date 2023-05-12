@@ -11,7 +11,7 @@ const SourcifyWork = () => {
                 <div className='content container' >
                     <h2 className='brand_text mb-5 pt-16  'data-translate="hi">How Sourcify Works</h2>
                     <div className='md:max-w-[50%]'>
-                        <p className='white_desc mb-5'data-translate="hi">Sourcify's platform is designed to streamline the sourcing process and make it more efficient for businesses and contractors.</p>
+                        <p className='white_desc font_18 mb-5'data-translate="hi">Sourcify's platform is designed to streamline the sourcing process and make it more efficient for businesses and contractors.</p>
                         <p className='white_desc font_18'data-translate="hi"> Whether you're a business looking for contractors or a contractor looking for new opportunities, Sourcify is here to help you achieve your goals</p>
                     </div>
                 </div>

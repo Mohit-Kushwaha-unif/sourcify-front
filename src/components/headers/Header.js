@@ -161,9 +161,19 @@ const Header = () => {
                 <div className='col-span-2 md:col-span-1 mr-3 md:mr-0 '>
                   <div> <img className='  md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
                 </div>
+                {
+                  mobilView && showMenu&& <div className='mt-3 h-5  flex  items-center header_text '>
+                  <label htmlFor="language">Language:</label>
+                  <select id="language" value={language} onChange={handleLanguageChange}>
+                      <option value="en">English</option>
+                      <option value="hi">हिंदी</option>
+                  </select>
+  
+              </div>
+                }
                 {isLoggedIn ?
                   <>
-                    <div className='col-span-3 md:hidden flex  mx-3 my-3 mr-3'>
+                    <div className={`col-span-3 md:hidden ${showMenu ? 'mx-0 order-3' : 'mx-3'} flex   my-3 mr-3`}>
                       <span className='mr-2 '><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text' data-translate="hi">Messages</p></NavLink>
                     </div>
                     <div
@@ -189,9 +199,9 @@ const Header = () => {
                     </div>
 
                   </>
-                  : <div className=' ml-8 col-span-4 md:hidden grid grid-cols-4'>
-                    <Link className='flex col-span-2   my-3 mr-3' to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'data-translate="hi">Register</p>  </Link>
-                    <Link className='flex col-span-2  my-3  mr-3' to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'data-translate="hi"> Login </p> </Link>
+                  : <div className={ ` ${mobilView && showMenu ?"ml-0 my-3":"ml-8 "} md:hidden grid grid-cols-4 col-span-4`} >
+                    <Link className={`flex   ${mobilView && showMenu ?"col-span-4 mb-2 " : '  col-span-2  my-3 mr-3'}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text'data-translate="hi">Register</p>  </Link>
+                    <Link className={`flex   ${mobilView && showMenu ?"col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text'data-translate="hi"> Login </p> </Link>
                   </div>}
                   </div>
                 {!showMenu?
@@ -203,13 +213,16 @@ const Header = () => {
                 {showMenu && <>
                   <div className='md:col-span-3 col-span-7 md:grid grid-cols-1 md:grid-cols-3  md:items-center '>
 
-                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ml-2' to={'/contractors'}data-translate="hi" >Find Contractors</NavLink>
+                    <NavLink className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 md:ml-2' to={'/contractors'}data-translate="hi" >Find Contractors</NavLink>
 
-
-                    <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3 ' to={'/project_list'}data-translate="hi">Find Projects</NavLink>
-
-
+                    <div  className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 '>
+                    <NavLink to={'/project_list'}data-translate="hi">Find Projects</NavLink>
+                    </div>
+                    <div  className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 '>
                     <NavLink className='header_text flex justify-center cursor-pointer md:mb-0 mb-3' to={'/SourcifyWork'}data-translate="hi">How it works</NavLink>
+                    </div>
+
+                   
                   </div>
                   {showMenu && <>
                     <div className='grid  col-span-7  md:col-span-2 w-full md:mb-0 mb-3 ' >
@@ -253,19 +266,19 @@ const Header = () => {
                       </>
                       :
                       <>
-                        <Link className='flex items-center mr-3 hidden md:inline-block' to='/register'>
+                        <div className='flex items-center mr-3 hidden md:inline-block' to='/register'>
                           <span className='flex items-center'>
                             <img src={edit_icon} className='mr-1' />
-                            <p className='header_text'data-translate="hi">Register</p>
+                            <NavLink to='/register' className='header_text'data-translate="hi">Register</NavLink>
                           </span>
-                        </Link>
+                        </div>
 
-                        <Link className='flex items-center mr-3 hidden md:inline-block' to='/login'>
+                        <div className='flex items-center mr-3 hidden md:inline-block' >
                           <span className='flex items-center'>
                             <img src={profile} className='mr-1' />
-                            <p className='header_text'data-translate="hi">Login</p>
+                            <NavLink to='/login' className='header_text'data-translate="hi">Login</NavLink>
                           </span>
-                        </Link>
+                        </div>
 
                       </>
                     }
@@ -282,23 +295,16 @@ const Header = () => {
                         Post Project
                       </div>
                       {
-                  mobilView &&<div className='mt-3 center_content'>
-                  <label htmlFor="language">Language:</label>
-                  <select id="language" value={language} onChange={handleLanguageChange}>
-                      <option value="en">English</option>
-                      <option value="hi">हिंदी</option>
-                  </select>
-  
-              </div>
-                }
+                        mobilView && <SubHeader/>
+                      }
                     </div>
                   </div>
                 </>}
                 {isOpen && (
-                  <div className="absolute z-[999] top-[10%] md:top-[88px] w-[210px]  left-[34%]  md:left-[66%] bg-[white]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {showStatus && <div className='px-4 py-2'>
-                        <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>Account status - </span>
+                  <div className="absolute z-[999] top-[10%] md:top-[88px] w-[210px]  left-[34%]  md:left-[66%] bg-[white]  w-60 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" style={{ overflowWrap: 'break-word' }}>
+                    <div className="py-1" style={{ overflowWrap: 'break-word' }}>
+                      {showStatus && <div className={`px-4 py-2`}>
+                        <span className='cursor-pointer' onClick={() => { accountStatus === 0 && navigate('/dashboard') }}>{`${showMenu && mobilView ?'Status' :"Account status -"} `} </span>
                         <span>{accountStatus === 0 ? <Tag color="green">Live</Tag> : accountStatus === 1 ? <Tag color="yellow">Under Review</Tag> : <Tag color="volcano">Blocked</Tag>}</span>
                       </div>}
                       <div className='px-4 py-2' onClick={() => { navigate('/dashboard') }}>Dashboard</div>
@@ -354,7 +360,9 @@ const Header = () => {
                 )}
                
               </header>
-              <SubHeader />
+              {
+                  !mobilView &&
+              <SubHeader />}
             </div>
           </div>
         </>
