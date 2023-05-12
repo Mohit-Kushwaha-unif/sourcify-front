@@ -116,7 +116,7 @@ const Contractor_Dashboard = () => {
       render: (text) => text,
     },
     {
-      title: 'Preferred State',
+      title: 'Project State',
       dataIndex: 'work_segment',
       key: 'work_segment',
       render: (_, { work_segment }) => (
