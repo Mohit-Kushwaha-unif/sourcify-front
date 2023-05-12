@@ -102,7 +102,7 @@ const DashboardAdmin = () => {
     var work_area= []
     setCategory(val.Category)
     Object.keys(val).map((val_item) => {
-      val.work_segment.map((work) => {
+     val.work_segment!=undefined && val.work_segment.map((work) => {
           if (val_item === work) {
 
               work_area.push({ [val_item]: val[val_item] })
@@ -586,7 +586,7 @@ const DashboardAdmin = () => {
                             })
                             }
               <div className='grid md:grid-cols-2'>
-                <button className='  brand_button w-[30%]'> Report</button>
+                <button   type="submit"  className='  brand_button w-[30%]' > Report</button>
                { showTable&& <div className='grid place-items-end'>
                   <button className='prime_button_sec w-[40%]  ' onClick={downloadPDF}>Download PDF</button>
                 </div>}
