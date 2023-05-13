@@ -185,7 +185,7 @@ const Sidebar = () => {
                         </li>
                         <li className="rounded-sm">
                             <NavLink
-                                to="/admin/messages"
+                                to="/messages"
                                 className="flex items-center p-2 space-x-3 rounded-md"
                             >
                                     {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  className="bi bi-grid-1x2-fill w-6 h-6">

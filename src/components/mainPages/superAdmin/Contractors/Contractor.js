@@ -205,7 +205,7 @@ const Contractor = () => {
                                     <div className='flex md:flex-row flex-col justify-between'>
                                         <button
                                             onClick={() => navigator('/contractor-form')}
-                                            className="brand_button px-2 padding_6_9 mb-3"
+                                            className="brand_button font_400 px-2 padding_6_9 mb-3"
                                         >
                                             Add New Contractor </button>
                                         <p className='w-[40%]'>
@@ -218,18 +218,15 @@ const Contractor = () => {
                                             />
                                         </p>
                                     </div>
-                                    <div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
-                                    <Card className='bg-gray-200 h-[50px] shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                    <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
                                        
                                     </Card>
-                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Active " bordered={false}>
-                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{approvedData.length}</p>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>
                                     </Card>
-                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Under Review  " bordered={false}>
-                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{reviewData.length}</p>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
                                     </Card>
-                                    <Card className='bg-gray-200 h-[150px] shadow-md border-2 border-solid mb-5' title="Rejected " bordered={false}>
-                                        <p className='col-span-1  mr-1 brand_text font_24 font_inter new_color  cursor-pointer'  >{rejectedData.length}</p>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
                                     </Card>
                                     </div>
                                     <Table

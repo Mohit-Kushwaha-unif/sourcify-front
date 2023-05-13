@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
-import { Space, Tag, Table, Input } from 'antd';
+import { Space, Tag, Table, Input, Card } from 'antd';
 // import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import { get_Vendor, remove_vendor } from '../../../../services/Vendor';
@@ -15,6 +15,9 @@ const Companies = () => {
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
     const [loading,setLoading] = useState(false)
+    const [reviewData,setReviewData] = useState([])
+    const [approvedData,setApprovedData] = useState([])
+    const [rejectedData,setRejectedData] = useState([])
     useEffect(() => {
         setLoading(true)
         tableDataMaker()
@@ -35,6 +38,10 @@ const Companies = () => {
                     tableCont.value = tableData.agency_name
                     tableDataFilter.push(tableCont)
                     if (tableData.user_id) {
+                        if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
+                        if(tableData.status === 0){setApprovedData((PREV)=>[...PREV, tableData]) }
+                        if(tableData.status === 2){setRejectedData((PREV)=>[...PREV, tableData]) }
+                     
                     data.push({
                         'user_id': tableData.user_id,
                         '_id': tableData._id,
@@ -185,22 +192,35 @@ const Companies = () => {
                 >
                     <div className="xl: w-full overflow-x-scroll lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
                     <div className="flex flex-row items-center justify-center lg:justify-start">
-                            <p className="headings mb-3 mr-4">Companies List</p>
+                            <p className="headings mb-3 mr-4">Companies </p>
                         </div>
+                        <div className='flex md:flex-row flex-col justify-between'>
                         <button
                             onClick={() => navigator('/vendor-form')}
-                            className="brand_button padding_6_9 mb-3"
+                            className="brand_button font_400 padding_6_9 mb-3"
                         >
                             Add New Company </button>
                         
-                        <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
+                        <p className='w-[40%]'>
 
                             <Input.Search
-                                className='md:w-[30%] '
+                                className='w-full '
                                 placeholder="Search by..."
                                 onSearch={search}
                             />
                         </p>
+                        </div>
+                        <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                       
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
+                                    </Card>
+                                    </div>
                         <Table
 
                             columns={columns}

@@ -20,7 +20,7 @@ const ViewFeedback = () => {
         <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-2xl">
             <div class="md:flex">
                 <div class="w-full px-6 py-8">
-                    <h2 class="text-center font-bold text-gray-700 text-2xl mb-6">FeedBack Detail</h2>
+                    <h2 class="text-center font-bold text-gray-700 text-2xl mb-6">Enquiries Detail</h2>
                     {!Array.isArray(feedBack) && <div  class="mb-4">
                         <div class="mb-4">
                             <label class="block text-gray-700 font-bold mb-2" for="name">

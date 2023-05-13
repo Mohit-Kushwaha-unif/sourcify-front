@@ -1,4 +1,4 @@
-import { Space,  Tag,Table, Input } from 'antd'
+import { Space,  Tag,Table, Input, Card } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -14,6 +14,9 @@ const All_Listings = () => {
     const [tableData, setTableData] = useState([])
     var [categories,setCategories] = useState([])
     const [loading,setLoading] = useState(true)
+    const [reviewData,setReviewData] = useState([])
+    const [approvedData,setApprovedData] = useState([])
+    const [rejectedData,setRejectedData] = useState([])
     var data = []
     var catData = []
     useEffect(() => {
@@ -41,6 +44,10 @@ const All_Listings = () => {
                 dataText.text = tableData.wok_segment
                 dataText.value = tableData.wok_segment
                 dataTable.push(dataText)
+                if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
+                if(tableData.status === 0){setApprovedData((PREV)=>[...PREV, tableData]) }
+                if(tableData.status === 2){setRejectedData((PREV)=>[...PREV, tableData]) }
+              
                 data.push({
                     '_id': tableData._id,
                     'key': index,
@@ -205,21 +212,33 @@ const All_Listings = () => {
                         <div className="flex flex-row items-center justify-center lg:justify-start">
                             <p className="headings mb-3 mr-4">All Projects</p>
                         </div>
+                        <div className='flex md:flex-row flex-col justify-between'>
                         <button
                             onClick={() => navigator('/dashboard/listing-form')}
-                            className="brand_button padding_6_9 mb-5"
+                            className="brand_button font_400 padding_6_9 mb-5"
                         >
-                            Add New Projects </button>
-                        <p className='flex mb-6 items-baseline flex-col  md:flex-row'>
+                            Add New Project </button>
+                        <p className='w-[40%]'>
                            
 
                         <Input.Search
-                            className='md:w-[30%] '
+                            className='w-full '
                             placeholder="Search by..."
                             onSearch={search}
                         />
                         </p>
-                        
+                        </div>
+                        <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                       
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
+                                    </Card>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
+                                    </Card>
+                                    </div>
                         <Table 
                             columns={columns}
                             dataSource={ tableData}

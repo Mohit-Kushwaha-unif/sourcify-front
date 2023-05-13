@@ -87,22 +87,22 @@ const DashboardAdmin = () => {
             <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Total Projects" bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer' onClick={()=>{navigate('/admin/all-listing')}}>{projects.length} </p>
             </Card>
-            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment " bordered={false}>
+            {/* <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment " bordered={false}>
 
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer' onClick={()=>{navigate('/admin/category-list')}}> {sub_cat?.length}</p>
 
-            </Card>
+            </Card> */}
 
-            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Parent Work Segment " bordered={false}>
+            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment " bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/category-list')}}> {categories?.length}</p>
             </Card>
-            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Sub Work Segment " bordered={false}>
+            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment types" bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/category-list')}}>{sub_cat?.length - categories?.length} </p>
             </Card>
 
-            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Feedbacks Recieved" bordered={false}>
+            {/* <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Feedbacks Recieved" bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer' onClick={()=>{navigate('/admin/feedbacks')}}>{feedBacks.length} </p>
-            </Card>
+            </Card> */}
            
           </div>
 

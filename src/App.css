@@ -567,6 +567,9 @@ input[type=number] {
 
 }
 
+.font_400{
+  font-weight: 400 !important;
+}
 
 .scrollbar::-webkit-scrollbar-track {
   background-color: #ffffff;

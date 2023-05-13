@@ -94,7 +94,7 @@ const Post = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to='/admin/edit-categories' state={{ _id: record?._id }}>Edit </Link>
+          {/* <Link to='/admin/edit-categories' state={{ _id: record?._id }}>Edit </Link> */}
           <Link onClick={() => deleteHandler(record._id)}>Delete</Link>
           <Link onClick={() => PublishHandler(record._id)}>Publish</Link>
         </Space>
@@ -120,7 +120,7 @@ const Post = () => {
             </div>
             <button
               onClick={() => navigator('/admin/post-form')}
-              className="brand_button padding_6_9 mb-3"
+              className="brand_button font_400 padding_6_9 mb-3"
             >
               Add New  </button>
             <Table columns={columns} dataSource={tableData} />
