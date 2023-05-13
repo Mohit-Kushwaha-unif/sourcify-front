@@ -164,14 +164,14 @@ const SearchResult = () => {
 
     return (
 
-        <div className='container'>
+        <div className='container my-10'>
             <div className='font-[600] font_18 mb-5' level={2}> Search Result for <span className='text-color'>Projects</span>   which includes <span className='text-color'>{location.state.input} </span></div>
             {
                 projectDetails.length > 0 ? projectDetails.map((proj_det) => {
 
                     return <div className='project_card p-6 border-2  mb-5'>
                         <h2 className='prime_h2 font_18 mb-3' data-translate="hi">Project Name</h2>
-                        <div className='grid grid-cols-3 gap-2 mb-3'>
+                        <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mb-3'>
                             <div>
                                 <span data-translate="hi">Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
                             </div>
@@ -193,8 +193,8 @@ const SearchResult = () => {
                             })
                         }
                         <p className='my-5' data-translate="hi">{proj_det.pro_details.project_discription}</p>
-                        <div className='flex pt-3'>
-                            <button className='prime_button_sec  mr-5 h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }} data-translate="hi" >Share Interest</button>
+                        <div className='flex md:flex-row flex-col pt-3'>
+                            <button className='prime_button_sec mb-5 md:mb-0 md:mr-5 h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }} data-translate="hi" >Share Interest</button>
                             <button className='brand_button h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }} data-translate="hi">View Project Details</button>
                         </div>
                     </div>

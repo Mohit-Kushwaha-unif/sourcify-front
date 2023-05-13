@@ -23,7 +23,7 @@ const FindProjects = () => {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const userRole = useSelector(state => state.User.user_role);
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(6);
     const [isCompany, setIsCompany] = useState(false)
     const dispatch = useDispatch()
     const [listID, setListId] = useState()
@@ -431,7 +431,7 @@ const FindProjects = () => {
 
                                     return <div className='project_card p-6 border-2  mb-5'>
                                         <h2 className='prime_h2 font_18 mb-3'>Project Name</h2>
-                                        <div className='grid grid-cols-3 gap-2 mb-3'>
+                                        <div className='grid grid grid-cols-1 md:grid-cols-3 gap-2 mb-3'>
                                             <div>
                                                 <span>Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
                                             </div>
