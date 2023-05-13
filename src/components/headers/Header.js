@@ -189,12 +189,12 @@ const Header = () => {
                   }
                   {isLoggedIn ?
                     <>
-                      <div className={`col-span-3 md:hidden ${showMenu ? 'mx-0 order-3' : 'mx-3'} flex   my-3 mr-3`}>
-                        <span className='mr-2 '><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text' data-translate="hi">Messages</p></NavLink>
+                      <div className={`col-span-3 md:hidden ${ mobilView &&showMenu ? 'mx-0 order-3 justify-start' : 'justify-end'} flex   my-3 mr-3`}>
+                        <span className='mr-2 mt-1'><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text' data-translate="hi">Messages</p></NavLink>
                       </div>
                       <div
                         onClick={() => setIsOpen(!isOpen)}
-                        className="inline-flex md:hidden col-span-1 h-[70%] my-2 mr-8 md:justify-center items-center  w-full "
+                        className={` inline-flex md:hidden justify-start col-span-1 h-[70%] my-2 mr-8 md:justify-center items-center  w-full `}
                       >
                         <img src={profile} />
                         {/* <span>{userName}</span> */}
@@ -215,9 +215,9 @@ const Header = () => {
                       </div>
 
                     </>
-                    : <div className={` ${mobilView && showMenu ? "ml-0 my-3" : "ml-8 "} md:hidden grid grid-cols-4 col-span-4`} >
+                    : <div className={` ${mobilView && showMenu ? "ml-0 my-3" : "place-items-end gap-0"} md:hidden grid grid-cols-4 col-span-4 `} >
 
-                      <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 mr-3'}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text' data-translate="hi">Register</p>  </Link>
+                      <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text' data-translate="hi">Register</p>  </Link>
                       <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text' data-translate="hi"> Login </p> </Link>
                     </div>}
                 </div>

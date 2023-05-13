@@ -9,7 +9,7 @@ const Work_Segment = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location.hash.split('#')[1])
+    console.log(location.hash.split('#')[1].replaceAll("%20"," "))
     const [category, setCategory] = useState([])
     
     useEffect(() => {
@@ -17,7 +17,8 @@ const Work_Segment = () => {
             // console.log(res)
              var data = []
             res.map((cats) => {
-                if(cats.name ===location.hash.split('#')[1])
+                if(cats.name ===location.hash.split('#')[1].replace("%20"," "))
+                console.log(cats)
                 data.push(cats)
             })
             
