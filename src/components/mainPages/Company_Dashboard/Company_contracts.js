@@ -45,7 +45,8 @@ const Contractor_Dashboard = ({companyContractData}) => {
                 'entity': applied.listing_id.project_discription,
                 'work_segment': applied.listing_id.prefferd_state,
                 'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Waiting" : "Rejected",
-                'listing_user_id': applied.listing_id.user_id
+                'listing_user_id': applied.listing_id.user_id,
+                'listing_id': applied.listing_id._id
               })
             }
           })
@@ -91,7 +92,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
       title: 'Description',
       dataIndex: 'entity',
       key: 'entity',
-      render: (text) => text,
+      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {console.log(text)} {_}</Link> ,
     },
     {
       title: 'Scope',
@@ -165,7 +166,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
     <>
       <div>
         <section className="container min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
-          <div className="px-2 h-auto text-gray-800">
+          <div className="px-0 h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
             >

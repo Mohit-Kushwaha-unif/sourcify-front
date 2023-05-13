@@ -70,7 +70,8 @@ const Contractor_Dashboard = () => {
                 'entity': applied.listing_id.project_discription,
                 'work_segment': applied.listing_id.prefferd_state,
                 'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Waiting" : "Rejected",
-                'listing_user_id': applied.listing_id.user_id
+                'listing_user_id': applied.listing_id.user_id,
+                'listing_id': applied.listing_id._id
               })
             }
           })
@@ -101,7 +102,7 @@ const Contractor_Dashboard = () => {
       title: 'S.No',
       dataIndex: 'key',
       key: 'key',
-      render: (text) => text + 1,
+      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {console.log(text)} {_}</Link> ,
     },
     {
       title: 'Description',
@@ -210,7 +211,7 @@ const Contractor_Dashboard = () => {
             </Card> */}
           </div>
           <Company_Dashboard dataTransfer={Company_Data} />
-          <div className="px-2 h-auto text-gray-800 ">
+          <div className=" h-auto text-gray-800 ">
             <div
               className="flex w-full flex-wrap h-full  "
             >

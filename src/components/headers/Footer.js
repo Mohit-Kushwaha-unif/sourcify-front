@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import Sourcify from '../../assests/Sourcify.png'
 import { FaLandmark } from 'react-icons/fa'
 import { BsFillTelephoneFill } from 'react-icons/bs'
@@ -12,17 +12,19 @@ import email from '../../assests/email.png'
 import right_with_line from '../../assests/right_with_line.png'
 import Sourcify_white from '../../assests/Sourcify_white.png'
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 // import { icons } from 'react-icons'
 const Footer = () => {
   const navigate = useNavigate()
   const isAdmin = useSelector(state => state.User.user_role);
-
+  const location = useLocation()
+  useEffect(()=>{console.log(location.pathname)},[location])
   return (
     <>
       {
         isAdmin != 2 &&
         <>
-          <Work_segment_foooter />
+         {location.pathname == "/work_segment/" ? '': <Work_segment_foooter />}
           <footer className='bg-[#00272B]  text-[14px] mx-auto px-4 '>
             <div className='container'>
               <div className="grid grid-cols-1 mb-10  md:grid-cols-12 footer">

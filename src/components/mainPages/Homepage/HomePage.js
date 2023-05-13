@@ -59,7 +59,7 @@ const Dashboard = () => {
                                 With our platform, businesses can easily find and connect with vetted contractors and suppliers who meet
                                 their specific needs. </p>
                             <div className='flex flex-col md:flex-row  '>
-                                <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>
+                              {localStorage.getItem("isLoggedIn") =="false"&&  <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>}
                                 <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => navigator('/dashboard/listing-form')}>Post Project</button>
                             </div>
                         </div>
@@ -86,7 +86,7 @@ const Dashboard = () => {
                             <p className='white_h3'data-translate="hi">Top-notch Contractors</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
-                            <img src={bookmark} className="mr-5" />
+                            <img src={bookmark} className="mr-8" />
                             <p className='white_h3'data-translate="hi">Easy & Transparent</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
@@ -97,7 +97,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
+           { localStorage.getItem("isLoggedIn") =="false"&& <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
                 <div>
                     <h2 className='prime_h2_rale mb-3'data-translate="hi">Register Yourself</h2>
                     <br/>
@@ -130,7 +130,7 @@ const Dashboard = () => {
                 </div> */}
 
 
-            </div>
+            </div>}
             <div className=' bg-[#00272B] mb-24 py-16 md:p-16'>
                 <p data-translate="hi" className='center_content mb-5 white_h3 cursor-pointer' onClick={() => navigator('/SourcifyWork')}>
                     How it works

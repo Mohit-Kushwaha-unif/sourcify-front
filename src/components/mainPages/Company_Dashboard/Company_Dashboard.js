@@ -30,12 +30,16 @@ const Company_Dashboard = ({dataTransfer}) => {
           setActiveProjects(prevState =>prevState+1)
         }
         console.log({tableData})
+        const found = tableData.proposals.find((val) => val.contract_status === 1);
+
         data.push({
           '_id': tableData._id,
           'key': index,
           'entity': tableData.project_discription,
           'work_segment': tableData.wok_segment,
-          'status': tableData.status === 1 ? "Under Review" : tableData.status === 0 ? "Approved" : "Rejected"
+          'Intrests': tableData.proposals.length,
+          'status': tableData.status === 1 ? "Under Review" : tableData.status === 0 ? "Approved" : "Rejected",
+          'found': found? found : "false"
         })
       })
      
@@ -111,14 +115,21 @@ const Company_Dashboard = ({dataTransfer}) => {
 
     },
     {
+      title: 'Interest Recieved',
+      dataIndex: 'Intrests',
+      key: 'Intrests',
+ 
+    },
+    {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
+        console.log(record),
         <Space size="middle">
           {record.status !== 'Approved' && <><Link to='/edit-listing' state={{ _id: record?._id }}>Edit </Link>
             <Link onClick={() => deleteHandler(record?._id)}>Delete</Link> </>}
-          <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>
-
+            <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>
+            <Link to='/messages' state={{ _id: record?.found.contractor_id }}>Message </Link>
         </Space>
       ),
 
@@ -128,9 +139,9 @@ const Company_Dashboard = ({dataTransfer}) => {
   return (
     <>
     <ToastContainer/>
-      <div className='p-6 container w-full'>
+      <div className='p-4 container w-full'>
         <section className="min-h-auto flex flex-col w-full mb-6  pt-6 " >
-          <div className="px-2 h-auto text-gray-800">
+          <div className=" h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
             >

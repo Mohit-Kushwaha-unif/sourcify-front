@@ -49,6 +49,8 @@ function logout(state) {
   console.log('logout');
   localStorage.setItem('isLoggedIn', false);
   localStorage.removeItem('access_token');
+  localStorage.setItem("lan","hi")
+  localStorage.setItem("isModal", "false")
   state.userDetails = {};
   return {
     isLoggedIn: false,

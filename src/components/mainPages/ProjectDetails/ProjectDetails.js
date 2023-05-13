@@ -91,7 +91,7 @@ const ProjectDetails = () => {
                                         </label>
                                         {formValues.listing.project_scope ? formValues.listing.project_scope : 'Not Provided'}
                                     </div>
-                                    <div class=" grid md:grid-cols-2  gap-5">
+                                    <div class=" grid md:grid-cols-2  gap-5 mb-5">
                                         <div>
                                         <label class="block text-gray-700 font-bold mb-2" for="email">
                                             Project State

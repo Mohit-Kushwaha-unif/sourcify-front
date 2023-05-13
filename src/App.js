@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("isModal") !== "false") {
       Swal.fire({
-        title: '<strong>Select <u>language</u></strong>',
+        title: '<strong>Select Language </strong>',
         icon: 'info',
         html:
           ' Select a language to view this website in:',

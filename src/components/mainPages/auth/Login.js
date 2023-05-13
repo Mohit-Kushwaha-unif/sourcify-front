@@ -33,13 +33,13 @@ const Login = () => {
         } else {
           console.log('Push notifications are not supported.');
         }
-        const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey
-        });
-        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+        // const applicationServerKey = urlBase64ToUint8Array('BH5Fc2ygIkKNjYHlRMnKtR2xk3Qg8P5nDjnuJ4rh1Kg_wkqMdXT5hca6fdun2sBfiNDuHYw5XzZou8A1c0Z91Zk');
+        // const registration = await navigator.serviceWorker.ready;
+        // const subscription = await registration.pushManager.subscribe({
+        //   userVisibleOnly: true,
+        //   applicationServerKey
+        // });
+        // dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
       } catch (error) {
         console.error('Error registering service worker:', error);
       }
@@ -178,7 +178,7 @@ const Login = () => {
   };
   return (
     <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
-      <div className="px-8 h-full  ">
+      <div className="md:px-8 h-full  ">
         <div
           className="flex  justify-center  flex-wrap h-full g-6 "
         >
