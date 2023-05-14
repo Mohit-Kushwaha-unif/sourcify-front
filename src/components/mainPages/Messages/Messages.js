@@ -24,6 +24,7 @@ const Messages = () => {
     const messageContainerRef = useRef(null)
     const chat_id = header?.id ? header.id : "-"
     const contractorId = location.state?.contractor_id?._id;
+    console.log(location)
     const id = location.state?._id._id || location.state?._id;
    
     useEffect(() => {

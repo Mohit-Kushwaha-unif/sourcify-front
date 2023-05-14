@@ -195,7 +195,7 @@ const FindProjects = () => {
                     navigate('/login')
                 } else if (localStorage.getItem('status') != 0) {
                     console.log("4")
-                    toast.error('Account is not approved by admin', {
+                    toast.error('Your account is not approved, please contact to know more', {
                         position: toast.POSITION.TOP_RIGHT
                     })
                 } else {
@@ -220,6 +220,9 @@ const FindProjects = () => {
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
             console.log(res)
+            toast.success('Interest Shared', {
+                position: toast.POSITION.TOP_RIGHT
+            })
             hideModal()
         })
     }
@@ -256,7 +259,6 @@ const FindProjects = () => {
                     return OprojectDetails
                 }
             });
-            console.log(FILTER);
             setProjectsOnPage(FILTER);
         }
         
@@ -428,9 +430,9 @@ const FindProjects = () => {
                         <div className='flex-shrink-0 '>
                             {
                                 projectsOnPage.length > 0 && projectsOnPage.map((proj_det) => {
-
+                                    {console.log({projectsOnPage})}
                                     return <div className='project_card p-6 border-2  mb-5'>
-                                        <h2 className='prime_h2 font_18 mb-3'>Project Name</h2>
+                                        <h2 className='prime_h2 font_18 mb-3'>{proj_det.pro_details.project_discription}</h2>
                                         <div className='grid grid grid-cols-1 md:grid-cols-3 gap-2 mb-3'>
                                             <div>
                                                 <span>Posted By: </span> <span>{proj_det.vendor_det.agency_name || proj_det.vendor_det.entity}</span>
@@ -452,7 +454,7 @@ const FindProjects = () => {
                                                 }
                                             })
                                         }
-                                        <p className='my-5'>{proj_det.pro_details.project_discription}</p>
+                                        <p className='my-5'>{proj_det.pro_details.project_scope}</p>
                                         <div className='flex flex-col md:flex-row pt-3'>
                                             <button className='prime_button_sec mb-3 md:mb-0  md:mr-5 h-auto md:h-[40px]' onClick={() => { intresetHandler(proj_det.pro_details._id) }}>Share Interest</button>
                                             <button className='brand_button h-auto md:h-[40px]' onClick={() => { projectHandler(proj_det.pro_details._id) }}>View Project Details</button>

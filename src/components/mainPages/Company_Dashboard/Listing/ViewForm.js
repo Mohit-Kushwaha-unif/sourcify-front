@@ -193,7 +193,7 @@ const ViewForm = () => {
       }
     return (
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
-            <div className="px-8 h-full text-gray-800">
+            <div className="mx-auto h-full text-gray-800">
                 <div
                     className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >

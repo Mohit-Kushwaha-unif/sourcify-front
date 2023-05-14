@@ -62,7 +62,9 @@ const ProjectDetails = () => {
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
          
-            navigator('/dashboard')
+            toast.success('Interest submitted', {
+                position: toast.POSITION.TOP_RIGHT
+            })
         })
     }
     function proposalHandler(e) {
@@ -96,9 +98,9 @@ const ProjectDetails = () => {
                                         <label class="block text-gray-700 font-bold mb-2" for="email">
                                             Project State
                                         </label>
-                                        {formValues?.listing.prefferd_state.map((states) => {
+                                        {Array.isArray(formValues?.listing.prefferd_state)?formValues?.listing.prefferd_state.map((states) => {
                                             return <Tag>{states}</Tag>
-                                        })}
+                                        }): <Tag>{formValues?.listing.prefferd_state}</Tag>}
                                         </div>
                                         <div>
                                         <label class="block text-gray-700 font-bold mb-2" for="email">

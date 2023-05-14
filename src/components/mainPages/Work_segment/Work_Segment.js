@@ -17,15 +17,19 @@ const Work_Segment = () => {
             // console.log(res)
              var data = []
             res.map((cats) => {
-                if(cats.name ===location.hash.split('#')[1].replace("%20"," "))
-                console.log(cats)
-                data.push(cats)
+                if(location.hash.split('#')[1].replaceAll("%20"," ") =="all")
+                {
+                    data.push(cats)
+                }
+                else if(cats.name ==location.hash.split('#')[1].replaceAll("%20"," "))
+                  {  console.log(cats)
+                    data.push(cats)}
             })
-            
+            console.log(data)
             setCategory(data)
         })
         
-    }, [])
+    }, [location])
     function searchHnadler(sub_cat){
         dispatch(search_db(sub_cat)).then((res)=>{
             navigate('/results/'+sub_cat,{state: {input:sub_cat,res}}) 

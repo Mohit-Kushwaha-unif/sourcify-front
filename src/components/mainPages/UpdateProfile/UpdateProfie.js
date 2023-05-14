@@ -50,11 +50,10 @@ const UpdateProfie = () => {
     const FormHandler = (value) => {
         value.id = localStorage.getItem('user_id')
         dispatch(update_user(value)).then((res)=>{
-            console.log(res)
-            toast.success('Value Updated', {
-                position: toast.POSITION.TOP_RIGHT
-              })
+ 
+              navigationHandler()
         })
+
      }
 
      function navigationHandler(){
@@ -121,10 +120,10 @@ const UpdateProfie = () => {
 
                             <div className="text-center flex flex-col md:flex-row justify-center justify-between lg:text-left mt-2 mb-3">
                          
-                                    <button className='back_btn' type="primary" htmlType="submit">
+                                    {/* <button className='back_btn' type="primary" htmlType="submit">
                                         Update
-                                    </button>
-                                    <button onClick={navigationHandler} className='save_Btn' type="primary">
+                                    </button> */}
+                                    <button className='save_Btn' type="primary">
                                         NEXT
                                     </button>
                                

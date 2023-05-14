@@ -166,17 +166,17 @@ const EditListing = () => {
                             <Form.Item name='project_discription' className='mb-1 mt-0' label="Write the Name of your project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please Name of your project'
                                 },
                             ]}
                             >
 
-                                <TextArea className='h-[100px]' placeholder='Enter Project Description' />
+                                <Input className='h-[100px]' placeholder='Enter Project Description' />
                             </Form.Item>
                             <Form.Item name='project_scope' className='mb-1 mt-0' label="Write the Scope of Your Project" rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Contact Person Name'
+                                    message: 'Please  Scope of Your Project'
                                 },
                             ]}
                             >

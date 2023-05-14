@@ -17,12 +17,11 @@ body {
   padding-bottom: 0.75rem;
   background-color: #FF5757 !important;
   border: 1px solid #FF5757;
-  border-radius: 50px;
   color: #fff;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  text-transform: uppercase;
+  font-family: 'Inter' !important;
   /* border-radius: 0.5rem; */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 1px -1px rgba(0, 0, 0, 0.1);
   transition-property: background-color, box-shadow;
@@ -41,7 +40,9 @@ body {
   appearance: none;
 }
 
-
+textarea:where(.css-dev-only-do-not-override-ixblex).ant-input{
+min-height: 150px !important;
+}
 
 /* Hover state */
 .primary_btn:hover {
@@ -345,7 +346,7 @@ input[type=number] {
 
 .footer {
   min-height: 350px;
-  padding-top: 5rem;
+  padding-top: 2rem;
   /* border-bottom: 4px solid #FF5757; */
 }
 .border_footer{
@@ -356,7 +357,8 @@ input[type=number] {
 .footer h3 {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+
 }
 
 .footer li {

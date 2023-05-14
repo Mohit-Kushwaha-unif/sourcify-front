@@ -89,7 +89,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
       render: (text) => text + 1,
     },
     {
-      title: 'Description',
+      title: 'Project Name',
       dataIndex: 'entity',
       key: 'entity',
       render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {console.log(text)} {_}</Link> ,

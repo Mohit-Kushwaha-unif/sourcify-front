@@ -158,17 +158,17 @@ const Sidebar = () => {
                                    <span>Projects</span>
                             </NavLink>
                         </li>
-                        <li className="rounded-sm">
+                        {/* <li className="rounded-sm">
                             <NavLink
                                 to="/admin/feedbacks"
                                 className="flex items-center p-2 space-x-3 rounded-md"
-                            >
+                            > */}
                                 {/* <svg xmlns="http://www.w3.org/2000/svg" className="bi bi-grid-1x2-fill w-6 h-6" width="24" height="24" viewBox="0 0 24 24">
                                     <path d="M21.59,3.59C20.92,3.22 20.17,3 19.41,3H4C2.9,3 2,3.9 2,5V17C2,18.1 2.9,19 4,19H18L22,23V5C22,4.24 21.76,3.53 21.59,3.59M18,7V5.5L19.5,7H18M8,10H16V12H8V10M8,14H14V16H8V14Z" />
                                 </svg> */}
-                                <span>Enquiries</span>
+                                {/* <span>Enquiries</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="rounded-sm">
                             <NavLink
                                 to="/admin/post-list"

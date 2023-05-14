@@ -134,7 +134,7 @@ const Header = () => {
   function submitHandler(e) {
     e.preventDefault()
     setIsOpen(false)
-
+    clossAll()
     dispatch(search_db(input)).then((res) => {
       setIsOpen(false)
       navigate('/results/' + input, { state: { selected, input, res } })
@@ -162,6 +162,13 @@ const Header = () => {
     setIsOpen(false)
     setShowMenu(false)
   }
+  function navigateHandler(){
+    if(mobilView){
+    clossAll()}
+    
+    navigate('/dashboard/listing-form')
+
+  }
   return (
     <>
       {
@@ -171,14 +178,14 @@ const Header = () => {
           <TopBar />
           <div className='bg-white'>
             <div className='container py-2'>
-              <header className={`${showMenu && mobilView ? 'container fixed left-0 top-0 z-[1035] h-screen w-60 -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] translate-x-0 dark:bg-zinc-800' : ''} md:h-auto md:grid  md:place-items-center  md:mb-0 md:grid-cols-9`}>
+              <header className={`${showMenu && mobilView ? 'container white fixed left-0 top-0 z-[1035] h-screen w-60 -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] translate-x-0 dark:bg-zinc-800' : ''} md:h-auto md:grid  md:place-items-center  md:mb-0 md:grid-cols-9`}>
 
                 <div className={`${mobilView && !showMenu ? "grid grid-cols-7" : ''}`}>
                   <div className='col-span-2 md:col-span-1 mr-3 md:mr-0 '>
                     <div> <img className='  md-w-auto' onClick={() => navigate('/')} src={NEW_Sourcify} alt="logo" /></div>
                   </div>
                   {
-                    mobilView && showMenu && <div className='mt-3 h-5  flex  items-center header_text '>
+                    mobilView && showMenu && <><div className='mt-3 h-5  flex  items-center header_text '>
                       <label htmlFor="language">Language:</label>
                       <select id="language" value={language} onChange={handleLanguageChange}>
                         <option value="en">English</option>
@@ -186,15 +193,25 @@ const Header = () => {
                       </select>
 
                     </div>
+                    {showMenu && <>
+                    <div className='grid  col-span-7  md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >
+                      <form onSubmit={submitHandler} className="w-full">
+                        <Input onChange={inputHandler} placeholder='Search for contractors or projects ' className='input_radius w-full' suffix={<img onClick={submitHandler} src={search_icon} />} />
+                      </form>
+                    </div>
+                  </>
                   }
+                  </>
+                  }
+                 { mobilView &&!showMenu && <>
                   {isLoggedIn ?
                     <>
-                      <div className={`col-span-3 md:hidden ${ mobilView &&showMenu ? 'mx-0 order-3 justify-start' : 'justify-end'} flex   my-3 mr-3`}>
+                      <div className={`col-span-3 md:hidden ${ mobilView &&showMenu ? 'mx-0 order-3 justify-start' : 'justify-end'} flex   my-2 mr-3`}>
                         <span className='mr-2 mt-1'><TiMessages /></span>  <NavLink to="/messages" className=" h-5  flex  items-center header_text"><p className='header_text' data-translate="hi">Messages</p></NavLink>
                       </div>
                       <div
                         onClick={() => setIsOpen(!isOpen)}
-                        className={` inline-flex md:hidden justify-start col-span-1 h-[70%] my-2 mr-8 md:justify-center items-center  w-full `}
+                        className={` inline-flex md:hidden justify-start col-span-1 h-[70%] my-1 mr-8 md:justify-center items-center  w-full `}
                       >
                         <img src={profile} />
                         {/* <span>{userName}</span> */}
@@ -220,6 +237,7 @@ const Header = () => {
                       <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text' data-translate="hi">Register</p>  </Link>
                       <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text' data-translate="hi"> Login </p> </Link>
                     </div>}
+                </>}
                 </div>
                 {!showMenu ?
                   <div className='absolute col-span-1 cursor-pointer text-2xl right-3 top-[2rem] md:hidden'><MenuOutlined onClick={() => { handleMenus() }} /></div>
@@ -242,7 +260,7 @@ const Header = () => {
 
                   </div>
                   {showMenu && <>
-                    <div className='grid  col-span-7  md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >
+                    <div className='grid  col-span-7  hidden md:inline-block md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >
                       <form onSubmit={submitHandler} className="w-full">
                         <Input onChange={inputHandler} placeholder='Search for contractors or projects ' className='input_radius w-full' suffix={<img onClick={submitHandler} src={search_icon} />} />
                       </form>
@@ -307,12 +325,12 @@ const Header = () => {
                           })
                           : accountStatus !== 0 ? toast.error('Account is  not approved by admin', {
                             position: toast.POSITION.TOP_RIGHT
-                          }) : navigate('/dashboard/listing-form')
+                          }) : navigateHandler()
                       }} data-translate="hi">
                         Post Project
                       </div>
                       {
-                        mobilView && <SubHeader />
+                        mobilView && <div onClick={clossAll}> <SubHeader /> </div>
                       }
                     </div>
                   </div>

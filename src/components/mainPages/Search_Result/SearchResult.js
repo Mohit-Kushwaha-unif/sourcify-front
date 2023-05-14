@@ -36,7 +36,7 @@ const SearchResult = () => {
             })
         }
         else if (localStorage.getItem('status') != 0) {
-            toast.error('Account is not approved by admin', {
+            toast.error('Your account is not approved, please contact to know more', {
                 position: toast.POSITION.TOP_RIGHT
             })
         }

@@ -184,7 +184,7 @@ const ListingForm = () => {
                             ]}
                             >
 
-                                <TextArea placeholder='Enter project name' />
+                                <Input placeholder='Enter project name' />
                             </Form.Item>
                             <Form.Item name="wok_segment" label="Select work segment for your project" rules={[
                                 {

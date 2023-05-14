@@ -26,7 +26,7 @@ const Regsiter = () => {
 
   useEffect(()=>{
     if(localStorage.getItem('isLoggedIn') === "true"){
-      navigate('/')
+      navigate('/dashboard')
     }
   },[])
  

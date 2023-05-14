@@ -31,7 +31,6 @@ const Company_Dashboard = ({dataTransfer}) => {
         }
         console.log({tableData})
         const found = tableData.proposals.find((val) => val.contract_status === 1);
-
         data.push({
           '_id': tableData._id,
           'key': index,
@@ -67,10 +66,10 @@ const Company_Dashboard = ({dataTransfer}) => {
 
     },
     {
-      title: 'Description',
+      title: 'Project Name',
       dataIndex: 'entity',
       key: 'entity',
-      render: (text) => text,
+      render: (_,text) => <><Link  to='/viewForm' state={{ _id: text?._id }}>{_}</Link></>,
 
     },
     {
@@ -115,7 +114,7 @@ const Company_Dashboard = ({dataTransfer}) => {
 
     },
     {
-      title: 'Interest Recieved',
+      title: 'Interest Received',
       dataIndex: 'Intrests',
       key: 'Intrests',
  
@@ -129,7 +128,8 @@ const Company_Dashboard = ({dataTransfer}) => {
           {record.status !== 'Approved' && <><Link to='/edit-listing' state={{ _id: record?._id }}>Edit </Link>
             <Link onClick={() => deleteHandler(record?._id)}>Delete</Link> </>}
             <Link to='/viewForm' state={{ _id: record?._id }}>View </Link>
-            <Link to='/messages' state={{ _id: record?.found.contractor_id }}>Message </Link>
+            
+            {record?.found !="false" &&<Link to='/messages' state={{ _id: record?.found.contractor_id }}>Message </Link> }
         </Space>
       ),
 
@@ -139,14 +139,14 @@ const Company_Dashboard = ({dataTransfer}) => {
   return (
     <>
     <ToastContainer/>
-      <div className='p-4 container w-full'>
+      <div className='p-4 px-0 w-full'>
         <section className="min-h-auto flex flex-col w-full mb-6  pt-6 " >
           <div className=" h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
             >
               <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-                <div className="flex flex-row items-center justify-center lg:justify-start">
+                <div className="flex flex-row  lg:justify-start">
                   <p className="text-lg mb-6 mr-4 font-semibold" data-translate="hi">Your Posted Projects</p>
                 </div>
 

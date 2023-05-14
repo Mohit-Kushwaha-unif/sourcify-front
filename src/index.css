@@ -94,6 +94,7 @@ input::placeholder {
 /* Responsive Classes for Container */
 @media (max-width: 576px) {
   .container {
+    width: 95% !important;
     max-width: 100%;
     /* Set maximum width to 100% for small screens */
     padding-left: 10px;
@@ -104,6 +105,7 @@ input::placeholder {
 
 @media (min-width: 576px) {
   .container {
+    width: 95% !important;
     max-width: 540px;
     /* Set maximum width to 540px for medium screens */
   }
@@ -111,6 +113,7 @@ input::placeholder {
 
 @media (min-width: 768px) {
   .container {
+    width: 95% !important;
     max-width: 720px;
     /* Set maximum width to 720px for large screens */
   }

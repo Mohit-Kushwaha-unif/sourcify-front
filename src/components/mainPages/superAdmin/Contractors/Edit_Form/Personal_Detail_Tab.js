@@ -20,6 +20,7 @@ import { AiFillDelete } from 'react-icons/ai'
 import moment from 'moment';
 import { upload_img } from '../../../../../services/upload';
 import Loader from '../../../../Helper/Loader';
+import { toast, ToastContainer } from 'react-toastify'
 const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const location = useLocation()
   const [fileList, setFileList] = useState([]);
@@ -345,7 +346,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       obj.contractor_id = res.data._id
       setLoading(false)
       if (isAdmin != 2) {
-        navigate('/dashboard')
+
+        toast.success('Profile Updated Successfully', {
+            position: toast.POSITION.TOP_RIGHT
+          })
       }
       else {
         navigate('/admin/contractors-list')

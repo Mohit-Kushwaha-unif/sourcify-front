@@ -69,7 +69,7 @@ const Contractor_Dashboard = () => {
                 'scope': applied.listing_id.project_scope,
                 'entity': applied.listing_id.project_discription,
                 'work_segment': applied.listing_id.prefferd_state,
-                'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Waiting" : "Rejected",
+                'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Pending Acceptence" : "Rejected",
                 'listing_user_id': applied.listing_id.user_id,
                 'listing_id': applied.listing_id._id
               })
@@ -102,13 +102,13 @@ const Contractor_Dashboard = () => {
       title: 'S.No',
       dataIndex: 'key',
       key: 'key',
-      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {console.log(text)} {_}</Link> ,
+      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } >  {_+1}</Link> ,
     },
     {
-      title: 'Description',
+      title: 'Project Name',
       dataIndex: 'entity',
       key: 'entity',
-      render: (text) => text,
+      render:(_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {_}</Link> ,
     },
     {
       title: 'Scope',
@@ -145,7 +145,7 @@ const Contractor_Dashboard = () => {
       render: (text, data) => {
 
         let color = 'Green'
-        if (text === "Waiting") {
+        if (text === "Pending Acceptence") {
           color = 'yellow'
 
         }
@@ -159,7 +159,7 @@ const Contractor_Dashboard = () => {
           {text == "Accepted" ? <div className='flex'>
             <Tag color={color}>{text}</Tag>
             <span className='cursor-pointer' onClick={() => msgNavigationHandler(data)}>
-              <AiOutlineMessage className='h-auto' />
+              Message
             </span>
           </div>
             : <Tag color={color}>{text}</Tag>}
@@ -188,7 +188,7 @@ const Contractor_Dashboard = () => {
             <Card title="Shown Interest " bordered={false}>
               <div className='grid grid-cols-3 place-items-center'>
                 <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color' > {tableData.length}</p>
-                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects in that you have shown intrest</span> {tableData.length} </p>
+                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects in which you have shown intrest</span> {tableData.length} </p>
               </div>
 
             </Card>

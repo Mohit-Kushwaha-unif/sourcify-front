@@ -6,7 +6,7 @@ const SourcifyWork = () => {
    
     return (
         <>
-            <div className='image_section relative mb-24 h-[400px] ' style={{ backgroundImage: `url(${sourciyfwork})` }}>
+            <div className='image_section relative mb-24 h-[600px]  md:h-[400px] ' style={{ backgroundImage: `url(${sourciyfwork})` }}>
 
                 <div className='content container' >
                     <h2 className='brand_text mb-5 pt-16  'data-translate="hi">How Sourcify Works</h2>
