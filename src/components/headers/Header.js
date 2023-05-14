@@ -215,7 +215,7 @@ const Header = () => {
                       </div>
 
                     </>
-                    : <div className={` ${mobilView && showMenu ? "ml-0 my-3" : "place-items-end gap-0"} md:hidden grid grid-cols-4 col-span-4 `} >
+                    : <div className={` ${mobilView && showMenu ? "ml-0 my-3 gap-y-1 mb-2" : "place-items-end gap-0"} md:hidden grid grid-cols-4 col-span-4 `} >
 
                       <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text' data-translate="hi">Register</p>  </Link>
                       <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text' data-translate="hi"> Login </p> </Link>
@@ -230,19 +230,19 @@ const Header = () => {
                 {showMenu && <>
                   <div className='md:col-span-3 col-span-7 md:grid grid-cols-1 md:grid-cols-3  md:items-center '>
 
-                    <NavLink onClick={() => {mobilView && clossAll() }} className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 md:ml-2' to={'/contractors'} data-translate="hi" >Find Contractors</NavLink>
+                    <NavLink onClick={() => {mobilView && clossAll() }} className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-5 mt-5 md:mt-0 md:ml-2' to={'/contractors'} data-translate="hi" >Find Contractors</NavLink>
 
-                    <div className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 '>
+                    <div className='header_text flex md:justify-center cursor-pointer  md:mb-0 mb-5 mt-5 md:mt-0 '>
                       <NavLink onClick={() => {mobilView && clossAll() }} to={'/project_list'} data-translate="hi">Find Projects</NavLink>
                     </div>
-                    <div className='header_text flex md:justify-center cursor-pointer md:mb-0 mb-3 '>
-                      <NavLink onClick={() => {mobilView && clossAll() }} className='header_text flex justify-center cursor-pointer md:mb-0 mb-3' to={'/SourcifyWork'} data-translate="hi">How it works</NavLink>
+                    <div className='header_text flex md:justify-center cursor-pointer  md:mb-0 mb-5 mt-5 md:mt-0 '>
+                      <NavLink onClick={() => {mobilView && clossAll() }} className='header_text flex justify-center cursor-pointer   md:mt-0' to={'/SourcifyWork'} data-translate="hi">How it works</NavLink>
                     </div>
 
 
                   </div>
                   {showMenu && <>
-                    <div className='grid  col-span-7  md:col-span-2 w-full md:mb-0 mb-3 ' >
+                    <div className='grid  col-span-7  md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >
                       <form onSubmit={submitHandler} className="w-full">
                         <Input onChange={inputHandler} placeholder='Search for contractors or projects ' className='input_radius w-full' suffix={<img onClick={submitHandler} src={search_icon} />} />
                       </form>
@@ -301,7 +301,7 @@ const Header = () => {
                     }
                     <div className='w-full'>
                       <div className='prime_button md:min-w-[41%]  cursor-pointer' onClick={() => {
-                        !localStorage.getItem("isLoggedIn") || localStorage.getItem("isLoggedIn") == "false" ?
+                        localStorage.getItem("isLoggedIn")==null || localStorage.getItem("isLoggedIn") == "false" ?
                           toast.error('Please login first', {
                             position: toast.POSITION.TOP_RIGHT
                           })

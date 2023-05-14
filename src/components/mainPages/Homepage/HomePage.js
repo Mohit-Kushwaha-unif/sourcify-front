@@ -22,6 +22,7 @@ import personalized from '../../../assests/personalized.png'
 import down_arrow from '../../../assests/down_arrow.png'
 
 import right from '../../../assests/right.png'
+import { toast, ToastContainer } from 'react-toastify'
 import Insight from '../Blogs/Insight';
 import Regsiter from '../auth/Register';
 const Dashboard = () => {
@@ -29,6 +30,8 @@ const Dashboard = () => {
     const navigator = useNavigate()
     const [category, setCategory] = useState([])
     const [caraousel, setCarausel_img] = useState([])
+    const [showRegister, setShowRegister] = useState(false)
+    const [accountStatus, setAccountStatus] = useState()
     // const userRole =  useSelector(state => state.User.user_role);
     useEffect(() => {
         dispatch(get_category()).then((res) => {
@@ -43,10 +46,19 @@ const Dashboard = () => {
             setCarausel_img(res)
         })
     }, [])
+    useEffect(() => {
+        if (localStorage.getItem("isLoggedIn") == "false" || localStorage.getItem("isLoggedIn") == null) {
+            setShowRegister(true)
 
-
+           
+        }
+        setAccountStatus( localStorage.getItem('status'))
+    }, [localStorage])
+   
+    console.log(accountStatus)
     return (
         <div>
+            <ToastContainer/>
             <div className='container mb-24'>
                 <div className='grid grid-cols-1 md:grid-cols-2'>
                     <div className='content order-2 md:order-1'>
@@ -55,12 +67,20 @@ const Dashboard = () => {
                         <div className='mt-5 '>
                             <h2 className='prime_h2 mb-5' data-translate="hi">Bringing Businesses &
                                 Contractors Together</h2>
-                            <p className='section_text mb-5'data-translate="hi">Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
+                            <p className='section_text mb-5' data-translate="hi">Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
                                 With our platform, businesses can easily find and connect with vetted contractors and suppliers who meet
                                 their specific needs. </p>
                             <div className='flex flex-col md:flex-row  '>
-                              {localStorage.getItem("isLoggedIn") =="false"&&  <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>}
-                                <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => navigator('/dashboard/listing-form')}>Post Project</button>
+                                {showRegister && <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>}
+                                <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => {
+                                    localStorage.getItem("isLoggedIn") == null || localStorage.getItem("isLoggedIn") == "false" ?
+                                        toast.error('Please login first', {
+                                            position: toast.POSITION.TOP_RIGHT
+                                        })
+                                        : accountStatus != 0 ? toast.error('Account is  not approved by admin', {
+                                            position: toast.POSITION.TOP_RIGHT
+                                        }) : navigator('/dashboard/listing-form')
+                                }}>Post Project</button>
                             </div>
                         </div>
                     </div>
@@ -79,37 +99,37 @@ const Dashboard = () => {
 
                         <div className='flex items-center  place-items-start'>
                             <img src={frame_charge} className="mr-5" />
-                            <p className='white_h3'data-translate="hi">Free of Charge</p>
+                            <p className='white_h3' data-translate="hi">Free of Charge</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={web} className="mr-5" />
-                            <p className='white_h3'data-translate="hi">Top-notch Contractors</p>
+                            <p className='white_h3' data-translate="hi">Top-notch Contractors</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={bookmark} className="mr-8" />
-                            <p className='white_h3'data-translate="hi">Easy & Transparent</p>
+                            <p className='white_h3' data-translate="hi">Easy & Transparent</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={checked} className="mr-5" />
-                            <p className='white_h3'data-translate="hi">Collaboration made easy</p>
+                            <p className='white_h3' data-translate="hi">Collaboration made easy</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-           { localStorage.getItem("isLoggedIn") =="false"&& <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
+            {showRegister && <div className='container grid md:grid-cols-2 grid-cols-1 gap-6 contractor mb-24'>
                 <div>
-                    <h2 className='prime_h2_rale mb-3'data-translate="hi">Register Yourself</h2>
-                    <br/>
-                    <p data-translate="hi">Welcome to our registration page! We're excited to have you join our community. <br/><br/>
+                    <h2 className='prime_h2_rale mb-3' data-translate="hi">Register Yourself</h2>
+                    <br />
+                    <p data-translate="hi">Welcome to our registration page! We're excited to have you join our community. <br /><br />
 
                         To get started, please provide us with some basic information so we can create your account. This includes your  email address, mobile number, and a password of your choice.
 
                         Once you've filled out the required fields and accepted our terms and conditions, click the "Register" button to create your account. After that, you'll receive a confirmation email with a link to activate your account.
 
-                        <br/> <br/>With your new account, you'll be able to access all the features and benefits of our platform. This includes personalized recommendations, exclusive content, and the ability to connect with other members of our community.
+                        <br /> <br />With your new account, you'll be able to access all the features and benefits of our platform. This includes personalized recommendations, exclusive content, and the ability to connect with other members of our community.
 
-                        <br/><br/>Thank you for choosing to register with us. We look forward to seeing you around </p>
+                        <br /><br />Thank you for choosing to register with us. We look forward to seeing you around </p>
                 </div>
                 <Regsiter />
                 {/* <p className='text-[#FF5757] underline mb-16 cursor-pointer' onClick={()=>{navigator('/work_segment')}}>Browse all Work Segments</p>
@@ -180,7 +200,7 @@ const Dashboard = () => {
                 <img src={sourc_img} className="" alt="why sourcify image" />
                 <div className='mt-3'>
                     <div className='flex my-3'>
-                        <img className='h-full mr-3'  src={down_arrow} />
+                        <img className='h-full mr-3' src={down_arrow} />
                         <p data-translate="hi" className='text-[#FF5757] font-semibold text-[21px] '>Innovation Free of Cost</p>
                     </div>
                     <p data-translate="hi" className='mb-8'>
@@ -195,7 +215,7 @@ const Dashboard = () => {
                     </p>
                     <div className='flex my-3'>
                         <img className='h-full mr-3' src={personalized} />
-                        <p data-translate="hi"  className='text-[#FF5757] font-semibold text-[21px] '>Personalized Support</p>
+                        <p data-translate="hi" className='text-[#FF5757] font-semibold text-[21px] '>Personalized Support</p>
                     </div>
                     <p data-translate="hi" className='mb-8'>
                         Sourcify offers personalized support from a team of experts with sourcing and supply chain expertise. With Sourcify, businesses have access to a dedicated account manager who can provide customized solutions and support throughout the sourcing process.

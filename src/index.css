@@ -80,6 +80,7 @@ input::placeholder {
 }
 
 .container {
+  width: 90%;
   max-width: 1200px;
   /* Set the maximum width of the container */
   margin-left: auto;

@@ -81,7 +81,7 @@ const AboutUs = () => {
                     <p className="text-base font-bold">
                       {hero.qutoe} <span className="text-[#FF5757]">{hero.quto_emph}</span>
                     </p>
-                    <p className="prime_h2 leading-8">
+                    <p className="prime_h2 ">
                       {hero.title}
                     </p>
                     <div className="mt-5">
