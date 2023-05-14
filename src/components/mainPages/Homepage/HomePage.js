@@ -74,9 +74,7 @@ const Dashboard = () => {
                                 {showRegister && <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>}
                                 <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => {
                                     localStorage.getItem("isLoggedIn") == null || localStorage.getItem("isLoggedIn") == "false" ?
-                                        toast.error('Please login first', {
-                                            position: toast.POSITION.TOP_RIGHT
-                                        })
+                                      navigator('/login')
                                         : accountStatus != 0 ? toast.error('Account is  not approved by admin', {
                                             position: toast.POSITION.TOP_RIGHT
                                         }) : navigator('/dashboard/listing-form')
