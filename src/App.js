@@ -25,7 +25,7 @@ function App() {
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText:
-          'Englsih',
+          'English',
         confirmButtonAriaLabel: 'Thumbs up, great!',
         cancelButtonText:
           ' हिंदी',
