@@ -223,17 +223,17 @@ const Login = () => {
               </div>
 
               <div className="text-center lg:text-left">
-                <div className='center_content bg-[#00272B] mb-3'>
+                
                   <button
                     type="submit"
-                    className="prime_button "
+                    className="prime_button center_content w-full mb-3"
                     data-translate="hi"
                   >
                     Login
 
 
                   </button>
-                </div>
+             
                 <p className="normal_text">
                   <span className='mr-0' data-translate="hi"> Don't have an account? </span>
                   <Link

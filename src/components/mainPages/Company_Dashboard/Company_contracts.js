@@ -44,7 +44,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
                 'scope': applied.listing_id.project_scope,
                 'entity': applied.listing_id.project_discription,
                 'work_segment': applied.listing_id.prefferd_state,
-                'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Waiting" : "Rejected",
+                'status': applied.status === 1 ? "Accepted" : applied.status === 0 ? "Pending Acceptence" : "Rejected",
                 'listing_user_id': applied.listing_id.user_id,
                 'listing_id': applied.listing_id._id
               })
@@ -129,7 +129,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
       render: (text, data) => {
 
         let color = 'Green'
-        if (text === "Waiting") {
+        if (text === "Pending Acceptence") {
           color = 'yellow'
 
         }
@@ -143,7 +143,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
           {text == "Accepted" ? <div className='flex'>
             <Tag color={color}>{text}</Tag>
             <span className='cursor-pointer' onClick={() => msgNavigationHandler(data)}>
-              <AiOutlineMessage className='h-auto' />
+              Message
             </span>
           </div>
             : <Tag color={color}>{text}</Tag>}

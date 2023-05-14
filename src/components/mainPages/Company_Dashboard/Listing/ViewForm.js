@@ -193,7 +193,7 @@ const ViewForm = () => {
       }
     return (
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
-            <div className="mx-auto h-full text-gray-800">
+            <div className="mx-auto md:w-[80%] w-[90%] h-full text-gray-800">
                 <div
                     className=" flex xl:justify-center lg:justify-center items-center flex-wrap h-full g-6 "
                 >
@@ -229,7 +229,7 @@ const ViewForm = () => {
                                 labelCol={{ span: 24 }}
                             >
 
-                                <TextArea className='h-[100px]' placeholder='Enter Project Description' />
+                                <Input placeholder='Enter Project Description' />
                             </Form.Item>
                             <Form.Item name='project_scope' className='mb-1 mt-0' label=" Scope of Your Project" rules={[
                                 {
