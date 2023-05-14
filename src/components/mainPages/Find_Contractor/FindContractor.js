@@ -135,7 +135,7 @@ const FindContractor = () => {
 
   const contractHandler = (val) => {
     console.log(val.user_id)
-    if (localStorage.getItem("isLoggedIn") == "false") {
+    if (localStorage.getItem("isLoggedIn") == "false" ||localStorage.getItem("isLoggedIn")==null) {
       navigate('/login')
     }
     else if (localStorage.getItem("user_id") == val.user_id._id || localStorage.getItem("user_id") == val.user_id) {

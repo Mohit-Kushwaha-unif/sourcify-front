@@ -139,14 +139,14 @@ const Company_Dashboard = ({dataTransfer}) => {
   return (
     <>
     <ToastContainer/>
-      <div className='p-4 px-0 w-full'>
-        <section className="min-h-auto flex flex-col w-full mb-6  pt-6 " >
-          <div className=" h-auto text-gray-800">
+    <section className="container min-h-auto flex flex-col w-full mb-6  pt-6 sm:px-6 " >
+          <div className="px-0 h-auto text-gray-800">
             <div
               className="flex w-full flex-wrap h-full  "
             >
-              <div className="xl: w-full overflow-x-auto   lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-                <div className="flex flex-row  lg:justify-start">
+              <div className="xl: w-full overflow-x-auto  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 p-6">
+
+                <div claassName="flex flex-row  lg:justify-start">
                   <p className="text-lg mb-6 mr-4 font-semibold" data-translate="hi">Your Posted Projects</p>
                 </div>
 
@@ -157,7 +157,6 @@ const Company_Dashboard = ({dataTransfer}) => {
         </section>
       
 
-      </div>
        
 
     </>

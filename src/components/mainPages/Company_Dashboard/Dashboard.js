@@ -48,7 +48,7 @@ const Dashboard = () => {
             <Card title="Shown Interest " bordered={false}>
               <div className='grid grid-cols-3 place-items-center'>
                 <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color' > {tableData.length}</p>
-                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects in that you have shown intrest</span> {tableData.length} </p>
+                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects in which you have shown intrest</span> {tableData.length} </p>
               </div>
 
             </Card>

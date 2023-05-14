@@ -190,7 +190,7 @@ const FindProjects = () => {
 
             })
             if (!foundInterest && !foundOwnProject) {
-                if (localStorage.getItem("isLoggedIn") == "false") {
+                if (localStorage.getItem("isLoggedIn") == "false"||localStorage.getItem("isLoggedIn")==null) {
                     console.log("3")
                     navigate('/login')
                 } else if (localStorage.getItem('status') != 0) {

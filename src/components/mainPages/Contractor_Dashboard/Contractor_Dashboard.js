@@ -210,7 +210,7 @@ const Contractor_Dashboard = () => {
                
             </Card> */}
           </div>
-          <Company_Dashboard dataTransfer={Company_Data} />
+        
           <div className=" h-auto text-gray-800 ">
             <div
               className="flex w-full flex-wrap h-full  "
@@ -225,7 +225,7 @@ const Contractor_Dashboard = () => {
             </div>
           </div>
         </section>
-
+        <Company_Dashboard dataTransfer={Company_Data} />
       </div>
 
 

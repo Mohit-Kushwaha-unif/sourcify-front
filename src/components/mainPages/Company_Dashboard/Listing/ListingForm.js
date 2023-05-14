@@ -113,7 +113,7 @@ const ListingForm = () => {
 
         dispatch(add_listing(formData)).then((res) => {
             setLoading(false)
-            Swal.fire('Your Listitng Posted Successfully', 'It will live once admin accept it', 'success').then(()=>{
+            Swal.fire('Your Project is submitted for approval', '', 'success').then(()=>{
                 navigator('/dashboard')
             })
         })
