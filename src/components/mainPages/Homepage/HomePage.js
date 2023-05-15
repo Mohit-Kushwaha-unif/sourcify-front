@@ -67,7 +67,7 @@ const Dashboard = () => {
                         <div className='mt-5 '>
                             <h2 className='prime_h2 mb-5' data-translate="hi">Bringing Businesses &
                                 Contractors Together</h2>
-                            <p className='section_text mb-5' data-translate="hi">Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
+                            <p className='section_text mb-5 w-[80%]' data-translate="hi">Sourcify creates a seamless bridge between businesses looking for contractors and contractors looking for projects.
                                 With our platform, businesses can easily find and connect with vetted contractors and suppliers who meet
                                 their specific needs. </p>
                             <div className='flex flex-col md:flex-row  '>
@@ -97,19 +97,19 @@ const Dashboard = () => {
 
                         <div className='flex items-center  place-items-start'>
                             <img src={frame_charge} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Free of Charge</p>
+                            <p className='white_h3' data-translate="hi">Free of <br/>Charge</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={web} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Top-notch Contractors</p>
+                            <p className='white_h3' data-translate="hi">Top-notch <br/>Contractors</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={bookmark} className="mr-8" />
-                            <p className='white_h3' data-translate="hi">Easy & Transparent</p>
+                            <p className='white_h3' data-translate="hi">Easy & <br/>Transparent</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={checked} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Collaboration made easy</p>
+                            <p className='white_h3' data-translate="hi">Collaboration <br/>made easy</p>
                         </div>
                     </div>
                 </div>

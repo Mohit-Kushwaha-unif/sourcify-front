@@ -112,12 +112,13 @@ const FindProjects = () => {
                             obj["pro_details"] = pro_det;
                             obj["vendor_det"] = vendor_det;
                             projDet.push(obj);
-                            setLoading(false)
+                          
                         }
                     });
                 }
-            });
 
+            });
+  setLoading(false)
             setProjectDetails([...projDet]);
             setoProjectDetails([...projDet]);
         });
