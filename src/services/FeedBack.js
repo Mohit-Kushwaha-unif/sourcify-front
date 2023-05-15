@@ -34,3 +34,14 @@ export const get_feedbackByid = (id)=>{
             })
         })
 }
+export const removeFeedBackById = (id)=>{
+
+    return ()=>
+        new Promise((resolve,reject)=>{
+            Http.delete(FeedBack_url+'/removeFeedBackById/'+id).then((res)=>{
+                return resolve(res.data)
+            }).catch((err)=>{
+                return reject(err)
+            })
+        })
+}

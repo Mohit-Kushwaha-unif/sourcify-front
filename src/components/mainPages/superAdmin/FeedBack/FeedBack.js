@@ -2,7 +2,7 @@ import { Space, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { get_feedback } from '../../../../services/FeedBack'
+import { get_feedback, removeFeedBackById } from '../../../../services/FeedBack'
 
 const FeedBack = () => {
   const dispatch = useDispatch()
@@ -23,7 +23,11 @@ const FeedBack = () => {
         setTableData(data)
     })
   },[])
-   
+  function deleteHandler(id){
+    dispatch(removeFeedBackById(id)).then((res)=>{
+        window.location = '/admin/feedbacks'
+    })
+}
     const columns = [
         {
             title: 'S.No',
@@ -53,7 +57,7 @@ const FeedBack = () => {
             render: (_, record) => (
                 <Space size="middle">
                     <Link to='/admin/view-feedback' state={{_id:record._id}}>view </Link>
-                    <Link >Delete</Link>
+                    <Link onClick={()=>deleteHandler(record._id)} >Delete</Link>
                 </Space>
             ),
         },
