@@ -350,7 +350,7 @@ const FindContractor = () => {
                           <img src={dummy_img} className='rounded-[50px]' />
                         </div>
                         <div className='col-span-3'>
-                          <div className='font-bold text-[18px]'> {item.username} </div>
+                          <div className='font-bold text-[18px]'> {item.entity} </div>
                           <div className='text-[#808080] text-[16px]'>{item.City} , {item.State} </div>
                           <div className='flex'>
                             <span className='mr-1'><img src={star} /></span>
