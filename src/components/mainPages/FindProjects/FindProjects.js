@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import Loader from '../../Helper/Loader'
 import { toast, ToastContainer } from 'react-toastify'
 import { get_contractor } from '../../../services/contractor'
-import {AiOutlineDown} from 'react-icons/ai'
+import { AiOutlineDown } from 'react-icons/ai'
 const FindProjects = () => {
     const [projects, setProjects] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,9 +38,9 @@ const FindProjects = () => {
     const [screenSize, getDimension] = useState(window.innerWidth);
     const [isOpen, setIsOpen] = useState(false);
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
+    const toggleAccordion = () => {
+        setIsOpen(!isOpen);
+    };
     useEffect(() => {
         if (isSearch !== true) {
             dispatch(get_listing()).then((res) => {
@@ -74,16 +74,16 @@ const FindProjects = () => {
     }, [WORK_SEGMENT])
     const setDimension = () => {
         getDimension(window.innerWidth)
-      }
+    }
     useEffect(() => {
         window.addEventListener('resize', setDimension);
         if (screenSize <= 759) {
-          // setShowMenu(true)
-          setMobileView(true)      
+            // setShowMenu(true)
+            setMobileView(true)
         } else {
-          setMobileView(false)
+            setMobileView(false)
         }
-      }, [screenSize])
+    }, [screenSize])
     useLayoutEffect(() => {
         const projDet = [];
         dispatch(get_Vendor()).then((res) => {
@@ -112,13 +112,13 @@ const FindProjects = () => {
                             obj["pro_details"] = pro_det;
                             obj["vendor_det"] = vendor_det;
                             projDet.push(obj);
-                          
+
                         }
                     });
                 }
 
             });
-  setLoading(false)
+            setLoading(false)
             setProjectDetails([...projDet]);
             setoProjectDetails([...projDet]);
         });
@@ -191,7 +191,7 @@ const FindProjects = () => {
 
             })
             if (!foundInterest && !foundOwnProject) {
-                if (localStorage.getItem("isLoggedIn") == "false"||localStorage.getItem("isLoggedIn")==null) {
+                if (localStorage.getItem("isLoggedIn") == "false" || localStorage.getItem("isLoggedIn") == null) {
                     console.log("3")
                     navigate('/login')
                 } else if (localStorage.getItem('status') != 0) {
@@ -248,7 +248,7 @@ const FindProjects = () => {
         if (e.target.value === "") {
             pagination(OprojectDetails);
         }
-        else{
+        else {
             const FILTER = projectsOnPage.filter((proj_det) => {
 
                 if (proj_det.vendor_det?.agency_name) {
@@ -262,7 +262,7 @@ const FindProjects = () => {
             });
             setProjectsOnPage(FILTER);
         }
-        
+
     }
 
     return (
@@ -270,8 +270,8 @@ const FindProjects = () => {
             {loading ? <Loader />
                 :
                 <div className='container grid grid-cols-1 md:grid-cols-7 md:gap-6 mb-16 mt-3'>
-                    
-                   {!mobilView? <div className='col-span-2 h-[500px] w-full shadow-lg border-2 p-5' >
+
+                    {!mobilView ? <div className='col-span-2 h-[500px] w-full shadow-lg border-2 p-5' >
                         <div className='relative '>
                             <p className='headings font_18 mb-10 '>Find Projects</p>
                             <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]'> </div>
@@ -336,82 +336,82 @@ const FindProjects = () => {
                             </p>
                         </Form>
                     </div>
-                    : 
-                    <div className="accordion ">
-      <div className="accordion__header bg-[#023047] w-full px-6 py-4" onClick={toggleAccordion}>
-          <div className="flex items-center justify-between">
-           <h3 className="normal_text  text-white">Filter </h3><AiOutlineDown color='white'/>
-            </div>  
-        <span className={`icon ${isOpen ? "rotate-icon" : ""}`} />
-      </div>
-      {isOpen && <div className='col-span-2  w-full shadow-lg border-2 p-5' >
-                        <div className='relative '>
-                            <p className='headings font_18 mb-10 '>Find Projects</p>
-                            <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]'> </div>
+                        :
+                        <div className="accordion ">
+                            <div className="accordion__header bg-[#023047] w-full px-6 py-4" onClick={toggleAccordion}>
+                                <div className="flex items-center justify-between">
+                                    <h3 className="normal_text  text-white">Filter </h3><AiOutlineDown color='white' />
+                                </div>
+                                <span className={`icon ${isOpen ? "rotate-icon" : ""}`} />
+                            </div>
+                            {isOpen && <div className='col-span-2  w-full shadow-lg border-2 p-5' >
+                                <div className='relative '>
+                                    <p className='headings font_18 mb-10 '>Find Projects</p>
+                                    <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]'> </div>
+                                </div>
+                                <Form
+                                    layout='vertical'
+                                    form={form}
+                                    onValuesChange={handleFormChange}
+                                >
+                                    <label className=' text-black font-[inter] font-[16px] pt-5'>Company Name</label>
+
+                                    <Input className='mt-2 mb-5' placeholder='Search for projects' onChange={inputHandler} />
+
+                                    <Form.Item name="Location" label="Search Location">
+                                        <Select className=' mb-5' placeholder='Add Location' >
+                                            {Object.keys(state_cites).map((state) => {
+                                                return (<Select.Option value={state}>{state}</Select.Option>)
+                                            }
+                                            )}
+                                        </Select>
+                                    </Form.Item>
+
+                                    <Form.Item name="work_Segments" label="Select work segment">
+                                        <Select placeholder="select work segments" onChange={setSelectedItems}>
+                                            {
+                                                work_segment.length > 0 && work_segment.map((cats) => {
+                                                    return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
+                                                })
+                                            }
+                                        </Select>
+                                    </Form.Item>
+                                    <p className='font-[inter]'>
+                                        {selectedItems.length > 0 &&
+                                            sub_cat[0].map((sub_category) => {
+
+                                                return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
+                                                    <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
+                                                        <Select>
+                                                            {sub_category.children.map((item, index) => {
+
+                                                                return (
+                                                                    <Select.Option
+                                                                        key={item.sub_Category}
+                                                                        className={`ml-${index === 0 ? 2 : 0} `}
+                                                                        value={item.name}
+                                                                    >
+                                                                        <span>{item.name}</span>
+                                                                    </Select.Option>
+                                                                );
+                                                            })}
+
+                                                        </Select>
+
+
+                                                    </Form.Item>
+                                                </>
+
+
+                                            })
+
+                                        }
+                                    </p>
+                                </Form>
+                            </div>}
                         </div>
-                        <Form
-                            layout='vertical'
-                            form={form}
-                            onValuesChange={handleFormChange}
-                        >
-                            <label className=' text-black font-[inter] font-[16px] pt-5'>Company Name</label>
-
-                            <Input className='mt-2 mb-5' placeholder='Search for projects' onChange={inputHandler} />
-
-                            <Form.Item name="Location" label="Search Location">
-                                <Select className=' mb-5' placeholder='Add Location' >
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
-                            </Form.Item>
-
-                            <Form.Item name="work_Segments" label="Select work segment">
-                                <Select placeholder="select work segments" onChange={setSelectedItems}>
-                                    {
-                                        work_segment.length > 0 && work_segment.map((cats) => {
-                                            return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-                            <p className='font-[inter]'>
-                                {selectedItems.length > 0 &&
-                                    sub_cat[0].map((sub_category) => {
-
-                                        return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
-                                            <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
-                                                <Select>
-                                                    {sub_category.children.map((item, index) => {
-
-                                                        return (
-                                                            <Select.Option
-                                                                key={item.sub_Category}
-                                                                className={`ml-${index === 0 ? 2 : 0} `}
-                                                                value={item.name}
-                                                            >
-                                                                <span>{item.name}</span>
-                                                            </Select.Option>
-                                                        );
-                                                    })}
-
-                                                </Select>
 
 
-                                            </Form.Item>
-                                        </>
-
-
-                                    })
-
-                                }
-                            </p>
-                        </Form>
-                    </div>}
-    </div>
-                    
-                   
                     }
                     <div className='col-span-5 mt-5 md:mt-0'>
 
@@ -431,7 +431,7 @@ const FindProjects = () => {
                         <div className='flex-shrink-0 '>
                             {
                                 projectsOnPage.length > 0 && projectsOnPage.map((proj_det) => {
-                                    {console.log({projectsOnPage})}
+                                    { console.log({ projectsOnPage }) }
                                     return <div className='project_card p-6 border-2  mb-5'>
                                         <h2 className='prime_h2 font_18 mb-3'>{proj_det.pro_details.project_discription}</h2>
                                         <div className='grid grid grid-cols-1 md:grid-cols-3 gap-2 mb-3'>

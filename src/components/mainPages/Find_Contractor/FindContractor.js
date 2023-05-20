@@ -22,6 +22,7 @@ import {AiOutlineDown} from 'react-icons/ai'
 
 const FindContractor = () => {
   const [contractors, setContractors] = useState([])
+  const [cpy_contractors, setCpyContractors] = useState([])
   const [hireContractor, setHireContractor] = useState()
   const [screenSize, getDimension] = useState(window.innerWidth);
   const [column, setColumns] = useState(1)
@@ -50,9 +51,11 @@ const FindContractor = () => {
           if(localStorage.getItem("user_id") && localStorage.getItem("user_id") !=cont.user_id )
           {
             setContractors(prev => [...prev, cont])
+            setCpyContractors(prev => [...prev, cont])
           }
           else{
             setContractors(prev => [...prev, cont])
+            setCpyContractors(prev => [...prev, cont])
           }
           }
           
@@ -97,7 +100,6 @@ const FindContractor = () => {
 
   const handleFormChange = () => {
     const { contractor, Location, work_segment,work_area_type } = form.getFieldsValue();
-    console.log(contractor, Location, work_segment,)
     var formData = new FormData()
     if (contractor != undefined) {
       formData.append("contractor", contractor)
@@ -172,6 +174,11 @@ const FindContractor = () => {
     setProposalVal(e.target.value)
   }
   useDocumentTitle('Find Contractor')
+  function resetHandler(){
+    form.resetFields()
+    setSelectedItems('')
+    setContractors(cpy_contractors)
+  }
   return (
     <>
       {
@@ -244,6 +251,8 @@ const FindContractor = () => {
                     }
                   </p>
               </Form>
+              <button className='brand_button' onClick={()=>{resetHandler()}}>Reset Filter</button>
+
             </div>:
               <div className="accordion ">
               <div className="accordion__header bg-[#023047] w-full px-6 py-4" onClick={toggleAccordion}>
@@ -318,6 +327,7 @@ const FindContractor = () => {
                     }
                   </p>
               </Form>
+              <button className='brand_button' onClick={()=>{form.resetFields()}}>Reset Filter</button>
                             </div>
                             }
             </div>
