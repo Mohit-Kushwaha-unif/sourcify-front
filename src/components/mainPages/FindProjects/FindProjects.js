@@ -18,6 +18,7 @@ const FindProjects = () => {
     const [projects, setProjects] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [work_segment, set_work_segment] = useState([])
+    const [cpyProjects,setCpyProjects] = useState([])
     var [projectDetails, setProjectDetails] = useState([])
     var [OprojectDetails, setoProjectDetails] = useState([])
     const [loading, setLoading] = useState(true)
@@ -120,10 +121,12 @@ const FindProjects = () => {
             });
             setLoading(false)
             setProjectDetails([...projDet]);
+            setCpyProjects([...projDet])
             setoProjectDetails([...projDet]);
         });
 
         setProjectDetails([...projDet]);
+        setCpyProjects([...projDet])
         setoProjectDetails([...projDet]);
 
     }, [projects, dispatch]);
@@ -264,7 +267,11 @@ const FindProjects = () => {
         }
 
     }
-
+    function resetHandler(){
+        form.resetFields()
+        setSelectedItems('')
+        setProjects(cpyProjects)
+      }
     return (
         <>
             {loading ? <Loader />
@@ -335,6 +342,8 @@ const FindProjects = () => {
                                 }
                             </p>
                         </Form>
+              <button className='brand_button h-[50px] mt-14 float-right ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+
                     </div>
                         :
                         <div className="accordion ">
@@ -407,6 +416,8 @@ const FindProjects = () => {
 
                                         }
                                     </p>
+              <button className='brand_button h-[50px] mb-10 ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+
                                 </Form>
                             </div>}
                         </div>
@@ -431,7 +442,6 @@ const FindProjects = () => {
                         <div className='flex-shrink-0 '>
                             {
                                 projectsOnPage.length > 0 && projectsOnPage.map((proj_det) => {
-                                    { console.log({ projectsOnPage }) }
                                     return <div className='project_card p-6 border-2  mb-5'>
                                         <h2 className='prime_h2 font_18 mb-3'>{proj_det.pro_details.project_discription}</h2>
                                         <div className='grid grid grid-cols-1 md:grid-cols-3 gap-2 mb-3'>

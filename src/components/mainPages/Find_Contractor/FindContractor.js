@@ -251,7 +251,7 @@ const FindContractor = () => {
                     }
                   </p>
               </Form>
-              <button className='brand_button' onClick={()=>{resetHandler()}}>Reset Filter</button>
+              <button className='brand_button h-[50px] mt-14 float-right' onClick={()=>{resetHandler()}}>Reset Filter</button>
 
             </div>:
               <div className="accordion ">
@@ -264,8 +264,10 @@ const FindContractor = () => {
               {isOpen && <div className='col-span-2  w-full shadow-lg border-2 p-5' >
               <div className='relative '>
                 <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
+
                 <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]' data-translate="hi"> </div>
               </div>
+
               <Form
                 layout='vertical'
                 form={form}
@@ -326,8 +328,10 @@ const FindContractor = () => {
 
                     }
                   </p>
+              <button className='brand_button h-[50px] mt-10 ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+
               </Form>
-              <button className='brand_button' onClick={()=>{form.resetFields()}}>Reset Filter</button>
+
                             </div>
                             }
             </div>
@@ -361,7 +365,7 @@ const FindContractor = () => {
                         </div>
                         <div className='col-span-3'>
                           <div className='font-bold text-[18px]'> {item.entity} </div>
-                          <div className='text-[#808080] text-[16px]'>{item.City} , {item.State} </div>
+                          <div className='text-[#808080] text-[16px]'>{item.City} {item.City !=undefined?  ',': ''}  {item.State} </div>
                           <div className='flex'>
                             <span className='mr-1'><img src={star} /></span>
                             <span className='mr-1'><img src={star} /></span>
