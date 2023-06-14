@@ -16,7 +16,6 @@ const EmailForm = () => {
         }
         else{
             dispatch(email_verify({activationToken : params.token})).then((res)=>{
-                console.log(res.message)
                 if(res.msg == "Email Verified"){
                     setIsVerified(true)
                     localStorage.setItem("accesstoken",params.token)

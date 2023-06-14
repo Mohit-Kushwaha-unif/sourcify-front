@@ -28,7 +28,7 @@ const EditListing = () => {
     const [loading,setLoading] = useState(false)
     const [specificationImage, setSpecificationImage] = useState()
     const [formStatus, setFormStatus] = useState()
-    const [showbillImg, setShowBillImg] = useState(true)
+    const [showbillImg, setShowBillImg] = useState(false)
     const [showSpecImg, setShowSpecImg] = useState(true)
     const [state, setState] = useState([])
     useEffect(() => {
@@ -52,7 +52,7 @@ const EditListing = () => {
             Object.keys(res.listing).map((value) => {
                 var obj = {}
                 if (value == 'project_bill_qty_image') {
-                    console.log("hi")
+                   console.log(res.listing[value])
                     setShowBillImg(res.listing[value])
                 }
                 else if (value == 'project_specification') {
@@ -183,7 +183,7 @@ const EditListing = () => {
 
                                 <TextArea placeholder='Enter Scope of your project' />
                             </Form.Item>
-                            <div className='grid grid-cols-2 my-3'>
+                            <div className='grid grid-cols-2 my-3 gap-6'>
                                 {showSpecImg !== true ? <div className='w-full h-full grid grid-cols-2'>
                                     <span>
                                         <a href={showSpecImg} className="flex flex-col items-center text-center" download={"Specifiaction"}>
@@ -207,7 +207,7 @@ const EditListing = () => {
                                     </Form.Item>
 
                                 }
-
+                                    {console.log(showbillImg)}
                                 {showbillImg !== false ?
                                     <div className='w-full h-full grid grid-cols-2'>
                                         <span>

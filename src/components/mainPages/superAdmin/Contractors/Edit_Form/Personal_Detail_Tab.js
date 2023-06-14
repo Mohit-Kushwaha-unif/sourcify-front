@@ -22,6 +22,7 @@ import { upload_img } from '../../../../../services/upload';
 import Loader from '../../../../Helper/Loader';
 import { toast, ToastContainer } from 'react-toastify'
 const Personal_Detail_Tab = ({ formValues, isClicked }) => {
+
   const location = useLocation()
   const [fileList, setFileList] = useState([]);
   const [preview_img, set_preveiwimg] = useState([])
@@ -53,8 +54,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
   const [contractor_status, set_Contractor_status] = useState(1)
-  const [workArea,setWorkArea]= useState([])
+  const [run,setRun] = useState(true)
+  const [fullName ,setFullName] = useState('')
+  const [designation ,setDesignation] = useState('')
+  const [email ,setemail] = useState('')
+  const [number ,setnumber] = useState('')
+  const [address ,setaddress] = useState('')
+  const [workArea, setWorkArea] = useState([])
   const [form] = Form.useForm();
+  const [cont_name, setCont_name] = useState()
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   var work_area_types = []
   var work_area = []
@@ -75,7 +83,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       var formData = new FormData();
       formData.append("File", file)
       return dispatch(upload_img(formData)).then((res) => {
-        console.log(res);
         newProjectImg.push(res);
       });
     });
@@ -150,81 +157,97 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       });
     });
   };
-
-
+  useEffect(()=>{
+    if(run){
+      setCont_name(formValues.entity)
+    }
+  },[])
+ 
 
 
   const disabledDate = (current) => current && current > moment().endOf('year');
 
   useEffect(() => {
-    if (formValues.msme_image !== "not provided") {
-      setIsMSMEVisible(true)
-    }
-    if (formValues.msme_image === undefined) {
-      setIsMSMEVisible(false)
-    }
-    formValues.work_area_types?.length > 0 && formValues.work_area_types.map((options) => {
-      Object.keys(options).map((opt_val) => {
-        var obj = {}
-        obj["name"] = opt_val
-        obj["value"] = options[opt_val]
-        work_area_types.push(obj)
+    console.log(run)
+    if(run)
+     { 
+      setState(formValues.State)
+      if (formValues.msme_image !== "not provided") {
+        setIsMSMEVisible(true)
+      }
+      if (formValues.msme_image === undefined) {
+        setIsMSMEVisible(false)
+      }
+      formValues.work_area_types?.length > 0 && formValues.work_area_types.map((options) => {
+        Object.keys(options).map((opt_val) => {
+          var obj = {}
+          obj["name"] = opt_val
+          obj["value"] = options[opt_val]
+          work_area_types.push(obj)
+        })
       })
-    })
-    formValues.work_area.length > 0 && formValues.work_area.map((work) => {
-      setSelectedItems((prev_state) => [...prev_state, work.work_segment])
-    })
-    formValues?.turnover?.map((_, index) => {
-      Object.keys(_, [index]).map((turnOvers) => {
-        years.push(turnOvers)
-        setYear(prevState => [...prevState, _[turnOvers]])
+      setFullName(formValues.username)
+      setaddress(formValues.Address)
+      setDesignation(formValues.Designation)
+      setemail(formValues.user_id.email)
+      setnumber(formValues.user_id.number)
+      formValues.work_area.length > 0 && formValues.work_area.map((work) => {
+        setSelectedItems((prev_state) => [...prev_state, work.work_segment])
       })
-    })
-    var data = []
-    formValues?.turnover?.map((val) => {
-      Object.keys(val).map((turn) => {
-        var obj = {}
-        obj["name"] = turn
-        obj["value"] = val[turn]
-        data.push(val)
+      formValues?.turnover?.map((_, index) => {
+        Object.keys(_, [index]).map((turnOvers) => {
+          years.push(turnOvers)
+          setYear(prevState => [...prevState, _[turnOvers]])
+        })
       })
-    })
-    var projects = []
-    formValues?.projects?.map((project) => {
-      var Exec = moment(project.Exec)
-      project.Exec = Exec
-      projects.push(project)
+      var data = []
+      formValues?.turnover?.map((val) => {
+        Object.keys(val).map((turn) => {
+          var obj = {}
+          obj["name"] = turn
+          obj["value"] = val[turn]
+          data.push(val)
+        })
+      })
+      var projects = []
+      formValues?.projects?.map((project) => {
+        var Exec = moment(project.Exec)
+        project.Exec = Exec
+        projects.push(project)
 
-      setPreviewImg(prevState => [...prevState, project.project_img])
-      set_preveiwimg(prevState => [...prevState, project.project_img])
-    })
-
-    if (formValues.pan_image && formValues.pan_image !== "undefined") {
-      setShowPANimage(true)
-    }
-    if (formValues.gst_image && formValues.gst_image !== "undefined") {
-      setShowGSTimage(true)
-    }
-    if (formValues.msme_image && formValues.msme_image !== "undefined") {
-      setShowMSMEImage(true)
-    }
-    if (formValues.company_image && formValues.company_image.includes("http")) {
-      setShowCompany_Img(true)
-    }
-    if (formValues.work_area) {
-      formValues.work_area.map((work) => {
-        work_area.push(work.work_segment)
+        setPreviewImg(prevState => [...prevState, project.project_img])
+        set_preveiwimg(prevState => [...prevState, project.project_img])
       })
+
+      if (formValues.pan_image && formValues.pan_image !== "undefined") {
+        setShowPANimage(true)
+      }
+      setState([formValues.State])
+      if (formValues.gst_image && formValues.gst_image !== "undefined") {
+        setShowGSTimage(true)
+      }
+      if (formValues.msme_image && formValues.msme_image !== "undefined") {
+        setShowMSMEImage(true)
+      }
+      if (formValues.company_image && formValues.company_image.includes("http")) {
+        setShowCompany_Img(true)
+      }
+      if (formValues.work_area) {
+        formValues.work_area.map((work) => {
+          work_area.push(work.work_segment)
+        })
+      }
+      setWorkArea([...work_area])
+      setProjects(projects)
+      setTurnover(data)
+      setSelectedOptions(work_area_types)
+      if (formValues.msme_number == "undefined" || formValues.msme_number == "N/A") { setStateInitialpf("N/A") }
+      else {
+        setStateInitialpf(formValues.msme_number)
+      }
+      setStateInitialValue(location.state?.email)
+     
     }
-    setWorkArea([...work_area])
-    setProjects(projects)
-    setTurnover(data)
-    setSelectedOptions(work_area_types)
-    if (formValues.msme_number == "undefined" || formValues.msme_number == "N/A") { setStateInitialpf("N/A") }
-    else {
-      setStateInitialpf(formValues.msme_number)
-    }
-    setStateInitialValue(location.state?.email)
   }, [])
   useEffect(() => {
     var data = []
@@ -232,7 +255,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       const segmentNames = WORK_SEGMENT.map((cat) => cat.name);
       set_work_Segment(segmentNames);
       WORK_SEGMENT.map((cat) =>
-      data.push(cat) );
+        data.push(cat));
       setSub_cat(data)
     }
   }, []);
@@ -243,9 +266,9 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       dispatch(get_category()).then((res) => {
         const segmentNames = res.map((cat) => cat.name);
         set_work_Segment(segmentNames);
-       res.map((cat) =>
-       data.push(cat) );
-      setSub_cat(data)
+        res.map((cat) =>
+          data.push(cat));
+        setSub_cat(data)
       });
     }
   }, []);
@@ -275,7 +298,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     value.Project = JSON.stringify(value.Project)
     value.Turnover = JSON.stringify(Turnover)
     var work_area_types = []
- 
+
     Object.keys(value).map((val_item) => {
       value.work_segment.map((work) => {
         if (val_item === work) {
@@ -292,8 +315,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     if (localStorage.getItem("adminEmail") == null) {
       value.user_id = localStorage.getItem("user_id")
     }
-    else{
-      formData.append("user_id",formValues.user_id._id)
+    else {
+      formData.append("user_id", formValues.user_id._id)
     }
     value.role = 0;
 
@@ -339,7 +362,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     })
     console.log(formValues)
     formData.append("form_id", formValues._id)
-   
+
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
@@ -348,8 +371,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       if (isAdmin != 2) {
 
         toast.success('Profile Updated Successfully', {
-            position: toast.POSITION.TOP_RIGHT
-          })
+          position: toast.POSITION.TOP_RIGHT
+        })
       }
       else {
         navigate('/admin/contractors-list')
@@ -387,13 +410,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     set_msmeImageD(e.target.files[0])
   }
 
-
-  function countrySelectHandler(country) {
-    setState(state_cites[country])
+  const countrySelectHandler =(country) => {
+    setState(state_cites[country]);
+    formValues.State = country 
+    formValues.entity = cont_name
+    setCont_name(cont_name)
+    setRun(false)
   }
-
-
-
   function pan_img_value(e) {
     set_panImageD(e.target.files[0])
   }
@@ -404,12 +427,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     set_company_imgae(e.target.files[0])
   }
   function selectChangeHandler(val) {
-    console.log(val)
     work_area = []
     setSelectedItems(val)
     setWorkArea(val)
-
+    setCont_name(cont_name)
   }
+  function inputHandler(val) {
+    setCont_name(val.target.value)
+  }
+
   return (
     <>
       {
@@ -429,7 +455,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               fields={[
                 {
                   name: ["entity"],
-                  value: [formValues.entity]
+                  value: cont_name
                 },
                 {
                   name: ['status'],
@@ -441,20 +467,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 },
                 {
                   name: ["email"],
-                  value: [formValues.user_id.email]
+                  value: email
                 },
                 {
                   name: ["mobile_number"],
-                  value: [formValues.user_id.number]
+                  value: number
                 },
                 {
                   name: ["Address"],
-                  value: [formValues.Address]
+                  value: address
                 },
-                {
-                  name: ["State"],
-                  value: [formValues.State]
-                },
+              
                 {
                   name: ["City"],
                   value: [formValues.City]
@@ -466,11 +489,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
                 {
                   name: ["username"],
-                  value: [formValues.username]
+                  value: fullName
                 },
                 {
                   name: ["Designation"],
-                  value: [formValues.Designation]
+                  value: designation
                 },
                 {
                   name: ["work_segment"],
@@ -541,7 +564,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   message: 'Please enter your entity name',
                 },
               ]}>
-                <Input placeholder='Enter the name of Your entity' />
+                <Input placeholder='Enter the name of Your entity' onChange={inputHandler} />
               </Form.Item>
               <div className='form_email_mobile_flex flex-col md:flex-row '>
                 <div className='form_flex_children mr-2'>
@@ -551,12 +574,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       message: 'Please enter your Name',
                     },
                   ]}>
-                    <Input placeholder='Enter contact person name' />
+                    <Input placeholder='Enter contact person name' value={fullName} onChange={(val)=>{setFullName(val.target.value)}} />
                   </Form.Item>
                 </div>
                 <div className='form_flex_children '>
                   <Form.Item name="Designation" label="Designation">
-                    <Input placeholder='Enter the  designation' />
+                    <Input placeholder='Enter the  designation' value={designation} onChange={(val)=>{setDesignation(val.target.value)}} />
                   </Form.Item>
                 </div>
               </div>
@@ -573,7 +596,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   }}>
 
                     {
-                      localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' />
+                      localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' value={email} onChange={(val)=>{setemail(val.target.value)}} />
                     }
 
 
@@ -591,7 +614,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                     },
                   ]}>
                     {
-                      localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                      localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" value={number} onChange={(val)=>{setnumber(val.target.value)}} placeholder='Enter Your Number' />
                     }
                     {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
                   </Form.Item>
@@ -599,18 +622,18 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 {/*******************************************/}
               </div>
               <Form.Item name="Address" label="Office address ">
-                <Input placeholder='Enter Your Office address' />
+                <Input placeholder='Enter Your Office address' value={address} onChange={(val)=>{setaddress(val.target.value)}}/>
               </Form.Item>
               <div className='flex flex-col md:flex-row '>
                 <div className='form_flex_children mr-1'>
-                  <Form.Item name="State" label="State " rules={[
+                  <Form.Item name="State" label="State " initialValue={formValues.State} rules={[
                     {
                       required: true,
                       message: 'Please enter your State'
                     },
                   ]}>
 
-                    <Select name="State" placeholder="Select state" onSelect={countrySelectHandler}>
+                    <Select name="State" placeholder="Select state" onChange={countrySelectHandler}>
                       {Object.keys(state_cites).map((state) => {
                         return (<Select.Option value={state}>{state}</Select.Option>)
                       }
@@ -664,11 +687,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   })}
                 </Select>
               </Form.Item>
-         
+
               {selectedItems.length > 0 && selectedItems.map((sub_item) => {
-                    
+
                 return sub_cat.map((sub_category) => {
-                  console.log(sub_category.name,"in",sub_item)
                   return sub_item === sub_category.name && sub_category.name != 'N/A' && <>
                     {
 
@@ -953,33 +975,33 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
               </Form.List>
               {
-                isAdmin ==2 && 
+                isAdmin == 2 &&
                 <Form.Item name="status" className='flex justify-between'>
-                <Radio.Group >
+                  <Radio.Group >
                     <Radio value={1} >Under Review</Radio>
                     <Radio value={2}>Reject</Radio>
                     <Radio value={0}>Accept</Radio>
-                </Radio.Group>
+                  </Radio.Group>
                 </Form.Item>
               }
-             
+
               <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"
                     className="back_btn"  >
                     Next
                   </button> */}
-              
-               
-                  <div className='content_center w-full'>
-                    <button
-                      type="submit"
-                      className="save_Btn   hover:bg-yellow-400"
-                    >
-                      Update
-                    </button>
-                  </div>
-                
+
+
+                <div className='content_center w-full'>
+                  <button
+                    type="submit"
+                    className="save_Btn   hover:bg-yellow-400"
+                  >
+                    Update
+                  </button>
+                </div>
+
               </div>
             </Form>
           </div>

@@ -14,6 +14,7 @@ const Companies = () => {
     const data = []
     const [entity, setEntity] = useState([])
     const [tableData, setTableData] = useState([])
+    const [totalCompany, setTotalCompany] = useState(0)
     const [loading,setLoading] = useState(false)
     const [reviewData,setReviewData] = useState([])
     const [approvedData,setApprovedData] = useState([])
@@ -26,6 +27,7 @@ const Companies = () => {
 
     const tableDataMaker = () =>{
         var tableDataFilter = []
+        var tot_Com = []
         dispatch(get_Vendor()).then((res) => {
 
             res.reverse().map((tableData, index) => {
@@ -36,6 +38,10 @@ const Companies = () => {
                     var tableCont = {}
                     tableCont.text = tableData.agency_name
                     tableCont.value = tableData.agency_name
+                    var exist = tot_Com.find((val)=>val===tableData.agency_name)
+                    if(exist=== undefined){
+                        tot_Com.push(tableData.agency_name)
+                    }
                     tableDataFilter.push(tableCont)
                     if (tableData.user_id) {
                         if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
@@ -56,6 +62,7 @@ const Companies = () => {
                 }
                 }
             })
+            setTotalCompany(tot_Com)
             setEntity([...tableDataFilter])
             setTableData(data)
         }).catch((err) => {
@@ -211,14 +218,14 @@ const Companies = () => {
                         </p>
                         </div>
                         <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${totalCompany.length} `} bordered={false}>
                                        
                                     </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active Users ${approvedData.length}`}  bordered={false}>
                                     </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review Users ${reviewData.length}`} bordered={false}>
                                     </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected Users ${rejectedData.length}`} bordered={false}>
                                     </Card>
                                     </div>
                         <Table

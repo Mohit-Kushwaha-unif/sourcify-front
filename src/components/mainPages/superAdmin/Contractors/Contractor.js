@@ -12,6 +12,7 @@ const Contractor = () => {
     const navigator = useNavigate()
     const dispatch = useDispatch()
     const [entity, setEntity] = useState([])
+    const [totalContractor, setTotalContractor] = useState(0)
     const [tableData, setTableData] = useState([])
     const [reviewData,setReviewData] = useState([])
     const [approvedData,setApprovedData] = useState([])
@@ -28,6 +29,7 @@ const Contractor = () => {
         dispatch(ContractorServices.get_contractor()).then((res) => {
             var work_segment = []
             var dataTable = []
+            var tot_cont = []
             res.reverse().map((tableData, index) => {
                 tableData.work_area.map((segment) => {
                     work_segment.push(segment.work_segment)
@@ -36,10 +38,11 @@ const Contractor = () => {
                 dataText.text = tableData.entity
                 dataText.value = tableData.entity
                 dataTable.push(dataText)
-                console.log(tableData)
-                var approv = 0
-                var review = 0
-                var grant = 0
+                var exist =  tot_cont.find((val) => val === tableData.entity)
+                if(exist === undefined ){
+                    tot_cont.push(tableData.entity)
+                }
+                
                 if (tableData.user_id) {
                     if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
                     if(tableData.status === 0){setApprovedData((PREV)=>[...PREV, tableData]) }
@@ -56,8 +59,8 @@ const Contractor = () => {
                     })
                 }
             })
-            console.log({ data })
             setTableData(data)
+            setTotalContractor(tot_cont)
             setEntity(dataTable)
         }).catch((err) => {
             console.log(err)
@@ -219,7 +222,7 @@ const Contractor = () => {
                                         </p>
                                     </div>
                                     <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${tableData.length} `} bordered={false}>
+                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${totalContractor.length} `} bordered={false}>
                                        
                                     </Card>
                                     <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>

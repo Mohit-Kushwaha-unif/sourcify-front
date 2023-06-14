@@ -35,11 +35,15 @@ const Header = () => {
   const [accountStatus, setAccountStatus] = useState()
   const [showStatus, setShowStatus] = useState(false)
   const [category, setCategory] = useState([])
+  const [isLocal,setIsLocal] = useState(false)
   const [mobilView, setMobileView] = useState(false)
   const isAdmin = useSelector(state => state.User.user_role);
   const [language, setLanguage] = useState(); // Default language is English
   const location = useLocation()
   useEffect(() => {
+    if(localStorage.getItem('lan')==="hi"){
+      setIsLocal(true)
+    }
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
       setisLoggedIn(false)
     } else {
@@ -246,7 +250,7 @@ const Header = () => {
                       </>
                       : <div className={` ${mobilView && showMenu ? "ml-0 my-3 gap-y-1 mb-2" : "place-items-end gap-0"} md:hidden grid grid-cols-4 col-span-4 `} >
 
-                        <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> <p className='header_text' data-translate="hi">Register</p>  </Link>
+                        <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> {isLocal? <p className='header_text' translate='no'>रजिस्टर</p> : <p className='header_text' data-custom-translate="hi">Register</p>}  </Link>
                         <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text' data-translate="hi"> Login </p> </Link>
                       </div>}
                   </>}
@@ -315,8 +319,9 @@ const Header = () => {
                         <div className='flex items-center mr-3 hidden md:inline-block' to='/register'>
                           <span className='flex items-center'>
                             <img src={edit_icon} className='mr-1' />
-                            <NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' data-translate="hi">Register</NavLink>
-                          </span>
+                            {isLocal?<NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' >रजिस्टर</NavLink>
+                           : <NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' data-custom-translate="hi">Register</NavLink>
+                          }</span>
                         </div>
 
                         <div className='flex items-center mr-3 hidden md:inline-block' >

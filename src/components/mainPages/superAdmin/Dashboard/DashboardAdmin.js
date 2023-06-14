@@ -20,6 +20,8 @@ const DashboardAdmin = () => {
 
   const dispatch = useDispatch()
   const [contractor, setContractor] = useState([])
+  const [totalContractor, setTotalContractor] = useState(0)
+  const [totalCompany, setTotalCompany] = useState(0)
   const navigate = useNavigate()
   const [companie, setCompanie] = useState([])
   const [categories,setCategories] = useState([])
@@ -30,17 +32,35 @@ const DashboardAdmin = () => {
     var cont_data = []
     var vend_data = []
     var proj_data = []
+    var tot_cont = []
+    var tot_comp = []
     var work_segment = []
     dispatch(get_contractor()).then((res) => {
+
       res.map((conts) => {
+        var isExist =  tot_cont.find((val)=> val === conts.entity )
+        if(isExist === undefined ){
+          tot_cont.push(conts.entity)
+         }
+      
+      
         cont_data.push(conts)
       })
+      setTotalContractor([...tot_cont])
       setContractor([...cont_data])
     })
     dispatch(get_Vendor()).then((res) => {
+      console.log(res)
       res.map((conts) => {
+        var isExist =  tot_comp.find((val)=> val == conts.agency_name )
+        console.log(isExist)
+        if(isExist === undefined ){
+          tot_comp.push(conts.agency_name)
+         }
+      
         vend_data.push(conts)
       })
+      setTotalCompany(tot_comp)
       setCompanie([...vend_data])
     })
     dispatch(get_listing()).then((res) => {
@@ -76,12 +96,12 @@ const DashboardAdmin = () => {
           <div className='grid grid-cols-1 md:gap-x-6  mb-5 md:grid-cols-3'>
             <Card   className='bg-gray-200 shadow-md border-2 border-solid mb-5' title="Contractors " bordered={false}>
 
-              <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer' onClick={()=>{navigate('/admin/contractors-list')}}> {contractor?.length}</p>
+              <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer' onClick={()=>{navigate('/admin/contractors-list')}}> {totalContractor?.length}</p>
 
             </Card>
 
             <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Companies " bordered={false}>
-              <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/companies')}}> {companie?.length}</p>
+              <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/companies')}}> {totalCompany?.length}</p>
             </Card>
 
             <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Total Projects" bordered={false}>
@@ -96,7 +116,7 @@ const DashboardAdmin = () => {
             <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment " bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/category-list')}}> {categories?.length}</p>
             </Card>
-            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment types" bordered={false}>
+            <Card className='bg-gray-200 shadow-md border-2 border-solid mb-5'  title="Work Segment Categories" bordered={false}>
               <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color hover:underline cursor-pointer'  onClick={()=>{navigate('/admin/category-list')}}>{sub_cat?.length - categories?.length} </p>
             </Card>
 

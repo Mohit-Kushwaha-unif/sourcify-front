@@ -32,6 +32,7 @@ const Dashboard = () => {
     const [caraousel, setCarausel_img] = useState([])
     const [showRegister, setShowRegister] = useState(false)
     const [accountStatus, setAccountStatus] = useState()
+    const [isLocal, setIsLocal] = useState(false)
     // const userRole =  useSelector(state => state.User.user_role);
     useEffect(() => {
         dispatch(get_category()).then((res) => {
@@ -47,18 +48,19 @@ const Dashboard = () => {
         })
     }, [])
     useEffect(() => {
+        if (localStorage.getItem("lan") === "hi") { setIsLocal(true) }
         if (localStorage.getItem("isLoggedIn") == "false" || localStorage.getItem("isLoggedIn") == null) {
             setShowRegister(true)
 
-           
+
         }
-        setAccountStatus( localStorage.getItem('status'))
+        setAccountStatus(localStorage.getItem('status'))
     }, [localStorage])
-   
-    console.log(accountStatus)
+
+    console.log(accountStatus, isLocal)
     return (
         <div>
-            <ToastContainer/>
+            <ToastContainer />
             <div className='container mb-24'>
                 <div className='grid grid-cols-1 md:grid-cols-2'>
                     <div className='content order-2 md:order-1'>
@@ -74,7 +76,7 @@ const Dashboard = () => {
                                 {showRegister && <button className='prime_button_sec mb-5 md:mb-0 md:mr-5' data-translate="hi" onClick={() => navigator('/register')}>Register as a Contractor</button>}
                                 <button className='brand_button justify-center text-center w-auto' data-translate="hi" onClick={() => {
                                     localStorage.getItem("isLoggedIn") == null || localStorage.getItem("isLoggedIn") == "false" ?
-                                      navigator('/login')
+                                        navigator('/login')
                                         : accountStatus != 0 ? toast.error('Account is  not approved by admin', {
                                             position: toast.POSITION.TOP_RIGHT
                                         }) : navigator('/dashboard/listing-form')
@@ -97,19 +99,19 @@ const Dashboard = () => {
 
                         <div className='flex items-center  place-items-start'>
                             <img src={frame_charge} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Free of <br/>Charge</p>
+                            <p className='white_h3' data-translate="hi">Free of <br />Charge</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={web} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Top-notch <br/>Contractors</p>
+                            <p className='white_h3' data-translate="hi">Top-notch <br />Contractors</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={bookmark} className="mr-8" />
-                            <p className='white_h3' data-translate="hi">Easy & <br/>Transparent</p>
+                            <p className='white_h3' data-translate="hi">Easy & <br />Transparent</p>
                         </div>
                         <div className='flex items-center  place-items-start'>
                             <img src={checked} className="mr-5" />
-                            <p className='white_h3' data-translate="hi">Collaboration <br/>made easy</p>
+                            <p className='white_h3' data-translate="hi">Collaboration <br />made easy</p>
                         </div>
                     </div>
                 </div>
@@ -160,7 +162,8 @@ const Dashboard = () => {
                 <div className='grid container md:gap-x-6  gap-y-6 grid-cols-1 md:grid-cols-3 mb-16'>
                     <div className='grid_card_design'>
                         <img src={register} className="grid_img_design w-full" alt="Register Account" />
-                        <h2 data-translate="hi" className='grid_heading text-center'>Register Account</h2>
+                        {isLocal ? <h2 className='grid_heading text-center'>रजिस्टर अकाउंट</h2> : <h2 data-custom-translate="hi" className='grid_heading text-center'>Register Account</h2>}
+
                         <p data-translate="hi" className='text-center'>
                             Create your free account, register as a contractor to find projects or post projects to find contractors to get work done.
                         </p>
@@ -174,7 +177,21 @@ const Dashboard = () => {
                     </div>
                     <div className='grid_card_design'>
                         <img src={proposal} className="grid_img_design" alt="Share Interests" />
-                        <h2 data-translate="hi" className='grid_heading text-center'>Share Interest</h2>
+                      
+                            {isLocal ? (
+                                <h2 translate="no" className='grid_heading text-center notranslate'>
+                                    शेयर इंटरेस्ट
+                                </h2>
+                            ) : (
+                                <h2 data-custom-translate="hi" className='grid_heading text-center'>
+                                    Share Interest
+                                </h2>
+                            )}
+
+                            
+                     
+
+                        {/* <h2 data-translate="hi" className='grid_heading text-center'>Share Interest</h2> */}
                         <p data-translate="hi" className='text-center'>
                             Contractors looking for projects can share their interest
                             for the projects listed by top companies.

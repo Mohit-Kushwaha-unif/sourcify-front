@@ -63,6 +63,7 @@ import Post from './superAdmin/Post/Post'
 import Add_Post from './superAdmin/Post/Add_Edit/Add_Post'
 import DashboardAdmin from './superAdmin/Dashboard/DashboardAdmin'
 import Report from './superAdmin/Report/ReportGenerator'
+import SendEmail from './superAdmin/Email/SendEmail'
 const Pages = (props) => {
   const location = useLocation()
   const dispatch = useDispatch()
@@ -170,6 +171,7 @@ const Pages = (props) => {
         <Route path='/userRole' element={<UserRole/>}/>
         <Route path='/verify' element={<OTPForm/>}/>
         <Route path='/everify/:token' element={<EmailForm/>}/>
+        <Route path='/everifing' element={<EmailForm/>}/>
         <Route path= '/privacy-policy' element={<Privacy/>}/>
         <Route path='/admin' element={<Navigate to="/admin/contractors-list" />} />
         <Route path='/admin/dashboard' element={<DashboardAdmin/>} />
@@ -177,6 +179,7 @@ const Pages = (props) => {
         <Route path='/contractors' element={< FindContractor/>} />
         <Route path='/project_list' element={< FindProjects/>} />
         <Route path='/Work_Segment' element={ <Work_Segment/> } />
+        <Route path='/admin/email-list' element={ <SendEmail/> } />
         <Route path='/blogs' element={ <Blogs/> } />
         <Route path='/blog' element={ <Blog/> } />
         <Route path='/contact-us' element={ <Contact/> } />

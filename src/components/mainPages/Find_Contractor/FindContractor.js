@@ -185,7 +185,7 @@ const FindContractor = () => {
         loading ?
           <Loader /> :
           <div className='container grid grid-cols-1 md:grid-cols-7 md:gap-6 mb-16 mt-3'>
-           {!mobilView? <div className='col-span-2 h-[500px] w-full shadow-lg border-2 p-5' >
+           {!mobilView? <div className='col-span-2 h-[500px] max-h-auto w-full shadow-lg border-2 p-5' >
               <div className='relative '>
                 <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
                 <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]' data-translate="hi"> </div>
@@ -261,7 +261,7 @@ const FindContractor = () => {
                     </div>  
                 <span className={`icon ${isOpen ? "rotate-icon" : ""}`} />
               </div>
-              {isOpen && <div className='col-span-2  w-full shadow-lg border-2 p-5' >
+              {isOpen && <div className='col-span-2 max-h-auto  w-full shadow-lg border-2 p-5' >
               <div className='relative '>
                 <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
 
