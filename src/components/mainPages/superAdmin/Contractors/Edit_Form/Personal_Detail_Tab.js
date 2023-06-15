@@ -53,7 +53,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [gstImageD, set_gstImageD] = useState('')
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
-  const [contractor_status, set_Contractor_status] = useState(1)
   const [run,setRun] = useState(true)
   const [fullName ,setFullName] = useState('')
   const [designation ,setDesignation] = useState('')
@@ -61,9 +60,18 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [number ,setnumber] = useState('')
   const [address ,setaddress] = useState('')
   const [workArea, setWorkArea] = useState([])
+  const [gstNumber, setGstNumber] = useState()
   const [form] = Form.useForm();
   const [cont_name, setCont_name] = useState()
+  const [pinCode,setPinCode] = useState()
   const [city,setCity] = useState()
+  const [approved,setApproved] = useState()
+  const [consumed,setConsumed] = useState()
+  const [panNumber,setPanNumber] = useState()
+  const [formStatus,setFormStatus] = useState()
+  const [msmeStatus,setmsmeStatus] = useState()
+  // const [projectIndex,setProjectIndex] = useState(0)
+  // const [isClicked,setIsClicked] = useState(false)
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   var work_area_types = []
   var work_area = []
@@ -192,6 +200,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       setDesignation(formValues.Designation)
       setemail(formValues.user_id.email)
       setnumber(formValues.user_id.number)
+      setPinCode(formValues.pin_code)
+      setGstNumber( formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number)
+      setPanNumber(formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" : formValues.pan_number)
+      setFormStatus(formValues.status)
       formValues.work_area.length > 0 && formValues.work_area.map((work) => {
         setSelectedItems((prev_state) => [...prev_state, work.work_segment])
       })
@@ -239,9 +251,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       }
       setWorkArea([...work_area])
       setCity(formValues.City)
+      setApproved(formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : '')
       setProjects(projects)
       setTurnover(data)
+      setConsumed( formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : '')
       setSelectedOptions(work_area_types)
+      setmsmeStatus(formValues?.msme)
       if (formValues.msme_number == "undefined" || formValues.msme_number == "N/A") { setStateInitialpf("N/A") }
       else {
         setStateInitialpf(formValues.msme_number)
@@ -275,6 +290,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   }, []);
   function ValidateGSTNumber(event) {
     let text = event.target.value
+    setGstNumber(text)
     var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
     if (text.length < 1) {
       set_Valid_gst(false)
@@ -394,6 +410,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
   const pancardValidation = (event) => {
     let text = event.target.value
+    setPanNumber(text)
     var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     if (text.length < 1) {
       set_Valid_pan(false)
@@ -441,7 +458,10 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   function inputHandler(val) {
     setCont_name(val.target.value)
   }
-
+  function btnHandler(){
+    // setIsClicked(true)
+    // setProjectIndex(projectIndex+1)
+  }
   return (
     <>
       {
@@ -465,7 +485,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 },
                 {
                   name: ['status'],
-                  value: formValues.status
+                  value: formStatus
                 },
                 {
                   name: ['prefferd_state'],
@@ -490,7 +510,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 },
                 {
                   name: ["pin_code"],
-                  value: [formValues.pin_code]
+                  value: pinCode
                 },
 
                 {
@@ -513,16 +533,16 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 ,
                 {
                   name: "msme",
-                  value: formValues?.msme
+                  value: msmeStatus
                 },
                 turnover,
                 {
                   name: ["Approved_Limit"],
-                  value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : ''
+                  value: approved
                 },
                 {
                   name: ["consumed"],
-                  value: formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : ''
+                  value:consumed
                 },
                 {
                   name: [`Turnover_${new Date().getFullYear()}`],
@@ -539,11 +559,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
                 {
                   name: ["pan_number"],
-                  value: formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" : formValues.pan_number
+                  value: panNumber
                 },
                 {
                   name: ["gst_number"],
-                  value: formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number
+                  value: gstNumber
                 },
                 {
                   name: ["Project"],
@@ -560,9 +580,31 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
-
+              
 
             >
+
+              <div className='grid grid-cols-3 '>
+                <div className='col-span-1'>
+                  <h2 className='text-2xl bold'>Form Details</h2>
+                </div>
+                <div className='col-span-2 flex ml-[80px] justify-center'>
+                  <h2 className='text-xl bold mr-10'>Status</h2>
+                {
+                isAdmin == 2 &&
+                <Form.Item name="status" className='flex justify-between'>
+                  <Radio.Group value={formStatus} onChange={(val)=>{setFormStatus(val.target.value)}}>
+                    <Radio value={1} >Under Review</Radio>
+                    <Radio value={2}>Reject</Radio>
+                    <Radio value={0}>Accept</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              }
+
+                </div>
+
+              </div>
+
               {/**************  Entity Name *************/}
               <Form.Item name="entity" label="Name of entity" rules={[
                 {
@@ -707,11 +749,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                           message: 'Please select options',
                         },
                       ]}>
-                        <Checkbox.Group className='grid md:grid-cols-5 gap-3'>
+                        <Checkbox.Group onChange={(val)=>{setSelectedOptions([val])}} className='grid md:grid-cols-5 gap-3'>
                           {sub_category.children.map((item, index) => {
 
                             return (
                               <Checkbox
+                                
                                 key={item.name}
                                 className={`ml-${index === 0 ? 2 : 0} `}
                                 value={item.name}
@@ -749,7 +792,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 <div>
                   <Form.Item name="msme_number" className='mb-0' label="PF Number" >
                     {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                    <Input placeholder='Enter your PF number' />
+                    <Input placeholder='Enter your PF number' value={initialpf} onChange={(val)=>{setStateInitialpf(val.target.value)}} />
                   </Form.Item>
 
                   {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
@@ -769,7 +812,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 <div>
 
                   <Form.Item name="pan_number" label="PAN Number" className='mb-0'>
-                    <Input onChange={pancardValidation} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
+                    <Input onChange={pancardValidation} value={panNumber} maxLength={10} minLength={10} placeholder='Enter Your PAN Number' />
                   </Form.Item>
                   {valid_pan && <span style={{ color: '#ff4d4f' }}>Please Enter valid PAN Number*</span>}
 
@@ -785,7 +828,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   </Form.Item>}
                 <div>
                   <Form.Item name="gst_number" className='mb-0' label="GST Number">
-                    <Input onChange={ValidateGSTNumber} placeholder="Please enter your GST Number" />
+                    <Input onChange={ValidateGSTNumber} value={gstNumber} placeholder="Please enter your GST Number" />
                   </Form.Item>
 
 
@@ -803,7 +846,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   </Form.Item>}
               </div>
               <Form.Item name="msme" label="Do you have MSME registration?" required >
-                <Radio.Group >
+                <Radio.Group value={msmeStatus} onChange={(val)=>{setmsmeStatus(val.target.value)}} >
                   <Radio value={"Yes"}>Yes</Radio>
                   <Radio value={"No"}>No</Radio>
                 </Radio.Group>
@@ -820,17 +863,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                 <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                 >
-                  <Input type='number' placeholder='Please enter turnover amount' />
+                  <Input type='number' placeholder='Please enter turnover amount' value={year[0]} onChange={(val)=>{year[0]= val.target.value}} />
                 </Form.Item>
                 <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount' />
+                  <Input type='number' placeholder='Please enter turnover amount'  value={year[0]} onChange={(val)=>{year[1]= val.target.value}}/>
                 </Form.Item>
                 <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount' />
+                  <Input type='number' placeholder='Please enter turnover amount'  value={year[0]} onChange={(val)=>{year[2]= val.target.value}} />
                 </Form.Item>
               </div>
               <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
@@ -839,12 +882,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   className="mb-1"
                 >
 
-                  <Input type='number' placeholder='Please enter  amount' />
+                  <Input type='number' placeholder='Please enter amount' value={approved} onChange={(val)=>{setApproved(val.target.value)}} />
                 </Form.Item>
                 <Form.Item name="consumed" label="Consumed " className="mt-0"
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount' />
+                  <Input type='number' placeholder='Please enter turnover amount' value={consumed} onChange={(val)=>{setConsumed(val.target.value)}} />
                 </Form.Item>
               </div>
               <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
@@ -856,10 +899,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               </div>
               <p className='mt-5 mb-2 '>Projects</p>
 
-              <Form.List name="Project">
+              <Form.List name="Project" >
                 {(fields, { add, remove }) => (
 
                   <>
+
 
                     {fields.map((field, index) => {
                       const project = form.getFieldValue(['Project', index]);
@@ -895,7 +939,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                                 },
                               ]}
                             >
-                              <Input placeholder="Client Name" style={{ width: '100%' }} />
+                              <Input placeholder="Client Name" value="khgfhgv"  onChange={(val)=>{setProjects([...project,val])}} style={{ width: '100%' }}  />
                             </Form.Item>
 
                             <Form.Item
@@ -964,6 +1008,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                     })}
 
                     <Form.Item>
+                      <span onClick={btnHandler}>
                       <Button
                         className="flex justify-center items-baseline"
                         type="dashed"
@@ -976,22 +1021,13 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       >
                         Add Project
                       </Button>
+                      </span>
                     </Form.Item>
                   </>
                 )}
 
               </Form.List>
-              {
-                isAdmin == 2 &&
-                <Form.Item name="status" className='flex justify-between'>
-                  <Radio.Group >
-                    <Radio value={1} >Under Review</Radio>
-                    <Radio value={2}>Reject</Radio>
-                    <Radio value={0}>Accept</Radio>
-                  </Radio.Group>
-                </Form.Item>
-              }
-
+           
               <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"
