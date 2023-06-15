@@ -63,6 +63,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [workArea, setWorkArea] = useState([])
   const [form] = Form.useForm();
   const [cont_name, setCont_name] = useState()
+  const [city,setCity] = useState()
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   var work_area_types = []
   var work_area = []
@@ -168,10 +169,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const disabledDate = (current) => current && current > moment().endOf('year');
 
   useEffect(() => {
-    console.log(run)
     if(run)
      { 
-      setState(formValues.State)
       if (formValues.msme_image !== "not provided") {
         setIsMSMEVisible(true)
       }
@@ -186,6 +185,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
           work_area_types.push(obj)
         })
       })
+      console.log(formValues.State)
+      setState(state_cites[formValues.State])
       setFullName(formValues.username)
       setaddress(formValues.Address)
       setDesignation(formValues.Designation)
@@ -222,7 +223,6 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       if (formValues.pan_image && formValues.pan_image !== "undefined") {
         setShowPANimage(true)
       }
-      setState([formValues.State])
       if (formValues.gst_image && formValues.gst_image !== "undefined") {
         setShowGSTimage(true)
       }
@@ -238,6 +238,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         })
       }
       setWorkArea([...work_area])
+      setCity(formValues.City)
       setProjects(projects)
       setTurnover(data)
       setSelectedOptions(work_area_types)
@@ -417,6 +418,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     setCont_name(cont_name)
     setRun(false)
   }
+
+  function cityHandler  (val){
+    setCity(val)
+  }
+
   function pan_img_value(e) {
     set_panImageD(e.target.files[0])
   }
@@ -480,7 +486,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               
                 {
                   name: ["City"],
-                  value: [formValues.City]
+                  value: city
                 },
                 {
                   name: ["pin_code"],
@@ -648,7 +654,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       message: 'Please enter your City',
                     },
                   ]}>
-                    <Select id="country-state" name="City" placeholder="Select city">
+                    <Select id="country-state" name="City" onSelect={cityHandler} placeholder="Select city">
+                      {console.log(state)}
                       {state.length > 0 && state.map((state) => {
                         return (<Select.Option value={state}>{state}</Select.Option>)
                       }
