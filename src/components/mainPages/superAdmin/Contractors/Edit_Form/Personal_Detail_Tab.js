@@ -53,23 +53,23 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   const [gstImageD, set_gstImageD] = useState('')
   const [showCompnay_Img, setShowCompany_Img] = useState(false)
   const [company_Image, set_company_imgae] = useState('')
-  const [run,setRun] = useState(true)
-  const [fullName ,setFullName] = useState('')
-  const [designation ,setDesignation] = useState('')
-  const [email ,setemail] = useState('')
-  const [number ,setnumber] = useState('')
-  const [address ,setaddress] = useState('')
+  const [run, setRun] = useState(true)
+  const [fullName, setFullName] = useState('')
+  const [designation, setDesignation] = useState('')
+  const [email, setemail] = useState('')
+  const [number, setnumber] = useState('')
+  const [address, setaddress] = useState('')
   const [workArea, setWorkArea] = useState([])
   const [gstNumber, setGstNumber] = useState()
   const [form] = Form.useForm();
   const [cont_name, setCont_name] = useState()
-  const [pinCode,setPinCode] = useState()
-  const [city,setCity] = useState()
-  const [approved,setApproved] = useState()
-  const [consumed,setConsumed] = useState()
-  const [panNumber,setPanNumber] = useState()
-  const [formStatus,setFormStatus] = useState()
-  const [msmeStatus,setmsmeStatus] = useState()
+  const [pinCode, setPinCode] = useState()
+  const [city, setCity] = useState()
+  const [approved, setApproved] = useState()
+  const [consumed, setConsumed] = useState()
+  const [panNumber, setPanNumber] = useState()
+  const [formStatus, setFormStatus] = useState()
+  const [msmeStatus, setmsmeStatus] = useState()
   // const [projectIndex,setProjectIndex] = useState(0)
   // const [isClicked,setIsClicked] = useState(false)
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
@@ -166,19 +166,18 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       });
     });
   };
-  useEffect(()=>{
-    if(run){
+  useEffect(() => {
+    if (run) {
       setCont_name(formValues.entity)
     }
-  },[])
- 
+  }, [])
+
 
 
   const disabledDate = (current) => current && current > moment().endOf('year');
 
   useEffect(() => {
-    if(run)
-     { 
+    if (run) {
       if (formValues.msme_image !== "not provided") {
         setIsMSMEVisible(true)
       }
@@ -201,7 +200,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       setemail(formValues.user_id.email)
       setnumber(formValues.user_id.number)
       setPinCode(formValues.pin_code)
-      setGstNumber( formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number)
+      setGstNumber(formValues.gst_number == "N/A" || formValues.gst_number == "undefined" ? "N/A" : formValues.gst_number)
       setPanNumber(formValues.pan_number == "N/A" || formValues.pan_number == "undefined" ? "N/A" : formValues.pan_number)
       setFormStatus(formValues.status)
       formValues.work_area.length > 0 && formValues.work_area.map((work) => {
@@ -254,7 +253,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
       setApproved(formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].approved : '')
       setProjects(projects)
       setTurnover(data)
-      setConsumed( formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : '')
+      setConsumed(formValues?.bank_overdraft?.length > 0 ? formValues?.bank_overdraft[0].consumed : '')
       setSelectedOptions(work_area_types)
       setmsmeStatus(formValues?.msme)
       if (formValues.msme_number == "undefined" || formValues.msme_number == "N/A") { setStateInitialpf("N/A") }
@@ -262,7 +261,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
         setStateInitialpf(formValues.msme_number)
       }
       setStateInitialValue(location.state?.email)
-     
+
     }
   }, [])
   useEffect(() => {
@@ -379,7 +378,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     })
     console.log(formValues)
     formData.append("form_id", formValues._id)
-
+    return false
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
@@ -407,7 +406,19 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     console.log('error', value)
   }
 
+  const addProject = (newProject) => {
+    setProjects(prevList => [...prevList, newProject]);
+  };
 
+ 
+ 
+  // Update the project list whenever the form values change
+  useEffect(() => {
+    // Get the updated project list from the form values and update the projectList state
+    const updatedProjects = form.getFieldValue('Project');
+    console.log(updatedProjects.length)
+    setProjects(updatedProjects);
+  }, [form.getFieldValue('Project')?.length]);
   const pancardValidation = (event) => {
     let text = event.target.value
     setPanNumber(text)
@@ -428,15 +439,15 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     set_msmeImageD(e.target.files[0])
   }
 
-  const countrySelectHandler =(country) => {
+  const countrySelectHandler = (country) => {
     setState(state_cites[country]);
-    formValues.State = country 
+    formValues.State = country
     formValues.entity = cont_name
     setCont_name(cont_name)
     setRun(false)
   }
 
-  function cityHandler  (val){
+  function cityHandler(val) {
     setCity(val)
   }
 
@@ -458,10 +469,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
   function inputHandler(val) {
     setCont_name(val.target.value)
   }
-  function btnHandler(){
-    // setIsClicked(true)
-    // setProjectIndex(projectIndex+1)
+  function btnHandler() {
+   console.log("Im clicked")
+    addProject()
   }
+  console.log(form.getFieldsValue())
   return (
     <>
       {
@@ -503,7 +515,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   name: ["Address"],
                   value: address
                 },
-              
+
                 {
                   name: ["City"],
                   value: city
@@ -542,7 +554,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 },
                 {
                   name: ["consumed"],
-                  value:consumed
+                  value: consumed
                 },
                 {
                   name: [`Turnover_${new Date().getFullYear()}`],
@@ -568,7 +580,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 {
                   name: ["Project"],
                   value: [...project]
-                }
+                },
+                {
+                  name: ["State"],
+                  value: formValues.State
+                },
 
               ]
 
@@ -580,7 +596,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
-              
+
 
             >
 
@@ -590,16 +606,16 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 </div>
                 <div className='col-span-2 flex ml-[80px] justify-center'>
                   <h2 className='text-xl bold mr-10'>Status</h2>
-                {
-                isAdmin == 2 &&
-                <Form.Item name="status" className='flex justify-between'>
-                  <Radio.Group value={formStatus} onChange={(val)=>{setFormStatus(val.target.value)}}>
-                    <Radio value={1} >Under Review</Radio>
-                    <Radio value={2}>Reject</Radio>
-                    <Radio value={0}>Accept</Radio>
-                  </Radio.Group>
-                </Form.Item>
-              }
+                  {
+                    isAdmin == 2 &&
+                    <Form.Item name="status" className='flex justify-between'>
+                      <Radio.Group value={formStatus} onChange={(val) => { setFormStatus(val.target.value) }}>
+                        <Radio value={1} >Under Review</Radio>
+                        <Radio value={2}>Reject</Radio>
+                        <Radio value={0}>Accept</Radio>
+                      </Radio.Group>
+                    </Form.Item>
+                  }
 
                 </div>
 
@@ -622,12 +638,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                       message: 'Please enter your Name',
                     },
                   ]}>
-                    <Input placeholder='Enter contact person name' value={fullName} onChange={(val)=>{setFullName(val.target.value)}} />
+                    <Input placeholder='Enter contact person name' value={fullName} onChange={(val) => { setFullName(val.target.value) }} />
                   </Form.Item>
                 </div>
                 <div className='form_flex_children '>
                   <Form.Item name="Designation" label="Designation">
-                    <Input placeholder='Enter the  designation' value={designation} onChange={(val)=>{setDesignation(val.target.value)}} />
+                    <Input placeholder='Enter the  designation' value={designation} onChange={(val) => { setDesignation(val.target.value) }} />
                   </Form.Item>
                 </div>
               </div>
@@ -644,7 +660,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   }}>
 
                     {
-                      localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' value={email} onChange={(val)=>{setemail(val.target.value)}} />
+                      localStorage.getItem('email') != null && !localStorage.getItem("adminEmail") ? <Input disabled placeholder='Enter Your Email' /> : <Input placeholder='Enter Your Email' value={email} onChange={(val) => { setemail(val.target.value) }} />
                     }
 
 
@@ -662,7 +678,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                     },
                   ]}>
                     {
-                      localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" value={number} onChange={(val)=>{setnumber(val.target.value)}} placeholder='Enter Your Number' />
+                      localStorage.getItem('number') != null && !localStorage.getItem("adminEmail") ? <Input disabled maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' /> : <Input maxLength={10} minLength={10} type="Number" value={number} onChange={(val) => { setnumber(val.target.value) }} placeholder='Enter Your Number' />
                     }
                     {/* <Input maxLength={10} minLength={10} placeholder='Enter the Mobile number to be registered' /> */}
                   </Form.Item>
@@ -670,11 +686,11 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 {/*******************************************/}
               </div>
               <Form.Item name="Address" label="Office address ">
-                <Input placeholder='Enter Your Office address' value={address} onChange={(val)=>{setaddress(val.target.value)}}/>
+                <Input placeholder='Enter Your Office address' value={address} onChange={(val) => { setaddress(val.target.value) }} />
               </Form.Item>
               <div className='flex flex-col md:flex-row '>
                 <div className='form_flex_children mr-1'>
-                  <Form.Item name="State" label="State " initialValue={formValues.State} rules={[
+                  <Form.Item name="State" label="State " rules={[
                     {
                       required: true,
                       message: 'Please enter your State'
@@ -749,12 +765,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                           message: 'Please select options',
                         },
                       ]}>
-                        <Checkbox.Group onChange={(val)=>{setSelectedOptions([val])}} className='grid md:grid-cols-5 gap-3'>
+                        <Checkbox.Group onChange={(val) => { setSelectedOptions([val]) }} className='grid md:grid-cols-5 gap-3'>
                           {sub_category.children.map((item, index) => {
 
                             return (
                               <Checkbox
-                                
+
                                 key={item.name}
                                 className={`ml-${index === 0 ? 2 : 0} `}
                                 value={item.name}
@@ -792,7 +808,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                 <div>
                   <Form.Item name="msme_number" className='mb-0' label="PF Number" >
                     {/* <Input placeholder='Enter your PF number' onChange={msmeVerfication} /> */}
-                    <Input placeholder='Enter your PF number' value={initialpf} onChange={(val)=>{setStateInitialpf(val.target.value)}} />
+                    <Input placeholder='Enter your PF number' value={initialpf} onChange={(val) => { setStateInitialpf(val.target.value) }} />
                   </Form.Item>
 
                   {valid_msme && <span style={{ color: '#ff4d4f' }}>Please Enter valid PF Number*</span>}
@@ -846,7 +862,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   </Form.Item>}
               </div>
               <Form.Item name="msme" label="Do you have MSME registration?" required >
-                <Radio.Group value={msmeStatus} onChange={(val)=>{setmsmeStatus(val.target.value)}} >
+                <Radio.Group value={msmeStatus} onChange={(val) => { setmsmeStatus(val.target.value) }} >
                   <Radio value={"Yes"}>Yes</Radio>
                   <Radio value={"No"}>No</Radio>
                 </Radio.Group>
@@ -863,17 +879,17 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
               <div className='grid grid-cols-1  md:grid-cols-3 gap-2'>
                 <Form.Item name={`Turnover_${new Date().getFullYear()}`} label={`Turnover of ${new Date().getFullYear()}`}
                 >
-                  <Input type='number' placeholder='Please enter turnover amount' value={year[0]} onChange={(val)=>{year[0]= val.target.value}} />
+                  <Input type='number' placeholder='Please enter turnover amount' value={year[0]} onChange={(val) => { year[0] = val.target.value }} />
                 </Form.Item>
                 <Form.Item name={`Turnover_${new Date().getFullYear() - 1}`} label={`Turnover of ${new Date().getFullYear() - 1}`}
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount'  value={year[0]} onChange={(val)=>{year[1]= val.target.value}}/>
+                  <Input type='number' placeholder='Please enter turnover amount' value={year[0]} onChange={(val) => { year[1] = val.target.value }} />
                 </Form.Item>
                 <Form.Item name={`Turnover_${new Date().getFullYear() - 2}`} label={`Turnover of ${new Date().getFullYear() - 2}`}
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount'  value={year[0]} onChange={(val)=>{year[2]= val.target.value}} />
+                  <Input type='number' placeholder='Please enter turnover amount' value={year[0]} onChange={(val) => { year[2] = val.target.value }} />
                 </Form.Item>
               </div>
               <div className='mb-1'>Bank Overdraft Limit / Solvency Certificate Value</div>
@@ -882,12 +898,12 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                   className="mb-1"
                 >
 
-                  <Input type='number' placeholder='Please enter amount' value={approved} onChange={(val)=>{setApproved(val.target.value)}} />
+                  <Input type='number' placeholder='Please enter amount' value={approved} onChange={(val) => { setApproved(val.target.value) }} />
                 </Form.Item>
                 <Form.Item name="consumed" label="Consumed " className="mt-0"
                 >
 
-                  <Input type='number' placeholder='Please enter turnover amount' value={consumed} onChange={(val)=>{setConsumed(val.target.value)}} />
+                  <Input type='number' placeholder='Please enter turnover amount' value={consumed} onChange={(val) => { setConsumed(val.target.value) }} />
                 </Form.Item>
               </div>
               <div className="flex flex-row items-center mt-5 justify-center lg:justify-start">
@@ -939,7 +955,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                                 },
                               ]}
                             >
-                              <Input placeholder="Client Name" value="khgfhgv"  onChange={(val)=>{setProjects([...project,val])}} style={{ width: '100%' }}  />
+                              <Input placeholder="Client Name" value="khgfhgv" onChange={(val) => { setProjects([...project, val]) }} style={{ width: '100%' }} />
                             </Form.Item>
 
                             <Form.Item
@@ -1009,25 +1025,25 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
 
                     <Form.Item>
                       <span onClick={btnHandler}>
-                      <Button
-                        className="flex justify-center items-baseline"
-                        type="dashed"
-                        onClick={() => {
-                          add();
+                        <Button
+                          className="flex justify-center items-baseline"
+                          type="dashed"
+                          onClick={() => {
+                            add();
 
-                        }}
-                        block
-                        icon={<PlusOutlined />}
-                      >
-                        Add Project
-                      </Button>
+                          }}
+                          block
+                          icon={<PlusOutlined />}
+                        >
+                          Add Project
+                        </Button>
                       </span>
                     </Form.Item>
                   </>
                 )}
 
               </Form.List>
-           
+
               <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-between'>
                 {/* <button
                     type="submit"
