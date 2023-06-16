@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.5d4cbb61.css",
-    "main.js": "/static/js/main.5d101c17.js",
+    "main.js": "/static/js/main.bfb44af4.js",
     "static/js/498.9c39cec2.chunk.js": "/static/js/498.9c39cec2.chunk.js",
     "static/js/703.31e56b59.chunk.js": "/static/js/703.31e56b59.chunk.js",
     "static/js/598.ac67d1e0.chunk.js": "/static/js/598.ac67d1e0.chunk.js",
@@ -26,13 +26,13 @@
     "static/media/Sourcify Logo.png": "/static/media/Sourcify Logo.117991e9b3cca7e5ad9d.png",
     "index.html": "/index.html",
     "main.5d4cbb61.css.map": "/static/css/main.5d4cbb61.css.map",
-    "main.5d101c17.js.map": "/static/js/main.5d101c17.js.map",
+    "main.bfb44af4.js.map": "/static/js/main.bfb44af4.js.map",
     "498.9c39cec2.chunk.js.map": "/static/js/498.9c39cec2.chunk.js.map",
     "703.31e56b59.chunk.js.map": "/static/js/703.31e56b59.chunk.js.map",
     "598.ac67d1e0.chunk.js.map": "/static/js/598.ac67d1e0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5d4cbb61.css",
-    "static/js/main.5d101c17.js"
+    "static/js/main.bfb44af4.js"
   ]
 }

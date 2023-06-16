@@ -378,7 +378,7 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
     })
     console.log(formValues)
     formData.append("form_id", formValues._id)
-    return false
+   
     dispatch(Contractor_service.update_contractor(formData)).then((res) => {
       var obj = {}
       obj.id = value.user_id
