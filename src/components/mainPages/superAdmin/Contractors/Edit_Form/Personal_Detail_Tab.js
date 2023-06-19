@@ -713,8 +713,8 @@ const Personal_Detail_Tab = ({ formValues, isClicked }) => {
                     },
                   ]}>
                     <Select id="country-state" name="City" onSelect={cityHandler} placeholder="Select city">
-                      {console.log(state)}
-                      {state.length > 0 && state.map((state) => {
+                      {console.log({state})}
+                      {state!=undefined && state.length > 0 && state.map((state) => {
                         return (<Select.Option value={state}>{state}</Select.Option>)
                       }
                       )}
