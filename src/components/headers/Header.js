@@ -202,12 +202,7 @@ const Header = () => {
                   </div>
                   {
                     mobilView && showMenu && <><div className='mt-3 h-5  flex  items-center header_text '>
-                      <label htmlFor="language">Language:</label>
-                      <select id="language" value={language} onChange={handleLanguageChange}>
-                        <option value="en">English</option>
-                        <option value="hi">हिंदी</option>
-                      </select>
-
+                     
                     </div>
                       {showMenu && <>
                         <div className='grid  col-span-7  md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >

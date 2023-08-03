@@ -14,42 +14,42 @@ function App() {
   const handleLanguageSelect = (selectedLanguage) => {
     setLanguage(selectedLanguage);
   };
-  useEffect(() => {
-    if (localStorage.getItem("isModal") !== "false") {
-      Swal.fire({
-        title: '<strong>Select Language </strong>',
-        icon: 'info',
-        html:
-          ' Select a language to view this website in:',
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-        confirmButtonText:
-          'English',
-        confirmButtonAriaLabel: 'Thumbs up, great!',
-        cancelButtonText:
-          ' हिंदी',
-        cancelButtonAriaLabel: 'Thumbs down'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleLanguageSelect('en');
-          localStorage.setItem("isModal", false)
-          localStorage.setItem("lan", "en")
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          handleLanguageSelect('hi');
-          localStorage.setItem("isModal", false)
-          localStorage.setItem("lan", "hi")
-        }
-      });
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("isModal") !== "false") {
+  //     Swal.fire({
+  //       title: '<strong>Select Language </strong>',
+  //       icon: 'info',
+  //       html:
+  //         ' Select a language to view this website in:',
+  //       showCloseButton: true,
+  //       showCancelButton: true,
+  //       focusConfirm: false,
+  //       confirmButtonText:
+  //         'English',
+  //       confirmButtonAriaLabel: 'Thumbs up, great!',
+  //       cancelButtonText:
+  //         ' हिंदी',
+  //       cancelButtonAriaLabel: 'Thumbs down'
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         handleLanguageSelect('en');
+  //         localStorage.setItem("isModal", false)
+  //         localStorage.setItem("lan", "en")
+  //       } else if (result.dismiss === Swal.DismissReason.cancel) {
+  //         handleLanguageSelect('hi');
+  //         localStorage.setItem("isModal", false)
+  //         localStorage.setItem("lan", "hi")
+  //       }
+  //     });
+  //   }
 
-    if (localStorage.getItem("lan") == "hi") {
-      translateToHindi("hi")
-    }
-    if (localStorage.getItem("lan") == "en") {
-      translateToHindi("en")
-    }
-  }, [language, path, localStorage]);
+  //   if (localStorage.getItem("lan") == "hi") {
+  //     translateToHindi("hi")
+  //   }
+  //   if (localStorage.getItem("lan") == "en") {
+  //     translateToHindi("en")
+  //   }
+  // }, [language, path, localStorage]);
   function translateToHindi(ln) {
     const apiKey = "AIzaSyDK-YBCVq3NGJFwjOpIJfqf3Vb23pu7AG4";
     const targetLanguage = ln
