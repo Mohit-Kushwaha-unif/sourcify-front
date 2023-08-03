@@ -246,15 +246,15 @@ const Login = () => {
 
               </div>
             </Form>
-            <div className='center_content mb-5'>
+            {/* <div className='center_content mb-5'>
               <span className='text-[28px] font-bold'data-translate="hi">or</span>
-            </div>
+            </div> */}
             <div className='social_buttons mb-16'>
-              <div className='bg-[#FF5757] mb-3 rounded-[6px] cursor-pointer'>
+              {/* <div className='bg-[#FF5757] mb-3 rounded-[6px] cursor-pointer'>
                 
                   <div onClick={() => logins()} className='brand_button' data-translate="hi">Login with Google</div>
              
-              </div>
+              </div> */}
 
               {/* <div className='bg-[#00272B] rounded-[6px]'>
                 <span className='prime_button_sec w-full '>Login with Facebook</span>
