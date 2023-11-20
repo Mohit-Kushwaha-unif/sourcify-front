@@ -1,36 +1,20 @@
-import { Space, Table, Tag } from 'antd'
+import {  Table, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { AiOutlineMessage } from 'react-icons/ai'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { get_contractor } from '../../../services/contractor'
-import { get_listing, get_listingBy_id } from '../../../services/listing'
-import Company_Dashboard from '../Company_Dashboard/Company_Dashboard'
+import {  get_listingBy_id } from '../../../services/listing'
 import { get_Vendor } from '../../../services/Vendor'
 
 const Contractor_Dashboard = ({companyContractData}) => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-  const [project, setProjects] = useState([])
   var data = []
   const [tableData, setTableData] = useState([])
-  const [lisitngs, setAllLisitngs] = useState([])
   const [contractors, setContractors] = useState([])
   useEffect(() => {
-    dispatch(get_listing(location?.state)).then((res) => {
-      var data = []
-
-      res.map((list_details) => {
-        if (list_details.status == 0 && list_details.form_status === 0) {
-          data.push(list_details)
-        }
-      })
-      setAllLisitngs(data)
-    })
     dispatch(get_Vendor()).then((respnse) => {
       setContractors(respnse)
-      // if(res._id === formValues.vendorDetail._id){
       respnse.map((contact) => {
         if (contact.user_id?._id === localStorage.getItem('user_id')) {
           setContractors(contact)
@@ -53,8 +37,6 @@ const Contractor_Dashboard = ({companyContractData}) => {
         }
         setTableData(data)
       })
-
-      // }
     })
    
   }, [location])
@@ -92,7 +74,7 @@ const Contractor_Dashboard = ({companyContractData}) => {
       title: 'Project Name',
       dataIndex: 'entity',
       key: 'entity',
-      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {console.log(text)} {_}</Link> ,
+      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {_}</Link> ,
     },
     {
       title: 'Scope',
@@ -151,16 +133,6 @@ const Contractor_Dashboard = ({companyContractData}) => {
 
       }
     },
-    // {
-    //     title: 'Action',
-    //     key: 'action',
-    //     render: (_, record) => (
-    //         <Space size="middle">
-    //             <Link to='/edit-listing' state={{ _id: record._id }}>Edit </Link>
-    //             <Link>Delete</Link>
-    //         </Space>
-    //     ),
-    // },
   ];
   return (
     <>
@@ -180,8 +152,6 @@ const Contractor_Dashboard = ({companyContractData}) => {
             </div>
           </div>
         </section>
-       
-    
       </div>
      
     </>

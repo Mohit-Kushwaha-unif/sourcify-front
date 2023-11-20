@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { get_category } from '../../services/category'
 import dropdown_icon from '../../assests/dropdown_icon.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { search_db } from '../../services/DB'
-const SubHeader = ({ filterValue }) => {
+const SubHeader = () => {
   const dispatch = useDispatch()
   const [category, setCategory] = useState([])
   const [hoverState, setHoverState] = useState({});
@@ -18,7 +17,6 @@ const SubHeader = ({ filterValue }) => {
   useEffect(() => {
     window.addEventListener('resize', setDimension);
     if (screenSize <= 759) {
-      // setShowMenu(true)
       setMobileView(true)
 
     } else {
@@ -93,17 +91,6 @@ const SubHeader = ({ filterValue }) => {
 
 
       </div>
-      {/* {!mobilView && (
-          <div className=' relative'>
-            <div className='absolute top-[-41px] right-[22px]'>
-              <label htmlFor="language">Language:</label>
-              <select id="language" value={language} onChange={handleLanguageChange}>
-                <option value="en">English</option>
-                <option value="hi">हिंदी</option>
-              </select>
-            </div>
-          </div>
-        )} */}
     </div>
 
 

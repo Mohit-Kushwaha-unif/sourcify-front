@@ -21,13 +21,12 @@ function OTPForm() {
         }).catch((err) => {
             Swal.fire('Please check OTP ', err.response.data.msg, 'warning')
         })
-        // Add code to send OTP
     }
 
-    function sendMessage(){
+    function sendMessage() {
         var formData = {}
         formData.email = localStorage.getItem('email')
-        dispatch(send_otp(formData)).then((res)=>{
+        dispatch(send_otp(formData)).then((res) => {
             Swal.fire('Please Check your Email ', res.msg, ' successful')
         })
     }

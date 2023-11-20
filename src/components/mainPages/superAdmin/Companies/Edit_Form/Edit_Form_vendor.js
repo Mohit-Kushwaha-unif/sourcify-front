@@ -1,5 +1,3 @@
-import { Tabs } from 'antd';
-import TabPane from 'antd/es/tabs/TabPane';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';

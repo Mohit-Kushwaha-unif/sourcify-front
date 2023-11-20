@@ -3,16 +3,13 @@ import { useDispatch } from 'react-redux'
 import { get_category } from '../../../services/category'
 // import Caraousel from '../../Helper/caraousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
 import { useNavigate } from 'react-router-dom';
 import { get_carausel } from '../../../services/Carausle';
-
 import Construction_pana from '../../../assests/Construction-pana.png'
 import frame_charge from '../../../assests/frame_charge.png'
 import web from '../../../assests/web.png'
 import bookmark from '../../../assests/bookmark.png'
 import checked from '../../../assests/checked.png'
-import carbon_clean from '../../../assests/carbon_clean.png'
 import proposal from '../../../assests/proposal.png'
 import post from '../../../assests/post.png'
 import register from '../../../assests/register.png'
@@ -20,7 +17,6 @@ import sourc_img from '../../../assests/sourc_img.png'
 import mssg from '../../../assests/mssg.png'
 import personalized from '../../../assests/personalized.png'
 import down_arrow from '../../../assests/down_arrow.png'
-
 import right from '../../../assests/right.png'
 import { toast, ToastContainer } from 'react-toastify'
 import Insight from '../Blogs/Insight';
@@ -132,9 +128,8 @@ const Dashboard = () => {
                         <br /><br />Thank you for choosing to register with us. We look forward to seeing you around </p>
                 </div>
                 <Regsiter />
-                {/* <p className='text-[#FF5757] underline mb-16 cursor-pointer' onClick={()=>{navigator('/work_segment')}}>Browse all Work Segments</p>
+                {/* <p className='text-[#FF5757] underline
                 <div className='grid grid-cols-1 md:grid-cols-4 gap-x-6 mb-10  '>
-
                     {
                         category.map((cats) => {
                             return <div onClick={() => navigator('/all_contractors', { state: cats })} className="p-16 shadow-md center_content flex-col  rounded-[6px] " >
@@ -148,7 +143,6 @@ const Dashboard = () => {
                         See All Work Segments
                     </button>
                 </div> */}
-
 
             </div>}
             <div className=' bg-[#00272B] mb-24 py-16 md:p-16'>

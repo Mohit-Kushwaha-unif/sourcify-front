@@ -32,7 +32,7 @@ const ListingForm = () => {
     useDocumentTitle('Add your Listing')
     var users = [];
     useEffect(() => {
-       
+
         if (localStorage.getItem("isLoggedIn") !== "true") {
             navigator('/login');
         }
@@ -40,7 +40,7 @@ const ListingForm = () => {
         dispatch(get_Vendor()).then((res) => {
             res.map((user) => {
                 if (user.status === 0) {
-                   
+
                     users.push(user);
                 }
 
@@ -49,7 +49,7 @@ const ListingForm = () => {
             dispatch(get_contractor()).then((res) => {
                 res.map((cont) => {
                     if (cont.status === 0) {
-                       
+
                         users.push(cont);
                     }
                 });
@@ -57,7 +57,7 @@ const ListingForm = () => {
                 setAllUsers([...users]);
             });
         });
-      console.log(users)
+        console.log(users)
         if (WORK_SEGMENT != undefined && WORK_SEGMENT.length > 0) {
 
             WORK_SEGMENT.map((cat) => {
@@ -89,12 +89,12 @@ const ListingForm = () => {
         var work_area = []
         var formData = new FormData()
         var info;
-        if(values.user_id){
+        if (values.user_id) {
             info = values.user_id
-            const User =  allUsers.find(item=>item.user_id._id == info)
+            const User = allUsers.find(item => item.user_id._id == info)
             values.listing_id = User._id
         }
-       
+
         Object.keys(values).map((val_item) => {
             values.wok_segment.map((work) => {
                 if (val_item === work) {
@@ -123,7 +123,7 @@ const ListingForm = () => {
             }
 
         })
-      
+
         dispatch(add_listing(formData)).then((res) => {
             setLoading(false)
             Swal.fire('Your Project is submitted for approval', '', 'success').then(() => {
@@ -305,12 +305,12 @@ const ListingForm = () => {
 
                                             <TextArea placeholder='Enter scope of your project' />
                                         </Form.Item>
-                                        <Form.Item name='project_specification' label="Work Specification" 
+                                        <Form.Item name='project_specification' label="Work Specification"
                                         >
                                             <Input type='file' max={1} onChange={specificationimageHandler} />
 
                                         </Form.Item>
-                                        <Form.Item name='project_bill_qty' label="Please attach Bill of Quantity" 
+                                        <Form.Item name='project_bill_qty' label="Please attach Bill of Quantity"
                                         >
 
                                             <Input type='file' max={1} onChange={imageHandler} />
@@ -318,7 +318,7 @@ const ListingForm = () => {
 
 
 
-                                        <Form.Item name='project_tent_date' label="Please select the tentative date to start the project" 
+                                        <Form.Item name='project_tent_date' label="Please select the tentative date to start the project"
                                         >
 
                                             <DatePicker disabledDate={disabledDate} onChange={onChange} />

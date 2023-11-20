@@ -5,7 +5,6 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
 import state_cites from '../../../../assests/state_city.'
 import { get_category } from '../../../../services/category'
 import { get_listingBy_id, update_listing } from '../../../../services/listing'
@@ -14,7 +13,6 @@ import { get_contractor } from '../../../../services/contractor';
 import { get_Vendor } from '../../../../services/Vendor';
 
 const ViewForm = () => {
-    const form = useForm()
     const { Title } = Typography
     const navigator = useNavigate()
     const dispatch = useDispatch()
@@ -42,7 +40,6 @@ const ViewForm = () => {
                 setCategories((prev_state) => [...prev_state, cat.category])
             })
         })
-        var data = []
         dispatch(get_contractor()).then((res) => {
             res.map((val) => {
 
@@ -65,7 +62,6 @@ const ViewForm = () => {
     useEffect(() => {
 
         dispatch(get_listingBy_id(location.state._id)).then((res) => {
-            // console.log({ res })
             set_user_id(res.listing.user_id._id)
             Object.keys(res.listing).map((value) => {
                 var obj = {}
@@ -92,7 +88,6 @@ const ViewForm = () => {
                             var obj = {}
                             obj["name"] = opt_val
                             obj["value"] = options[opt_val]
-                            console.log(obj)
                             initialOptions.push(obj)
                         })
                     })
@@ -101,7 +96,6 @@ const ViewForm = () => {
 
                     contact.map((contDetails) => {
                         res.listing[value].map((listVal) => {
-                            console.log(listVal.contractor_id._id, contDetails.user_id._id)
                             if (listVal.contractor_id._id == contDetails.user_id._id)
 
                                 listVal.agency = contDetails.agency_name || contDetails.entity
@@ -118,7 +112,6 @@ const ViewForm = () => {
             setSelectedItems(initialSelects)
             setInitialValues(initialValue)
             initialValue.map((values) => {
-                // console.log({ values })
                 if (values.name === 'project_bill_qty_image') {
                     setShowBillImg(values.value)
                 }
@@ -126,10 +119,8 @@ const ViewForm = () => {
                     setShowSpecImg(values.value)
                 }
             })
-            // setInitialValues((prevState)=>[...prevState, initialOptions)])
         })
     }, [contact])
-    // console.log(initialValues)
     const filteredOptions = categories.filter((o) => !selectedItems.includes(o))
     function FormHandler(values) {
 
@@ -150,33 +141,16 @@ const ViewForm = () => {
         values.proposal_status = formStatus.proposal_status
         values.proposal_id = formStatus.proposal_detail
         values.cont_id = formStatus.cont_id
-        console.log(values, formStatus)
-        dispatch(update_listing(values)).then((res) => {
-            // if (formStatus === 0) {
-            //     Swal.fire('Proposal Has Been Accepted',
-            //         'It will live soon',
-            //         'success')
-            // }
-            // else if (formStatus === 1) {
-            //     Swal.fire('P has been put in Under Review',
-            //         'It will live once admin accept it',
-            //         'warning')
-            // }
 
-            // else {
-            //     Swal.fire('Listitng has been  rejected',
-            //         'Admin has rejected this listing',
-            //         'error')
-            // }
-            if (isAdmin == 2) { navigator('/admin/all-listing') }
-            else {
-                navigator('/dashboard')
-            }
-        })
+        if (isAdmin == 2) {
+            navigator('/admin/all-listing')
+        }
+        else {
+            navigator('/dashboard')
+        }
+
     }
     const onChange = (date, dateString) => {
-        console.log(date, dateString);
-
     };
     function disabledDate(current) {
         // Can not select days before today and today
@@ -190,7 +164,7 @@ const ViewForm = () => {
     }
     function countrySelectHandler(country) {
         setState(state_cites[country])
-      }
+    }
     return (
         <section className="min-h-min mt-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8 w-full" >
             <div className="mx-auto md:w-[80%] w-[90%] h-full text-gray-800">
@@ -204,7 +178,6 @@ const ViewForm = () => {
                             {isAdmin === 2 && Object.keys(initialValues).map((value) => {
                                 if (initialValues[value].name === 'proposals') {
                                     return initialValues[value].value.map((acceptedBy) => {
-                                        console.log(acceptedBy.contract_status)
                                         if (acceptedBy.contract_status === 1) {
                                             return <p className='font-semibold'>Accepted By :- {acceptedBy.contractor_id.email}</p>
                                         }
@@ -319,8 +292,6 @@ const ViewForm = () => {
                                             <Select
                                                 mode="multiple"
                                                 placeholder="Select Categories"
-                                                // value={selectedItems}
-                                                // onChange={setSelectedItems}
                                                 style={{
                                                     width: '100%',
                                                 }}
@@ -399,9 +370,7 @@ const ViewForm = () => {
                                     if (proposal.name === "proposals") {
 
                                         return proposal.value.map((details) => {
-                                            console.log({ details })
                                             return <>
-
                                                 <p>Submitted By  - {details.agency}</p>
                                                 <TextArea value={details.proposal} />
                                                 {details.contract_status === 0 ? <div className='flex mt-3 justify-evenly'>
@@ -433,52 +402,6 @@ const ViewForm = () => {
 
                                 })
                             }
-
-                            {/* {
-                                isAdmin === 2 ?
-                                    <div className="text-center lg:text-left mt-2 flex justify-around">
-                                        {console.log({initialValues})}
-                                        {initialValues.length > 0 && initialValues[7].value != 2 &&
-                                            <button
-                                                type="submit"
-                                                onClick={() => setFormStatus(2)}
-                                                className="inline-block px-7 py-3 bg-red-600 text-white font-medium hover:bg-red-400  text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                            >
-
-                                                Reject
-
-                                            </button>}
-                                        {initialValues.length > 0 && initialValues[7].value != 0 && <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(0)}
-                                            className="inline-block px-7 py-3 bg-green-600 text-white hover:bg-green-400 font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Accept
-
-                                        </button>}
-                                        {initialValues.length > 0 && initialValues[7].value != 1 && <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-yellow-600 text-white hover:bg-yellow-400  font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Under Review
-
-                                        </button>}
-                                    </div> : <div className='text-center lg:text-left mt-2 flex justify-around'>
-                                        <button
-                                            type="submit"
-                                            onClick={() => setFormStatus(1)}
-                                            className="inline-block px-7 py-3 bg-blue-400 text-white font-medium   text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                        >
-
-                                            Update
-
-                                        </button>
-                                    </div>
-                            } */}
-
                         </Form>
                     </div>
                 </div>

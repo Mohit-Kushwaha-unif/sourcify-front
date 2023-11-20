@@ -24,7 +24,6 @@ const CarauselList = () => {
            setTableData(data)
         })    
     },[])
-    console.log(tableData)
     const deleteHandler=(value,)=>{
 
         // dispatch((delete_category({heading:value.category}))).then((res)=>{
@@ -78,12 +77,6 @@ const CarauselList = () => {
                     <p className="text-lg mb-0 mr-4">Caraousel List</p>
                 </div>
                 <Table columns={columns} dataSource={tableData} />
-                {/* <Table antTableProps={{
-                    showHeader: true,
-                    columns: columns,
-                    dataSource: tableData,
-                    pagination: true
-                }} mobileBreakPoint={768} /> */}
             </div>
         </div>
     </div>

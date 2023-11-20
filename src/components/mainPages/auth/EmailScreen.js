@@ -16,7 +16,7 @@ const EmailScreen = () => {
                         <p className='mb-5 mt-5'>An email has been sent to <b>{location.state}</b>. If this email address is registered
                             to Sourcify.com, you'll receive instructions on how to set a new password.</p>
                         <Link to='/forgotPassword' className='text-[#FF5757] mt-3 ' onClick={() => navigate('/forgotPassword')}>Didn't Recieve Email?</Link>
-                    
+
                     </div>
                 </div>
             </div>

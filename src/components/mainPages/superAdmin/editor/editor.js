@@ -7,7 +7,6 @@ function QuillEditor() {
   const [editorDescription, setEditorDescription] = useState("");
   const quillRef = useRef(null);
   const descRef = useRef(null)
-    console.log(editorHeading)
   useEffect(() => {
     if (quillRef.current) {
       const quill = new Quill(quillRef.current, {
@@ -50,21 +49,21 @@ function QuillEditor() {
       });
     }
   }, [descRef]);
-  function submitHandler(){
-    if(descRef =="" || quillRef =="" ){
-        alert('Please Fill all the fields')
+  function submitHandler() {
+    if (descRef == "" || quillRef == "") {
+      alert('Please Fill all the fields')
     }
   }
   return (
     <div className="w-70 p-9 w-full">
-        <div className="mb-5">Wite your Heading</div>
+      <div className="mb-5">Wite your Heading</div>
       <div className="h-auto" ref={quillRef} />
-      
+
       <div className="mb-5 mt-5">Wite your description</div>
       <div className="min-h-3" ref={descRef} />
 
-      <button className=" mt-9 inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" 
-      onClick={submitHandler}>Submit</button>
+      <button className=" mt-9 inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        onClick={submitHandler}>Submit</button>
     </div>
   );
 }

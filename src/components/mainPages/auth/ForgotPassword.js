@@ -1,6 +1,5 @@
 import { Form, Input } from 'antd'
 import React from 'react'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
@@ -43,7 +42,7 @@ const ForgotPassword = () => {
                             </Form.Item>
                             <Form.Item className='w-full '>
                                 <div className='w-full'>
-                                <button htmlType='submit' className='brand_button w-full' >Next</button>
+                                    <button htmlType='submit' className='brand_button w-full' >Next</button>
                                 </div>
                             </Form.Item>
                         </Form>

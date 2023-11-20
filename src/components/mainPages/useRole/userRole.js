@@ -7,17 +7,16 @@ import { update_user } from '../../../services/user'
 const UserRole = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const [userRole, setUserRole] = useState()
     const formSubmit = (userRole) => {
         var obj = {}
         obj.role = userRole.role
         obj.id = localStorage.getItem("user_id")
-        dispatch((update_user(obj))).then((res)=>{
+        dispatch((update_user(obj))).then((res) => {
             console.log(res)
-            if(userRole.role === 1){
+            if (userRole.role === 1) {
                 navigate('/vendor-form')
             }
-            if(userRole.role === 0){
+            if (userRole.role === 0) {
                 navigate('/contractor-form')
             }
         })
@@ -43,15 +42,15 @@ const UserRole = () => {
                         </Radio.Group>
                     </Form.Item>
                     <div className='center_content mt-5'>
-                    <button
-                  type="submit"
-                  className=" brand_button"
-                >
-                  Next
+                        <button
+                            type="submit"
+                            className=" brand_button"
+                        >
+                            Next
 
 
-                </button>
-                </div>
+                        </button>
+                    </div>
                 </Form>
             </div>
 

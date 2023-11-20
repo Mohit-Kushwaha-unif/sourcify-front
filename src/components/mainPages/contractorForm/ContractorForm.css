@@ -1,4 +1,4 @@
-.form_container{
+.form_container {
     background: #FFFFFF;
     /* margin:  25vw; */
     margin-top: 10px;
@@ -7,36 +7,41 @@
     border-radius: 15px;
 }
 
-.form_email_mobile_flex{
+.form_email_mobile_flex {
     display: flex;
     flex: 1;
 }
-.form_flex_children{
+
+.form_flex_children {
     flex: 0.5;
 }
-.form_button{
+
+.form_button {
     background-color: #1677ff;
 }
-.form_header{
-    font-weight: 700;
-font-size: 36px;
-line-height: 56px;
 
-color: #000000;
-margin-bottom:1.5rem   ;
-border-bottom: 1px solid black;
+.form_header {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 56px;
+
+    color: #000000;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid black;
 }
-.ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before  {
+
+.ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     position: absolute;
     display: inline-block;
     margin-inline-end: 4px;
     color: #ff4d4f;
     font-size: 14px;
-    font-family: SimSun,sans-serif;
+    font-family: SimSun, sans-serif;
     line-height: 1;
     content: "*";
     right: -14px;
 }
-.error_field{
+
+.error_field {
     margin-bottom: 0;
 }

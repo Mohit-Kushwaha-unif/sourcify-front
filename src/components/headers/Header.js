@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Dropdown, Input, Space, Tag } from 'antd'
-import { DownOutlined, MenuOutlined } from '@ant-design/icons';
+import { Input, Tag } from 'antd'
+import { MenuOutlined } from '@ant-design/icons';
 
 import NEW_Sourcify from '../../assests/Sourcify.png'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
@@ -9,14 +9,13 @@ import { logout } from '../Helper/LogooutHelper'
 
 import { TiMessages } from 'react-icons/ti'
 import { RxCross2 } from 'react-icons/rx'
-import { get_Vendor_by_id, search_vendor } from '../../services/Vendor';
-import { get_contractorBy_id, search_contractor } from '../../services/contractor';
+import { get_Vendor_by_id } from '../../services/Vendor';
+import { get_contractorBy_id } from '../../services/contractor';
 import { get_user_info } from '../../services/user';
 import profile from '../../assests/profile.png'
 import edit_icon from '../../assests/edit_icon.png'
 import search_icon from '../../assests/search_icon.png'
 import TopBar from './TopBar';
-import { get_category } from '../../services/category';
 import SubHeader from './Sub-Header';
 import { toast, ToastContainer } from 'react-toastify'
 import { acc_status } from '../../store/actions/user';
@@ -34,14 +33,13 @@ const Header = () => {
   const [userName, setUserName] = useState('')
   const [accountStatus, setAccountStatus] = useState()
   const [showStatus, setShowStatus] = useState(false)
-  const [category, setCategory] = useState([])
-  const [isLocal,setIsLocal] = useState(false)
+  const [isLocal, setIsLocal] = useState(false)
   const [mobilView, setMobileView] = useState(false)
   const isAdmin = useSelector(state => state.User.user_role);
   const [language, setLanguage] = useState(); // Default language is English
   const location = useLocation()
   useEffect(() => {
-    if(localStorage.getItem('lan')==="hi"){
+    if (localStorage.getItem('lan') === "hi") {
       setIsLocal(true)
     }
     if (localStorage.getItem('isLoggedIn') === null || localStorage.getItem('isLoggedIn') == "false") {
@@ -53,17 +51,6 @@ const Header = () => {
   useEffect(() => {
     setLanguage(localStorage.getItem("lan"))
   }, [localStorage])
-  useEffect(() => {
-    dispatch(get_category()).then((res) => {
-      // console.log(res)
-      var data = []
-      res.map((cats) => {
-        data.push(cats.category)
-      })
-      setCategory(data)
-    })
-
-  }, [])
   const [screenSize, getDimension] = useState(window.innerWidth);
   const setDimension = () => {
     getDimension(window.innerWidth)
@@ -123,11 +110,11 @@ const Header = () => {
       window.location = '/';
     });
   }
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-    localStorage.setItem("lan", event.target.value)
-    window.location = location.pathname
-  };
+  // const handleLanguageChange = (event) => {
+  //   setLanguage(event.target.value);
+  //   localStorage.setItem("lan", event.target.value)
+  //   window.location = location.pathname
+  // };
 
 
 
@@ -202,7 +189,7 @@ const Header = () => {
                   </div>
                   {
                     mobilView && showMenu && <><div className='mt-3 h-5  flex  items-center header_text '>
-                     
+
                     </div>
                       {showMenu && <>
                         <div className='grid  col-span-7  md:col-span-2 w-full  md:mb-0 mb-5 mt-5 md:mt-0 ' >
@@ -225,7 +212,6 @@ const Header = () => {
                           className={` inline-flex md:hidden justify-start col-span-1 h-[70%] my-1 mr-8 md:justify-center items-center  w-full `}
                         >
                           <img src={profile} />
-                          {/* <span>{userName}</span> */}
                           <svg
                             className=" w-[10px]   mr-2"
                             fill="none"
@@ -245,7 +231,7 @@ const Header = () => {
                       </>
                       : <div className={` ${mobilView && showMenu ? "ml-0 my-3 gap-y-1 mb-2" : "place-items-end gap-0"} md:hidden grid grid-cols-4 col-span-4 `} >
 
-                        <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> {isLocal? <p className='header_text' translate='no'>रजिस्टर</p> : <p className='header_text' data-custom-translate="hi">Register</p>}  </Link>
+                        <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 mb-2 " : '  col-span-2  my-3 '}  `} to='/register'><span className='w-auto items-center  bold mr-1'><img src={edit_icon} /></span> {isLocal ? <p className='header_text' translate='no'>रजिस्टर</p> : <p className='header_text' data-custom-translate="hi">Register</p>}  </Link>
                         <Link onClick={() => { setShowMenu(false) }} className={`flex   ${mobilView && showMenu ? "col-span-4 " : ' col-span-2 my-3 mr-3 '} `} to='/login'><span className='w-auto  items-center bold mr-1'><img src={profile} /></span> <p className='header_text' data-translate="hi"> Login </p> </Link>
                       </div>}
                   </>}
@@ -314,9 +300,9 @@ const Header = () => {
                         <div className='flex items-center mr-3 hidden md:inline-block' to='/register'>
                           <span className='flex items-center'>
                             <img src={edit_icon} className='mr-1' />
-                            {isLocal?<NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' >रजिस्टर</NavLink>
-                           : <NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' data-custom-translate="hi">Register</NavLink>
-                          }</span>
+                            {isLocal ? <NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' >रजिस्टर</NavLink>
+                              : <NavLink onClick={() => { mobilView && clossAll() }} to='/register' className='header_text' data-custom-translate="hi">Register</NavLink>
+                            }</span>
                         </div>
 
                         <div className='flex items-center mr-3 hidden md:inline-block' >

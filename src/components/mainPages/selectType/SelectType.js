@@ -4,9 +4,6 @@ import { Button, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 const SelectType = ({employee_route_value}) => {
     const navigation = useNavigate()
-    const getEmployeeType = (route_id)=>{
-        employee_route_value({route_id})
-    }
   return (
     <>
       <Space className='type_employee' direction="Horizontal" >

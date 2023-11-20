@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Form, Modal, Tag, Typography } from 'antd'
+import { Modal, Typography } from 'antd'
 import dummy_img from '../../../assests/dummy_img.png'
 import star from '../../../assests/star.png'
 import right_red from '../../../assests/right_red.png'
@@ -13,7 +13,6 @@ import moment from 'moment'
 import { get_listingBy_id, update_listing } from '../../../services/listing'
 import { get_contractor } from '../../../services/contractor'
 const SearchResult = () => {
-    const { Title } = Typography
     const [projects, setProjects] = useState([])
     const [hireContractor, setHireContractor] = useState()
     const [isCompany, setIsCompany] = useState(false)
@@ -90,7 +89,6 @@ const SearchResult = () => {
         formData.contractor_id = localStorage.getItem('user_id')
 
         formData.listing_id = listID
-        // formData.form_status = 1
         formData.proposal = proposalVal
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
@@ -133,7 +131,7 @@ const SearchResult = () => {
             console.log(projDet);
             setProjectDetails([...projDet]);
         });
-        
+
     }, [projects, dispatch]);
 
     const projectHandler = (id) => {

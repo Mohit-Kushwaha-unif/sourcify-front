@@ -9,78 +9,71 @@ import { get_slug } from '../../../../../services/Slug'
 
 const Banner = () => {
     const dispatch = useDispatch()
-    const [bannerImg,setBannerImg] = useState()
-    const [showImg,setShowImg] = useState(false)
-    const [formInitialVal,setInitialValues] = useState([])
-    const [options,setOptions] = useState([])
+    const [bannerImg, setBannerImg] = useState()
+    const [showImg, setShowImg] = useState(false)
+    const [formInitialVal, setInitialValues] = useState([])
+    const [options, setOptions] = useState([])
     const [About_us, SetAboutUs] = useState([])
     const onFinish = (formValue) => {
         formValue.banner_img = bannerImg
         var formData = new FormData()
-        Object.keys(formValue).map((formKey)=>{
-           
+        Object.keys(formValue).map((formKey) => {
+
             formData.append(formKey, formValue[formKey])
         })
-        // console.log()
-        if(About_us.length == 0)
-       { dispatch(add_about(formData)).then((res)=>{
-            // console.group(res)
-            localStorage.setItem("AboutUs",res._id)
-        })}
-        else{
-            formData.append("id", localStorage.getItem("AboutUs"))
-            dispatch(update_about(formData)).then((res)=>{
-                // console.group(res)
-                // localStorage.setItem("AboutUs",res._id)
+        if (About_us.length == 0) {
+            dispatch(add_about(formData)).then((res) => {
+                localStorage.setItem("AboutUs", res._id)
             })
         }
-     }
-     function fileHandler(e){
+        else {
+            formData.append("id", localStorage.getItem("AboutUs"))
+            dispatch(update_about(formData)).then((res) => {
+            })
+        }
+    }
+    function fileHandler(e) {
         setBannerImg(e.target.files[0])
-     }
-     useEffect(()=>{
-       
-      var obj={}
-      var data =[]
-      var optionSet =[]
-          dispatch(get_about()).then((res) => {
+    }
+    useEffect(() => {
+
+        var obj = {}
+        var data = []
+        var optionSet = []
+        dispatch(get_about()).then((res) => {
             SetAboutUs(res)
-           res[0].Banner?.map((formVal)=>{
-            obj["name"] = "baner_title"
-            obj["value"] = formVal.title
-            data.push(obj)
-            obj ={}
-            obj["name"] = "banner_Sub_title"
-            obj["value"] = formVal.sub_title
-            data.push(obj)
-            obj ={}
-            obj["name"] = "banner_btn"
-            obj["value"] = formVal.button
-            data.push(obj)
-            obj ={}
-            obj["name"] = "banner_btn_link"
-            obj["value"] = formVal.buttonLink
-            data.push(obj)
-            if(formVal.image){
-            
-             setShowImg(formVal.image)
-            }
-            
-         })
-          })
-          dispatch(get_slug()).then((res)=>{
+            res[0].Banner?.map((formVal) => {
+                obj["name"] = "baner_title"
+                obj["value"] = formVal.title
+                data.push(obj)
+                obj = {}
+                obj["name"] = "banner_Sub_title"
+                obj["value"] = formVal.sub_title
+                data.push(obj)
+                obj = {}
+                obj["name"] = "banner_btn"
+                obj["value"] = formVal.button
+                data.push(obj)
+                obj = {}
+                obj["name"] = "banner_btn_link"
+                obj["value"] = formVal.buttonLink
+                data.push(obj)
+                if (formVal.image) {
+
+                    setShowImg(formVal.image)
+                }
+
+            })
+        })
+        dispatch(get_slug()).then((res) => {
             console.log(res[0].slugs)
             optionSet.push(...res[0].slugs)
-          })
-       
+        })
+
         setOptions(optionSet)
-        
+
         setInitialValues(data)
-     },[])
-     console.log({options});
-     options.map((opt)=>{
-        console.log({opt})
-     })
+    }, [])
     return (
         <div className='bg-white p-3 rounded-xl '>
             <Form
@@ -126,28 +119,28 @@ const Banner = () => {
 
                 {/*****************Email*******************/}
 
-                {showImg!=false?
-                <>
-                <p>Banner Image</p>
-                <div className='flex '>
-                <img className='w-80 h-80 mr-4' src= {showImg} />
-                <MinusCircleOutlined className='cursor-pointer' onClick={()=>setShowImg(false)}/>
-                </div> 
-                </>
-                :<Form.Item name="banner_img" label="Banner Image " rules={[
-                    {
-                        required: true,
-                        message: 'Please input your Email!'
-                    },
-                ]} wrapperCol={{
-                    span: 56,
-                }}>
+                {showImg != false ?
+                    <>
+                        <p>Banner Image</p>
+                        <div className='flex '>
+                            <img className='w-80 h-80 mr-4' src={showImg} />
+                            <MinusCircleOutlined className='cursor-pointer' onClick={() => setShowImg(false)} />
+                        </div>
+                    </>
+                    : <Form.Item name="banner_img" label="Banner Image " rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Email!'
+                        },
+                    ]} wrapperCol={{
+                        span: 56,
+                    }}>
 
-                    <input type="file" onChange={fileHandler} placeholder='Enter your Email ID ' />
+                        <input type="file" onChange={fileHandler} placeholder='Enter your Email ID ' />
 
 
 
-                </Form.Item>}
+                    </Form.Item>}
 
                 {/*******************************************/}
 
@@ -159,7 +152,7 @@ const Banner = () => {
                             message: 'Please input your Mobile Number!'
                         },
                     ]}>
-                        <Input  placeholder='Enter the Banner Button' />
+                        <Input placeholder='Enter the Banner Button' />
                     </Form.Item>
                 </div>
                 {/*******************************************/}
@@ -171,20 +164,20 @@ const Banner = () => {
                     },
                 ]}>
                     <Select >
-                    {options.map((opt) => {
-                    return (<Select.Option value={opt}>{opt}</Select.Option>)
-                  }
-                  )}
-                       
+                        {options.map((opt) => {
+                            return (<Select.Option value={opt}>{opt}</Select.Option>)
+                        }
+                        )}
+
                     </Select>
                 </Form.Item>
                 <button
-              type="submit"
-              className="primary_btn">
-                Save
-                
-             
-            </button>
+                    type="submit"
+                    className="primary_btn">
+                    Save
+
+
+                </button>
             </Form>
         </div>
     )

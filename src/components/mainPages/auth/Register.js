@@ -2,17 +2,12 @@
 import {
   Form,
   Input,
-  Checkbox,
-  Radio
 } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-
 import useDocumentTitle from '../../Helper/useDocumentTitle';
 import * as userService from '../../../services/user'
 import { useDispatch } from 'react-redux';
 import { setValue } from '../../../store/actions/user';
-
 import RadioGroup from './RadioButtonMaker';
 import { useEffect, useState } from 'react';
 import Loader from '../../Helper/Loader';
@@ -20,16 +15,16 @@ const Regsiter = () => {
   useDocumentTitle("Register Yourself")
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const location = useLocation()
 
-  useEffect(()=>{
-    if(localStorage.getItem('isLoggedIn') === "true"){
+  useEffect(() => {
+    if (localStorage.getItem('isLoggedIn') === "true") {
       navigate('/dashboard')
     }
-  },[])
- 
+  }, [])
+
   const handleRadioChange = (value) => {
     console.log(`Selected option: ${value}`);
   };
@@ -42,7 +37,7 @@ const Regsiter = () => {
   function formHandler(values) {
     setLoading(true)
     dispatch(userService.register(values))
-      .then(async(res) => {
+      .then(async (res) => {
         try {
           if ('PushManager' in window) {
             console.log('Push notifications are supported!');
@@ -55,7 +50,7 @@ const Regsiter = () => {
             userVisibleOnly: true,
             applicationServerKey
           });
-          dispatch(userService.saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+          dispatch(userService.saveSubscription({ "subscription": JSON.stringify(subscription), id: res.user._id }))
         } catch (error) {
           console.error('Error registering service worker:', error);
         }
@@ -66,7 +61,7 @@ const Regsiter = () => {
         localStorage.setItem("isLoggedIn", true)
         setLoading(false)
         dispatch(setValue(res.user_data.role))
-        if(res.user_data.otpVerfied !=true){
+        if (res.user_data.otpVerfied != true) {
           navigate('/everifing')
         }
         if (res.user_data.role === 1)
@@ -94,111 +89,106 @@ const Regsiter = () => {
 
   return (
     <>
-    {
-      loading ? <Loader/> :
-      <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
-      <div className="md:px-8  ">
-        <div
-          className="flex  justify-center   h-full "
-        >
-          <div className={`${location.pathname =="/" ? '': 'card'}`}>
-            <div className="flex flex-row items-center justify-center lg:justify-start">
-              <p className="headings mb-5 mt-5 mr-4" ><span data-translate="hi">Create Account</span> </p>
-            </div>
-            <p className='text-sm mb-8' ><span data-translate="hi">Sign up for Sourcify today and experience the power of our platform firsthand.</span></p>
-            
-            <Form labelAlign="left"
-
-              layout="vertical" onFinish={formHandler}>
-              <Form.Item
-                name="role"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select your role',
-                  },
-                ]}
+      {
+        loading ? <Loader /> :
+          <section className=" mb-3 flex flex-col justify-center py-6 sm:px-6 lg:px-8" >
+            <div className="md:px-8  ">
+              <div
+                className="flex  justify-center   h-full "
               >
-                <div className='flex items-center mb-3'>
-                  <div className="py-1">
-                    <RadioGroup options={options} cols={2} onChange={handleRadioChange} />
+                <div className={`${location.pathname == "/" ? '' : 'card'}`}>
+                  <div className="flex flex-row items-center justify-center lg:justify-start">
+                    <p className="headings mb-5 mt-5 mr-4" ><span data-translate="hi">Create Account</span> </p>
                   </div>
+                  <p className='text-sm mb-8' ><span data-translate="hi">Sign up for Sourcify today and experience the power of our platform firsthand.</span></p>
+
+                  <Form labelAlign="left"
+
+                    layout="vertical" onFinish={formHandler}>
+                    <Form.Item
+                      name="role"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please select your role',
+                        },
+                      ]}
+                    >
+                      <div className='flex items-center mb-3'>
+                        <div className="py-1">
+                          <RadioGroup options={options} cols={2} onChange={handleRadioChange} />
+                        </div>
+                      </div>
+
+                    </Form.Item>
+                    <Form.Item
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your email',
+                        },
+                      ]}
+
+                    >
+                      <Input className='input_border mb-3' placeholder="Email address" />
+
+                    </Form.Item >
+                    {isError && <p className='text-[red] mb-3' data-translate="hi">Email already exists </p>}
+                    <Form.Item
+                      name="number"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please enter your mobile number',
+                        },
+                      ]}
+                    >
+
+
+
+                      <Input className='input_border mb-3' prefix={"+91"} type='Number' maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
+
+                    </Form.Item >
+                    <Form.Item
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please select your password and it should be six digit long',
+                        },
+                      ]}
+                    >
+
+                      <Input.Password className='input_border mb-3' min={6} placeholder='Enter Your Passowrd' />
+
+                    </Form.Item>
+
+                    <p className=' font-[Inter] text-[14px]'> <span data-translate="hi">By continuing, I agree to the</span>  <Link to={'/privacy-policy'}><span className='text-[#FF5757] font-[700]'>Terms of Use</span> & <span className='text-[#FF5757] font-[700]'>Privacy Policy</span></Link></p>
+                    <div className="text-center mt-5 mb-16 lg:text-left ">
+                      <button
+                        type="submit"
+                        className="brand_button w-full mb-3"
+                        data-translate="hi"
+                      >
+                        Sign Up
+                      </button>
+                      <p className="font-[Inter] text-[14px]  mt-2 pt-1 mb-0">
+                        <span className='mr-2' data-translate="hi">Already Have an account?</span>
+                        <Link
+                          to='/login'
+                          className="text-[#FF5757]  font-[700] hover:text-[#FF5757] focus:text-red-700 transition duration-200 ease-in-out"
+                          data-translate="hi" >Login here</Link>
+                      </p>
+                    </div>
+                  </Form>
                 </div>
-
-              </Form.Item>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter your email',
-                  },
-                ]}
-
-              >
-                <Input className='input_border mb-3' placeholder="Email address" />
-
-              </Form.Item >
-              {isError && <p className='text-[red] mb-3' data-translate="hi">Email already exists </p>}
-              <Form.Item
-                name="number"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter your mobile number',
-                  },
-                ]}
-              >
-
-
-
-                <Input className='input_border mb-3' prefix={"+91"} type='Number' maxLength={10} minLength={10} placeholder="Enter your Mobile Number" />
-
-              </Form.Item >
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select your password and it should be six digit long',
-                  },
-                ]}
-              >
-
-                <Input.Password className='input_border mb-3' min={6} placeholder='Enter Your Passowrd' />
-
-              </Form.Item>
-
-              <p className=' font-[Inter] text-[14px]'> <span data-translate="hi">By continuing, I agree to the</span>  <Link to={'/privacy-policy'}><span className='text-[#FF5757] font-[700]'>Terms of Use</span> & <span className='text-[#FF5757] font-[700]'>Privacy Policy</span></Link></p> 
-              <div className="text-center mt-5 mb-16 lg:text-left ">
-                <button
-                  type="submit"
-                  className="brand_button w-full mb-3"
-                  data-translate="hi"
-                >
-                  Sign Up
-                </button>
-                <p className="font-[Inter] text-[14px]  mt-2 pt-1 mb-0">
-                <span className='mr-2' data-translate="hi">Already Have an account?</span> 
-                  <Link
-                    to='/login'
-                    className="text-[#FF5757]  font-[700] hover:text-[#FF5757] focus:text-red-700 transition duration-200 ease-in-out"
-                    data-translate="hi" >Login here</Link>
-                </p>
               </div>
-            </Form>
-          </div>
-        </div>
-      </div>
+            </div>
 
-    </section>
-    }
+          </section>
+      }
     </>
-  
-
-
-
-
   )
 }
 export default Regsiter

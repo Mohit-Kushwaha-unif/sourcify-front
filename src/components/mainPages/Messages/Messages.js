@@ -24,9 +24,8 @@ const Messages = () => {
     const messageContainerRef = useRef(null)
     const chat_id = header?.id ? header.id : "-"
     const contractorId = location.state?.contractor_id?._id;
-    console.log(location)
     const id = location.state?._id._id || location.state?._id;
-   
+
     useEffect(() => {
         if (contractorId || id) {
             set_To_id(contractorId || id);
@@ -36,24 +35,24 @@ const Messages = () => {
     useEffect(() => {
         var sideContacts = []
         dispatch((getContacts({ from_id }))).then((res) => {
-          
+
             res.map((msg) => {
                 var exist = sideContacts.some(val => val.id == msg.id)
                 if (!exist && msg.id != localStorage.getItem("user_id")) {
                     var sideObj = {}
                     sideObj.id = msg.id;
                     sideObj.name = msg.name;
-                    if(msg.role ==2){
+                    if (msg.role == 2) {
                         sideObj.name = "Team Sourcify"
                     }
-                    else{
+                    else {
                         sideObj.name = msg.name;
                     }
                     sideObj.status = "online"
                     sideContacts.push(sideObj)
                 }
             })
-            
+
             setContacts(prevState => [...prevState, ...sideContacts])
             originalContactsRef.current = contacts
             setDidMount(true)
@@ -147,15 +146,11 @@ const Messages = () => {
             setHeader(sideObj);
         }
     }, [findId]);
-    // console.log(contacts)
 
     useEffect(() => {
         if (chat_id != "-") {
             set_To_id(chat_id)
             channel.bind('message', function (data) {
-
-                // console.log({ header })
-                // console.log(data.from_id === header.id && data.to_id === from_id)
                 if (data.from_id === chat_id && data.to_id === from_id) {
                     setMessages((prevState) => [...prevState, { id: messages.length + 1, sender: "other", text: data.message, time: new Date() }])
                 }
@@ -165,9 +160,9 @@ const Messages = () => {
     }, [chat_id])
     function inputHandler(event) {
         setSearchTerm(event.target.value.toLowerCase());
-      }
-      const filteredContacts = contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(searchTerm)
+    }
+    const filteredContacts = contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(searchTerm)
     );
 
     const sendMessage = (text) => {
@@ -193,7 +188,6 @@ const Messages = () => {
         }
     };
     function updateMessages(contact) {
-        // console.log({ contact })
         // set_To_id(contact)
         setHeader(contact)
         var obj = {}
@@ -219,12 +213,12 @@ const Messages = () => {
 
 
             setMessages([...mssgData])
-            
-        
-           
+
+
+
         })
     }
-    useEffect(()=>{ messageContainerRef.current.scrollTo(0, messageContainerRef.current.scrollHeight);},[messages])
+    useEffect(() => { messageContainerRef.current.scrollTo(0, messageContainerRef.current.scrollHeight); }, [messages])
     function getRelativeTime(timestamp) {
         const now = new Date();
         const diff = (now - new Date(timestamp)) / 1000;
@@ -274,12 +268,6 @@ const Messages = () => {
                                     round={true}
                                     className="mr-2"
                                 />
-                                
-                                
-                                {/* <div
-                                        className={`w-2 h-2 rounded-full mr-2 ${contact.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
-                                            }`}
-                                    ></div> */}
                                 <h2 className="text-lg font-medium">{contact.name}</h2>
                             </div>
                         ))}
@@ -296,7 +284,7 @@ const Messages = () => {
                 }
                 <div className="flex flex-col overflow-hidden h-[29rem] p-4">
                     <div className="flex-grow h-[300px] scrollbar overflow-y-auto p-4" ref={messageContainerRef}>
-                        {messages.map((message,index) => (
+                        {messages.map((message, index) => (
                             <div
                                 ref={index === messages.length - 1 ? messagesEndRef : null}
                                 key={message.id}
@@ -314,7 +302,7 @@ const Messages = () => {
                                 </div>
                             </div>
                         ))}
-                         <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef} />
                     </div>
 
                     {to_id != undefined && <form onSubmit={handleSubmit}>
@@ -328,12 +316,8 @@ const Messages = () => {
                             />
                             <button
                                 type="submit"
-
                                 className="primary_btn"
                             >
-                                {/* <svg viewBox="0 0 24 24" className="w-6 h-6  text-white" fill="#fffff" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.757 11.136l16.486-6.705a.5.5 0 0 1 .757.424v11.149a.5.5 0 0 1-.757.424L3.757 12.864a.5.5 0 0 1 0-.728z" />
-                            </svg> */}
                                 Send
                             </button>
                         </div>

@@ -18,7 +18,7 @@ import Loader from '../../Helper/Loader'
 import { get_category } from '../../../services/category'
 import state_cites from '../../../assests/state_city.'
 import useDocumentTitle from '../../Helper/useDocumentTitle'
-import {AiOutlineDown} from 'react-icons/ai'
+import { AiOutlineDown } from 'react-icons/ai'
 
 const FindContractor = () => {
   const [contractors, setContractors] = useState([])
@@ -37,7 +37,7 @@ const FindContractor = () => {
   const [work_segment, set_work_segment] = useState([])
   const WORK_SEGMENT = useSelector(state => state.User.Work_segment)
   const [mobilView, setMobileView] = useState(false)
-  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -47,19 +47,18 @@ const FindContractor = () => {
     dispatch(get_contractor()).then((res) => {
       res.map((cont) => {
 
-        if(cont.status ==0){
-          if(localStorage.getItem("user_id") && localStorage.getItem("user_id") !=cont.user_id )
-          {
+        if (cont.status == 0) {
+          if (localStorage.getItem("user_id") && localStorage.getItem("user_id") != cont.user_id) {
             setContractors(prev => [...prev, cont])
             setCpyContractors(prev => [...prev, cont])
           }
-          else{
+          else {
             setContractors(prev => [...prev, cont])
             setCpyContractors(prev => [...prev, cont])
           }
-          }
-          
-       
+        }
+
+
         setLoading(false)
       })
 
@@ -99,7 +98,7 @@ const FindContractor = () => {
   }, [screenSize])
 
   const handleFormChange = () => {
-    const { contractor, Location, work_segment,work_area_type } = form.getFieldsValue();
+    const { contractor, Location, work_segment, work_area_type } = form.getFieldsValue();
     var formData = new FormData()
     if (contractor != undefined) {
       formData.append("contractor", contractor)
@@ -113,31 +112,30 @@ const FindContractor = () => {
     if (work_area_type != undefined) {
       formData.append("work_area_type", work_area_type)
     }
-    
+
     dispatch(search_contractor(formData)).then((res) => {
       setContractors([])
       res.map((cont) => {
-        if(cont.status ==0){
-          if(localStorage.getItem("user_id") && localStorage.getItem("user_id") !=cont.user_id )
-          {
-            setContractors((prev)=> [...prev,cont])
+        if (cont.status == 0) {
+          if (localStorage.getItem("user_id") && localStorage.getItem("user_id") != cont.user_id) {
+            setContractors((prev) => [...prev, cont])
           }
-          else{
-            setContractors((prev)=> [...prev,cont])
+          else {
+            setContractors((prev) => [...prev, cont])
           }
-          }
-          
-       
+        }
+
+
         setLoading(false)
       })
 
-      
+
     })
   }
 
   const contractHandler = (val) => {
     console.log(val.user_id)
-    if (localStorage.getItem("isLoggedIn") == "false" ||localStorage.getItem("isLoggedIn")==null) {
+    if (localStorage.getItem("isLoggedIn") == "false" || localStorage.getItem("isLoggedIn") == null) {
       navigate('/login')
     }
     else if (localStorage.getItem("user_id") == val.user_id._id || localStorage.getItem("user_id") == val.user_id) {
@@ -174,7 +172,7 @@ const FindContractor = () => {
     setProposalVal(e.target.value)
   }
   useDocumentTitle('Find Contractor')
-  function resetHandler(){
+  function resetHandler() {
     form.resetFields()
     setSelectedItems('')
     setContractors(cpy_contractors)
@@ -185,7 +183,7 @@ const FindContractor = () => {
         loading ?
           <Loader /> :
           <div className='container grid grid-cols-1 md:grid-cols-7 md:gap-6 mb-16 mt-3'>
-           {!mobilView? <div className='col-span-2 h-[500px] max-h-auto w-full shadow-lg border-2 p-5' >
+            {!mobilView ? <div className='col-span-2 h-[500px] max-h-auto w-full shadow-lg border-2 p-5' >
               <div className='relative '>
                 <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
                 <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]' data-translate="hi"> </div>
@@ -194,20 +192,20 @@ const FindContractor = () => {
                 layout='vertical'
                 form={form}
                 onValuesChange={handleFormChange}
-                
+
               >
                 <Form.Item name="contractor" label="">
                   <Input data-translate="hi" className=' mb-5' placeholder='Search for contractors' />
                 </Form.Item>
 
                 <Form.Item name="Location" label="Search Location">
-                                <Select className=' mb-5' data-translate="hi" placeholder='Add Location' >
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option data-translate="hi" value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
-                            </Form.Item>
+                  <Select className=' mb-5' data-translate="hi" placeholder='Add Location' >
+                    {Object.keys(state_cites).map((state) => {
+                      return (<Select.Option data-translate="hi" value={state}>{state}</Select.Option>)
+                    }
+                    )}
+                  </Select>
+                </Form.Item>
 
                 <Form.Item name="work_segment" label="Select Work Segments">
                   <Select placeholder="select work segments" data-translate="hi" onChange={setSelectedItems} >
@@ -217,124 +215,124 @@ const FindContractor = () => {
                       })
                     }
                   </Select>
-                
+
                 </Form.Item>
                 <p className='font-[inter]'>
-                    {selectedItems.length > 0 &&
-                      sub_cat[0].map((sub_category) => {
+                  {selectedItems.length > 0 &&
+                    sub_cat[0].map((sub_category) => {
 
-                        return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
-                          <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
-                            <Select>
-                              {sub_category.children.map((item, index) => {
+                      return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
+                        <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
+                          <Select>
+                            {sub_category.children.map((item, index) => {
 
-                                return (
-                                  <Select.Option
-                                    key={item.sub_Category}
-                                    className={`ml-${index === 0 ? 2 : 0} `}
-                                    value={item.name}
-                                  >
-                                    <span>{item.name}</span>
-                                  </Select.Option>
-                                );
-                              })}
-                             
-                            </Select>
-                           
+                              return (
+                                <Select.Option
+                                  key={item.sub_Category}
+                                  className={`ml-${index === 0 ? 2 : 0} `}
+                                  value={item.name}
+                                >
+                                  <span>{item.name}</span>
+                                </Select.Option>
+                              );
+                            })}
 
-                          </Form.Item>
-                        </>
+                          </Select>
 
 
-                      })
+                        </Form.Item>
+                      </>
 
-                    }
-                  </p>
+
+                    })
+
+                  }
+                </p>
               </Form>
-              <button className='brand_button h-[50px] mt-14 float-right' onClick={()=>{resetHandler()}}>Reset Filter</button>
+              <button className='brand_button h-[50px] mt-14 float-right' onClick={() => { resetHandler() }}>Reset Filter</button>
 
-            </div>:
+            </div> :
               <div className="accordion ">
-              <div className="accordion__header bg-[#023047] w-full px-6 py-4" onClick={toggleAccordion}>
+                <div className="accordion__header bg-[#023047] w-full px-6 py-4" onClick={toggleAccordion}>
                   <div className="flex items-center justify-between">
-                   <h3 className="normal_text  text-white">Filter </h3><AiOutlineDown color='white'/>
-                    </div>  
-                <span className={`icon ${isOpen ? "rotate-icon" : ""}`} />
-              </div>
-              {isOpen && <div className='col-span-2 max-h-auto  w-full shadow-lg border-2 p-5' >
-              <div className='relative '>
-                <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
+                    <h3 className="normal_text  text-white">Filter </h3><AiOutlineDown color='white' />
+                  </div>
+                  <span className={`icon ${isOpen ? "rotate-icon" : ""}`} />
+                </div>
+                {isOpen && <div className='col-span-2 max-h-auto  w-full shadow-lg border-2 p-5' >
+                  <div className='relative '>
+                    <p className='headings font_18 mb-10 '><span data-translate="hi">Hire Contractors</span></p>
 
-                <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]' data-translate="hi"> </div>
-              </div>
+                    <div className='absolute mb-10 border-2  border-[#023047] top-[120%] left-0 right-[62%]' data-translate="hi"> </div>
+                  </div>
 
-              <Form
-                layout='vertical'
-                form={form}
-                onValuesChange={handleFormChange}
-                
-              >
-                <Form.Item name="contractor" label="">
-                  <Input data-translate="hi" className=' mb-5' placeholder='Search for contractors' />
-                </Form.Item>
+                  <Form
+                    layout='vertical'
+                    form={form}
+                    onValuesChange={handleFormChange}
 
-                <Form.Item name="Location" label="Search Location">
-                                <Select className=' mb-5' data-translate="hi" placeholder='Add Location' >
-                                    {Object.keys(state_cites).map((state) => {
-                                        return (<Select.Option data-translate="hi" value={state}>{state}</Select.Option>)
-                                    }
-                                    )}
-                                </Select>
+                  >
+                    <Form.Item name="contractor" label="">
+                      <Input data-translate="hi" className=' mb-5' placeholder='Search for contractors' />
+                    </Form.Item>
+
+                    <Form.Item name="Location" label="Search Location">
+                      <Select className=' mb-5' data-translate="hi" placeholder='Add Location' >
+                        {Object.keys(state_cites).map((state) => {
+                          return (<Select.Option data-translate="hi" value={state}>{state}</Select.Option>)
+                        }
+                        )}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item name="work_segment" label="Select Work Segments">
+                      <Select placeholder="select work segments" data-translate="hi" onChange={setSelectedItems} >
+                        {
+                          work_segment.length > 0 && work_segment.map((cats) => {
+                            return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
+                          })
+                        }
+                      </Select>
+
+                    </Form.Item>
+                    <p className='font-[inter]'>
+                      {selectedItems.length > 0 &&
+                        sub_cat[0].map((sub_category) => {
+
+                          return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
+                            <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
+                              <Select>
+                                {sub_category.children.map((item, index) => {
+
+                                  return (
+                                    <Select.Option
+                                      key={item.sub_Category}
+                                      className={`ml-${index === 0 ? 2 : 0} `}
+                                      value={item.name}
+                                    >
+                                      <span>{item.name}</span>
+                                    </Select.Option>
+                                  );
+                                })}
+
+                              </Select>
+
+
                             </Form.Item>
-
-                <Form.Item name="work_segment" label="Select Work Segments">
-                  <Select placeholder="select work segments" data-translate="hi" onChange={setSelectedItems} >
-                    {
-                      work_segment.length > 0 && work_segment.map((cats) => {
-                        return (<Select.Option value={cats.name}>{cats.name}</Select.Option>)
-                      })
-                    }
-                  </Select>
-                
-                </Form.Item>
-                <p className='font-[inter]'>
-                    {selectedItems.length > 0 &&
-                      sub_cat[0].map((sub_category) => {
-
-                        return selectedItems === sub_category.name && sub_category.name != 'N/A' && <>
-                          <Form.Item name="work_area_type" className="my-3" label={`Select Sub Category For ${selectedItems}`} >
-                            <Select>
-                              {sub_category.children.map((item, index) => {
-
-                                return (
-                                  <Select.Option
-                                    key={item.sub_Category}
-                                    className={`ml-${index === 0 ? 2 : 0} `}
-                                    value={item.name}
-                                  >
-                                    <span>{item.name}</span>
-                                  </Select.Option>
-                                );
-                              })}
-                             
-                            </Select>
-                           
-
-                          </Form.Item>
-                        </>
+                          </>
 
 
-                      })
+                        })
 
-                    }
-                  </p>
-              <button className='brand_button h-[50px] mt-10 ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+                      }
+                    </p>
+                    <button className='brand_button h-[50px] mt-10 ' onClick={() => { resetHandler() }}>Reset Filter</button>
 
-              </Form>
+                  </Form>
 
-                            </div>
-                            }
-            </div>
+                </div>
+                }
+              </div>
             }
             <div className='col-span-5 mt-5 md:mt-0'>
               <div className='border-2 overflow-y-scroll scrollbar shadow-sm p-3 mb-5 flex justify-between items-center'>
@@ -365,7 +363,7 @@ const FindContractor = () => {
                         </div>
                         <div className='col-span-3'>
                           <div className='font-bold text-[18px]'> {item.entity} </div>
-                          <div className='text-[#808080] text-[16px]'>{item.City} {item.City !=undefined?  ',': ''}  {item.State} </div>
+                          <div className='text-[#808080] text-[16px]'>{item.City} {item.City != undefined ? ',' : ''}  {item.State} </div>
                           <div className='flex'>
                             <span className='mr-1'><img src={star} /></span>
                             <span className='mr-1'><img src={star} /></span>
@@ -390,10 +388,10 @@ const FindContractor = () => {
                         </div>
                         <div className='col-span-4 realtive '>
                           <div className='absolute bottom-5'>
-                          <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
-                            <span className='white_p mr-3 font_700'>Contact</span>
-                            <img src={right_red} />
-                          </button>
+                            <button onClick={() => { contractHandler(item) }} className='bg-[#023047] input_radius py-2 px-4 flex items-center'>
+                              <span className='white_p mr-3 font_700'>Contact</span>
+                              <img src={right_red} />
+                            </button>
                           </div>
                         </div>
                       </div>

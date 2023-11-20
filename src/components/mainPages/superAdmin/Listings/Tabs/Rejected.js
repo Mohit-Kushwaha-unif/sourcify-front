@@ -15,19 +15,18 @@ const Rejected_Listing = () => {
             console.log(res);
             res = res.reverse()
             res.map((tableData, index) => {
-                if(tableData.status==2)
-               { data.push({
-                    '_id': tableData._id,
-                    'key': index,
-                    'entity': tableData.project_discription,
-                    'work_segment': tableData.wok_segment,
-                    'status': "Under Review" 
-                })}
+                if (tableData.status == 2) {
+                    data.push({
+                        '_id': tableData._id,
+                        'key': index,
+                        'entity': tableData.project_discription,
+                        'work_segment': tableData.wok_segment,
+                        'status': "Under Review"
+                    })
+                }
             })
-            console.log({ data })
             setTableData(data)
             setFormData(res)
-            console.log(formData)
         })
     }, [])
     const columns = [
@@ -70,8 +69,9 @@ const Rejected_Listing = () => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (text) => {return <Tag color="volcano">{text}</Tag>
-            } 
+            render: (text) => {
+                return <Tag color="volcano">{text}</Tag>
+            }
         },
         {
             title: 'Action',
@@ -84,26 +84,26 @@ const Rejected_Listing = () => {
             ),
         },
     ];
-  return (
-    <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
-    <div className="px-2 h-auto text-gray-800">
-        <div
-            className="flex w-full  flex-wrap h-full g-6 "
-        >
-            <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
-                <button
-                    onClick={() => navigator('/dashboard/listing-form')}
-                    className="primary_btn mb-5"     >
-                    Add New Listing </button>
-                <div className="flex flex-row items-center justify-center lg:justify-start">
-                    <p className="text-lg mb-0 mr-4">All Listings</p>
+    return (
+        <section className="min-h-screen flex flex-col w-full  py-6 sm:px-6 lg:px-3" >
+            <div className="px-2 h-auto text-gray-800">
+                <div
+                    className="flex w-full  flex-wrap h-full g-6 "
+                >
+                    <div className="xl: w-full  lg: w-full  md: w-full  mb-12 md:mb-0 bg-white border border-black-600 rounded-xl p-6">
+                        <button
+                            onClick={() => navigator('/dashboard/listing-form')}
+                            className="primary_btn mb-5"     >
+                            Add New Listing </button>
+                        <div className="flex flex-row items-center justify-center lg:justify-start">
+                            <p className="text-lg mb-0 mr-4">All Listings</p>
+                        </div>
+                        <Table columns={columns} dataSource={tableData} />
+                    </div>
                 </div>
-                <Table columns={columns} dataSource={tableData} />
             </div>
-        </div>
-    </div>
-</section>
-  )
+        </section>
+    )
 }
 
 export default Rejected_Listing

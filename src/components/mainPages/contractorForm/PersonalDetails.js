@@ -918,11 +918,6 @@ const PersonalDetails = () => {
                           </Form.List>
 
                           <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
-                            {/* <button
-                    type="submit"
-                    className="back_btn"  >
-                    Next
-                  </button> */}
                             <button
                               type="submit"
                               className="save_Btn"  >
@@ -1779,11 +1774,6 @@ const PersonalDetails = () => {
                             </Form.List>
 
                             <div className='text-center flex flex-col flex-col-reverse md:flex-row justify-center'>
-                              {/* <button
-                    type="submit"
-                    className="back_btn"  >
-                    Next
-                  </button> */}
                               <button
                                 type="submit"
                                 className="save_Btn"  >

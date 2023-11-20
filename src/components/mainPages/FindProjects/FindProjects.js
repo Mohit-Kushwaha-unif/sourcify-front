@@ -18,7 +18,7 @@ const FindProjects = () => {
     const [projects, setProjects] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [work_segment, set_work_segment] = useState([])
-    const [cpyProjects,setCpyProjects] = useState([])
+    const [cpyProjects, setCpyProjects] = useState([])
     var [projectDetails, setProjectDetails] = useState([])
     var [OprojectDetails, setoProjectDetails] = useState([])
     const [loading, setLoading] = useState(true)
@@ -267,11 +267,11 @@ const FindProjects = () => {
         }
 
     }
-    function resetHandler(){
+    function resetHandler() {
         form.resetFields()
         setSelectedItems('')
         setProjects(cpyProjects)
-      }
+    }
     return (
         <>
             {loading ? <Loader />
@@ -342,7 +342,7 @@ const FindProjects = () => {
                                 }
                             </p>
                         </Form>
-              <button className='brand_button h-[50px] mt-14 float-right ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+                        <button className='brand_button h-[50px] mt-14 float-right ' onClick={() => { resetHandler() }}>Reset Filter</button>
 
                     </div>
                         :
@@ -416,7 +416,7 @@ const FindProjects = () => {
 
                                         }
                                     </p>
-              <button className='brand_button h-[50px] mb-10 ' onClick={()=>{resetHandler()}}>Reset Filter</button>
+                                    <button className='brand_button h-[50px] mb-10 ' onClick={() => { resetHandler() }}>Reset Filter</button>
 
                                 </Form>
                             </div>}

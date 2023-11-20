@@ -12,8 +12,8 @@ const Personal_Detail_Tab = (formValues) => {
   const [state, setState] = useState([]);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm(); // Initialize form instance
-  const [email,setEmail] = useState()
-  const [number,setNumber] = useState()
+  const [email, setEmail] = useState()
+  const [number, setNumber] = useState()
   const [initialState, setInitialState] = useState(formValues.formValues.State);
   const dispatch = useDispatch();
 
@@ -108,7 +108,7 @@ const Personal_Detail_Tab = (formValues) => {
                   ]}
                   className='mb-1'
                 >
-                  <Input maxLength={10} minLength={10} type='Number' value={number} onChange={(val)=>{setNumber(val.target.value)}} placeholder='Enter Your Number' />
+                  <Input maxLength={10} minLength={10} type='Number' value={number} onChange={(val) => { setNumber(val.target.value) }} placeholder='Enter Your Number' />
                 </Form.Item>
               </div>
               <div className='form_flex_children mr-1'>
@@ -122,10 +122,10 @@ const Personal_Detail_Tab = (formValues) => {
                     },
                   ]}
                 >
-                  <Input placeholder='Enter Your Email'  value={email} onChange={(val)=>{setEmail(val.target.value)}} />
+                  <Input placeholder='Enter Your Email' value={email} onChange={(val) => { setEmail(val.target.value) }} />
                 </Form.Item>
-             
-            </div>
+
+              </div>
             </div>
             <Form.Item name="Address" className='mb-1' label="Office Address " rules={[
               {

@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import * as ContractorServices from '../../../../services/contractor'
 import { Space, Tag, Table, Input, Card } from 'antd';
 import "antd/dist/antd";
-// import Table from 'ant-responsive-table'
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loader from '../../../Helper/Loader';
@@ -14,9 +13,9 @@ const Contractor = () => {
     const [entity, setEntity] = useState([])
     const [totalContractor, setTotalContractor] = useState(0)
     const [tableData, setTableData] = useState([])
-    const [reviewData,setReviewData] = useState([])
-    const [approvedData,setApprovedData] = useState([])
-    const [rejectedData,setRejectedData] = useState([])
+    const [reviewData, setReviewData] = useState([])
+    const [approvedData, setApprovedData] = useState([])
+    const [rejectedData, setRejectedData] = useState([])
     const [loading, setLoading] = useState(false)
     const data = [];
     useEffect(() => {
@@ -38,15 +37,15 @@ const Contractor = () => {
                 dataText.text = tableData.entity
                 dataText.value = tableData.entity
                 dataTable.push(dataText)
-                var exist =  tot_cont.find((val) => val === tableData.entity)
-                if(exist === undefined ){
+                var exist = tot_cont.find((val) => val === tableData.entity)
+                if (exist === undefined) {
                     tot_cont.push(tableData.entity)
                 }
-                
+
                 if (tableData.user_id) {
-                    if(tableData.status === 1){  setReviewData((PREV)=>[...PREV, tableData]) }
-                    if(tableData.status === 0){setApprovedData((PREV)=>[...PREV, tableData]) }
-                    if(tableData.status === 2){setRejectedData((PREV)=>[...PREV, tableData]) }
+                    if (tableData.status === 1) { setReviewData((PREV) => [...PREV, tableData]) }
+                    if (tableData.status === 0) { setApprovedData((PREV) => [...PREV, tableData]) }
+                    if (tableData.status === 2) { setRejectedData((PREV) => [...PREV, tableData]) }
                     data.push({
                         'user_id': tableData.user_id,
                         '_id': tableData._id,
@@ -222,15 +221,15 @@ const Contractor = () => {
                                         </p>
                                     </div>
                                     <div className='grid grid-cols-1 text-center gap-6 md:grid-cols-4'>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${totalContractor.length} `} bordered={false}>
-                                       
-                                    </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`}  bordered={false}>
-                                    </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
-                                    </Card>
-                                    <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
-                                    </Card>
+                                        <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Total ${totalContractor.length} `} bordered={false}>
+
+                                        </Card>
+                                        <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Active ${approvedData.length}`} bordered={false}>
+                                        </Card>
+                                        <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Under Review  ${reviewData.length}`} bordered={false}>
+                                        </Card>
+                                        <Card className='bg-gray-200 h-[50px] cursor-pointer shadow-md border-2 border-solid mb-5' title={`Rejected  ${rejectedData.length}`} bordered={false}>
+                                        </Card>
                                     </div>
                                     <Table
 

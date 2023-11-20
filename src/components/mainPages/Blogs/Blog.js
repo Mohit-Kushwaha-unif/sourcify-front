@@ -27,7 +27,7 @@ const Blog = () => {
             </div>
             <div className='col-span-2 p-6 border-2 order-1 md:order-2 h-auto md:h-[42%] overflow-y-scroll scrollbar'>
                 <div className='mt-3 mb-10'>
-                <Input placeholder='Search for contractors or projects ' className='input_radius' suffix={<img src={search_icon} />} />
+                    <Input placeholder='Search for contractors or projects ' className='input_radius' suffix={<img src={search_icon} />} />
                 </div>
                 <p className='font-bold text-lg'>Categories</p>
                 <ul className='mt-5'>

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
 import { get_user_info, update_user } from '../../../services/user'
 import useDocumentTitle from '../../Helper/useDocumentTitle'
 import { toast, ToastContainer } from 'react-toastify'
@@ -12,71 +11,71 @@ const UpdateProfie = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     useDocumentTitle('Edit Profile')
-    const [initialValue,setInitialValue] = useState([])
-    const [isContractor,setIsContractor] = useState()
+    const [initialValue, setInitialValue] = useState([])
+    const [isContractor, setIsContractor] = useState()
     const [contractor, setContractor] = useState()
     var formValue = []
-    useEffect(()=>{
-        dispatch(get_user_info({user_id:localStorage.getItem('user_id')})).then((res)=>{
-          
+    useEffect(() => {
+        dispatch(get_user_info({ user_id: localStorage.getItem('user_id') })).then((res) => {
+
             var obj = {}
             obj.name = "email"
-            obj.value= res.email
-            setInitialValue(prevState=>[...prevState,obj])
+            obj.value = res.email
+            setInitialValue(prevState => [...prevState, obj])
             formValue.push(obj)
             obj = {}
             obj.name = "number"
-            obj.value= res.number
-            if(res.role == 0){
+            obj.value = res.number
+            if (res.role == 0) {
                 setContractor(true)
             }
-            else if(res.role == 1){
+            else if (res.role == 1) {
                 setContractor(false)
             }
-           
-            setInitialValue(prevState=>[...prevState,obj])
-            if(Object.keys(res).includes('contractor_id')){
-                console.log({res})
-                
-                setIsContractor({is:false, _id:res.contractor_id._id})
+
+            setInitialValue(prevState => [...prevState, obj])
+            if (Object.keys(res).includes('contractor_id')) {
+                console.log({ res })
+
+                setIsContractor({ is: false, _id: res.contractor_id._id })
             }
-            if(Object.keys(res).includes('vendor_id')){
-                
-                setIsContractor({is:true, _id:res.vendor_id._id})
+            if (Object.keys(res).includes('vendor_id')) {
+
+                setIsContractor({ is: true, _id: res.vendor_id._id })
             }
         })
         // setInitialValue(formValue)
-    },[])
+    }, [])
     const FormHandler = (value) => {
         value.id = localStorage.getItem('user_id')
-        dispatch(update_user(value)).then((res)=>{
- 
-              navigationHandler()
+        dispatch(update_user(value)).then((res) => {
+
+            navigationHandler()
         })
 
-     }
+    }
 
-     function navigationHandler(){
-        console.log(isContractor,contractor)
+    function navigationHandler() {
+        console.log(isContractor, contractor)
         console.log(isContractor === undefined)
         // return false
-        if(isContractor === undefined && contractor=== true){
+        if (isContractor === undefined && contractor === true) {
             navigate('/contractor-form')
         }
-        if(isContractor === undefined && contractor=== false){
+        if (isContractor === undefined && contractor === false) {
             navigate('/vendor-form')
         }
-        if(isContractor?.is === true){
-            navigate('/edit-company',{state:{_id:isContractor._id}})
+        if (isContractor?.is === true) {
+            navigate('/edit-company', { state: { _id: isContractor._id } })
         }
-        if(isContractor?.is === false){
-            navigate('/edit-contractors',{state:{_id:isContractor._id}})
+        if (isContractor?.is === false) {
+            navigate('/edit-contractors', { state: { _id: isContractor._id } })
         }
-        
-     }
+
+    }
     return (
         <section className="container min-h-min  flex flex-col  w-full " >
-                <ToastContainer/>
+            <ToastContainer />
             <div className=" h-auto text-gray-800">
                 <div
                     className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-auto "
@@ -90,7 +89,7 @@ const UpdateProfie = () => {
                         >
                         </div>
                         <Form labelAlign="left"
-                               fields={[...initialValue]}
+                            fields={[...initialValue]}
                             layout="vertical" onFinish={FormHandler}>
                             <Form.Item name="email" label="Email " rules={[
                                 {
@@ -103,30 +102,26 @@ const UpdateProfie = () => {
 
                                 <Input placeholder='Enter Email' />
                             </Form.Item>
-                                    <Form.Item name="number" label="Number " rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your Number'
-                                        },
-                                    ]}
-                                        className="mb-1"
-                                    >
+                            <Form.Item name="number" label="Number " rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Number'
+                                },
+                            ]}
+                                className="mb-1"
+                            >
 
-                                        <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
+                                <Input maxLength={10} minLength={10} type="Number" placeholder='Enter Your Number' />
 
-                                    </Form.Item>
-                 
+                            </Form.Item>
+
 
 
                             <div className="text-center flex flex-col md:flex-row justify-center justify-between lg:text-left mt-2 mb-3">
-                         
-                                    {/* <button className='back_btn' type="primary" htmlType="submit">
-                                        Update
-                                    </button> */}
-                                    <button className='save_Btn' type="primary">
-                                        NEXT
-                                    </button>
-                               
+                                <button className='save_Btn' type="primary">
+                                    NEXT
+                                </button>
+
                             </div>
                         </Form>
                     </div>

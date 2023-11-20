@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { get_listing } from '../../../services/listing'
 import Cat_Sidebar from '../../headers/Cat_Sidebar'
-import SubHeader from '../../headers/Sub-Header'
 
 const All_projects = () => {
   const dispatch = useDispatch()
@@ -45,7 +44,6 @@ const All_projects = () => {
         <div className='p-6 col-span-5'><div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {
             lisitngs.length > 0 ? lisitngs.map((res) => {
-              // console.log(res)
               return <div className='grid grid-cols-3 rounded-lg border-2 min-h-60  max-h-60 rounded-[25px] shadow-gray-50  '>
                 <div className='col-span-1 '>
                   <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="User image" class="w-full h-60" />

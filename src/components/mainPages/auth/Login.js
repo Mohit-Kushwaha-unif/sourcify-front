@@ -23,10 +23,10 @@ const Login = () => {
   const dispatch = useDispatch()
   useDocumentTitle("Login")
   const navigate = useNavigate();
-  const formHandler= async(value)=> {
+  const formHandler = async (value) => {
     var subscription;
-   
-    dispatch(login(value)).then(async(res) => {
+
+    dispatch(login(value)).then(async (res) => {
       try {
         if ('PushManager' in window) {
           console.log('Push notifications are supported!');
@@ -39,11 +39,11 @@ const Login = () => {
           userVisibleOnly: true,
           applicationServerKey
         });
-        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.user._id}))
+        dispatch(saveSubscription({ "subscription": JSON.stringify(subscription), id: res.user._id }))
       } catch (error) {
         console.error('Error registering service worker:', error);
       }
-     
+
       localStorage.setItem('accesstoken', res.accesstoken)
       localStorage.setItem('user_id', res.user._id)
       localStorage.setItem('email', res.user.email)
@@ -57,15 +57,13 @@ const Login = () => {
               return user_data
             return null
           })
-          // console.log(user_exist.length)
           if (user_exist.length === 0) {
             navigate('/vendor-form')
           }
           else {
 
             localStorage.setItem("form_id", userDetails.user.vendor_id)
-            // navigate('/vendor-form')
-             navigate('/dashboard')
+            navigate('/dashboard')
 
           }
         })
@@ -78,14 +76,12 @@ const Login = () => {
       else
         if (res.user.contractor_id) {
           localStorage.setItem("form_id", res.user.contractor_id)
-        
+
           navigate('/dashboard')
         }
         else {
           navigate('/contractor-form', { state: res.user })
         }
-
-      // navigate('/contractor-form' ,{state:res.data.user})  
     })
       .catch(err => Swal.fire({
         position: 'center',
@@ -99,9 +95,9 @@ const Login = () => {
 
 
   const responseMessage = (response, e) => {
-   
 
-    dispatch(googleLogin({ tokenId: response })).then(async(res) => {
+
+    dispatch(googleLogin({ tokenId: response })).then(async (res) => {
       console.log(res)
       try {
         if ('PushManager' in window) {
@@ -115,7 +111,7 @@ const Login = () => {
           userVisibleOnly: true,
           applicationServerKey
         });
-        dispatch(saveSubscription({"subscription":JSON.stringify(subscription), id:res.userdata._id}))
+        dispatch(saveSubscription({ "subscription": JSON.stringify(subscription), id: res.userdata._id }))
       } catch (error) {
         console.error('Error registering service worker:', error);
       }
@@ -124,7 +120,6 @@ const Login = () => {
       localStorage.setItem('email', res.userdata.email)
       localStorage.setItem("isLoggedIn", true)
       dispatch(setValue(res.userdata.role))
-      // localStorage.setItem('number', )
       if (res.userdata.role === 1) {
         console.log(Object.keys(res.userdata), Object.keys(res.userdata).includes == 'vendor_id')
         if ("vendor_id" in res.userdata) {
@@ -132,7 +127,7 @@ const Login = () => {
           navigate('/dashboard')
           return
         }
-        else{
+        else {
           navigate('/vendor-form')
           return
         }
@@ -144,7 +139,7 @@ const Login = () => {
           navigate('/dashboard')
           return
         }
-        else{
+        else {
           navigate('/contractor-form')
           return
         }
@@ -159,7 +154,7 @@ const Login = () => {
   const logins = useGoogleLogin({
     onSuccess: codeResponse => responseMessage(codeResponse),
     onError: response => errorMessage(response),
-    
+
   });
   const errorMessage = (response) => {
     console.log(response)
@@ -223,17 +218,17 @@ const Login = () => {
               </div>
 
               <div className="text-center lg:text-left">
-                
-                  <button
-                    type="submit"
-                    className="prime_button center_content w-full mb-3"
-                    data-translate="hi"
-                  >
-                    Login
+
+                <button
+                  type="submit"
+                  className="prime_button center_content w-full mb-3"
+                  data-translate="hi"
+                >
+                  Login
 
 
-                  </button>
-             
+                </button>
+
                 <p className="normal_text">
                   <span className='mr-0' data-translate="hi"> Don't have an account? </span>
                   <Link
@@ -246,19 +241,7 @@ const Login = () => {
 
               </div>
             </Form>
-            {/* <div className='center_content mb-5'>
-              <span className='text-[28px] font-bold'data-translate="hi">or</span>
-            </div> */}
             <div className='social_buttons mb-16'>
-              {/* <div className='bg-[#FF5757] mb-3 rounded-[6px] cursor-pointer'>
-                
-                  <div onClick={() => logins()} className='brand_button' data-translate="hi">Login with Google</div>
-             
-              </div> */}
-
-              {/* <div className='bg-[#00272B] rounded-[6px]'>
-                <span className='prime_button_sec w-full '>Login with Facebook</span>
-              </div> */}
             </div>
           </div>
         </div>

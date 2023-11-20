@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { delete_category, get_category } from '../../../../services/category';
 import Swal from 'sweetalert2';
 import Loader from '../../../Helper/Loader';
-// import Table from 'ant-responsive-table'
 const Category = () => {
   const navigator = useNavigate()
   const dispatch = useDispatch()

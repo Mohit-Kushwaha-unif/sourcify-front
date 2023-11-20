@@ -1,19 +1,15 @@
-import { Card, Col, Row, Space, Table, Tag } from 'antd'
+import { Card,  Table, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { AiOutlineMessage } from 'react-icons/ai'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { get_contractor } from '../../../services/contractor'
 import { get_listing, get_listingBy_id } from '../../../services/listing'
 import Company_Dashboard from '../Company_Dashboard/Company_Dashboard'
-import Meta from 'antd/es/card/Meta'
 
 const Contractor_Dashboard = () => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-
-  const [project, setProjects] = useState([])
   var data = []
   const [tableData, setTableData] = useState([])
   const [lisitngs, setAllLisitngs] = useState([])
@@ -23,20 +19,15 @@ const Contractor_Dashboard = () => {
   const [activeProjects, setActiveProjects] = useState(0)
   var count = 0
   function Company_Data(val) {
-    console.log(val)
-
     val.map((details) => {
       if (details.status == 'Approved') {
         count = count + 1;
-        // setActiveProjects((prevActiveProjects) => prevActiveProjects + 1);
       }
-
     })
     setActiveProjects(count);
     setPostedProjects(val.length)
     setRender(true)
   }
-  console.log(activeProjects, postedProjects, tableData.length)
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") !== "true") {
       navigator('/login');
@@ -79,8 +70,6 @@ const Contractor_Dashboard = () => {
         setTableData(data)
         setRender(false)
       })
-
-      // }
     })
   }, [location])
 
@@ -102,13 +91,13 @@ const Contractor_Dashboard = () => {
       title: 'S.No',
       dataIndex: 'key',
       key: 'key',
-      render: (_,text) =><Link to="/projectDetails"  state={  text.listing_id } >  {_+1}</Link> ,
+      render: (_, text) => <Link to="/projectDetails" state={text.listing_id} >  {_ + 1}</Link>,
     },
     {
       title: 'Project Name',
       dataIndex: 'entity',
       key: 'entity',
-      render:(_,text) =><Link to="/projectDetails"  state={  text.listing_id } > {_}</Link> ,
+      render: (_, text) => <Link to="/projectDetails" state={text.listing_id} > {_}</Link>,
     },
     {
       title: 'Scope',
@@ -183,34 +172,23 @@ const Contractor_Dashboard = () => {
                 <p className='col-span-2 text-lg' ><span data-translate="hi">Your Ongoing Projects are</span> {activeProjects}</p>
               </div>
             </Card>
-      
+
 
             <Card title="Shown Interest " bordered={false}>
               <div className='grid grid-cols-3 place-items-center'>
                 <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color' > {tableData.length}</p>
-                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects in which you have shown intrest</span> {tableData.length} </p>
+                <p className='col-span-2 text-lg' > <span data-translate="hi">Projects in which you have shown intrest</span> {tableData.length} </p>
               </div>
 
             </Card>
             <Card title="Posted Projects " bordered={false}>
               <div className='grid grid-cols-3 place-items-center'>
                 <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color' > {postedProjects}</p>
-                <p className='col-span-2 text-lg' > <span  data-translate="hi">Projects that you have posted till now </span> {postedProjects}  </p>
+                <p className='col-span-2 text-lg' > <span data-translate="hi">Projects that you have posted till now </span> {postedProjects}  </p>
               </div>
             </Card>
-
-
-
-
-            {/* <Card title="All Projects" bordered={false}>
-            <div className='grid grid-cols-3 place-items-center'>
-                <p className='col-span-1  mr-1 brand_text font_64 font_inter new_color'data-translate="hi"> {postedProjects + tableData.length}</p>
-                <p className='col-span-2 text-lg'data-translate="hi"> Your Total Number of projects</p>
-              </div>
-               
-            </Card> */}
           </div>
-        
+
           <div className=" h-auto text-gray-800 ">
             <div
               className="flex w-full flex-wrap h-full  "

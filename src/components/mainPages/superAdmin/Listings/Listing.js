@@ -10,22 +10,22 @@ import Under_Review_listings from './Tabs/moderation_listings'
 import Rejected_Listing from './Tabs/Rejected'
 
 const Listing = () => {
-    
-    const [activeTab,setActiveTab] = useState("1")
-      function tabKeys(valueOfTab){
 
-        setActiveTab(valueOfTab)
-      }
- 
+  const [activeTab, setActiveTab] = useState("1")
+  function tabKeys(valueOfTab) {
+
+    setActiveTab(valueOfTab)
+  }
+
   return (
     <div className='flex align-center ml-30 w-full p-2 px-3'>
-    {
-        
-          <All_Listings  isClicked = {tabKeys}/>
-      
-  
-      
-    }
+      {
+
+        <All_Listings isClicked={tabKeys} />
+
+
+
+      }
     </div>
   )
 }

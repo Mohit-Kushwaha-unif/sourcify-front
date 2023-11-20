@@ -3,61 +3,62 @@
     align-items: center;
     padding: 1px;
     padding-right: 5px;
-    color: #1E1E1E ;
-    /* z-index:1; */
-    /* box-shadow: 0px 4px 4px rgba(239, 235, 235, 0.5); */
+    color: #1E1E1E;
 }
-.navbar__image{
+
+.navbar__image {
     width: 30%;
 }
+
 .navbar__title {
-    /* margin-right: auto;
-    font-size: 150%; */
-    padding: 12px 16px; 
+    padding: 12px 16px;
     margin-left: 2px;
- 
+
 }
+
 .header {
     position: fixed;
     top: 0;
-    left: -300px; /* Move the navbar off-screen to the left */
+    left: -300px;
+    /* Move the navbar off-screen to the left */
     width: 300px;
     height: 100vh;
     background-color: #fff;
     z-index: 1000;
     transition: all 0.3s ease-in-out;
-  }
-  
-  /* Show the navbar when the 'showMenu' state is true */
-  .header.show-menu {
+}
+
+/* Show the navbar when the 'showMenu' state is true */
+.header.show-menu {
     left: 0;
-  }
-  
+}
+
 
 .navbar__item {
-    padding: 8px 6px; 
-    /* 16px 12px; */
+    padding: 8px 6px;
     cursor: pointer;
-    padding-left:0.4rem;
-    padding-right: 0.4rem;;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    ;
     vertical-align: middle;
 }
-.navbar__button{
+
+.navbar__button {
     padding: 6px 15px 6px;
     cursor: pointer;
-    /* font-size: 104%; */
     background-color: #FF5757;
-    color: #ffffff ;
+    color: #ffffff;
     font-family: Helvetica;
     font-weight: 300;
     height: auto;
 }
-.navbar__button :hover{
+
+.navbar__button :hover {
     color: inherit;
     background-color: inherit;
 }
 
-.responsive{
+.responsive {
     position: absolute;
     z-index: 10;
     top: 16px;
@@ -72,6 +73,6 @@
     outline: none;
 }
 
-.white{
+.white {
     background-color: white !important;
 }

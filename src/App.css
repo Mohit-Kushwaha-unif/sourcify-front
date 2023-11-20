@@ -22,7 +22,6 @@ body {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-family: 'Inter' !important;
-  /* border-radius: 0.5rem; */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 1px -1px rgba(0, 0, 0, 0.1);
   transition-property: background-color, box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -100,9 +99,7 @@ min-height: 150px !important;
 
 }
 
-/* #password{
 
-} */
 .ant-input-affix-wrapper {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -122,35 +119,12 @@ min-height: 150px !important;
 .ant-form-item-explain-error {
   margin-bottom: 20px;
 }
-
-/* Global CSS */
-
-/* .btn-primary {
-  background-color: #FF5757;
-  border-radius: 50px;
-  border: none;
-}
-.btn-primary :hover{
-  background-color: none !important;
-  border: 3px solid white !important;
-}
-.btn :hover{
-  background-color: none !important;
-  border: 3px solid white !important;
-} */
 .hero-abt-quote {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 29px;
   letter-spacing: 0em;
-
-
 }
-
-
-
-
-
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -192,7 +166,6 @@ input[type=number] {
 }
 
 .ant-space-item {
-  /* min-width: 90% !important; */
   gap: 0 !important;
 }
 
@@ -204,51 +177,11 @@ input[type=number] {
 }
 
 .background-image {
-  /* background-size: cover; */
-  /* filter: brightness(30%); */
-  /* background-position: center center; */
   height: 500px;
   background: rgba(0, 0, 0, 0.79);
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative; */
 }
-
-/* .background-image::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: -1;
-} */
-
-/* .background-image h1,
-.background-image p {
-  position: relative;
-  color: #fff;
-  z-index: 1;
-}
-
-.background-image h1 {
-  color: #FF5757;
-} */
-
-
-
-
-
-
-
-
-
 
 /* About us page CSS */
-
 
 .hero-section {
   background-size: cover;
@@ -271,7 +204,6 @@ input[type=number] {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Adjust opacity value to darken/lighten the image */
   z-index: -1;
 }
 
@@ -332,7 +264,6 @@ input[type=number] {
 }
 
 .what_We_do_title {
-  /* font-size: 2.5rem; */
   font-size: 32px;
   font-weight: 600;
   line-height: 39px;
@@ -347,7 +278,6 @@ input[type=number] {
 .footer {
   min-height: 350px;
   padding-top: 2rem;
-  /* border-bottom: 4px solid #FF5757; */
 }
 .border_footer{
   background: rgba(255, 255, 255, 0.2);
@@ -364,118 +294,6 @@ input[type=number] {
 .footer li {
   margin: 10px 0px;
 }
-
-/* 
-.image-box {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-top: calc(100% * (100 / 300));
-} */
-
-
-/* .ant-table-tbody {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /* border: 1px solid black; */
-/* overflow-x: auto; */
-/* }  */
-
-/* .ant-table-thead {
-  display: flex;
-  flex-direction: row;
-  background-color: lightgray;
-  font-weight: bold;
-}
-
-.thead {
-  display: flex;
-  flex-direction: row;
-}
-
-.ant-table-cell {
-  flex-basis: 33.33%;
-  padding: 5px;
-} */
-
-/* @media (max-width: 768px) {
-  .ant-table-thead{
-    flex-direction: column;
-  }
-  .thead {
-    flex-direction: column;
-  }
-} */
-/* table {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
-} */
-/* .ant-table {
-  white-space: nowrap;
-}
-
-.ant-table thead th {
-  min-width: 100px;
-} */
-
-
-/* @media screen and (max-width: 768px) {
-
-  .ant-table thead,
-  .ant-table tbody,
-  .ant-table th,
-  .ant-table td,
-  .ant-table tr {
-    display: block;
-  }
-
-  .ant-table thead tr {
-    transform: translateX(-100%);
-    white-space: nowrap;
-  }
-
-  .ant-table td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-    text-align: right;
-  }
-
-  .ant-table td:before {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
-    content: attr(data-column);
-    font-weight: bold;
-  }
-
-
-  .ant-table thead {
-    display: table-header-group;
-  }
-
-
-  .ant-table tbody tr:not(:empty) {
-    display: table-row;
-  }
-
-  
-  .ant-table td:before {
-    padding-top: 10px;
-  }
-} */
-
-
-
 
 /*save button*/
 .save_Btn {
@@ -563,14 +381,7 @@ input[type=number] {
   background: #ffffff;
 }
 
-/* input[type=radio] {
-  -webkit-appearance: unset;
-  border: none;
-} */
 
-/* .ant-input-prefix{
-  background-color: #f9f9f9;
-} */
 
 .scrollbar::-webkit-scrollbar {
   width: 1px;
@@ -648,7 +459,6 @@ input[type=number] {
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,.1);
  padding: 8px;
-  /* Add other styling as needed */
 }
 
 /* Hide dropdown menu by default */

@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { get_listingBy_id, update_listing } from '../../../services/listing'
 import { FaFileExcel } from 'react-icons/fa';
 import TextArea from 'antd/es/input/TextArea'
-import { get_contractor, get_contractorBy_id } from '../../../services/contractor'
 import moment from 'moment'
 import { toast, ToastContainer } from 'react-toastify'
 const ProjectDetails = () => {
@@ -22,7 +21,7 @@ const ProjectDetails = () => {
         dispatch(get_listingBy_id(location?.state)).then((res) => {
             console.log(res)
             res.listing.proposals.map((detail) => {
-                if (detail.contractor_id!=null &&detail.contractor_id._id === localStorage.getItem('user_id')) {
+                if (detail.contractor_id != null && detail.contractor_id._id === localStorage.getItem('user_id')) {
                     setApplied(true)
                 }
             })
@@ -33,23 +32,23 @@ const ProjectDetails = () => {
     console.log(formValues)
 
     const showModal = () => {
-        if(localStorage.getItem("isLoggedIn")=="false"){
+        if (localStorage.getItem("isLoggedIn") == "false") {
             navigator('/login')
         }
-         if(localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id || localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id._id){
+        if (localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id || localStorage.getItem("user_id") == formValues.vendorDetail[0].user_id._id) {
             toast.error('Can not Share Interest to your own projects', {
                 position: toast.POSITION.TOP_RIGHT
-              })
+            })
         }
-         if(localStorage.getItem("status") !== "0"){
+        if (localStorage.getItem("status") !== "0") {
             toast.error('Account not approved by admin', {
                 position: toast.POSITION.TOP_RIGHT
-              })
+            })
         }
-        else{
+        else {
             setOpen(true);
         }
-       
+
     };
     const hideModal = () => {
         setOpen(false);
@@ -61,7 +60,7 @@ const ProjectDetails = () => {
         formData.proposal = proposalVal
         formData.contract_status = 0
         dispatch(update_listing(formData)).then((res) => {
-         
+
             toast.success('Interest submitted', {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -80,7 +79,7 @@ const ProjectDetails = () => {
                                 <h2 class="text-center font-bold text-gray-700 text-2xl mb-6">Project Detail</h2>
                                 {console.log(formValues)}
                                 {!Array.isArray(formValues) && <form onSubmit={submitHandler} class="mb-4">
-                                   
+
                                     <div class="mb-4">
                                         <label class="block text-gray-700 font-bold mb-2" for="name">
                                             Project Description
@@ -95,18 +94,18 @@ const ProjectDetails = () => {
                                     </div>
                                     <div class=" grid md:grid-cols-2  gap-5 mb-5">
                                         <div>
-                                        <label class="block text-gray-700 font-bold mb-2" for="email">
-                                            Project State
-                                        </label>
-                                        {Array.isArray(formValues?.listing.prefferd_state)?formValues?.listing.prefferd_state.map((states) => {
-                                            return <Tag>{states}</Tag>
-                                        }): <Tag>{formValues?.listing.prefferd_state}</Tag>}
+                                            <label class="block text-gray-700 font-bold mb-2" for="email">
+                                                Project State
+                                            </label>
+                                            {Array.isArray(formValues?.listing.prefferd_state) ? formValues?.listing.prefferd_state.map((states) => {
+                                                return <Tag>{states}</Tag>
+                                            }) : <Tag>{formValues?.listing.prefferd_state}</Tag>}
                                         </div>
                                         <div>
-                                        <label class="block text-gray-700 font-bold mb-2" for="email">
-                                            City
-                                        </label>
-                                        <Tag>{formValues?.listing?.City}</Tag>
+                                            <label class="block text-gray-700 font-bold mb-2" for="email">
+                                                City
+                                            </label>
+                                            <Tag>{formValues?.listing?.City}</Tag>
                                         </div>
 
                                     </div>
@@ -121,38 +120,37 @@ const ProjectDetails = () => {
                                     </div>
                                     <div class="mb-4 grid md:grid-cols-2">
                                         <div>
-                                        <label class=" text-gray-700 font-bold mb-2" for="email">
-                                            Project Bill Quantity
-                                        </label>
-                                        {
-                                            formValues.listing.project_bill_qty_image?.split('.')[1] != 'JPEG' ||
-                                                formValues.listing.project_bill_qty_image?.split('.')[1] != 'PNG' ?
-                                                <a href={formValues.listing.project_bill_qty_image} download={"Project Bill"}>
+                                            <label class=" text-gray-700 font-bold mb-2" for="email">
+                                                Project Bill Quantity
+                                            </label>
+                                            {
+                                                formValues.listing.project_bill_qty_image?.split('.')[1] != 'JPEG' ||
+                                                    formValues.listing.project_bill_qty_image?.split('.')[1] != 'PNG' ?
+                                                    <a href={formValues.listing.project_bill_qty_image} download={"Project Bill"}>
 
-                                                    <FaFileExcel className='w-20 h-20' />
+                                                        <FaFileExcel className='w-20 h-20' />
 
-                                                    {/* {"Specifiaction Img"} */}
-                                                </a> :
-                                                <img src={formValues.vendorDetail.project_bill_qty_image} />
-                                        }
+                                                        {/* {"Specifiaction Img"} */}
+                                                    </a> :
+                                                    <img src={formValues.vendorDetail.project_bill_qty_image} />
+                                            }
                                         </div>
                                         <div>
-                                        <label class=" text-gray-700 font-bold mb-2" for="email">
-                                            Project Specification 
-                                        </label>
-                                        {
-                                            formValues.listing.project_specification?.split('.')[1] != 'JPEG' ||
-                                                formValues.listing.project_specification?.split('.')[1] != 'PNG' ?
-                                                <a href={formValues.listing.project_specification} download={"Project Bill"}>
+                                            <label class=" text-gray-700 font-bold mb-2" for="email">
+                                                Project Specification
+                                            </label>
+                                            {
+                                                formValues.listing.project_specification?.split('.')[1] != 'JPEG' ||
+                                                    formValues.listing.project_specification?.split('.')[1] != 'PNG' ?
+                                                    <a href={formValues.listing.project_specification} download={"Project Bill"}>
 
-                                                    <FaFileExcel className='w-20 h-20' />
+                                                        <FaFileExcel className='w-20 h-20' />
 
-                                                    {/* {"Specifiaction Img"} */}
-                                                </a> :
-                                                <img src={formValues.vendorDetail.project_specification} />
-                                        }
-                                        {/* {console.log(formValues.listing[0].project_bill_qty_image)} */}
-                                    </div>
+                                                        {/* {"Specifiaction Img"} */}
+                                                    </a> :
+                                                    <img src={formValues.vendorDetail.project_specification} />
+                                            }
+                                        </div>
                                     </div>
                                     <div className='md:grid grid-cols-2'>
                                         <div class="mb-4 flex">
@@ -231,7 +229,7 @@ const ProjectDetails = () => {
 
                                 </button>
                                 </div>}
-                                <ToastContainer/>
+                                <ToastContainer />
                             </div>
                         </div>
                     </div>

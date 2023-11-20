@@ -37,7 +37,7 @@ const SendEmail = () => {
 
     }, []);
     function formHandler(val) {
-        dispatch(sendemail(val)).then((res)=>{
+        dispatch(sendemail(val)).then((res) => {
             console.log(res)
         })
     }
